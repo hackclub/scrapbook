@@ -1,5 +1,5 @@
 import { find, reverse, orderBy } from 'lodash'
-import { getRawUsers } from './profiles'
+import { getRawUsers } from './users'
 
 export const getRawPosts = () =>
   fetch(

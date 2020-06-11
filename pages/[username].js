@@ -85,7 +85,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { getProfile, getPosts } = require('./api/[username]')
+  const { getProfile, getPosts } = require('./api/users/[username]')
   const profile = await getProfile(params.username)
   const posts = (await getPosts(profile)) || []
   return { props: { profile, posts }, unstable_revalidate: 2 }

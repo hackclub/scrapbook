@@ -1,5 +1,5 @@
 import { find, reverse, orderBy, filter } from 'lodash'
-import { getRawUsers } from './profiles'
+import { getRawUsers } from './index'
 
 export const getProfile = async (username) => {
   const accounts = await getRawUsers()
