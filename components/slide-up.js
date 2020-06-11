@@ -7,7 +7,7 @@ const slideUp = keyframes({
   to: { transform: 'translateY(0)', opacity: 1 }
 })
 
-const SlideUp = ({ duration = 300, delay = 0, ...props }) => (
+const SlideUp = ({ duration = 512, delay = 0, ...props }) => (
   <Box
     {...props}
     sx={{

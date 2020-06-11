@@ -1,57 +1,49 @@
-import {
-  Box,
-  IconButton,
-  Container,
-  Image,
-  Text,
-  Flex,
-  Heading,
-  Button,
-  Grid,
-  Avatar,
-  Badge,
-  Link as A
-} from 'theme-ui'
-import { keyframes } from '@emotion/core'
-import Head from 'next/head'
-import Meta from '@hackclub/meta'
-import Nav from '../components/nav'
-import Icon from '../components/icon'
-import Stat from '../components/stat'
-import { timeSince } from '../lib/dates'
+import { Container, Heading, Grid } from 'theme-ui'
+import { find, reverse, orderBy } from 'lodash'
+import Post from '../components/post'
 
-export default props => (
-  <>
-    <Meta
-      as={Head}
-      title="Summer of Making"
-      description="Join Hack Club’s Summer of Making: professional mentorship, $50k in GitHub hardware grants, & an unparalleled online community. Starting June 18, ages 13–18."
-      image="https://cdn.glitch.com/3899929b-9aed-4dae-b1e6-230ef0ed4d51%2Fsummer.jpg?v=1590594017411"
-    />
-    <Nav />
-  </>
+export default ({ posts }) => (
+  <Container sx={{ py: [4, 5] }}>
+    <Heading as="h1" variant="title" sx={{ textAlign: 'center', mb: 4 }}>
+      Summer Updates
+    </Heading>
+    <Grid columns={[null, 2, 3]} gap={[3, 4]} sx={{ alignItems: 'start' }}>
+      {posts.map(post => (
+        <Post key={post.id} {...post} />
+      ))}
+    </Grid>
+  </Container>
 )
 
 export const getStaticProps = async () => {
-  const props = {}
+  const usernames = await fetch(
+    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
+  ).then(r => r.json())
 
-  let options = {
-    maxRecords: 1,
-    sort: [{ field: 'Created at', direction: 'desc' }],
-    filterByFormula: '{Approved for display} = 1'
-  }
-  let endpointURL = `https://api2.hackclub.com/v0.1/Pre-register/Applications?select=${JSON.stringify(
-    options
-  )}`
+  const updates = await fetch(
+    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
+  )
+    .then(r => r.json())
+    .then(updates =>
+      updates.map(u => {
+        u.user = find(usernames, { id: u.fields['Slack Account']?.[0] }) || {}
+        return u
+      })
+    )
+  const posts = reverse(
+    orderBy(
+      updates.map(({ id, user, fields }) => ({
+        id,
+        username: user?.fields['Username'],
+        streakDisplay: user?.fields['Display Streak'] || false,
+        streakCount: user?.fields['Streak Count'] || 1,
+        postedAt: fields['Post Time'] || '',
+        text: fields['Text'] || '',
+        attachments: fields['Attachments'] || []
+      })),
+      'postedAt'
+    )
+  )
 
-  try {
-    let results = await fetch(endpointURL, { mode: 'cors' }).then(r => r.json())
-    let reason = results[0].fields
-    props.reason = reason['What do you want to learn?']
-    props.time = reason['Created at']
-    props.status = 'success'
-  } catch (e) {
-    props.status = 'error'
-  }
-  return { props, unstable_revalidate: 1 }
+  return { props: { posts }, unstable_revalidate: 2 }
 }

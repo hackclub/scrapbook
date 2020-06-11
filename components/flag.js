@@ -3,15 +3,15 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
 const waveFlag = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-5deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-5deg); }
 `
 
 const Base = styled('a')`
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: ${theme.space[3]}px;
   background-image: url(https://assets.hackclub.com/flag-orpheus-top.svg);
   background-repeat: no-repeat;
   background-position: top left;
