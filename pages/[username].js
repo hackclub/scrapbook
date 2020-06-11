@@ -5,7 +5,7 @@ import {
   Container,
   Flex,
   Heading,
-  IconButton,
+  IconButton
 } from 'theme-ui'
 import Link from 'next/link'
 import Icon from '../components/icon'
@@ -55,14 +55,22 @@ export default ({ profile, posts }) => (
         <Heading as="h1" variant="title" my={0}>
           {profile.username}
         </Heading>
-        {profile.streakDisplay && <Badge ml={3} sx={{
-          bg: 'cyan',
-          fontSize: 2,
-          px: 3,
-          borderRadius: 'circle',
-          verticalAlign: 'middle',
-          textAlign: 'center'
-        }}>{profile.streakCount} day{profile.streakCount !== 1 ? 's' : ''}</Badge>}
+        {profile.streakDisplay && (
+          <Badge
+            ml={3}
+            sx={{
+              bg: 'cyan',
+              fontSize: 2,
+              px: 3,
+              borderRadius: 'circle',
+              verticalAlign: 'middle',
+              textAlign: 'center'
+            }}
+          >
+            {profile.streakCount} day
+            {profile.streakCount !== 1 ? 's' : ''}
+          </Badge>
+        )}
       </Flex>
     </Box>
     <Posts posts={posts} profile />
@@ -79,6 +87,6 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('./api/[username]')
   const profile = await getProfile(params.username)
-  const posts = await getPosts(profile) || []
+  const posts = (await getPosts(profile)) || []
   return { props: { profile, posts }, unstable_revalidate: 2 }
 }

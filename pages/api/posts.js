@@ -1,10 +1,10 @@
 import { find, reverse, orderBy } from 'lodash'
 import { getRawUsers } from './profiles'
 
-export const getRawPosts = () => fetch(
-  'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
-)
-  .then(r => r.json())
+export const getRawPosts = () =>
+  fetch(
+    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
+  ).then(r => r.json())
 
 export const getPosts = async () => {
   let posts = await getRawPosts()
