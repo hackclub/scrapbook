@@ -1,17 +1,13 @@
-import { Container, Heading, Grid } from 'theme-ui'
+import { Container, Heading } from 'theme-ui'
 import { find, reverse, orderBy } from 'lodash'
-import Post from '../components/post'
+import Posts from '../components/posts'
 
 export default ({ posts }) => (
   <Container sx={{ py: [4, 5] }}>
     <Heading as="h1" variant="title" sx={{ textAlign: 'center', mb: 4 }}>
       Summer Updates
     </Heading>
-    <Grid columns={[null, 2, 3]} gap={[3, 4]} sx={{ alignItems: 'start' }}>
-      {posts.map(post => (
-        <Post key={post.id} {...post} />
-      ))}
-    </Grid>
+    <Posts posts={posts} />
   </Container>
 )
 

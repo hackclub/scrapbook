@@ -4,14 +4,13 @@ import {
   Box,
   Container,
   Flex,
-  Grid,
   Heading,
   IconButton,
 } from 'theme-ui'
 import { find, filter, map, reverse, orderBy } from 'lodash'
 import Link from 'next/link'
 import Icon from '../components/icon'
-import Post from '../components/post'
+import Posts from '../components/posts'
 
 const avatars = {
   msw: 'max',
@@ -67,11 +66,7 @@ export default ({ profile, posts }) => (
         }}>{profile.streakCount} day{profile.streakCount !== 1 ? 's' : ''}</Badge>}
       </Flex>
     </Box>
-    <Grid columns={[null, 2, 3]} gap={[3, 4]} sx={{ alignItems: 'start' }}>
-      {posts.map(post => (
-        <Post key={post.id} profile {...post} />
-      ))}
-    </Grid>
+    <Posts posts={posts} profile />
   </Container>
 )
 
