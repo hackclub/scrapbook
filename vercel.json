@@ -1,4 +1,5 @@
 {
   "public": true,
-  "github": { "silent": true }
+  "github": { "silent": true },
+  "rewrites": [{ "source": "/api/users", "destination": "/api/profiles" }]
 }

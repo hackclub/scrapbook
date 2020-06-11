@@ -7,7 +7,6 @@ import {
   Heading,
   IconButton,
 } from 'theme-ui'
-import { find, filter, map, reverse, orderBy } from 'lodash'
 import Link from 'next/link'
 import Icon from '../components/icon'
 import Posts from '../components/posts'
@@ -71,38 +70,15 @@ export default ({ profile, posts }) => (
 )
 
 export const getStaticPaths = async () => {
-  const usernames = await fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
-  )
-    .then(r => r.json())
-    .then(a => map(a, 'fields.Username'))
+  const { getUsernames } = require('./api/usernames')
+  const usernames = await getUsernames()
   const paths = usernames.map(username => ({ params: { username } }))
   return { paths, fallback: false }
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { username } = params
-  const accounts = await fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
-  ).then(r => r.json())
-  const user = find(accounts, ['fields.Username', username]) || {}
-  const profile = {
-    id: user?.id,
-    username,
-    streakDisplay: user?.fields['Display Streak'] || false,
-    streakCount: user?.fields['Streak Count'] || 1
-  }
-
-  const allUpdates = await fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
-  ).then(r => r.json())
-  const updates = filter(allUpdates, ['fields.Slack Account', [user?.id]])
-  const posts = reverse(orderBy(updates.map(({ id, fields }) => ({
-    ...profile,
-    postedAt: fields['Post Time'] || '',
-    text: fields['Text'] || '',
-    attachments: fields['Attachments'] || []
-  })), 'postedAt'))
-
+  const { getProfile, getPosts } = require('./api/[username]')
+  const profile = await getProfile(params.username)
+  const posts = await getPosts(profile) || []
   return { props: { profile, posts }, unstable_revalidate: 2 }
 }
