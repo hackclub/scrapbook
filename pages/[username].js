@@ -8,6 +8,8 @@ import {
   IconButton
 } from 'theme-ui'
 import Link from 'next/link'
+import Head from 'next/head'
+import Meta from '@hackclub/meta'
 import Icon from '../components/icon'
 import Posts from '../components/posts'
 
@@ -17,9 +19,21 @@ const avatars = {
   lachlanjc: 'lachlan',
   melody: 'orpheus'
 }
+const avatarUrl = u => `https://hackclub.com/team/${avatars[u] || u}.jpg`
 
 export default ({ profile, posts }) => (
   <Container as="main" sx={{ py: [4, 5] }}>
+    <Meta
+      as={Head}
+      name="Summer Streaks"
+      title={`@${profile.username}`}
+      description={`Follow @${profile.username}’s progress ${profile.streakDisplay ? `(currently a ${profile.streakCount}-day streak!)` : ''} making things in the Hack Club community this summer.`}
+      image={`https://workshop-cards.hackclub.com/@${
+        profile.username
+        }.png?brand=Streaks&images=${avatarUrl(profile.username)}${
+        profile.streakDisplay ? `&caption=${profile.streakCount}-day streak` : ''
+        }`}
+    />
     {profile.css && <link rel="stylesheet" type="text/css" href={`/api/css?url=${profile.css}`} />}
     <Box as="header" sx={{ textAlign: 'center', mb: [3, 4] }}>
       <Link href="/" passHref>
@@ -47,8 +61,7 @@ export default ({ profile, posts }) => (
       </Link>
       <Flex sx={{ mt: 3, justifyContent: 'center', alignItems: 'center' }}>
         <Avatar
-          src={`https://hackclub.com/team/${avatars[profile.username] ||
-            profile.username}.jpg`}
+          src={avatarUrl(profile.username)}
           size={64}
           mr={3}
           alt={profile.username}
