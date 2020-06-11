@@ -19,7 +19,8 @@ const avatars = {
 }
 
 export default ({ profile, posts }) => (
-  <Container sx={{ py: [4, 5] }}>
+  <Container as="main" sx={{ py: [4, 5] }}>
+    {profile.css && <link rel="stylesheet" type="text/css" href={`/api/css?url=${profile.css}`} />}
     <Box as="header" sx={{ textAlign: 'center', mb: [3, 4] }}>
       <Link href="/" passHref>
         <IconButton

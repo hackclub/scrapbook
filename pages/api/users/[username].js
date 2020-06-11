@@ -6,10 +6,11 @@ export const getProfile = async (username) => {
   const user = find(accounts, ['fields.Username', username]) || {}
   if (!user) return {}
   const profile = {
-    id: user?.id,
+    id: user.id,
     username,
-    streakDisplay: user?.fields['Display Streak'] || false,
-    streakCount: user?.fields['Streak Count'] || 1
+    css: user.fields['CSS URL'] || null,
+    streakDisplay: user.fields['Display Streak'] || false,
+    streakCount: user.fields['Streak Count'] || 1
   }
   return profile
 }

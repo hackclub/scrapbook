@@ -8,6 +8,7 @@ export const getProfiles = () =>
     users.map(user => ({
       id: user?.id,
       username: user?.fields['Username'] || '',
+      css: user?.fields['CSS URL'] || null,
       streakDisplay: user?.fields['Display Streak'] || false,
       streakCount: user?.fields['Streak Count'] || 1
     }))
