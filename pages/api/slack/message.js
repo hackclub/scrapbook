@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-unfetch'
-
 export default async (req, res) => {
   if (req.body.challenge) {
     res.json({ challenge: req.body.challenge })
