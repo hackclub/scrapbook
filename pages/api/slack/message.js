@@ -23,20 +23,6 @@ export default async (req, res) => {
       'Text': req.body.event.text,
       'Attachments': attachments
     })
-    /*const postData = {
-      channel: 'G015WNVR1PS',
-      attachments: [],
-      text: `Yay! Serverless bot works!`,
-      user: 'U4QAK9SRW'
-    }
-    await fetch('https://slack.com/api/chat.postEphemeral', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
-      },
-      body: JSON.stringify(postData)
-    })*/
     let record = await getUserRecord(req.body.event.user)
     let updatedStreakCount = record.fields['Streak Count'] + 1
     await accountsTable.update(record.id, {
