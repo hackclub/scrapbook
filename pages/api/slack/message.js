@@ -24,6 +24,7 @@ export default async (req, res) => {
       body: JSON.stringify(postData)
     })*/
     let record = await getUserRecord(req.body.event.user)
+    console.log(record)
     let updatedStreakCount = record.fields['Streak Count'] + 1
     await accountsTable.update(record.id, {
       'Streak Count': updatedStreakCount
