@@ -12,7 +12,7 @@ export default async (req, res) => {
     text: `Yay! Serverless bot works!`,
     user: 'U4QAK9SRW'
   }
-  if (req.body.event.channel === 'G015WNVR1PS' && req.body.event.files && req.body.event.user !== 'U015D6A36AG') {
+  if (req.body.event.channel === 'G015WNVR1PS' && req.body.event.user !== 'U015D6A36AG') {
     console.log(req.body)
     /*await fetch('https://slack.com/api/chat.postEphemeral', {
       method: 'POST',
