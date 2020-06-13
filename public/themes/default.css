@@ -1,0 +1,192 @@
+:root {
+  --colors-sheet: var(--colors-smoke);
+  --colors-elevated: var(--colors-white);
+  --colors-sunken: var(--colors-smoke);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --colors-text: var(--colors-white);
+    --colors-background: var(--colors-dark);
+    --colors-sheet: var(--colors-darkless);
+    --colors-elevated: var(--colors-darkless);
+    --colors-sunken: var(--colors-darker);
+  }
+}
+
+.container {
+  max-width: 72rem;
+  padding: 4rem 1rem;
+  margin: auto;
+}
+
+.header {
+  display: grid;
+  max-width: 48rem;
+}
+
+@media (min-width: 48em) {
+  .header {
+    grid-template-columns: 2fr 3fr;
+  }
+}
+
+.header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  margin-left: -12px;
+  color: var(--colors-muted);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: box-shadow 0.125s ease-in-out;
+}
+.header-back:focus,
+.header-back:hover {
+  box-shadow: 0 0 0 2px;
+  outline: none;
+}
+.header-back svg {
+  margin-right: 8px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+.header-title-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  margin-right: 16px;
+}
+.header-title-name {
+  margin: 0;
+  flex: 1 1 auto;
+  font-size: 48px;
+}
+
+.badge {
+  background-color: var(--colors-cyan);
+  color: var(--colors-white);
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 999px;
+  line-height: 1.4;
+  text-align: center;
+  vertical-align: middle;
+}
+.header-streak {
+  padding: 4px 16px;
+}
+
+.header-chart svg {
+  max-width: 100%;
+  max-height: 266px;
+  overflow-y: hidden;
+}
+
+.react-calendar-heatmap text {
+  fill: var(--colors-muted);
+  font-size: 6px;
+}
+.react-calendar-heatmap .color-empty {
+  fill: var(--colors-sheet);
+}
+.react-calendar-heatmap .color-1 {
+  fill: one;
+}
+.react-calendar-heatmap .color-2 {
+  fill: two;
+}
+.react-calendar-heatmap .color-3 {
+  fill: three;
+}
+.react-calendar-heatmap .color-4 {
+  fill: four;
+}
+
+.posts {
+  display: grid;
+  grid-gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 32em) {
+  .posts {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 32px;
+  }
+}
+
+.post {
+  padding: 16px;
+  background-color: var(--colors-sheet);
+  border-radius: 12px;
+  position: relative;
+  width: 100%;
+}
+
+.post-header {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.post-header-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  margin-right: 16px;
+}
+.post-header-name {
+  flex: 1 1 auto;
+  font-size: 18px;
+}
+.post-header-streak {
+  min-width: 20px;
+  margin-left: 8px;
+  font-size: 14px;
+}
+.post-header-date {
+  color: var(--colors-muted);
+}
+
+.post-text {
+  font-size: 18px;
+}
+
+.post-attachments {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+}
+.post-attachment {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+a.post-attachment {
+  line-height: 0;
+}
+video.post-attachment {
+  background-color: var(--colors-sunken);
+  max-width: 100%;
+  max-height: 256px;
+}
+.post-attachment img {
+  background-color: var(--colors-sunken);
+  max-width: 100%;
+  max-height: 100%;
+}
+video.post-attachment,
+audio.post-attachment,
+a.post-attachment:first-child:last-child {
+  grid-column: span 2;
+}

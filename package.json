@@ -22,7 +22,6 @@
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-calendar-heatmap": "^1.8.1",
-    "react-dom": "^16.13.1",
-    "theme-ui": "^0.3.1"
+    "react-dom": "^16.13.1"
   }
 }

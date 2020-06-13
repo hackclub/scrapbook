@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  --colors-darker: #121217;
+  --colors-dark: #17171d;
+  --colors-darkless: #252429;
+  --colors-black: #1f2d3d;
+  --colors-steel: #273444;
+  --colors-slate: #3c4858;
+  --colors-muted: #8492a6;
+  --colors-smoke: #e0e6ed;
+  --colors-snow: #f9fafc;
+  --colors-white: #ffffff;
+  --colors-red: #ec3750;
+  --colors-orange: #ff8c37;
+  --colors-yellow: #f1c40f;
+  --colors-green: #33d6a6;
+  --colors-cyan: #5bc0de;
+  --colors-blue: #338eda;
+
+  --colors-text: var(--colors-black);
+  --colors-background: var(--colors-snow);
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+  line-height: 1.5;
+  font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  background-color: var(--colors-background);
+  color: var(--colors-text);
+}
+
+.react-calendar-heatmap {
+  max-width: 320px;
+}
+.react-calendar-heatmap-month-label,
+.react-calendar-heatmap-weekday-label {
+  font-size: 8px;
+}

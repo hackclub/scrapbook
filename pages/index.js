@@ -4,7 +4,7 @@ import Meta from '@hackclub/meta'
 import Posts from '../components/posts'
 
 export default ({ posts }) => (
-  <Container sx={{ py: [4, 5] }}>
+  <main className="container">
     <Meta
       as={Head}
       name="Summer Streaks"
@@ -12,11 +12,32 @@ export default ({ posts }) => (
       description="See everything the Hack Club community is making this summer."
       image="https://workshop-cards.hackclub.com/Summer%20Updates.png?brand=Streaks&fontSize=300px"
     />
-    <Heading as="h1" variant="title" sx={{ textAlign: 'center', mb: 4 }}>
-      Hack&nbsp;Club Summer Updates
-    </Heading>
+    <link rel="stylesheet" type="text/css" href="/themes/default.css" />
+    <h1>Hack&nbsp;Club Summer Updates</h1>
     <Posts posts={posts} />
-  </Container>
+    <style jsx>{`
+      h1 {
+        color: var(--colors-blue);
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 2rem;
+        font-size: 3rem;
+        line-height: 1;
+      }
+      @supports (-webkit-background-clip: text) {
+        h1 {
+          background-image: radial-gradient(
+            ellipse farthest-corner at top left,
+            var(--colors-cyan),
+            var(--colors-blue)
+          );
+          background-repeat: no-repeat;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    `}</style>
+  </main>
 )
 
 export const getStaticProps = async () => {
