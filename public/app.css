@@ -48,6 +48,10 @@ body {
   color: var(--colors-text);
 }
 
+img {
+  max-width: 100%;
+}
+
 .react-calendar-heatmap {
   max-width: 320px;
 }

@@ -171,19 +171,19 @@
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
+  text-align: center;
 }
 a.post-attachment {
   line-height: 0;
 }
+.post-attachment img {
+  border-radius: 6px;
+}
+.post-attachment img,
 video.post-attachment {
   background-color: var(--colors-sunken);
   max-width: 100%;
   max-height: 256px;
-}
-.post-attachment img {
-  background-color: var(--colors-sunken);
-  max-width: 100%;
-  max-height: 100%;
 }
 video.post-attachment,
 audio.post-attachment,

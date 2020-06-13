@@ -38,7 +38,7 @@ const Post = ({
             </strong>
           </>
         )}
-        <time className="post-header-date" datatime={postedAt}>
+        <time className="post-header-date" datetime={postedAt}>
           {formatDate(postedAt)}
         </time>
       </a>
