@@ -6,8 +6,9 @@ export default async (req, res) => {
   }
   await res.json({ ok: true })
 
-  if (req.body.event.channel === 'G015C21HR7C' && req.body.event.subtype === 'file_share' && req.body.event.user !== 'U015D6A36AG') {
+  if (req.body.event.channel === 'G015C21HR7C' && req.body.event.subtype === 'file_share') {
     console.log('Received files!')
+    postEphemeral('Received files!')
     const files = req.body.event.files
     let attachments = []
     const promiseArray = files.map(async file => {
