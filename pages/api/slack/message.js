@@ -8,8 +8,6 @@ export default async (req, res) => {
 
   if (req.body.event.channel === 'G015C21HR7C' && req.body.event.subtype === 'file_share') {
     console.log('Received files!')
-    postEphemeral('Received files!')
-    await fetch('https://f181381699b5.ngrok.io/test.txt')
     const files = req.body.event.files
     let attachments = []
     const promiseArray = files.map(async file => {
@@ -18,7 +16,6 @@ export default async (req, res) => {
       })
     })
     await Promise.all(promiseArray)
-    postEphemeral('Did the array thing')
 
     const userRecord = await getUserRecord(req.body.event.user)
     const createRecord = await updatesTable.create({
@@ -27,13 +24,11 @@ export default async (req, res) => {
       'Text': req.body.event.text,
       'Attachments': attachments
     })
-    postEphemeral(`Created user record`)
     let record = await getUserRecord(req.body.event.user)
     let updatedStreakCount = record.fields['Streak Count'] + 1
     await accountsTable.update(record.id, {
       'Streak Count': updatedStreakCount
     })
     displayStreaks(req.body.event.user, updatedStreakCount)
-    postEphemeral('The end')
   }
 }
