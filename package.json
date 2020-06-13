@@ -23,6 +23,7 @@
     "react": "^16.13.1",
     "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^16.13.1",
-    "react-lazy-load-image-component": "^1.5.0-beta.0"
+    "react-lazy-load-image-component": "^1.5.0-beta.0",
+    "swr": "^0.2.3"
   }
 }

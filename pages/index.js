@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
+import useSWR from 'swr'
 import Posts from '../components/posts'
 
-export default ({ posts }) => (
-  <main className="container">
+const Header = () => (
+  <>
     <Meta
       as={Head}
       name="Summer Scrapbook"
@@ -11,9 +12,10 @@ export default ({ posts }) => (
       description="See everything the Hack Club community is making this summer."
       image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
-    <link rel="stylesheet" type="text/css" href="/themes/default.css" />
+    <Head>
+      <link rel="stylesheet" type="text/css" href="/themes/default.css" />
+    </Head>
     <h1>Hack&nbsp;Club Summer Scrapbook</h1>
-    <Posts posts={posts} />
     <style jsx>{`
       h1 {
         color: var(--colors-blue);
@@ -36,11 +38,55 @@ export default ({ posts }) => (
         }
       }
     `}</style>
-  </main>
+  </>
 )
+
+const fetcher = url => fetch(url).then(r => r.json())
+
+export default ({ initialData }) => {
+  const { data, error } = useSWR('/api/posts', fetcher, { initialData, refreshInterval: 5000 })
+
+  if (error) {
+    return (
+      <main className="container">
+        <Header />
+        <p>Unable to get posts. Check your connection?</p>
+        <style jsx>{`
+          p {
+            text-align: center;
+            font-size: 20px;
+          }
+        `}</style>
+      </main>
+    )
+  }
+
+  if (!data) {
+    return (
+      <main className="container">
+        <Header />
+        <p>Loading…</p>
+        <pre>{JSON.stringify(data)}</pre>
+        <style jsx>{`
+          p {
+            text-align: center;
+            font-size: 20px;
+          }
+        `}</style>
+      </main>
+    )
+  }
+
+  return (
+    <main className="container">
+      <Header />
+      <Posts posts={data} />
+    </main>
+  )
+}
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
-  const posts = await getPosts()
-  return { props: { posts }, unstable_revalidate: 1 }
+  const initialData = await getPosts()
+  return { props: { initialData }, unstable_revalidate: 1 }
 }

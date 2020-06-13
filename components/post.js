@@ -47,21 +47,22 @@ const Post = ({
       <p className="post-text">{text}</p>
       {attachments.length > 0 && (
         <div className="post-attachments">
-          {filter(attachments, a => a.type.startsWith('image')).map(img => (
+          {filter(attachments, a => a?.type?.toString().startsWith('image')).map(img => (
             <a
               key={img.filename}
-              href={img.thumbnails.full.url}
+              href={img.thumbnails?.full?.url}
               target="_blank"
               className="post-attachment"
             >
               <LazyLoadImage
                 alt={img.filename}
                 effect="blur"
-                src={img.thumbnails.large.url}
+                src={img.thumbnails?.large?.url}
+                placeholderSrc={img.thumbnails?.small?.url}
               />
             </a>
           ))}
-          {filter(attachments, a => a.type.startsWith('video')).map(vid => (
+          {filter(attachments, a => a?.type?.startsWith('video')).map(vid => (
             <video
               controls
               key={vid.filename}
