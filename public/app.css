@@ -26,6 +26,9 @@
 
   --colors-text: var(--colors-black);
   --colors-background: var(--colors-snow);
+  --colors-sheet: var(--colors-smoke);
+  --colors-elevated: var(--colors-white);
+  --colors-sunken: var(--colors-smoke);
 }
 
 html {

@@ -1,9 +1,3 @@
-:root {
-  --colors-sheet: var(--colors-smoke);
-  --colors-elevated: var(--colors-white);
-  --colors-sunken: var(--colors-smoke);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --colors-text: var(--colors-white);
@@ -189,4 +183,23 @@ video.post-attachment,
 audio.post-attachment,
 a.post-attachment:first-child:last-child {
   grid-column: span 2;
+}
+
+.css {
+  display: flex;
+  align-items: center;
+  color: var(--colors-muted);
+  margin-top: 32px;
+}
+.css-icon {
+  margin-left: -4px;
+  margin-right: 8px;
+}
+.css-link {
+  flex: 1 1 auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: inherit;
+  font-size: 14px;
+  font-family: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
 }

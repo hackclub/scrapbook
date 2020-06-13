@@ -1,4 +1,3 @@
-import { Container, Heading } from 'theme-ui'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import Posts from '../components/posts'
