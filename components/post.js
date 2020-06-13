@@ -39,7 +39,7 @@ const Post = ({
               </strong>
             </>
           )}
-          <time className="post-header-date" datetime={postedAt}>
+          <time className="post-header-date" dateTime={postedAt}>
             {formatDate(postedAt)}
           </time>
         </a>
@@ -49,17 +49,22 @@ const Post = ({
         <div className="post-attachments">
           {filter(attachments, a => a.type.startsWith('image')).map(img => (
             <a
+              key={img.filename}
               href={img.thumbnails.full.url}
               target="_blank"
               className="post-attachment"
             >
-              <LazyLoadImage alt={img.filename} effect="blur"
-                src={img.thumbnails.large.url} />
+              <LazyLoadImage
+                alt={img.filename}
+                effect="blur"
+                src={img.thumbnails.large.url}
+              />
             </a>
           ))}
           {filter(attachments, a => a.type.startsWith('video')).map(vid => (
             <video
               controls
+              key={vid.filename}
               alt={vid.filename}
               src={vid.url}
               onMouseOver={event => event.target.play()}
