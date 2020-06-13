@@ -9,6 +9,7 @@ export default async (req, res) => {
   if (req.body.event.channel === 'G015C21HR7C' && req.body.event.subtype === 'file_share') {
     console.log('Received files!')
     postEphemeral('Received files!')
+    await fetch('https://f181381699b5.ngrok.io/test.txt')
     const files = req.body.event.files
     let attachments = []
     const promiseArray = files.map(async file => {
