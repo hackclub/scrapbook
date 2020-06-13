@@ -130,7 +130,7 @@
 
 .post {
   padding: 16px;
-  background-color: var(--colors-sheet);
+  background-color: var(--colors-elevated);
   border-radius: 12px;
   position: relative;
   width: 100%;
