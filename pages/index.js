@@ -7,13 +7,13 @@ export default ({ posts }) => (
   <main className="container">
     <Meta
       as={Head}
-      name="Summer Streaks"
-      title="Summer Streaks"
+      name="Summer Scrapbook"
+      title="Summer Scrapbook"
       description="See everything the Hack Club community is making this summer."
-      image="https://workshop-cards.hackclub.com/Summer%20Updates.png?brand=Streaks&fontSize=300px"
+      image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
     <link rel="stylesheet" type="text/css" href="/themes/default.css" />
-    <h1>Hack&nbsp;Club Summer Updates</h1>
+    <h1>Hack&nbsp;Club Summer Scrapbook</h1>
     <Posts posts={posts} />
     <style jsx>{`
       h1 {

@@ -16,7 +16,7 @@ export default ({ profile, heatmap, posts }) => (
   <main className="container">
     <Meta
       as={Head}
-      name="Summer Streaks"
+      name="Summer Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
         profile.streakDisplay
@@ -25,7 +25,7 @@ export default ({ profile, heatmap, posts }) => (
         } making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-        }.png?brand=Streaks&images=${avatarUrl(profile.username)}${
+        }.png?brand=Scrapbook&images=${avatarUrl(profile.username)}${
         profile.streakDisplay
           ? `&caption=${profile.streakCount}-day streak`
           : ''
@@ -41,7 +41,7 @@ export default ({ profile, heatmap, posts }) => (
         <Link href="/" passHref>
           <a className="header-back">
             <Icon glyph="view-back" size={24} />
-            All updates
+            All scraps
           </a>
         </Link>
         <div className="header-title">
