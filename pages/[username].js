@@ -5,13 +5,6 @@ import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Posts from '../components/posts'
 
-const avatars = {
-  msw: 'max',
-  zrl: 'zach',
-  lachlanjc: 'lachlan'
-}
-const avatarUrl = u => `https://hackclub.com/team/${avatars[u] || u}.jpg`
-
 export default ({ profile, heatmap, posts }) => (
   <main className="container">
     <Meta
@@ -25,7 +18,7 @@ export default ({ profile, heatmap, posts }) => (
         } making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-        }.png?brand=Scrapbook&images=${avatarUrl(profile.username)}${
+        }.png?brand=Scrapbook${profile.avatar ? `&images=${profile.avatar}` : ''}${
         profile.streakDisplay
           ? `&caption=${profile.streakCount}-day streak`
           : ''
@@ -45,12 +38,13 @@ export default ({ profile, heatmap, posts }) => (
           </a>
         </Link>
         <div className="header-title">
-          <img
-            src={avatarUrl(profile.username)}
-            width={64}
-            alt={profile.username}
-            className="header-title-avatar"
-          />
+          {profile.avatar &&
+            <img
+              src={profile.avatar}
+              width={64}
+              alt={profile.username}
+              className="header-title-avatar"
+            />}
           <h1 className="header-title-name">{profile.username}</h1>
         </div>
         {profile.streakDisplay && (

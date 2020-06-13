@@ -3,38 +3,34 @@ import { filter } from 'lodash'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Link from 'next/link'
 
-const avatars = {
-  msw: 'max',
-  zrl: 'zach',
-  lachlanjc: 'lachlan',
-  melody: 'orpheus'
-}
-
 const Post = ({
   profile = false,
-  username,
-  streakDisplay,
-  streakCount,
+  user = {
+    username: 'abc',
+    avatar: '',
+    streakDisplay: false,
+    streakCount: 0,
+  },
   text,
   attachments = [],
   postedAt
 }) => (
     <section className="post">
-      <Link href="/[profile]" as={`/${username}`}>
+      <Link href="/[profile]" as={`/${user.username}`}>
         <a className="post-header">
           {!profile && (
             <>
-              <img
-                src={`https://hackclub.com/team/${avatars[username] ||
-                  username}.jpg`}
+              {user.avatar && <img
+                loading="lazy"
+                src={user.avatar}
                 width={48}
-                alt={username}
+                alt={user.username}
                 className="post-header-avatar"
-              />
+              />}
               <strong className="post-header-name">
-                @{username}
-                {streakDisplay && (
-                  <span className="badge post-header-streak">{streakCount}</span>
+                @{user.username}
+                {user.streakDisplay && (
+                  <span className="badge post-header-streak">{user.streakCount}</span>
                 )}
               </strong>
             </>
