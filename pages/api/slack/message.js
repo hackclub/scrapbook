@@ -1,4 +1,4 @@
-import { getUserRecord, displayStreaks, accountsTable, updatesTable, makeFilePublic } from '../../../lib/api-utils'
+import { getUserRecord, displayStreaks, accountsTable, updatesTable, makeFilePublic, postEphemeral } from '../../../lib/api-utils'
 
 export default async (req, res) => {
   if (req.body.challenge) {
@@ -16,6 +16,7 @@ export default async (req, res) => {
       })
     })
     await Promise.all(promiseArray)
+    postEphemeral('Did the array thing')
 
     const userRecord = await getUserRecord(req.body.event.user)
     const createRecord = await updatesTable.create({
@@ -24,13 +25,13 @@ export default async (req, res) => {
       'Text': req.body.event.text,
       'Attachments': attachments
     })
-    console.log(createRecord)
+    postEphemeral(`Created user record`)
     let record = await getUserRecord(req.body.event.user)
     let updatedStreakCount = record.fields['Streak Count'] + 1
     await accountsTable.update(record.id, {
       'Streak Count': updatedStreakCount
     })
     displayStreaks(req.body.event.user, updatedStreakCount)
-    console.log('the end')
+    postEphemeral('The end')
   }
 }
