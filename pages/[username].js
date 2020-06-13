@@ -73,10 +73,12 @@ export default ({ profile, heatmap, posts }) => (
       </aside>
     </header>
     <Posts posts={posts} profile />
-    <footer className="css">
-      <Icon glyph="embed" size={32} className="css-icon" />
-      <a href={profile.css} className="css-link">{profile.css}</a>
-    </footer>
+    {profile.css &&
+      <footer className="css" title="External CSS URL">
+        <Icon glyph="embed" size={32} className="css-icon" aria-label="Code link icon" />
+        <a href={profile.css} target="_blank" className="css-link">{profile.css}</a>
+      </footer>
+    }
   </main>
 )
 
