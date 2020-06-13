@@ -3,8 +3,7 @@ import {
   displayStreaks,
   accountsTable,
   updatesTable,
-  makeFilePublic,
-  postEphemeral
+  getPublicFileUrl
 } from '../../../lib/api-utils'
 
 export default async (req, res) => {
@@ -18,7 +17,7 @@ export default async (req, res) => {
     const attachments = []
     await Promise.all(
       files.map(async file => {
-        attachments.push({ url: await makeFilePublic(file.id, file.name) })
+        attachments.push({ url: await getPublicFileUrl(file.url_private) })
       })
     )
 
