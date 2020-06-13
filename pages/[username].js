@@ -101,5 +101,5 @@ export const getStaticProps = async ({ params }) => {
     count: days[date].length || 0
   }))
 
-  return { props: { profile, heatmap, posts }, unstable_revalidate: 2 }
+  return { props: { profile, heatmap, posts }, unstable_revalidate: 1 }
 }

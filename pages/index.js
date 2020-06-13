@@ -42,5 +42,5 @@ export default ({ posts }) => (
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
   const posts = await getPosts()
-  return { props: { posts }, unstable_revalidate: 2 }
+  return { props: { posts }, unstable_revalidate: 1 }
 }
