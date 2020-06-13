@@ -6,8 +6,7 @@ export default async (req, res) => {
   }
   await res.json({ ok: true })
 
-  if (req.body.event.channel === 'G015C21HR7C' && req.body.event.subtype === 'file_share') {
-    console.log('Received files!')
+  if (req.body.event.channel === 'C0P5NE354' && req.body.event.subtype === 'file_share') {
     const files = req.body.event.files
     let attachments = []
     const promiseArray = files.map(async file => {
@@ -18,7 +17,7 @@ export default async (req, res) => {
     await Promise.all(promiseArray)
 
     const userRecord = await getUserRecord(req.body.event.user)
-    const createRecord = await updatesTable.create({
+    await updatesTable.create({
       'Slack Account': [userRecord.id],
       'Post Time': new Date().toUTCString(),
       'Text': req.body.event.text,
