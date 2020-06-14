@@ -1,11 +1,13 @@
 const Flag = props => (
-  <a title="Hack Club" href="https://hackclub.com/" className="flag" {...props}>
+  <a
+    title="Hack Club"
+    href="https://hackclub.com/"
+    className="nav-flag"
+    {...props}
+  >
     <style jsx>{`
       a {
         display: inline-block;
-        position: absolute;
-        top: 0;
-        left: 16px;
         background-image: url(https://assets.hackclub.com/flag-orpheus-top.svg);
         background-repeat: no-repeat;
         background-position: top left;

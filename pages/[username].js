@@ -61,7 +61,7 @@ export default ({ profile, heatmap, posts }) => (
             <span
               className={`badge header-streak header-streak-${
                 profile.streakCount !== 1 ? 'plural' : 'singular'
-              }`}
+                }`}
             >
               {profile.streakCount}
             </span>
@@ -72,7 +72,7 @@ export default ({ profile, heatmap, posts }) => (
               target="_blank"
               className="header-link header-link-github"
             >
-              <Icon size={48} glyph="github" />
+              <Icon size={32} glyph="github" />
             </a>
           )}
           {profile.website && (
@@ -81,7 +81,7 @@ export default ({ profile, heatmap, posts }) => (
               target="_blank"
               className="header-link header-link-website"
             >
-              <Icon size={48} glyph="link" />
+              <Icon size={32} glyph="link" />
             </a>
           )}
         </section>

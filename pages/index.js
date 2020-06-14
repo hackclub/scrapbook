@@ -44,7 +44,10 @@ const Header = () => (
 const fetcher = url => fetch(url).then(r => r.json())
 
 export default ({ initialData }) => {
-  const { data, error } = useSWR('/api/posts', fetcher, { initialData, refreshInterval: 5000 })
+  const { data, error } = useSWR('/api/posts', fetcher, {
+    initialData,
+    refreshInterval: 5000
+  })
 
   if (error) {
     return (
