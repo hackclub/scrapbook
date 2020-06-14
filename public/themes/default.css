@@ -87,6 +87,23 @@
 }
 .header-streak {
   padding: 4px 16px;
+  margin-right: 16px;
+}
+.header-streak-singular:after {
+  content: ' day';
+}
+.header-streak-plural:after {
+  content: ' days';
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+.header-link {
+  color: var(--colors-blue);
+  margin-left: 12px;
+  line-height: 0;
 }
 
 .header-chart svg {

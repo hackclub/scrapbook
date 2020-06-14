@@ -5,7 +5,8 @@ import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Posts from '../components/posts'
 
-const HOST = process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+const HOST =
+  process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
 export default ({ profile, heatmap, posts }) => (
   <main className="container">
@@ -17,19 +18,24 @@ export default ({ profile, heatmap, posts }) => (
         profile.streakDisplay
           ? `(currently a ${profile.streakCount}-day streak!)`
           : ''
-        } making things in the Hack Club community this summer.`}
+      } making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-        }.png?brand=Scrapbook${profile.avatar ? `&images=${profile.avatar}` : ''}${
+      }.png?brand=Scrapbook${
+        profile.avatar ? `&images=${profile.avatar}` : ''
+      }${
         profile.streakDisplay
           ? `&caption=${profile.streakCount}-day streak`
           : ''
-        }`}
+      }`}
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href={HOST + (profile.css ? `/api/css?url=${profile.css}` : '/themes/default.css')}
+      href={
+        HOST +
+        (profile.css ? `/api/css?url=${profile.css}` : '/themes/default.css')
+      }
     />
     <header className="header">
       <div className="header-col-1">
@@ -40,23 +46,47 @@ export default ({ profile, heatmap, posts }) => (
           </a>
         </Link>
         <div className="header-title">
-          {profile.avatar &&
+          {profile.avatar && (
             <img
               src={profile.avatar}
               width={64}
               alt={profile.username}
               className="header-title-avatar"
-            />}
+            />
+          )}
           <h1 className="header-title-name">{profile.username}</h1>
         </div>
-        {profile.streakDisplay && (
-          <span className="badge header-streak">
-            {profile.streakCount} day
-            {profile.streakCount !== 1 ? 's' : ''}
-          </span>
-        )}
+        <section className="header-content">
+          {profile.streakDisplay && (
+            <span
+              className={`badge header-streak header-streak-${
+                profile.streakCount !== 1 ? 'plural' : 'singular'
+              }`}
+            >
+              {profile.streakCount}
+            </span>
+          )}
+          {profile.github && (
+            <a
+              href={profile.github}
+              target="_blank"
+              className="header-link header-link-github"
+            >
+              <Icon size={48} glyph="github" />
+            </a>
+          )}
+          {profile.website && (
+            <a
+              href={profile.website}
+              target="_blank"
+              className="header-link header-link-website"
+            >
+              <Icon size={48} glyph="link" />
+            </a>
+          )}
+        </section>
       </div>
-      <aside className="header-chart" aria-hidden>
+      <aside className="header-col-2 header-chart" aria-hidden>
         <CalendarHeatmap
           startDate={new Date('2020-06-09')}
           endDate={new Date('2020-08-09')}
@@ -69,12 +99,19 @@ export default ({ profile, heatmap, posts }) => (
       </aside>
     </header>
     <Posts posts={posts} profile />
-    {profile.css &&
+    {profile.css && (
       <footer className="css" title="External CSS URL">
-        <Icon glyph="embed" size={32} className="css-icon" aria-label="Code link icon" />
-        <a href={profile.css} target="_blank" className="css-link">{profile.css}</a>
+        <Icon
+          glyph="embed"
+          size={32}
+          className="css-icon"
+          aria-label="Code link icon"
+        />
+        <a href={profile.css} target="_blank" className="css-link">
+          {profile.css}
+        </a>
       </footer>
-    }
+    )}
   </main>
 )
 

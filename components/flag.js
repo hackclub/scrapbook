@@ -1,5 +1,5 @@
 const Flag = props => (
-  <a title="Hack Club" href="https://hackclub.com/" {...props}>
+  <a title="Hack Club" href="https://hackclub.com/" className="flag" {...props}>
     <style jsx>{`
       a {
         display: inline-block;

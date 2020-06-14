@@ -23,7 +23,9 @@ export const transformUser = (user = {}) => ({
   avatar: user?.fields['Avatar']?.[0]?.thumbnails?.large?.url || '',
   css: user?.fields['CSS URL'] || null,
   streakDisplay: user?.fields['Display Streak'] || false,
-  streakCount: user?.fields['Streak Count'] || 1
+  streakCount: user?.fields['Streak Count'] || 1,
+  github: user?.fields['GitHub'] || '',
+  website: user?.fields['Website'] || ''
 })
 
 export const getProfiles = () =>
