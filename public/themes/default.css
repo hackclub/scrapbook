@@ -24,8 +24,10 @@
   padding: 0 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
+}
+.nav-flag {
+  margin-right: auto;
 }
 .nav-link {
   margin-left: 16px;
@@ -36,6 +38,9 @@
 .nav-link:hover,
 .nav-link:focus {
   color: var(--colors-cyan);
+}
+.nav-link-github {
+  line-height: 0;
 }
 
 .container {
