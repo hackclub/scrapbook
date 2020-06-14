@@ -53,5 +53,5 @@ export default async (req, res) => {
     'Streak Count': updatedStreakCount
   })
 
-  displayStreaks(event.user, updatedStreakCount)
+  await displayStreaks(event.user, updatedStreakCount)
 }
