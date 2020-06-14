@@ -20,8 +20,10 @@ export default async (req, res) => {
   console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
 
   const files = event.files
+
   let attachments = []
   let videos = []
+
   await Promise.all(
     files.map(async file => {
       const publicUrl = await getPublicFileUrl(file.url_private)
@@ -32,6 +34,9 @@ export default async (req, res) => {
     })
   )
 
+  console.log("Attachments:", attachments)
+  console.log("Videos:", videos)
+
   const userRecord = await getUserRecord(event.user)
   await updatesTable.create({
     'Slack Account': [userRecord.id],
@@ -40,10 +45,13 @@ export default async (req, res) => {
     Attachments: attachments,
     'Mux Asset IDs': videos.toString()
   })
+
   const record = await getUserRecord(event.user)
   const updatedStreakCount = record.fields['Streak Count'] + 1
+
   await accountsTable.update(record.id, {
     'Streak Count': updatedStreakCount
   })
+
   displayStreaks(event.user, updatedStreakCount)
 }
