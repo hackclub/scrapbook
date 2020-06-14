@@ -2,6 +2,7 @@ import { formatDate } from '../lib/dates'
 import { filter } from 'lodash'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Link from 'next/link'
+import Video from './video'
 
 const Post = ({
   profile = false,
@@ -13,6 +14,7 @@ const Post = ({
   },
   text,
   attachments = [],
+  mux = [],
   postedAt
 }) => (
     <section className="post">
@@ -58,14 +60,12 @@ const Post = ({
               />
             </a>
           ))}
-          {filter(attachments, a => a?.type?.startsWith('video')).map(vid => (
-            <video
-              controls
-              key={vid.filename}
-              alt={vid.filename}
-              src={vid.url}
-              onMouseOver={event => event.target.play()}
-              onMouseOut={event => event.target.pause()}
+          {mux.map(id => (
+            <Video
+              key={id}
+              mux={id}
+              onMouseOver={e => e.target.play()}
+              onMouseOut={e => e.target.pause()}
               className="post-attachment"
             />
           ))}

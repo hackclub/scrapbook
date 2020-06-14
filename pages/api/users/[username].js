@@ -17,7 +17,8 @@ export const getPosts = async (user) => {
     user,
     postedAt: fields['Post Time'] || '',
     text: fields['Text'] || '',
-    attachments: fields['Attachments'] || []
+    attachments: fields['Attachments'] || [],
+    mux: fields['Mux Playback IDs']?.split(' ') || []
   })), 'postedAt'))
 
   return posts

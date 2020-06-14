@@ -19,7 +19,8 @@ export const getPosts = async () => {
     user,
     postedAt: fields['Post Time'] || '',
     text: fields['Text'] || '',
-    attachments: fields['Attachments'] || []
+    attachments: fields['Attachments'] || [],
+    mux: fields['Mux Playback IDs']?.split(' ') || []
   }))
   posts = reverse(orderBy(posts, 'postedAt'))
   return posts
