@@ -47,4 +47,3 @@ export default async (req, res) => {
   })
   displayStreaks(event.user, updatedStreakCount)
 }
-}
