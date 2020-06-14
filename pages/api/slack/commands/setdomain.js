@@ -11,5 +11,6 @@ export default async (req, res) => {
     await accountsTable.update(user.id, {
       'Custom Domain': command.text
     })
+    sendCommandResponse(command.response_url, 'Custom domain `' + command.text + '` set!')
   }
 }
