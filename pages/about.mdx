@@ -1,0 +1,78 @@
+import Head from 'next/head'
+import Meta from '@hackclub/meta'
+
+<Meta title="About" name="Summer Scrapbook" as={Head} />
+<link rel="stylesheet" href="/themes/default.css" />
+
+<main className="container">
+
+# About
+
+## What is this?
+
+This is [Hack Club](https://hackclub.com/)’s [Summer Scrapbook](https://scrapbook.hackclub.com/), which is part of the [2020 Summer of Making](https://summer.hackclub.com/).
+
+## Public API
+
+The backend is powered by Airtable served over [api2](https://github.com/hackclub/api2), but the site exposes a public JSON API that reformats data in a more useful way. The live site runs entirely on this API.
+
+- [`/api/posts`](https://scrapbook.hackclub.com/api/posts) – Get all posts (used on the homepage)
+- [`/api/users`](https://scrapbook.hackclub.com/api/users) – Get all users
+- [`/api/users/:username`](https://scrapbook.hackclub.com/api/users/zrl) – Get a specific user’s profile + posts
+
+The other [API routes](https://nextjs.org/docs/api-routes/introduction) power the Slack slash commands & [Mux](https://mux.com) video integration.
+
+</main>
+
+<style jsx global>{`
+  .container {
+    max-width: 680px !important;
+    font-size: 20px !important;
+  }
+
+  a {
+    color: var(--colors-orange);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.25;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-top: 0;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  p,
+  ol,
+  ul,
+  pre,
+  blockquote {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  code,
+  pre {
+    font-family: 'SF Mono', 'Roboto Mono', 'Source Code Pro', Menlo, Consolas,
+      'Liberation Mono', monospace;
+  }
+
+  code {
+    font-size: 87.5%;
+    padding: 0.125em;
+  }
+`}</style>
