@@ -61,6 +61,7 @@ export default async (req, res) => {
   const files = event.files
   let attachments = []
   let videos = []
+  let videoPlaybackIds = []
 
   await Promise.all(
     files.map(async file => {
@@ -68,6 +69,7 @@ export default async (req, res) => {
       attachments.push({ url: publicUrl.url })
       if (publicUrl.muxId) {
         videos.push(publicUrl.muxId)
+        videoPlaybackIds.push(publicUrl.muxPlaybackId)
       }
     })
   )
@@ -81,7 +83,8 @@ export default async (req, res) => {
     'Post Time': new Date().toUTCString(),
     Text: event.text,
     Attachments: attachments,
-    'Mux Asset IDs': videos.toString()
+    'Mux Asset IDs': videos.toString(),
+    'Mux Playback IDs': videoPlaybackIds.toString()
   })
 
   const record = await getUserRecord(event.user)
