@@ -3,7 +3,8 @@ import {
   displayStreaks,
   accountsTable,
   updatesTable,
-  getPublicFileUrl
+  getPublicFileUrl,
+  getReplyMessage
 } from '../../../lib/api-utils'
 
 // ex. react('add', 'C248d81234', '12384391.12231', 'beachball')
@@ -51,16 +52,13 @@ export default async (req, res) => {
 
   if (!((event.channel === process.env.CHANNEL || event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share')) {
     console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
-
     return await res.json({ ok: true })
   }
 
   console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
-
   await react('add', event.channel, event.ts, 'beachball')
 
   const files = event.files
-
   let attachments = []
   let videos = []
 
@@ -104,7 +102,9 @@ export default async (req, res) => {
   const user = await userInfo(event.user)
   console.log(user)
 
-  await reply(event.channel, event.ts, `Boom! Congratulations <@${user.id}> on your first post in <#${event.channel}>. Your site has been started at https://scrapbook.hackclub.com/${user.name}/.`)
+  const updatedRecord = await getUserRecord(event.user)
+  const replyMessage = await getReplyMessage(event.user, updatedRecord.fields['Username'], updatedRecord.fields['Streak Count'])
+  await reply(event.channel, event.ts, replyMessage)
 
   // write final response
   await res.json({ ok: true })
