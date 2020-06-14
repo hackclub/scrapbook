@@ -14,6 +14,7 @@
     "@hackclub/meta": "^1.0.0",
     "@hackclub/theme": "^0.1.1",
     "@mdx-js/loader": "^1.6.5",
+    "@mux/mux-node": "^2.8.0",
     "@next/mdx": "^9.4.4",
     "@segment/snippet": "^4.12.0",
     "airtable-plus": "^1.0.4",

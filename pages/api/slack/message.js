@@ -12,12 +12,17 @@ export default async (req, res) => {
   if (challenge) res.json({ challenge })
   await res.json({ ok: true })
 
-  if (event.channel === 'C0P5NE354' && event.subtype === 'file_share') {
+  if ((event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share') {
     const files = event.files
-    const attachments = []
+    let attachments = []
+    let videos = []
     await Promise.all(
       files.map(async file => {
-        attachments.push({ url: await getPublicFileUrl(file.url_private) })
+        const publicUrl = await getPublicFileUrl(file.url_private)
+        attachments.push({ url: publicUrl.url })
+        if (publicUrl.muxId) {
+          videos.push(publicUrl.muxId)
+        }
       })
     )
 
@@ -26,7 +31,8 @@ export default async (req, res) => {
       'Slack Account': [userRecord.id],
       'Post Time': new Date().toUTCString(),
       Text: event.text,
-      Attachments: attachments
+      Attachments: attachments,
+      'Mux Asset IDs': videos.toString()
     })
     const record = await getUserRecord(event.user)
     const updatedStreakCount = record.fields['Streak Count'] + 1
