@@ -5,6 +5,8 @@ import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Posts from '../components/posts'
 
+const HOST = process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
 export default ({ profile, heatmap, posts }) => (
   <main className="container">
     <Meta
@@ -27,7 +29,7 @@ export default ({ profile, heatmap, posts }) => (
     <link
       rel="stylesheet"
       type="text/css"
-      href={profile.css ? `/api/css?url=${profile.css}` : '/themes/default.css'}
+      href={HOST + (profile.css ? `/api/css?url=${profile.css}` : '/themes/default.css')}
     />
     <header className="header">
       <div className="header-col-1">
