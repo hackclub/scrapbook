@@ -23,13 +23,12 @@ export default async (req, res) => {
 
   if (challenge) {
     return await res.json({ challenge })
-  } else {
-    res.json({ ok: true })
   }
 
   if (!((event.channel === process.env.CHANNEL || event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share')) {
     console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
-    return
+
+    return await res.json({ ok: true })
   }
 
   console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
@@ -81,4 +80,7 @@ export default async (req, res) => {
     react('remove', event.channel, event.ts, 'beachball'),
     react('add', event.channel, event.ts, 'summer-of-making')
   ])
+
+  // write final response
+  await res.json({ ok: true })
 }
