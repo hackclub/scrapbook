@@ -1,49 +1,25 @@
-import {
-  getUserRecord,
-  displayStreaks,
-  accountsTable,
-  updatesTable,
-  getPublicFileUrl
-} from '../../../lib/api-utils'
-
+// Slack expects a very quick response to all webhooks it sends out. This
+// function returns quickly back to Slack with status OK and then passes off
+// the data sent to us to another serverless function for longer processing.
 export default async (req, res) => {
   const { challenge, event } = req.body
 
-  if (challenge) res.json({ challenge })
-  await res.json({ ok: true })
-
-  if (!((event.channel === process.env.CHANNEL || event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share')) {
-    console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
-    return
+  // pass URL setup challenge Slack sends us
+  if (challenge) {
+    return await res.json({ challenge })
   }
 
-  console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
+  // respond immediately for slack
+  res.json({ ok: true })
 
-  const files = event.files
-  let attachments = []
-  let videos = []
-  await Promise.all(
-    files.map(async file => {
-      const publicUrl = await getPublicFileUrl(file.url_private)
-      attachments.push({ url: publicUrl.url })
-      if (publicUrl.muxId) {
-        videos.push(publicUrl.muxId)
-      }
-    })
-  )
-
-  const userRecord = await getUserRecord(event.user)
-  await updatesTable.create({
-    'Slack Account': [userRecord.id],
-    'Post Time': new Date().toUTCString(),
-    Text: event.text,
-    Attachments: attachments,
-    'Mux Asset IDs': videos.toString()
+  // queue this to start. we don't expect it to finish by the time this
+  // function is cancelled
+  await fetch(req.headers['x-forwarded-proto'] + '://' + req.headers.host + '/api/slack/processMessage', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Passthrough': 'TRUE - Working around slack, see message.js for source'
+    },
+    body: JSON.stringify(req.body)
   })
-  const record = await getUserRecord(event.user)
-  const updatedStreakCount = record.fields['Streak Count'] + 1
-  await accountsTable.update(record.id, {
-    'Streak Count': updatedStreakCount
-  })
-  displayStreaks(event.user, updatedStreakCount)
 }
