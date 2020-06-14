@@ -208,6 +208,7 @@
 
 .post-text {
   font-size: 18px;
+  word-wrap: break-word;
 }
 
 .post-attachments {

@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import useSWR from 'swr'
-import Posts from '../components/posts'
+import Masonry from 'react-masonry-css'
+import Post from '../components/post'
 
 const Header = () => (
   <>
@@ -81,9 +82,54 @@ export default ({ initialData }) => {
   }
 
   return (
-    <main className="container">
+    <main>
       <Header />
-      <Posts posts={data} />
+      <Masonry
+        breakpointCols={{
+          default: 4,
+          1100: 3,
+          700: 2,
+          500: 1
+        }}
+        className="masonry-posts"
+        columnClassName="masonry-posts-column">
+        {data.map(post => (
+          <Post key={post.id} {...post} />
+        ))}
+      </Masonry>
+      <style jsx global>{`
+        h1 {
+          padding: 16px;
+        }
+
+        .masonry-posts {
+          display: flex;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .masonry-posts-column {
+          background-clip: padding-box;
+        }
+        
+        .post {
+          margin-bottom: 16px;
+        }
+
+        @media (min-width: 32em) {
+          .masonry-posts {
+            padding-right: 32px;
+          }
+
+          .masonry-posts-column {
+            padding-left: 32px;
+          }
+
+          .post {
+            margin-bottom: 32px;
+          }
+        }
+      `}</style>
     </main>
   )
 }
