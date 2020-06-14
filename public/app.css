@@ -26,7 +26,7 @@
 
   --colors-text: var(--colors-black);
   --colors-background: var(--colors-smoke);
-  --colors-sheet: var(--colors-smoke);
+  --colors-sheet: var(--colors-snow);
   --colors-elevated: var(--colors-white);
   --colors-sunken: var(--colors-smoke);
 }

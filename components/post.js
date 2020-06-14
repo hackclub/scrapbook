@@ -61,13 +61,7 @@ const Post = ({
             </a>
           ))}
           {mux.map(id => (
-            <Video
-              key={id}
-              mux={id}
-              onMouseOver={e => e.target.play()}
-              onMouseOut={e => e.target.pause()}
-              className="post-attachment"
-            />
+            <Video key={id} mux={id} />
           ))}
         </div>
       )}

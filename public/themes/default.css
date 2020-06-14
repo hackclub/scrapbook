@@ -1,8 +1,8 @@
 :root {
-  --colors-one: #d4f5a9;
-  --colors-two: #84d46e;
-  --colors-three: #3fb34f;
-  --colors-four: #257a2f;
+  --colors-one: #d6e685;
+  --colors-two: #8cc665;
+  --colors-three: #44a340;
+  --colors-four: #1e6823;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,11 +12,6 @@
     --colors-sheet: var(--colors-darkless);
     --colors-elevated: var(--colors-darkless);
     --colors-sunken: var(--colors-darker);
-
-    --colors-one: #2a2e24;
-    --colors-two: #2d4326;
-    --colors-three: #1f5927;
-    --colors-four: #2e7a37;
   }
 }
 
