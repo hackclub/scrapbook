@@ -12,7 +12,7 @@ export default async (req, res) => {
   if (challenge) res.json({ challenge })
   await res.json({ ok: true })
 
-  if ((event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share') {
+  if ((event.channel === process.env.CHANNEL || event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share') {
     const files = event.files
     let attachments = []
     let videos = []
