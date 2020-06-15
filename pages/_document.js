@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import * as snippet from '@segment/snippet'
 
 const {
-  ANALYTICS_WRITE_KEY = 'wRi41ypHhzfZm3pdbyXFq7PTpZ7fhORD',
+  ANALYTICS_WRITE_KEY = 'TGTC6ST9N5AQAKqvrtgJf3d6mWwsT4Qx',
   NODE_ENV = 'development'
 } = process.env
 
