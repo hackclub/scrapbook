@@ -39,17 +39,6 @@ async function reply(channel, parentTs, text) {
     })
   }).then(r => r.json()).then(json => json.ts)
 }
-
-async function userInfo(userId) {
-  return fetch('https://slack.com/api/users.info?user=' + userId, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
-    }
-  })
-    .then(r => r.json())
-    .then(json => json.user)
-}
 async function handleDelete(event) {
   const { channel, message, thread_ts } = event
 
@@ -145,9 +134,6 @@ async function handleCreate(event) {
     react('add', channel, ts, 'summer-of-making')
   ])
 
-  // const user = await userInfo(user)
-  // console.log(user)
-
   const updatedRecord = await getUserRecord(user)
   const replyMessage = await getReplyMessage(user, updatedRecord.fields['Username'], updatedRecord.fields['Streak Count'])
   await reply(channel, ts, replyMessage)
@@ -191,6 +177,8 @@ export default async (req, res) => {
   }
 
   if (event.subtype === 'message_changed') {
+    // sniff sniff!
+    // I smell a changed message– let's update airtable & inform the user!
     await handleEdit(event)
     return await res.json({ ok: true })
   }
