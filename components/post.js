@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Video from './video'
 
 const Post = ({
+  id = new Date().toISOString(),
   profile = false,
   user = {
     username: 'abc',
@@ -17,7 +18,7 @@ const Post = ({
   mux = [],
   postedAt
 }) => (
-  <section className="post">
+  <section className="post" id={id}>
     <Link href="/[profile]" as={`/${user.username}`}>
       <a className="post-header">
         {!profile && (

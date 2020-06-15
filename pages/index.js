@@ -14,23 +14,24 @@ const Header = () => (
       image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
     <Head>
-      <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet" />
-      <link rel="stylesheet" type="text/css" href="/themes/default.css" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
+        rel="stylesheet"
+      />
     </Head>
     <header>
-      <h1>Hack&nbsp;Club Summer Scrapbook</h1>
+      <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
         Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
         learning & making something new every day.
       </p>
     </header>
     <style jsx global>{`
-      :root {
-        --colors-text: var(--colors-snow);
-        --colors-background: var(--colors-darker);
-        --colors-sheet: var(--colors-darkless);
-        --colors-elevated: var(--colors-darkless);
-        --colors-sunken: var(--colors-darker);
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --colors-text: var(--colors-snow);
+          --colors-background: var(--colors-darker);
+        }
       }
     `}</style>
     <style jsx>{`
@@ -47,7 +48,7 @@ const Header = () => (
       }
       @media (min-width: 32em) {
         h1 {
-          font-size: 72px;
+          font-size: 64px;
         }
         header {
           padding: 24px 24px 48px;
@@ -55,7 +56,7 @@ const Header = () => (
       }
       p {
         font-size: 24px;
-        color: var(--colors-smoke);
+        color: var(--colors-text);
       }
       a {
         color: var(--colors-orange);

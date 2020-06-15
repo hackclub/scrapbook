@@ -3,18 +3,20 @@ import { getRawUsers, transformUser } from './index'
 
 export const getProfile = async (username) => {
   const accounts = await getRawUsers()
+  if (!accounts) console.error('Could not fetch accounts')
   const user = find(accounts, ['fields.Username', username]) || {}
-  return user ? transformUser(user) : {}
+  // console.log('User', user)
+  return user && user?.fields?.Username ? transformUser(user) : {}
 }
 
 export const getPosts = async (user) => {
   const allUpdates = await fetch(
     'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
   ).then(r => r.json())
+  if (!allUpdates) console.error('Could not fetch posts')
   const updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
   const posts = reverse(orderBy(updates.map(({ id, fields }) => ({
     id,
-    user,
     postedAt: fields['Post Time'] || '',
     text: fields['Text'] || '',
     attachments: fields['Attachments'] || [],

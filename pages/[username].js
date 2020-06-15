@@ -1,14 +1,15 @@
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Posts from '../components/posts'
+import Post from '../components/post'
+import FourOhFour from './404'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-export default ({ profile, heatmap, posts }) => (
+const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
   <main className="container">
     <Meta
       as={Head}
@@ -29,14 +30,13 @@ export default ({ profile, heatmap, posts }) => (
           : ''
         }`}
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href={
-        HOST +
-        (profile.css ? `/api/css?url=${profile.css}` : '/themes/default.css')
-      }
-    />
+    {profile.css && (
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href={HOST + `/api/css?url=${profile.css}`}
+      />
+    )}
     <header className="header">
       <div className="header-col-1">
         {/* <Link href="/" passHref>
@@ -73,8 +73,7 @@ export default ({ profile, heatmap, posts }) => (
               >
                 <Icon size={32} glyph="github" />
               </a>
-            )
-            }
+            )}
             {profile.website && (
               <a
                 href={profile.website}
@@ -99,7 +98,11 @@ export default ({ profile, heatmap, posts }) => (
         />
       </aside>
     </header>
-    <Posts posts={posts} profile />
+    <article className="posts">
+      {posts.map(post => (
+        <Post key={post.id} user={profile} {...post} />
+      ))}
+    </article>
     {profile.css && (
       <footer className="css" title="External CSS URL">
         <Icon
@@ -116,24 +119,83 @@ export default ({ profile, heatmap, posts }) => (
   </main>
 )
 
+const Loading = () => (
+  <main className="container">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
+      rel="stylesheet"
+    />
+    <h1>Loading…</h1>
+    <style jsx>{`
+      main {
+        text-align: center;
+        padding: 32px 16px;
+      }
+      h1 {
+        color: var(--colors-red);
+        font-family: var(--fonts-display);
+        margin: 0;
+        font-size: 56px;
+        line-height: 1;
+      }
+      @media (min-width: 32em) {
+        h1 {
+          font-size: 64px;
+        }
+      }
+      @supports (-webkit-background-clip: text) {
+        h1 {
+          background-image: radial-gradient(
+            ellipse farthest-corner at top left,
+            var(--colors-orange),
+            var(--colors-red)
+          );
+          background-repeat: no-repeat;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    `}</style>
+  </main>
+)
+
+export default props => {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <Loading />
+  } else if (!props.profile?.username) {
+    return <FourOhFour />
+  } else {
+    return <Profile {...props} />
+  }
+}
+
 export const getStaticPaths = async () => {
   const { getUsernames } = require('./api/usernames')
   const usernames = await getUsernames()
   const paths = usernames.map(username => ({ params: { username } }))
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('./api/users/[username]')
+  if (params.username?.length < 2) return console.error('No username') || { props: {} }
+
   const profile = await getProfile(params.username)
-  const posts = await getPosts(profile)
+  if (!profile || !profile?.username) return console.error('No profile') || { props: {} }
 
-  const { groupBy } = require('lodash')
-  const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
-  const heatmap = Object.keys(days).map(date => ({
-    date,
-    count: days[date].length || 0
-  }))
-
-  return { props: { profile, heatmap, posts }, unstable_revalidate: 1 }
+  try {
+    const posts = await getPosts(profile)
+    const { groupBy } = require('lodash')
+    const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
+    const heatmap = Object.keys(days).map(date => ({
+      date,
+      count: days[date].length || 0
+    }))
+    return { props: { profile, heatmap, posts }, unstable_revalidate: 1 }
+  } catch (error) {
+    console.error(error)
+    return { props: {} }
+  }
 }

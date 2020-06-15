@@ -15,7 +15,7 @@ async function react(addOrRemove, channel, ts, reaction) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     },
     body: JSON.stringify({ channel: channel, name: reaction, timestamp: ts })
   }).then(r => r.json()).catch(err => console.error(err))
@@ -29,7 +29,7 @@ async function reply(channel, parentTs, text) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     },
     body: JSON.stringify({
       channel: channel,
@@ -44,9 +44,11 @@ async function userInfo(userId) {
   return fetch('https://slack.com/api/users.info?user=' + userId, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     }
-  }).then(r => r.json()).then(json => json.user)
+  })
+    .then(r => r.json())
+    .then(json => json.user)
 }
 async function handleDelete(event) {
   console.log('handling deletion')
@@ -65,13 +67,21 @@ async function handleDelete(event) {
     console.log("SHIT")
   }
 }
-
 async function handleCreate(event) {
   const { files, channel, ts, user, text } = event
   const r = await react('add', channel, ts, 'beachball')
   console.log('the channel of the day is...', channel, event)
   console.log('showing r', r)
 
+  console.log(
+    'Event channel',
+    event.channel,
+    'matched',
+    process.env.CHANNEL + '. Continuing...'
+  )
+  await react('add', event.channel, event.ts, 'beachball')
+
+  const files = event.files || []
   let attachments = []
   let videos = []
   let videoPlaybackIds = []
@@ -87,8 +97,8 @@ async function handleCreate(event) {
     })
   )
 
-  console.log("Attachments:", attachments)
-  console.log("Videos:", videos)
+  console.log('Attachments:', attachments)
+  console.log('Videos:', videos)
 
   const userRecord = await getUserRecord(user)
   await updatesTable.create({
@@ -204,7 +214,13 @@ export default async (req, res) => {
     await postEphemeral(event.channel, `Your update has been edited! You should see it update on the website in a few seconds.`, event.message.user)
   }
 
-
+  const updatedRecord = await getUserRecord(event.user)
+  const replyMessage = await getReplyMessage(
+    event.user,
+    updatedRecord.fields['Username'],
+    updatedRecord.fields['Streak Count']
+  )
+  await reply(event.channel, event.ts, replyMessage)
 
   // write final response
   await res.json({ ok: true })
