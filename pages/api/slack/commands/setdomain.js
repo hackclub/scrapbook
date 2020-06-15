@@ -11,6 +11,16 @@ export default async (req, res) => {
     await accountsTable.update(user.id, {
       'Custom Domain': command.text
     })
+    await fetch(`https://api.vercel.com/v1/QmTPcx5p97BhNnU28DUzGSJfdnyAAaFdho2hCngqYPuK9m/alias`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${VC_SCRAPBOOK_TOKEN}`
+      },
+      body: JSON.stringify({
+        domain: command.text
+      })
+    })
     sendCommandResponse(command.response_url, 'Custom domain `' + command.text + '` set!')
   }
 }
