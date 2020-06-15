@@ -68,6 +68,25 @@ async function handleDelete(event) {
     console.log("SHIT")
   }
 }
+async function handleEdit(event) {
+  const newMessage = event.message.text
+  const prevTs = event.previous_message.ts
+  const ts = event.message.ts
+
+  await react('add', event.channel, ts, 'beachball')
+
+  const updateRecord = (await updatesTable.read({
+    maxRecords: 1,
+    filterByFormula: `{Message Timestamp} = '${prevTs}'`
+  }))[0]
+  await updatesTable.update(updateRecord.id, {
+    'Text': newMessage
+  })
+  await Promise.all([
+    react('remove', event.channel, ts, 'beachball'),
+    postEphemeral(event.channel, `Your update has been edited! You should see it update on the website in a few seconds.`, event.message.user)
+  ])
+}
 async function handleCreate(event) {
   const { files = [], channel, ts, user, text } = event
   const r = await react('add', channel, ts, 'beachball')
@@ -171,58 +190,10 @@ export default async (req, res) => {
     return await res.json({ ok: true })
   }
 
-  // stop here while debugging
-  return await res.json({ ok: true })
-
   if (event.subtype === 'message_changed') {
-    if (event.message.subtype === 'tombstone') {
-      console.log('lskdfalkdjalsgkalsjdgklasjdg')
-      const ts = event.message.thread_ts
-
-      const updateRecord = (await updatesTable.read({
-        maxRecords: 1,
-        filterByFormula: `{Message Timestamp} = '${ts}'`
-      }))[0]
-      await updatesTable.delete(updateRecord.id)
-
-      const replies = await fetch(`https://slack.com/api/conversations.replies?token=${process.env.SLACK_BOT_TOKEN}&channel=${event.channel}&ts=${ts}`)
-      const scrappyReply = replies.messages.filter(reply => reply.user === 'U015D6A36AG')
-      await fetch('https://slack.com/api/chat.delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
-        },
-        body: JSON.stringify({
-          channel: event.channel,
-          ts: scrappyReply.ts
-        })
-      })
-      await postEphemeral(event.channel, `Your update has been deleted. You should see it disappear from the website in a few seconds.`, event.previous_message.user)
-
-      return await res.json({ ok: true })
-    }
-    const newMessage = event.message.text
-    const prevTs = event.previous_message.ts
-
-    const updateRecord = (await updatesTable.read({
-      maxRecords: 1,
-      filterByFormula: `{Message Timestamp} = '${prevTs}'`
-    }))[0]
-    await updatesTable.update(updateRecord.id, {
-      'Text': newMessage
-    })
-    await postEphemeral(event.channel, `Your update has been edited! You should see it update on the website in a few seconds.`, event.message.user)
+    await handleEdit(event)
+    return await res.json({ ok: true })
   }
 
-  const updatedRecord = await getUserRecord(event.user)
-  const replyMessage = await getReplyMessage(
-    event.user,
-    updatedRecord.fields['Username'],
-    updatedRecord.fields['Streak Count']
-  )
-  await reply(event.channel, event.ts, replyMessage)
-
-  // write final response
-  await res.json({ ok: true })
+  return await res.json({ ok: true })
 }
