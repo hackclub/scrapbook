@@ -51,7 +51,7 @@ async function userInfo(userId) {
 export default async (req, res) => {
   const { event } = req.body
 
-  if (!((event.channel === process.env.CHANNEL || event.channel === 'G015C21HR7C' || event.channel === 'G015WNVR1PS') && event.subtype === 'file_share')) {
+  if (!((event.channel === process.env.CHANNEL || event.channel === 'G0164MBNTG8') && (event.subtype === 'file_share' || event.subtype === 'message_changed'))) {
     //console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
     return await res.json({ ok: true })
   }
@@ -61,6 +61,19 @@ export default async (req, res) => {
     To get started, post a photo or video of a project you're working on—it can be anything!
     Your update will be added to your personal scrapbook, which I'll share with you after your
     first post.`, event.user)
+  }
+
+  if (event.subtype === 'message_changed') {
+    const newMessage = event.message.text
+    const prevMessage = event.previous_message.text
+
+    const updateRecord = (await updatesTable.read({
+      maxRecords: 1,
+      filterByFormula: `AND(FIND('${event.message.user}', {ID}) > 0, {Text} = '${prevMessage}')`
+    }))[0]
+    await updatesTable.update(updateRecord.id, {
+      'Text': newMessage
+    })
   }
 
   console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
