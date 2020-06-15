@@ -14,7 +14,7 @@ async function react(addOrRemove, channel, ts, reaction) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     },
     body: JSON.stringify({ channel: channel, name: reaction, timestamp: ts })
   }).then(r => r.json())
@@ -28,7 +28,7 @@ async function reply(channel, parentTs, text) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     },
     body: JSON.stringify({
       channel: channel,
@@ -36,38 +36,57 @@ async function reply(channel, parentTs, text) {
       text: text,
       parse: 'mrkdwn'
     })
-  }).then(r => r.json()).then(json => json.user)
+  })
+    .then(r => r.json())
+    .then(json => json.user)
 }
 
 async function userInfo(userId) {
   return fetch('https://slack.com/api/users.info?user=' + userId, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
     }
-  }).then(r => r.json()).then(json => json.user)
+  })
+    .then(r => r.json())
+    .then(json => json.user)
 }
 
 export default async (req, res) => {
   const { event } = req.body
-  console.log("Handling", event.type, event.subtype)
+  console.log('Handling', event.type, event.subtype)
 
   if (event.channel !== process.env.CHANNEL) {
-    console.log('Ignoring event in', event.channel, 'because I only listen in on', process.env.CHANNEL)
+    console.log(
+      'Ignoring event in',
+      event.channel,
+      'because I only listen in on',
+      process.env.CHANNEL
+    )
     return await res.json({ ok: true })
   }
 
   if (event.type === 'member_joined_channel' || event.type === 'group_joined') {
-    console.log("Someone new joined the channel! I'm welcoming user", event.user)
-    await postEphemeral(event.channel, `Welcome to the Summer Scrapbook, <@${event.user}>!
+    console.log(
+      "Someone new joined the channel! I'm welcoming user",
+      event.user
+    )
+    await postEphemeral(
+      event.channel,
+      `Welcome to the Summer Scrapbook, <@${event.user}>!
     To get started, post a photo or video of a project you're working on—it can be anything!
     Your update will be added to your personal scrapbook, which I'll share with you after your
-    first post.`, event.user)
+    first post.`,
+      event.user
+    )
 
     return await res.json({ ok: true })
   }
 
-  if (event.subtype === 'message_changed' && event.message.text !== 'This message was deleted.') {
+  if (
+    event.subtype === 'message_changed' &&
+    event.message.text !== 'This message was deleted.'
+  ) {
     const newMessage = event.message.text
     const prevTs = event.previous_message.ts
 
@@ -76,9 +95,13 @@ export default async (req, res) => {
       filterByFormula: `{Message Timestamp} = '${prevTs}'`
     }))[0]
     await updatesTable.update(updateRecord.id, {
-      'Text': newMessage
+      Text: newMessage
     })
-    await postEphemeral(event.channel, `Your update has been edited! You should see it update on the website in a few seconds.`, event.message.user)
+    await postEphemeral(
+      event.channel,
+      `Your update has been edited! You should see it update on the website in a few seconds.`,
+      event.message.user
+    )
   }
 
   if (event.subtype === 'message_deleted') {
@@ -88,10 +111,19 @@ export default async (req, res) => {
       filterByFormula: `{Message Timestamp} = '${prevTs}'`
     }))[0]
     await updatesTable.delete(updateRecord.id)
-    await postEphemeral(event.channel, `Your update has been deleted. You should see it disappear from the website in a few seconds.`, event.previous_message.user)
+    await postEphemeral(
+      event.channel,
+      `Your update has been deleted. You should see it disappear from the website in a few seconds.`,
+      event.previous_message.user
+    )
   }
 
-  console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
+  console.log(
+    'Event channel',
+    event.channel,
+    'matched',
+    process.env.CHANNEL + '. Continuing...'
+  )
   await react('add', event.channel, event.ts, 'beachball')
 
   const files = event.files
@@ -110,8 +142,8 @@ export default async (req, res) => {
     })
   )
 
-  console.log("Attachments:", attachments)
-  console.log("Videos:", videos)
+  console.log('Attachments:', attachments)
+  console.log('Videos:', videos)
 
   const userRecord = await getUserRecord(event.user)
   await updatesTable.create({
@@ -143,7 +175,11 @@ export default async (req, res) => {
   console.log(user)
 
   const updatedRecord = await getUserRecord(event.user)
-  const replyMessage = await getReplyMessage(event.user, updatedRecord.fields['Username'], updatedRecord.fields['Streak Count'])
+  const replyMessage = await getReplyMessage(
+    event.user,
+    updatedRecord.fields['Username'],
+    updatedRecord.fields['Streak Count']
+  )
   await reply(event.channel, event.ts, replyMessage)
 
   // write final response

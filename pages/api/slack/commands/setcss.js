@@ -1,6 +1,10 @@
 import cheerio from 'cheerio'
 
-import { sendCommandResponse, accountsTable, getUserRecord } from '../../../../lib/api-utils'
+import {
+  sendCommandResponse,
+  accountsTable,
+  getUserRecord
+} from '../../../../lib/api-utils'
 
 export default async (req, res) => {
   await res.status(200).end()
@@ -8,11 +12,14 @@ export default async (req, res) => {
   let url = command.text
 
   if (url === '' || !url.includes('http')) {
-    sendCommandResponse(command.response_url, 'You must give a URL to a GitHub Gist or CSS file somewhere on the web.')
+    sendCommandResponse(
+      command.response_url,
+      'You must give a URL to a GitHub Gist or CSS file somewhere on the web.'
+    )
   } else if (url.includes('gist.github.com')) {
     url = await fetch(url)
       .then(r => r.text())
-      .then(async (html) => {
+      .then(async html => {
         console.log(html)
         const $ = cheerio.load(html)
         let raw = $('.file .file-actions a').attr('href')
@@ -23,10 +30,16 @@ export default async (req, res) => {
           await accountsTable.update(user.id, {
             'CSS URL': raw
           })
-          sendCommandResponse(command.response_url, `Your CSS file has been linked to your profile!`)
+          sendCommandResponse(
+            command.response_url,
+            `Your CSS file has been linked to your profile!`
+          )
           return 'https://gist.githubusercontent.com' + raw
         } else {
-          sendCommandResponse(command.response_url, 'You linked a Gist, but there isn’t a .css file on your Gist. Try again with the raw URL to the CSS.')
+          sendCommandResponse(
+            command.response_url,
+            'You linked a Gist, but there isn’t a .css file on your Gist. Try again with the raw URL to the CSS.'
+          )
         }
       })
   }

@@ -11,7 +11,7 @@ export const getPosts = async () => {
   const users = await getRawUsers()
   posts = posts.map(p => {
     const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-    p.user = transformUser(user)
+    p.user = (user?.fields?.Username) ? {} : transformUser(user)
     return p
   })
   posts = posts.map(({ id, user, fields }) => ({
