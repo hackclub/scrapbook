@@ -126,7 +126,7 @@ export default async (req, res) => {
   )
   await react('add', event.channel, event.ts, 'beachball')
 
-  const files = event.files
+  const files = event.files || []
   let attachments = []
   let videos = []
   let videoPlaybackIds = []
