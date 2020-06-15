@@ -14,11 +14,13 @@ const Header = () => (
       image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
     <Head>
-      <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet" />
-      <link rel="stylesheet" type="text/css" href="/themes/default.css" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
+        rel="stylesheet"
+      />
     </Head>
     <header>
-      <h1>Hack&nbsp;Club Summer Scrapbook</h1>
+      <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
         Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
         learning & making something new every day.
@@ -47,7 +49,7 @@ const Header = () => (
       }
       @media (min-width: 32em) {
         h1 {
-          font-size: 72px;
+          font-size: 64px;
         }
         header {
           padding: 24px 24px 48px;
