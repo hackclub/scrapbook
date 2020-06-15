@@ -51,7 +51,7 @@ async function userInfo(userId) {
 export default async (req, res) => {
   const { event } = req.body
 
-  if (!((event.channel === process.env.CHANNEL || event.channel === 'G0164MBNTG8') && (event.subtype === 'file_share' || event.subtype === 'message_changed' || event.subtype === 'message_deleted'))) {
+  if (!(event.channel === process.env.CHANNEL && (event.subtype === 'file_share' || event.subtype === 'message_changed' || event.subtype === 'message_deleted'))) {
     //console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
     return await res.json({ ok: true })
   }
@@ -65,11 +65,11 @@ export default async (req, res) => {
 
   if (event.subtype === 'message_changed') {
     const newMessage = event.message.text
-    const prevMessage = event.previous_message.text
+    const prevTs = event.previous_message.ts
 
     const updateRecord = (await updatesTable.read({
       maxRecords: 1,
-      filterByFormula: `AND(FIND('${event.message.user}', {ID}) > 0, {Text} = '${prevMessage}')`
+      filterByFormula: `{Message Timestamp} = '${prevTs}'`
     }))[0]
     await updatesTable.update(updateRecord.id, {
       'Text': newMessage
@@ -81,7 +81,7 @@ export default async (req, res) => {
     const prevMessage = event.previous_message.text
     const updateRecord = (await updatesTable.read({
       maxRecords: 1,
-      filterByFormula: `AND(FIND('${event.previous_message.user}', {ID}) > 0, {Text} = '${prevMessage}')`
+      filterByFormula: `{Message Timestamp} = '${prevTs}'`
     }))[0]
     await updatesTable.delete(updateRecord.id)
     await postEphemeral(event.channel, `Your update has been deleted. You should see it disappear from the website in a few seconds.`, event.previous_message.user)
@@ -113,6 +113,7 @@ export default async (req, res) => {
   await updatesTable.create({
     'Slack Account': [userRecord.id],
     'Post Time': new Date().toUTCString(),
+    'Message Timestamp': event.ts,
     Text: event.text,
     Attachments: attachments,
     'Mux Asset IDs': videos.toString(),
