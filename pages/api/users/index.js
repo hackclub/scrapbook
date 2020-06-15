@@ -14,7 +14,7 @@ export const makeAvatar = (username = '') =>
 
 export const getRawUsers = () =>
   fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
   ).then(r => r.json())
 
 export const transformUser = (user = {}) => ({

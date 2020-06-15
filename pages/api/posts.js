@@ -3,7 +3,7 @@ import { getRawUsers, transformUser } from './users'
 
 export const getRawPosts = () =>
   fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
   ).then(r => r.json())
 
 export const getPosts = async () => {

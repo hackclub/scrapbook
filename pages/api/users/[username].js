@@ -11,7 +11,7 @@ export const getProfile = async (username) => {
 
 export const getPosts = async (user) => {
   const allUpdates = await fetch(
-    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
   ).then(r => r.json())
   if (!allUpdates) console.error('Could not fetch posts')
   const updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
