@@ -17,7 +17,6 @@ export const getPosts = async (user) => {
   const updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
   const posts = reverse(orderBy(updates.map(({ id, fields }) => ({
     id,
-    user,
     postedAt: fields['Post Time'] || '',
     text: fields['Text'] || '',
     attachments: fields['Attachments'] || [],

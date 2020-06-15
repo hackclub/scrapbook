@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Posts from '../components/posts'
+import Post from '../components/post'
 import FourOhFour from './404'
 
 const HOST =
@@ -98,7 +98,11 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
         />
       </aside>
     </header>
-    <Posts posts={posts} profile />
+    <article className="posts">
+      {posts.map(post => (
+        <Post key={post.id} user={profile} {...post} />
+      ))}
+    </article>
     {profile.css && (
       <footer className="css" title="External CSS URL">
         <Icon
