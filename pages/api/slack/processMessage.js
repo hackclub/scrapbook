@@ -63,7 +63,7 @@ export default async (req, res) => {
     first post.`, event.user)
   }
 
-  if (event.subtype === 'message_changed') {
+  if (event.subtype === 'message_changed' && event.message.text !== 'This message was deleted.') {
     const newMessage = event.message.text
     const prevTs = event.previous_message.ts
 
