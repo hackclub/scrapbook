@@ -34,7 +34,7 @@ export default async (req, res) => {
   })
 
   // give the above function a little time to get going
-  await wait(1000)
+  await wait(500)
 
   // respond for slack
   res.json({ ok: true })
