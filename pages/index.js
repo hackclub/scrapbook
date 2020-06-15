@@ -37,26 +37,35 @@ const Header = () => (
     <style jsx>{`
       header {
         text-align: center;
-        padding: 0 16px 48px;
+        padding: 0 0 48px;
       }
       h1 {
         color: var(--colors-red);
         font-family: var(--fonts-display);
         margin: 0;
-        font-size: 56px;
+        font-size: 36px;
         line-height: 1;
+      }
+      p {
+        font-size: 16px;
+        color: var(--colors-text);
       }
       @media (min-width: 32em) {
         h1 {
-          font-size: 64px;
+          font-size: 48px;
+          margin-bottom: 16px;
+        }
+        p {
+          font-size: 24px;
         }
         header {
-          padding: 24px 24px 48px;
+          padding: 24px 0 48px;
         }
       }
-      p {
-        font-size: 24px;
-        color: var(--colors-text);
+      @media (min-width: 48em) {
+        h1 {
+          font-size: 64px;
+        } 
       }
       a {
         color: var(--colors-orange);
@@ -66,7 +75,7 @@ const Header = () => (
       a:focus {
         text-decoration: underline;
         text-decoration-style: wavy;
-        text-decoration-position: under;
+        text-underline-position: under;
       }
       @supports (-webkit-background-clip: text) {
         h1 {
