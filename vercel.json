@@ -1,5 +1,11 @@
 {
-  "trailingSlash": true,
-  "github": { "silent": true },
-  "rewrites": [{ "source": "/api/profiles", "destination": "/api/users" }]
+  "github": {
+    "silent": true
+  },
+  "rewrites": [
+    {
+      "source": "/api/profiles",
+      "destination": "/api/users"
+    }
+  ]
 }
