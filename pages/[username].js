@@ -18,16 +18,16 @@ export default ({ profile, heatmap, posts }) => (
         profile.streakDisplay
           ? `(currently a ${profile.streakCount}-day streak!)`
           : ''
-      } making things in the Hack Club community this summer.`}
+        } making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-      }.png?brand=Scrapbook${
+        }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
-      }${
+        }${
         profile.streakDisplay
           ? `&caption=${profile.streakCount}-day streak`
           : ''
-      }`}
+        }`}
     />
     <link
       rel="stylesheet"
@@ -39,52 +39,53 @@ export default ({ profile, heatmap, posts }) => (
     />
     <header className="header">
       <div className="header-col-1">
-        <Link href="/" passHref>
+        {/* <Link href="/" passHref>
           <a className="header-back">
             <Icon glyph="view-back" size={24} />
             All scraps
           </a>
-        </Link>
-        <div className="header-title">
-          {profile.avatar && (
-            <img
-              src={profile.avatar}
-              width={64}
-              alt={profile.username}
-              className="header-title-avatar"
-            />
-          )}
+        </Link> */}
+        {profile.avatar && (
+          <img
+            src={profile.avatar}
+            width={96}
+            alt={profile.username}
+            className="header-title-avatar"
+          />
+        )}
+        <div>
           <h1 className="header-title-name">{profile.username}</h1>
+          <section className="header-content">
+            {profile.streakDisplay && (
+              <span
+                className={`badge header-streak header-streak-${
+                  profile.streakCount !== 1 ? 'plural' : 'singular'
+                  }`}
+              >
+                {profile.streakCount}
+              </span>
+            )}
+            {profile.github && (
+              <a
+                href={profile.github}
+                target="_blank"
+                className="header-link header-link-github"
+              >
+                <Icon size={32} glyph="github" />
+              </a>
+            )
+            }
+            {profile.website && (
+              <a
+                href={profile.website}
+                target="_blank"
+                className="header-link header-link-website"
+              >
+                <Icon size={32} glyph="link" />
+              </a>
+            )}
+          </section>
         </div>
-        <section className="header-content">
-          {profile.streakDisplay && (
-            <span
-              className={`badge header-streak header-streak-${
-                profile.streakCount !== 1 ? 'plural' : 'singular'
-                }`}
-            >
-              {profile.streakCount}
-            </span>
-          )}
-          {profile.github && (
-            <a
-              href={profile.github}
-              target="_blank"
-              className="header-link header-link-github"
-            >
-              <Icon size={32} glyph="github" />
-            </a>
-          )}
-          {profile.website && (
-            <a
-              href={profile.website}
-              target="_blank"
-              className="header-link header-link-website"
-            >
-              <Icon size={32} glyph="link" />
-            </a>
-          )}
-        </section>
       </div>
       <aside className="header-col-2 header-chart" aria-hidden>
         <CalendarHeatmap

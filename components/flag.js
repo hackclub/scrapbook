@@ -19,7 +19,6 @@ const Flag = props => (
       }
       @media (min-width: 32em) {
         a {
-          width: 172px;
           height: 64px;
         }
       }

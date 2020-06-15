@@ -14,24 +14,65 @@ const Header = () => (
       image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
     <Head>
+      <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="/themes/default.css" />
     </Head>
-    <h1>Hack&nbsp;Club Summer Scrapbook</h1>
+    <header>
+      <h1>Hack&nbsp;Club Summer Scrapbook</h1>
+      <p>
+        Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
+        learning & making something new every day.
+      </p>
+    </header>
+    <style jsx global>{`
+      :root {
+        --colors-text: var(--colors-snow);
+        --colors-background: var(--colors-darker);
+        --colors-sheet: var(--colors-darkless);
+        --colors-elevated: var(--colors-darkless);
+        --colors-sunken: var(--colors-darker);
+      }
+    `}</style>
     <style jsx>{`
-      h1 {
-        color: var(--colors-blue);
+      header {
         text-align: center;
-        margin-top: 0;
-        margin-bottom: 2rem;
-        font-size: 3rem;
+        padding: 0 16px 48px;
+      }
+      h1 {
+        color: var(--colors-red);
+        font-family: var(--fonts-display);
+        margin: 0;
+        font-size: 56px;
         line-height: 1;
+      }
+      @media (min-width: 32em) {
+        h1 {
+          font-size: 72px;
+        }
+        header {
+          padding: 24px 24px 48px;
+        }
+      }
+      p {
+        font-size: 24px;
+        color: var(--colors-smoke);
+      }
+      a {
+        color: var(--colors-orange);
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        text-decoration: underline;
+        text-decoration-style: wavy;
+        text-decoration-position: under;
       }
       @supports (-webkit-background-clip: text) {
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-cyan),
-            var(--colors-blue)
+            var(--colors-orange),
+            var(--colors-red)
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;
@@ -92,7 +133,8 @@ export default ({ initialData }) => {
           500: 1
         }}
         className="masonry-posts"
-        columnClassName="masonry-posts-column">
+        columnClassName="masonry-posts-column"
+      >
         {data.map(post => (
           <Post key={post.id} {...post} />
         ))}
@@ -111,7 +153,7 @@ export default ({ initialData }) => {
         .masonry-posts-column {
           background-clip: padding-box;
         }
-        
+
         .post {
           margin-bottom: 16px;
         }

@@ -10,42 +10,47 @@ const Post = ({
     username: 'abc',
     avatar: '',
     streakDisplay: false,
-    streakCount: 0,
+    streakCount: 0
   },
   text,
   attachments = [],
   mux = [],
   postedAt
 }) => (
-    <section className="post">
-      <Link href="/[profile]" as={`/${user.username}`}>
-        <a className="post-header">
-          {!profile && (
-            <>
-              {user.avatar && <img
+  <section className="post">
+    <Link href="/[profile]" as={`/${user.username}`}>
+      <a className="post-header">
+        {!profile && (
+          <>
+            {user.avatar && (
+              <img
                 loading="lazy"
                 src={user.avatar}
                 width={48}
                 alt={user.username}
                 className="post-header-avatar"
-              />}
-              <strong className="post-header-name">
-                @{user.username}
-                {user.streakDisplay && (
-                  <span className="badge post-header-streak">{user.streakCount}</span>
-                )}
-              </strong>
-            </>
-          )}
-          <time className="post-header-date" dateTime={postedAt}>
-            {formatDate(postedAt)}
-          </time>
-        </a>
-      </Link>
-      <p className="post-text">{text}</p>
-      {attachments.length > 0 && (
-        <div className="post-attachments">
-          {filter(attachments, a => a?.type?.toString().startsWith('image')).map(img => (
+              />
+            )}
+            <strong className="post-header-name">
+              @{user.username}
+              {user.streakDisplay && (
+                <span className="badge post-header-streak">
+                  {user.streakCount}
+                </span>
+              )}
+            </strong>
+          </>
+        )}
+        <time className="post-header-date" dateTime={postedAt}>
+          {formatDate(postedAt)}
+        </time>
+      </a>
+    </Link>
+    <p className="post-text">{text}</p>
+    {attachments.length > 0 && (
+      <div className="post-attachments">
+        {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
+          img => (
             <a
               key={img.filename}
               href={img.thumbnails?.full?.url}
@@ -59,13 +64,14 @@ const Post = ({
                 placeholderSrc={img.thumbnails?.small?.url}
               />
             </a>
-          ))}
-          {mux.map(id => (
-            <Video key={id} mux={id} />
-          ))}
-        </div>
-      )}
-    </section>
-  )
+          )
+        )}
+        {mux.map(id => (
+          <Video key={id} mux={id} />
+        ))}
+      </div>
+    )}
+  </section>
+)
 
 export default Post
