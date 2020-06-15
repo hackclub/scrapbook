@@ -27,14 +27,14 @@ export default async (req, res) => {
         console.log(raw)
         if (raw.endsWith('.css')) {
           const user = await getUserRecord(command.user_id)
+          const githubUrl = 'https://gist.githubusercontent.com' + raw
           await accountsTable.update(user.id, {
-            'CSS URL': raw
+            'CSS URL': githubUrl
           })
           sendCommandResponse(
             command.response_url,
-            `Your CSS file, ${raw} has been linked to your profile!`
+            `Your CSS file, ${githubUrl} has been linked to your profile!`
           )
-          return 'https://gist.githubusercontent.com' + raw
         } else {
           sendCommandResponse(
             command.response_url,
