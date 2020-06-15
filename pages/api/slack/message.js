@@ -1,3 +1,12 @@
+// wait specified ms
+function wait(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
 // Slack expects a very quick response to all webhooks it sends out. This
 // function returns quickly back to Slack with status OK and then passes off
 // the data sent to us to another serverless function for longer processing.
@@ -9,12 +18,13 @@ export default async (req, res) => {
     return await res.json({ challenge })
   }
 
-  // respond immediately for slack
-  res.json({ ok: true })
+  //                v- should be http or https, fallback to http just in case
+  const protocol = (req.headers['x-forwarded-proto'] || 'http') + '://'
+  const backendUrl = protocol + req.headers.host + '/api/slack/processMessage'
 
   // queue this to start. we don't expect it to finish by the time this
   // function is cancelled
-  await fetch(req.headers['x-forwarded-proto'] + '://' + req.headers.host + '/api/slack/processMessage', {
+  const backendReq = fetch(backendUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -22,4 +32,13 @@ export default async (req, res) => {
     },
     body: JSON.stringify(req.body)
   })
+
+  // give the above function a little time to get going
+  await wait(1000)
+
+  // respond for slack
+  res.json({ ok: true })
+
+  // wait for function to finish
+  await backendReq
 }
