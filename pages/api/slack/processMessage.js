@@ -51,13 +51,14 @@ async function userInfo(userId) {
     .then(json => json.user)
 }
 async function handleDelete(event) {
-  console.log('handling deletion')
-  console.log(event)
-  let ts = event.thread_ts || event.message.thread_ts
+  const { channel, message, thread_ts } = event
+
+  const ts = thread_ts || message.thread_ts
+  console.log('attempting delete of event', ts)
   if (ts) {
     await Promise.all([
       react('add', channel, ts, 'beachball'),
-      deleteScrap(event.thread_ts)
+      deleteScrap(ts)
     ])
     await Promise.all([
       await react('remove', channel, ts, 'beachball'),
@@ -68,20 +69,19 @@ async function handleDelete(event) {
   }
 }
 async function handleCreate(event) {
-  const { files, channel, ts, user, text } = event
+  const { files = [], channel, ts, user, text } = event
   const r = await react('add', channel, ts, 'beachball')
   console.log('the channel of the day is...', channel, event)
   console.log('showing r', r)
 
   console.log(
     'Event channel',
-    event.channel,
+    channel,
     'matched',
     process.env.CHANNEL + '. Continuing...'
   )
-  await react('add', event.channel, event.ts, 'beachball')
+  await react('add', channel, ts, 'beachball')
 
-  const files = event.files || []
   let attachments = []
   let videos = []
   let videoPlaybackIds = []
@@ -89,6 +89,7 @@ async function handleCreate(event) {
   await Promise.all(
     files.map(async file => {
       const publicUrl = await getPublicFileUrl(file.url_private)
+      console.log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", publicUrl)
       attachments.push({ url: publicUrl.url })
       if (publicUrl.muxId) {
         videos.push(publicUrl.muxId)
@@ -143,7 +144,6 @@ export default async (req, res) => {
     return await res.json({ ok: true })
   }
 
-  console.log('this might be a join')
   if (event.type === 'member_joined_channel' || event.type === 'group_joined' || event.type === 'channel_join') {
     // someone has joined the channel– let's greet them!
     console.log("Someone new joined the channel! I'm welcoming user", event.user)
