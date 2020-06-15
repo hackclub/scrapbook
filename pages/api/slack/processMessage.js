@@ -78,7 +78,7 @@ export default async (req, res) => {
   }
 
   if (event.subtype === 'message_deleted') {
-    const prevMessage = event.previous_message.text
+    const prevTs = event.previous_message.ts
     const updateRecord = (await updatesTable.read({
       maxRecords: 1,
       filterByFormula: `{Message Timestamp} = '${prevTs}'`
