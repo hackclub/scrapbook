@@ -51,7 +51,7 @@ async function userInfo(userId) {
 export default async (req, res) => {
   const { event } = req.body
 
-  if (!((event.channel === process.env.CHANNEL || event.channel === 'G0164MBNTG8') && (event.subtype === 'file_share' || event.subtype === 'message_changed'))) {
+  if (!((event.channel === process.env.CHANNEL || event.channel === 'G0164MBNTG8') && (event.subtype === 'file_share' || event.subtype === 'message_changed' || event.subtype === 'message_deleted'))) {
     //console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
     return await res.json({ ok: true })
   }
@@ -74,6 +74,17 @@ export default async (req, res) => {
     await updatesTable.update(updateRecord.id, {
       'Text': newMessage
     })
+    await postEphemeral(event.channel, `Your update has been edited! You should see it update on the website in a few seconds.`, event.message.user)
+  }
+
+  if (event.subtype === 'message_deleted') {
+    const prevMessage = event.previous_message.text
+    const updateRecord = (await updatesTable.read({
+      maxRecords: 1,
+      filterByFormula: `AND(FIND('${event.previous_message.user}', {ID}) > 0, {Text} = '${prevMessage}')`
+    }))[0]
+    await updatesTable.delete(updateRecord.id)
+    await postEphemeral(event.channel, `Your update has been deleted. You should see it disappear from the website in a few seconds.`, event.previous_message.user)
   }
 
   console.log("Event channel", event.channel, "matched", process.env.CHANNEL + ". Continuing...")
