@@ -11,7 +11,7 @@ export default async (req, res) => {
   const command = req.body
   let url = command.text
 
-  if (url === '' || !url.includes('http')) {
+  if (url === '') {
     sendCommandResponse(
       command.response_url,
       'You must give a URL to a GitHub Gist or CSS file somewhere on the web.'
@@ -32,7 +32,7 @@ export default async (req, res) => {
           })
           sendCommandResponse(
             command.response_url,
-            `Your CSS file has been linked to your profile!`
+            `Your CSS file, ${raw} has been linked to your profile!`
           )
           return 'https://gist.githubusercontent.com' + raw
         } else {
@@ -42,5 +42,17 @@ export default async (req, res) => {
           )
         }
       })
+  } else {
+    const user = await getUserRecord(command.user_id)
+    if (!url.includes('http')) {
+      url = 'https://' + url
+    }
+    await accountsTable.update(user.id, {
+      'CSS URL': url
+    })
+    sendCommandResponse(
+      command.response_url,
+      `Your CSS file, ${url} has been linked to your profile!`
+    )
   }
 }
