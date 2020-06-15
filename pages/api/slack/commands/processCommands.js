@@ -32,7 +32,7 @@ export default async (req, res) => {
   await wait(500)
 
   // respond for slack
-  res.json({ ok: true })
+  res.status(200).end()
 
   // wait for function to finish
   await backendReq
