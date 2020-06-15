@@ -6,7 +6,7 @@ export const getProfile = async (username) => {
   if (!accounts) console.error('Could not fetch accounts')
   const user = find(accounts, ['fields.Username', username]) || {}
   // console.log('User', user)
-  return user && user?.fields ? transformUser(user) : {}
+  return user && user?.fields?.Username ? transformUser(user) : {}
 }
 
 export const getPosts = async (user) => {

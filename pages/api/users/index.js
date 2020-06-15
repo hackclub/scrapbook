@@ -19,13 +19,13 @@ export const getRawUsers = () =>
 
 export const transformUser = (user = {}) => ({
   id: user?.id,
-  username: user?.fields['Username'] || '',
-  avatar: user?.fields['Avatar']?.[0]?.thumbnails?.large?.url || '',
+  username: user?.fields['Username'] || null,
+  avatar: user?.fields['Avatar']?.[0]?.thumbnails?.large?.url || null,
   css: user?.fields['CSS URL'] || null,
   streakDisplay: user?.fields['Display Streak'] || false,
   streakCount: user?.fields['Streak Count'] || 1,
-  github: user?.fields['GitHub'] || '',
-  website: user?.fields['Website'] || ''
+  github: user?.fields['GitHub'] || null,
+  website: user?.fields['Website'] || null
 })
 
 export const getProfiles = () =>
