@@ -89,7 +89,6 @@ async function handleCreate(event) {
   await Promise.all(
     files.map(async file => {
       const publicUrl = await getPublicFileUrl(file.url_private)
-      console.log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", publicUrl)
       attachments.push({ url: publicUrl.url })
       if (publicUrl.muxId) {
         videos.push(publicUrl.muxId)
@@ -144,7 +143,9 @@ export default async (req, res) => {
     return await res.json({ ok: true })
   }
 
-  if (event.type === 'member_joined_channel' || event.type === 'group_joined' || event.type === 'channel_join') {
+  console.log("In the right channel, continuing...")
+
+  if (event.subtype === 'member_joined_channel' || event.subtype === 'group_joined' || event.subtype === 'channel_join') {
     // someone has joined the channel– let's greet them!
     console.log("Someone new joined the channel! I'm welcoming user", event.user)
     const result = await postEphemeral(event.channel, `Welcome to the Summer Scrapbook, <@${event.user}>!
