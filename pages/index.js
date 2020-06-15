@@ -27,12 +27,11 @@ const Header = () => (
       </p>
     </header>
     <style jsx global>{`
-      :root {
-        --colors-text: var(--colors-snow);
-        --colors-background: var(--colors-darker);
-        --colors-sheet: var(--colors-darkless);
-        --colors-elevated: var(--colors-darkless);
-        --colors-sunken: var(--colors-darker);
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --colors-text: var(--colors-snow);
+          --colors-background: var(--colors-darker);
+        }
       }
     `}</style>
     <style jsx>{`
@@ -57,7 +56,7 @@ const Header = () => (
       }
       p {
         font-size: 24px;
-        color: var(--colors-smoke);
+        color: var(--colors-text);
       }
       a {
         color: var(--colors-orange);

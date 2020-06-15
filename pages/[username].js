@@ -161,14 +161,13 @@ const Loading = () => (
 
 export default props => {
   const router = useRouter()
-  console.log('Fallback', router.isFallback, props)
 
-  if (router.isFallback && props.profile) {
-    return <Profile {...props} />
-  } else if (!router.isFallback && !props.profile?.username) {
+  if (router.isFallback) {
+    return <Loading />
+  } else if (!props.profile?.username) {
     return <FourOhFour />
   } else {
-    return <Loading />
+    return <Profile {...props} />
   }
 }
 
@@ -181,9 +180,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('./api/users/[username]')
-  const profile = await getProfile(params.username)
+  if (params.username?.length < 2) return console.error('No username') || { props: {} }
 
-  if (!profile) return { props: {} }
+  const profile = await getProfile(params.username)
+  if (!profile || !profile?.username) return console.error('No profile') || { props: {} }
 
   try {
     const posts = await getPosts(profile)
