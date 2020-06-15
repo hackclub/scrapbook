@@ -50,17 +50,21 @@ async function userInfo(userId) {
 
 export default async (req, res) => {
   const { event } = req.body
+  console.log("Handling", event.type, event.subtype)
 
-  if (!(event.channel === process.env.CHANNEL && (event.subtype === 'file_share' || event.subtype === 'message_changed' || event.subtype === 'message_deleted'))) {
-    //console.log("Event channel", event.channel, "did not match", process.env.CHANNEL + ". Skipping event...")
+  if (event.channel !== process.env.CHANNEL) {
+    console.log('Ignoring event in', event.channel, 'because I only listen in on', process.env.CHANNEL)
     return await res.json({ ok: true })
   }
 
-  if (event.type === 'member_joined_channel') {
+  if (event.type === 'member_joined_channel' || event.type === 'group_joined') {
+    console.log("Someone new joined the channel! I'm welcoming user", event.user)
     await postEphemeral(event.channel, `Welcome to the Summer Scrapbook, <@${event.user}>!
     To get started, post a photo or video of a project you're working on—it can be anything!
     Your update will be added to your personal scrapbook, which I'll share with you after your
     first post.`, event.user)
+
+    return await res.json({ ok: true })
   }
 
   if (event.subtype === 'message_changed' && event.message.text !== 'This message was deleted.') {
