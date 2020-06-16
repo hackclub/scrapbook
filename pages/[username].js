@@ -164,18 +164,18 @@ export default props => {
 
   if (router.isFallback) {
     return <Loading />
-  } else if (!props.profile?.username) {
-    return <FourOhFour />
-  } else {
+  } else if (props.profile?.username) {
     return <Profile {...props} />
+  } else {
+    return <FourOhFour />
   }
 }
 
 export const getStaticPaths = async () => {
-  const { getUsernames } = require('./api/usernames')
-  const usernames = await getUsernames()
-  const paths = usernames.map(username => ({ params: { username } }))
-  return { paths, fallback: true }
+  // const { getUsernames } = require('./api/usernames')
+  // const usernames = await getUsernames()
+  // const paths = usernames.map(username => ({ params: { username } }))
+  return { paths: [], fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
