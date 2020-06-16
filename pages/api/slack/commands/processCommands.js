@@ -15,7 +15,7 @@ export default async (req, res) => {
 
   //                v- should be http or https, fallback to http just in case
   const protocol = (req.headers['x-forwarded-proto'] || 'http') + '://'
-  const backendUrl = protocol + req.headers.host + `/api/slack/${command.text}`
+  const backendUrl = protocol + req.headers.host + `/api/slack/${command.command}`
 
   // queue this to start. we don't expect it to finish by the time this
   // function is cancelled
