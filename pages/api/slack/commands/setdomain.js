@@ -19,13 +19,9 @@ export default async (req, res) => {
       'Custom Domain': command.text
     })
 
-    let domainCount
-    const updates = await updatesTable.read({
+    const domainCount = await accountsTable.read({
       filterByFormula: `{Custom Domain} != ''`
-    })
-    updates.forEach(() => {
-      domainCount++
-    })
+    }).length
 
     await fetch(
       `https://api.vercel.com/v1/QmdYCqhZxcLiKpZcQw7dpcqu5B7rmt2k7BbKmdaq6ojwoS/alias`,
@@ -40,6 +36,7 @@ export default async (req, res) => {
         })
       }
     ).catch(err => {
+      console.log(err)
       if (domainCount > 50) {
         sendCommandResponse(
           command.response_url,
@@ -48,15 +45,14 @@ export default async (req, res) => {
       }
       sendCommandResponse(
         command.response_url,
-        `Couldn't set your domain. You can't add a domain if it's already set to another Vercel project. Try again with a different domain.`
+        `Sorry, something went wrong setting your domain. Unfortunately you can’t use custom domains if Vercel manages your DNS. Try again with a different domain.`
       )
     })
     sendCommandResponse(
       command.response_url,
-      `Custom domain \`${command.text}\` set!\n\n
-    *Your next steps*: create a CNAME record in your DNS provider for your domain and point it to \`cname.vercel-dns.com\`. \n\n
-    You're one of 50 people who can add a custom domain during the Summer of Making. There are *${domainCount}* domains spots left.
-    `
+      `Custom domain \`${command.text}\` set! You’re one of 50 people who can add a custom domain—there are *${domainCount}* domains spots left.
+
+*Your next step*: create a CNAME record in your DNS provider for your domain and point it to \`cname.vercel-dns.com\`.`
     )
   }
 }
