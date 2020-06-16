@@ -67,6 +67,17 @@ const Post = ({
             </a>
           )
         )}
+        {filter(attachments, a => a?.type?.toString().startsWith('audio')).map(
+          aud => (
+            <audio
+              key={aud.filename}
+              className="post-attachment"
+              src={aud.url}
+              controls
+              preload="metadata"
+            />
+          )
+        )}
         {mux.map(id => (
           <Video key={id} mux={id} />
         ))}
