@@ -172,7 +172,7 @@
 
 @media (min-width: 32em) {
   .posts {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 }
 
@@ -197,7 +197,7 @@
   margin-right: 8px;
 }
 .post-header-name {
-  font-size: 18px;
+  font-size: 16px;
   word-break: break-all;
   word-wrap: break-word;
 }
@@ -208,7 +208,8 @@
   margin-right: 4px;
   margin-left: 8px;
   padding-left: 10px;
-  font-size: 14px;
+  font-size: 12px;
+  max-height: 20px;
 }
 .post-header-date {
   margin-left: auto;
