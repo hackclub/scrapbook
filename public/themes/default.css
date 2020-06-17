@@ -189,6 +189,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  line-height: 1;
 }
 .post-header-avatar {
   width: 48px;

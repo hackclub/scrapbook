@@ -1,4 +1,4 @@
-import { formatDate } from '../lib/dates'
+import { convertTimestampToDate } from '../lib/dates'
 import { filter } from 'lodash'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Icon from '@hackclub/icons'
@@ -54,7 +54,7 @@ const Post = ({
           </>
         )}
         <time className="post-header-date" dateTime={postedAt}>
-          {postedAt?.startsWith('20') ? formatDate(postedAt) : postedAt}
+          {postedAt?.startsWith('20') ? convertTimestampToDate(postedAt) : postedAt}
         </time>
       </a>
     </Link>
