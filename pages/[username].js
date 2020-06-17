@@ -65,6 +65,13 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
                 {profile.streakCount}
               </span>
             )}
+            <a
+              href={`https://app.slack.com/client/T0266FRGM/user_profile/${profile.slack}`}
+              target="_blank"
+              className="header-link header-link-slack"
+            >
+              <Icon size={32} glyph="slack-fill" />
+            </a>
             {profile.github && (
               <a
                 href={profile.github}
