@@ -95,12 +95,12 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
       </div>
       <aside className="header-col-2 header-chart" aria-hidden>
         <CalendarHeatmap
-          startDate={new Date('2020-06-09')}
-          endDate={new Date('2020-08-09')}
+          startDate={new Date('2020-06-12')}
+          endDate={new Date('2020-08-15')}
           values={heatmap}
           showWeekdayLabels
-          classForValue={val => (val ? `color-${val.count}` : 'color-empty')}
-          titleForValue={v => v?.date}
+          classForValue={v => (v ? `color-${v.count}` : 'color-empty')}
+          titleForValue={v => `${v?.date}: ${v?.count} updates`}
           width={128}
         />
       </aside>
