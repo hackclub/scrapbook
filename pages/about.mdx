@@ -11,15 +11,6 @@ import Meta from '@hackclub/meta'
 
 This is [Hack Club](https://hackclub.com/)’s [Summer Scrapbook](https://scrapbook.hackclub.com/), which is part of the [2020 Summer of Making](https://summer.hackclub.com/).
 
-## Custom domains
-
-To put your profile on your own domain, run `/setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.zachlatta.com`](https://scrapbook.zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
-
-<small>
-  (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this
-  feature.)
-</small>
-
 ## CSS customization
 
 To customize the CSS on your profile page, run `/setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
@@ -62,6 +53,15 @@ Some “relative” colors use these colors for various components:
 - `--colors-sunken` – “sunken” content
 
 Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
+
+## Custom domains
+
+To put your profile on your own domain, run `/setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.zachlatta.com`](https://scrapbook.zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
+
+<small>
+  (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this
+  feature.)
+</small>
 
 ## Public API
 
