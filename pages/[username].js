@@ -4,14 +4,15 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
+import Message from '../components/message'
 import Post from '../components/post'
+import ExamplePosts from '../components/example-posts'
 import FourOhFour from './404'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-
-const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
+const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
   <main className="container">
     <Meta
       as={Head}
@@ -39,6 +40,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
         href={HOST + `/api/css?url=${profile.css}`}
       />
     )}
+    {children}
     <header className="header">
       <div className="header-col-1">
         {/* <Link href="/" passHref>
@@ -115,46 +117,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
       {posts.map(post => (
         <Post key={post.id} user={profile} profile {...post} />
       ))}
-      {posts.length === 1 && (
-        <>
-          <Post
-            text="The Cambrian explosion of life on Earth."
-            postedAt="530M yrs ago"
-            attachments={[
-              {
-                filename: 'cambrian.jpg',
-                type: 'image/jpg',
-                thumbnails: {
-                  large: {
-                    url:
-                      'https://scx2.b-cdn.net/gfx/news/hires/2016/proteinlikes.png'
-                  }
-                }
-              }
-            ]}
-            profile
-            muted
-          />
-          <Post
-            text="The Big Bang begins the universe."
-            postedAt="13.8B yrs ago"
-            attachments={[
-              {
-                filename: 'bigbang.jpg',
-                type: 'image/jpg',
-                thumbnails: {
-                  large: {
-                    url:
-                      'https://cdn.mos.cms.futurecdn.net/vLq9PC5VDGqgCFXxSUUCaQ-1024-80.jpg'
-                  }
-                }
-              }
-            ]}
-            profile
-            muted
-          />
-        </>
-      )}
+      {posts.length === 1 && <ExamplePosts />}
     </article>
     {profile.css && (
       <footer className="css" title="External CSS URL">
@@ -180,42 +143,6 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
         </a>
       </footer>
     )}
-  </main>
-)
-
-const Message = ({ text, color1 = 'yellow', color2 = 'green' }) => (
-  <main className="container">
-    <h1>{text}</h1>
-    <style jsx>{`
-      main {
-        text-align: center;
-        padding: 32px 16px;
-      }
-      h1 {
-        color: var(--colors-${color2});
-        font-family: var(--fonts-display);
-        margin: 0;
-        font-size: 56px;
-        line-height: 1;
-      }
-      @media (min-width: 32em) {
-        h1 {
-          font-size: 64px;
-        }
-      }
-      @supports (-webkit-background-clip: text) {
-        h1 {
-          background-image: radial-gradient(
-            ellipse farthest-corner at top left,
-            var(--colors-${color1}),
-            var(--colors-${color2})
-          );
-          background-repeat: no-repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      }
-    `}</style>
   </main>
 )
 
