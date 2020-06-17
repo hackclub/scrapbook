@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import useSWR from 'swr'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
@@ -8,6 +9,7 @@ import FourOhFour from './404'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
 
 const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
   <main className="container">
@@ -60,7 +62,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
               <span
                 className={`badge header-streak header-streak-${
                   profile.streakCount !== 1 ? 'plural' : 'singular'
-                }`}
+                  }`}
               >
                 <Icon size={32} glyph="admin-badge" title="Streak icon" />
                 {profile.streakCount}
@@ -70,7 +72,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
             <a
               href={`https://app.slack.com/client/T0266FRGM/user_profile/${
                 profile.slack
-              }`}
+                }`}
               target="_blank"
               className="header-link header-link-slack"
             >
@@ -181,16 +183,16 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
   </main>
 )
 
-const Loading = () => (
+const Message = ({ text, color1 = 'yellow', color2 = 'green' }) => (
   <main className="container">
-    <h1>Loading…</h1>
+    <h1>{text}</h1>
     <style jsx>{`
       main {
         text-align: center;
         padding: 32px 16px;
       }
       h1 {
-        color: var(--colors-green);
+        color: var(--colors-${color2});
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 56px;
@@ -205,8 +207,8 @@ const Loading = () => (
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-yellow),
-            var(--colors-green)
+            var(--colors-${color1}),
+            var(--colors-${color2})
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;
@@ -217,13 +219,29 @@ const Loading = () => (
   </main>
 )
 
+const fetcher = url => fetch(url).then(r => r.json())
+
+const Page = ({ username = '', initialData = {} }) => {
+  const { data, error } = useSWR(`/api/users/${username}`, fetcher, {
+    initialData,
+    refreshInterval: 5000
+  })
+  if (!data) {
+    return <Message text="Loading…" />
+  } else if (error) {
+    return <Message text="Error" color1="orange" color2="pink" />
+  } else {
+    return <Profile {...data} />
+  }
+}
+
 export default props => {
   const router = useRouter()
 
   if (router.isFallback) {
-    return <Loading />
+    return <Message text="Loading…" />
   } else if (props.profile?.username) {
-    return <Profile {...props} />
+    return <Page username={props.profile.username} initialData={props} />
   } else {
     return <FourOhFour />
   }
