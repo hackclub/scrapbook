@@ -7,9 +7,23 @@ import Meta from '@hackclub/meta'
 
 # About
 
-## What is this?
+53 years ago, 100,000 people gathered in San Francisco for what was later called the Summer of Love.
 
-This is [Hack Club](https://hackclub.com/)’s [Summer Scrapbook](https://scrapbook.hackclub.com/), which is part of the [2020 Summer of Making](https://summer.hackclub.com/).
+Now, we’ve entered the [Hack Club Summer of Making](https://summer.hackclub.com/). It’s not an event, or a program with a start and end date. It’s a theme for this summer and a challenge to everyone reading this: what will you make? What will you learn? What will you build?
+
+## What do I do here?
+
+**Share updates of your learning every day**: Every day this summer, [Hack Clubbers](https://hackclub.com/) are learning & building projects, sharing short video & photo updates each day.
+
+We at Hack Club HQ made this because the times of ouur lives when we’ve really improved our skills came from **showing up every day**. Even if we didn’t make something amazing every day, the consistency was key. Scrapbook is a tool to help us all do that while stuck at home this summer.
+
+## How do I join?
+
+[Join the Hack Club Slack to participate.](https://hack.af/som-slack/)
+
+## How does it work?
+
+Behind the scens, the site ([totally open source!](https://github.com/hackclub/summer-scrapbook)) runs on [Next.js](https://nextjs.org) & React. All pages are [static-rendered](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) & it’s hosted on [Vercel](https://vercel.com). Videos are hosted by [Mux](https://mux.com). The custom domains use a [Vercel serverless function](https://github.com/hackclub/summer-domains). The [Slack integration](https://github.com/hackclub/scrappy) runs on [Express.js](https://expressjs.com), hosted on [Heroku](https://heroku.com). All the data is stored in [Airtable](https://airtable.com), fetched using our service [airbridge](https://github.com/hackclub/api2). We built it in a week.
 
 ## CSS customization
 
@@ -21,7 +35,7 @@ If you’d like to change the page-wide fonts or colors, you can change yours wi
 
 ```css
 :root {
-  --fonts-body: 'Phantom Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  --fonts-body: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, sans-serif;
   --fonts-display: 'Shrikhand', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, sans-serif;
@@ -65,13 +79,11 @@ To put your profile on your own domain, run `/setdomain <domain>` in Slack, givi
 
 ## Public API
 
-The backend is powered by Airtable served over [api2](https://github.com/hackclub/api2), but the site exposes a public JSON API that reformats data in a more useful way. The live site runs entirely on this API.
+The backend is powered by Airtable served over [Airbridge](https://github.com/hackclub/api2), but the site exposes a public JSON API powered by [Next.js API routes](https://nextjs.org/docs/api-routes/introduction) that reformats data in a more useful way. The live site runs entirely on this API.
 
 - [`/api/posts`](https://scrapbook.hackclub.com/api/posts) – Get all posts (used on the homepage)
 - [`/api/users`](https://scrapbook.hackclub.com/api/users) – Get all users
 - [`/api/users/:username`](https://scrapbook.hackclub.com/api/users/zrl) – Get a specific user’s profile + posts
-
-The other [API routes](https://nextjs.org/docs/api-routes/introduction) power the Slack slash commands & [Mux](https://mux.com) video integration.
 
 </main>
 
@@ -122,6 +134,10 @@ The other [API routes](https://nextjs.org/docs/api-routes/introduction) power th
     margin-bottom: 1em;
   }
 
+  small {
+    color: var(--colors-muted);
+  }
+
   code,
   pre {
     font-family: 'SF Mono', 'Roboto Mono', 'Source Code Pro', Menlo, Consolas,
@@ -139,7 +155,6 @@ The other [API routes](https://nextjs.org/docs/api-routes/introduction) power th
   }
 
   pre {
-    white-space: pre-wrap;
     word-break: break-all;
     word-wrap: break-word;
     padding: 1em;
