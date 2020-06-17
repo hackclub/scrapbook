@@ -100,7 +100,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
     </header>
     <article className="posts">
       {posts.map(post => (
-        <Post key={post.id} user={profile} {...post} />
+        <Post key={post.id} user={profile} profile {...post} />
       ))}
     </article>
     {profile.css && (
@@ -112,7 +112,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
           aria-label="Code link icon"
         />
         <a href={profile.css} target="_blank" className="css-link">
-          {profile.css}
+          CSS: {profile.css.includes('gist.githubusercontent.com') ? `Gist by @${profile.css.match(/\.com\/(\w+)(?=\/)/)?.[1]}` : profile.css}
         </a>
       </footer>
     )}
