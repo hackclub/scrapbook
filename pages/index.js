@@ -30,7 +30,6 @@ const Header = () => (
       @media (prefers-color-scheme: dark) {
         :root {
           --colors-text: var(--colors-snow);
-          --colors-background: var(--colors-darker);
         }
       }
     `}</style>
@@ -40,7 +39,7 @@ const Header = () => (
         padding: 0 0 48px;
       }
       h1 {
-        color: var(--colors-red);
+        color: var(--colors-orange);
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 36px;
@@ -80,8 +79,8 @@ const Header = () => (
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-orange),
-            var(--colors-red)
+            var(--colors-yellow),
+            var(--colors-orange)
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;

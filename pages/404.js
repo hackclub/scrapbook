@@ -23,7 +23,7 @@ export default () => (
         text-align: center;
       }
       h1 {
-        color: var(--colors-orange);
+        color: var(--colors-purple);
         -webkit-text-stroke: currentColor;
         -webkit-text-stroke-width: 2px;
         -webkit-text-fill-color: var(--colors-sheet);
@@ -44,6 +44,7 @@ export default () => (
         align-items: center;
         text-decoration: none;
         padding: 12px 24px;
+        background-color: var(--colors-cyan);
       }
       a :global(svg) {
         margin-right: 8px;

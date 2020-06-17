@@ -139,7 +139,7 @@ const Loading = () => (
         padding: 32px 16px;
       }
       h1 {
-        color: var(--colors-red);
+        color: var(--colors-green);
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 56px;
@@ -154,8 +154,8 @@ const Loading = () => (
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-orange),
-            var(--colors-red)
+            var(--colors-yellow),
+            var(--colors-green)
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;
