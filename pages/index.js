@@ -2,7 +2,10 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import useSWR from 'swr'
 import Masonry from 'react-masonry-css'
+import Banner from '../components/banner'
+import Message from '../components/message'
 import Post from '../components/post'
+import { useRouter } from 'next/router'
 
 const Header = () => (
   <>
@@ -88,6 +91,8 @@ const Header = () => (
 const fetcher = url => fetch(url).then(r => r.json())
 
 export default ({ initialData }) => {
+  const router = useRouter()
+
   const { data, error } = useSWR('/api/posts', fetcher, {
     initialData,
     refreshInterval: 5000
@@ -109,23 +114,17 @@ export default ({ initialData }) => {
   }
 
   if (!data) {
-    return (
-      <main className="container">
-        <Header />
-        <p>Loading…</p>
-        <pre>{JSON.stringify(data)}</pre>
-        <style jsx>{`
-          p {
-            text-align: center;
-            font-size: 20px;
-          }
-        `}</style>
-      </main>
-    )
+    return <Message text="Loading…" />
   }
 
   return (
     <main>
+      <Banner
+        isVisible={router.query?.ref === 'github'}
+        title="Hello, GitHubber!"
+      >
+        This is placeholder text.
+      </Banner>
       <Header />
       <Masonry
         breakpointCols={{

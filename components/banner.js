@@ -1,20 +1,26 @@
-const Scrappy = ({ children, isVisible = true }) =>
+const Banner = ({
+  avatar = 'https://dl.airtable.com/.attachmentThumbnails/169b73adf87cc2d0695b220e137611ba/e6f06147',
+  title = '@scrappy',
+  children,
+  isVisible = true
+}) =>
   isVisible ? (
     <aside className="container banner">
-      <img className="banner-avatar" src="https://dl.airtable.com/.attachmentThumbnails/169b73adf87cc2d0695b220e137611ba/e6f06147" width={48} />
+      <img className="banner-avatar" src={avatar} width={48} />
       <div>
-        <strong className="post-header-name">@scrappy</strong>
+        <strong className="post-header-name">{title}</strong>
         <p className="post-text">{children}</p>
       </div>
       <style jsx>{`
         .banner {
           display: grid;
-          grid-gap: 16px;
+          grid-gap: 12px;
           grid-template-columns: 48px 1fr;
           padding: 12px;
           border-radius: 9px;
           max-width: 640px;
-          background-color: var(--colors-elevated);
+          background-color: var(--colors-blue);
+          color: var(--colors-white);
           margin: 0 auto 24px;
         }
         .banner-avatar {
@@ -24,4 +30,4 @@ const Scrappy = ({ children, isVisible = true }) =>
     </aside>
   ) : null
 
-export default Scrappy
+export default Banner

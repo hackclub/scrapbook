@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Scrappy from '../components/scrappy'
+import Banner from '../components/banner'
 import Message from '../components/message'
 import Post from '../components/post'
 import ExamplePosts from '../components/example-posts'
@@ -131,7 +131,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         <a
           href={
             profile.css.includes('gist.githubusercontent')
-              ? profile.css.replace('githubusercontent.', 'github.').split('/raw')?.[0]
+              ? profile.css
+                  .replace('githubusercontent.', 'github.')
+                  .split('/raw')?.[0]
               : profile.css
           }
           target="_blank"
@@ -159,7 +161,13 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   } else if (error) {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
-    return <Profile {...data}>{router.query.welcome && <Scrappy>Welcome to your scrapbook page!</Scrappy>}</Profile>
+    return (
+      <Profile {...data}>
+        <Banner isVisible={router.query.welcome}>
+          Welcome to your scrapbook page!
+        </Banner>
+      </Profile>
+    )
   }
 }
 
@@ -169,7 +177,13 @@ export default props => {
   if (router.isFallback) {
     return <Message text="Loading…" />
   } else if (props.profile?.username) {
-    return <Page username={props.profile.username} router={router} initialData={props} />
+    return (
+      <Page
+        username={props.profile.username}
+        router={router}
+        initialData={props}
+      />
+    )
   } else {
     return <FourOhFour />
   }

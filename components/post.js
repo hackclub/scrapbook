@@ -54,7 +54,9 @@ const Post = ({
           </>
         )}
         <time className="post-header-date" dateTime={postedAt}>
-          {postedAt?.startsWith('20') ? convertTimestampToDate(postedAt) : postedAt}
+          {postedAt?.startsWith('20')
+            ? convertTimestampToDate(postedAt)
+            : postedAt}
         </time>
       </a>
     </Link>
