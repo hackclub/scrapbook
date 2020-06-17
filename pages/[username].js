@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import Icon from '@hackclub/icons'
+import Scrappy from '../components/scrappy'
 import Message from '../components/message'
 import Post from '../components/post'
 import ExamplePosts from '../components/example-posts'
@@ -148,7 +149,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
 
 const fetcher = url => fetch(url).then(r => r.json())
 
-const Page = ({ username = '', initialData = {} }) => {
+const Page = ({ username = '', router = {}, initialData = {} }) => {
   const { data, error } = useSWR(`/api/users/${username}`, fetcher, {
     initialData,
     refreshInterval: 5000
@@ -158,7 +159,7 @@ const Page = ({ username = '', initialData = {} }) => {
   } else if (error) {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
-    return <Profile {...data} />
+    return <Profile {...data}>{router.query.welcome && <Scrappy>Welcome to your scrapbook page!</Scrappy>}</Profile>
   }
 }
 
@@ -168,7 +169,7 @@ export default props => {
   if (router.isFallback) {
     return <Message text="Loading…" />
   } else if (props.profile?.username) {
-    return <Page username={props.profile.username} initialData={props} />
+    return <Page username={props.profile.username} router={router} initialData={props} />
   } else {
     return <FourOhFour />
   }
