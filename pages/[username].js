@@ -116,7 +116,6 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
       {posts.length === 1 && (
         <>
           <Post
-            user={{ avatar: '', username: 'universe' }}
             text="The Cambrian explosion of life on Earth."
             postedAt="530M yrs ago"
             attachments={[
@@ -131,10 +130,10 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
                 }
               }
             ]}
+            profile
             muted
           />
           <Post
-            user={{ avatar: '', username: 'universe' }}
             text="The Big Bang begins the universe."
             postedAt="13.8B yrs ago"
             attachments={[
@@ -144,11 +143,12 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
                 thumbnails: {
                   large: {
                     url:
-                      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Heic1401a-Abell2744-20140107.jpg/538px-Heic1401a-Abell2744-20140107.jpg'
+                      'https://cdn.mos.cms.futurecdn.net/vLq9PC5VDGqgCFXxSUUCaQ-1024-80.jpg'
                   }
                 }
               }
             ]}
+            profile
             muted
           />
         </>
