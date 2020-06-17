@@ -60,14 +60,17 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
               <span
                 className={`badge header-streak header-streak-${
                   profile.streakCount !== 1 ? 'plural' : 'singular'
-                  }`}
+                }`}
               >
                 <Icon size={32} glyph="admin-badge" title="Streak icon" />
-                {profile.streakCount}-day streak
+                {profile.streakCount}
+                -day streak
               </span>
             )}
             <a
-              href={`https://app.slack.com/client/T0266FRGM/user_profile/${profile.slack}`}
+              href={`https://app.slack.com/client/T0266FRGM/user_profile/${
+                profile.slack
+              }`}
               target="_blank"
               className="header-link header-link-slack"
             >
@@ -110,6 +113,46 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
       {posts.map(post => (
         <Post key={post.id} user={profile} profile {...post} />
       ))}
+      {posts.length === 1 && (
+        <>
+          <Post
+            user={{ avatar: '', username: 'universe' }}
+            text="The Cambrian explosion of life on Earth."
+            postedAt="530M yrs ago"
+            attachments={[
+              {
+                filename: 'cambrian.jpg',
+                type: 'image/jpg',
+                thumbnails: {
+                  large: {
+                    url:
+                      'https://scx2.b-cdn.net/gfx/news/hires/2016/proteinlikes.png'
+                  }
+                }
+              }
+            ]}
+            muted
+          />
+          <Post
+            user={{ avatar: '', username: 'universe' }}
+            text="The Big Bang begins the universe."
+            postedAt="13.8B yrs ago"
+            attachments={[
+              {
+                filename: 'bigbang.jpg',
+                type: 'image/jpg',
+                thumbnails: {
+                  large: {
+                    url:
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Heic1401a-Abell2744-20140107.jpg/538px-Heic1401a-Abell2744-20140107.jpg'
+                  }
+                }
+              }
+            ]}
+            muted
+          />
+        </>
+      )}
     </article>
     {profile.css && (
       <footer className="css" title="External CSS URL">
@@ -120,7 +163,10 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
           aria-label="Code link icon"
         />
         <a href={profile.css} target="_blank" className="css-link">
-          CSS: {profile.css.includes('gist.githubusercontent.com') ? `Gist by @${profile.css.match(/\.com\/(\w+)(?=\/)/)?.[1]}` : profile.css}
+          CSS:{' '}
+          {profile.css.includes('gist.githubusercontent.com')
+            ? `Gist by @${profile.css.match(/\.com\/(\w+)(?=\/)/)?.[1]}`
+            : profile.css}
         </a>
       </footer>
     )}
@@ -184,10 +230,12 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('./api/users/[username]')
-  if (params.username?.length < 2) return console.error('No username') || { props: {} }
+  if (params.username?.length < 2)
+    return console.error('No username') || { props: {} }
 
   const profile = await getProfile(params.username)
-  if (!profile || !profile?.username) return console.error('No profile') || { props: {} }
+  if (!profile || !profile?.username)
+    return console.error('No profile') || { props: {} }
 
   try {
     const posts = await getPosts(profile)

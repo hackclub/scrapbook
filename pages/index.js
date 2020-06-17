@@ -57,7 +57,7 @@ const Header = () => (
       @media (min-width: 48em) {
         h1 {
           font-size: 64px;
-        } 
+        }
       }
       a {
         color: var(--colors-orange);
@@ -159,16 +159,16 @@ export default ({ initialData }) => {
         .post {
           margin-bottom: 1px;
         }
-        
+
         @media (min-width: 32em) {
           .masonry-posts {
             padding-right: 24px;
           }
-          
+
           .masonry-posts-column {
             padding-left: 24px;
           }
-          
+
           .post {
             border-radius: 12px;
             margin-bottom: 24px;
