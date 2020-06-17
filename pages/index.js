@@ -53,7 +53,6 @@ const Header = () => (
       @media (min-width: 32em) {
         h1 {
           font-size: 48px;
-          margin-bottom: 16px;
         }
         p {
           font-size: 24px;
@@ -165,20 +164,21 @@ export default ({ initialData }) => {
         }
 
         .post {
-          margin-bottom: 16px;
+          margin-bottom: 1px;
         }
-
+        
         @media (min-width: 32em) {
           .masonry-posts {
-            padding-right: 32px;
+            padding-right: 24px;
           }
-
+          
           .masonry-posts-column {
-            padding-left: 32px;
+            padding-left: 24px;
           }
-
+          
           .post {
-            margin-bottom: 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
           }
         }
       `}</style>
