@@ -111,24 +111,19 @@
 }
 
 .badge {
-  background-color: var(--colors-cyan);
-  color: var(--colors-white);
-  display: inline-block;
+  background-color: var(--colors-yellow);
+  color: var(--colors-black);
+  display: inline-flex;
+  align-items: center;
   font-weight: bold;
   border-radius: 999px;
-  line-height: 1.4;
   text-align: center;
-  vertical-align: middle;
 }
+
 .header-streak {
-  padding: 4px 16px;
+  padding: 4px 16px 4px 0;
   margin-right: 12px;
-}
-.header-streak-singular:after {
-  content: ' day';
-}
-.header-streak-plural:after {
-  content: ' days';
+  max-height: 28px;
 }
 
 .header-content {
@@ -208,11 +203,9 @@
   word-wrap: break-word;
 }
 .post-header-streak {
-  min-width: 20px;
-  margin-left: 8px;
-  line-height: 1.2;
-  font-size: 12px;
-  padding: 2px 6px;
+  font-size: 14px;
+  margin-left: 12px;
+  padding-left: 10px;
 }
 .post-header-date {
   color: var(--colors-muted);

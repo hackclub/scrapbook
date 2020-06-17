@@ -1,6 +1,7 @@
 import { formatDate } from '../lib/dates'
 import { filter } from 'lodash'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Video from './video'
 
@@ -35,8 +36,9 @@ const Post = ({
               <strong className="post-header-name">
                 @{user.username}
                 {user.streakDisplay && (
-                  <span className="badge post-header-streak">
+                  <span className="badge post-header-streak" title={`${user.streakCount}-day streak`}>
                     {user.streakCount}
+                    <Icon size={24} glyph="admin-badge" title="Streak icon" />
                   </span>
                 )}
               </strong>

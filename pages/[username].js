@@ -62,7 +62,8 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
                   profile.streakCount !== 1 ? 'plural' : 'singular'
                   }`}
               >
-                {profile.streakCount}
+                <Icon size={32} glyph="admin-badge" title="Streak icon" />
+                {profile.streakCount}-day streak
               </span>
             )}
             <a
