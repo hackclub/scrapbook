@@ -35,13 +35,16 @@ const Post = ({
               )}
               <strong className="post-header-name">
                 @{user.username}
-                {user.streakDisplay && (
-                  <span className="badge post-header-streak" title={`${user.streakCount}-day streak`}>
-                    {user.streakCount}
-                    <Icon size={24} glyph="admin-badge" title="Streak icon" />
-                  </span>
-                )}
               </strong>
+              {user.streakDisplay && (
+                <span className="badge post-header-streak" title={`${user.streakCount}-day streak`}>
+                  {user.streakCount}
+                  <Icon size={24} glyph="admin-badge" title="Streak icon" />
+                </span>
+              )}
+              {user.css && (
+                <Icon size={24} glyph="rep" title="Has a customized profile" />
+              )}
             </>
           )}
           <time className="post-header-date" dateTime={postedAt}>

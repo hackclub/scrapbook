@@ -197,20 +197,25 @@
   margin-right: 8px;
 }
 .post-header-name {
-  flex: 1 1 auto;
   font-size: 18px;
   word-break: break-all;
   word-wrap: break-word;
 }
+.post-header > svg {
+  color: var(--colors-pink);
+}
 .post-header-streak {
-  font-size: 14px;
-  margin-left: 12px;
+  margin-right: 4px;
+  margin-left: 8px;
   padding-left: 10px;
+  font-size: 14px;
 }
 .post-header-date {
+  margin-left: auto;
   color: var(--colors-muted);
 }
 .post-header-date:first-child {
+  margin-left: 0;
   color: var(--colors-text);
   font-size: 18px;
   font-weight: bold;
