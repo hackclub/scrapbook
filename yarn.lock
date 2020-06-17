@@ -1060,11 +1060,6 @@
   resolved "https://registry.yarnpkg.com/@hackclub/meta/-/meta-1.0.0.tgz#421731bd87e8fdeb4cc33afd12d68c8266ce79ae"
   integrity sha512-Xm1QgCxWAzG8ekV3xSf0gZ/6gCL4BuaKl3EjAy3e8QhoKDCjO7O4TtlfeUyLoJvIHzgYN/1sbZtkZ1VE6Pw5XA==
 
-"@hackclub/theme@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@hackclub/theme/-/theme-0.1.1.tgz#b02672cc2f28094eb79a227e160cee935cc751fe"
-  integrity sha512-P8G0OcY22NnWK2SsGupYSMxd1ScbqSrTewPVjgWLcd1qgjTHEJBafWEF75B3Ru87CRco0wLiJi3bMmEBp1LT+A==
-
 "@mdx-js/loader@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-1.6.5.tgz#f2826c79f18cbc6b502dd5722d7e7101e5658dbb"

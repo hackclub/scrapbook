@@ -129,10 +129,6 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
 
 const Loading = () => (
   <main className="container">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
-      rel="stylesheet"
-    />
     <h1>Loading…</h1>
     <style jsx>{`
       main {

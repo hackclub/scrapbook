@@ -1,7 +1,7 @@
 import * as React from 'react'
 import NextApp from 'next/app'
 
-import '@hackclub/theme/fonts/reg-bold.css'
+import '../public/fonts.css'
 import '../public/app.css'
 import '../public/themes/default.css'
 import 'react-lazy-load-image-component/src/effects/blur.css'

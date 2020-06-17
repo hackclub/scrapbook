@@ -13,12 +13,6 @@ const Header = () => (
       description="See everything the Hack Club community is making this summer."
       image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
     />
-    <Head>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
-        rel="stylesheet"
-      />
-    </Head>
     <header>
       <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
