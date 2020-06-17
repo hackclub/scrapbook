@@ -162,9 +162,17 @@ const Profile = ({ profile = {}, heatmap = [], posts = [] }) => (
           className="css-icon"
           aria-label="Code link icon"
         />
-        <a href={profile.css} target="_blank" className="css-link">
+        <a
+          href={
+            profile.css.includes('gist.githubusercontent')
+              ? profile.css.replace('githubusercontent.', 'github.').split('/raw')?.[0]
+              : profile.css
+          }
+          target="_blank"
+          className="css-link"
+        >
           CSS:{' '}
-          {profile.css.includes('gist.githubusercontent.com')
+          {profile.css.includes('gist.githubusercontent')
             ? `Gist by @${profile.css.match(/\.com\/(\w+)(?=\/)/)?.[1]}`
             : profile.css}
         </a>

@@ -275,5 +275,5 @@ a.post-attachment:first-child:last-child {
   word-break: break-all;
   color: inherit;
   font-size: 14px;
-  font-family: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+  font-family: var(--fonts-mono);
 }
