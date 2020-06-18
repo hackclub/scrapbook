@@ -6,10 +6,6 @@
     {
       "source": "/api/profiles",
       "destination": "/api/users"
-    },
-    {
-      "source": "/leaderboard",
-      "destination": "/leaderboard.html"
     }
   ]
 }

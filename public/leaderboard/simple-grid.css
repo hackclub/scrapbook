@@ -118,7 +118,7 @@
 @media only screen and (min-width: 33.75em) {
   /* 540px */
   .container {
-    width: 80%;
+    width: 90%;
   }
 }
 
@@ -183,7 +183,7 @@
 @media only screen and (min-width: 60em) {
   /* 960px */
   .container {
-    width: 75%;
+    width: 90%;
     max-width: 60rem;
   }
 }
