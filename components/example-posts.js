@@ -18,7 +18,7 @@ const ExamplePosts = () => [
       'https://scx2.b-cdn.net/gfx/news/hires/2016/proteinlikes.png'
     )}
     profile
-    muted
+    muted={0.625}
   />,
   <Post
     key="bang"
@@ -29,7 +29,7 @@ const ExamplePosts = () => [
       'https://cdn.mos.cms.futurecdn.net/vLq9PC5VDGqgCFXxSUUCaQ-1024-80.jpg'
     )}
     profile
-    muted
+    muted={0.375}
   />
 ]
 

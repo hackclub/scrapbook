@@ -23,7 +23,7 @@ const Post = ({
   <section
     className="post"
     id={id}
-    style={muted ? { color: 'var(--colors-muted)' } : null}
+    style={muted ? { opacity: muted, pointerEvents: 'none' } : null}
   >
     <Link href="/[profile]" as={`/${user.username}`}>
       <a className="post-header">
