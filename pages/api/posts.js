@@ -1,4 +1,4 @@
-import { find, reverse, orderBy } from 'lodash'
+import { find, reverse, orderBy, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
 
 export const getRawPosts = () =>
@@ -8,12 +8,14 @@ export const getRawPosts = () =>
 
 export const getPosts = async () => {
   let posts = await getRawPosts()
-  const users = await getRawUsers()
-  posts = posts.map(p => {
-    const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-    p.user = user?.fields ? transformUser(user) : {}
-    return p
-  })
+  const users = await getRawUsers(true)
+  posts = posts
+    .map(p => {
+      const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
+      p.user = user?.fields ? transformUser(user) : null
+      return p
+    })
+    .filter(p => !isEmpty(p.user))
   posts = posts.map(({ id, user, fields }) => ({
     id,
     user,
