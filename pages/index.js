@@ -11,10 +11,10 @@ const Header = () => (
   <>
     <Meta
       as={Head}
-      name="Summer Scrapbook"
+      name="Summer of Making"
       title="Summer Scrapbook"
-      description="See everything the Hack Club community is making this summer."
-      image="https://workshop-cards.hackclub.com/Summer%20Scrapbook.png?brand=Scrapbook&fontSize=300px"
+      description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
+      image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
       <h1>Hack Club’s Summer Scrapbook</h1>
@@ -119,12 +119,14 @@ export default ({ initialData }) => {
 
   return (
     <main>
+      {/*
       <Banner
         isVisible={router.query?.ref === 'github'}
         title="Hello, GitHubber!"
       >
         This is placeholder text.
       </Banner>
+      */}
       <Header />
       <Masonry
         breakpointCols={{
