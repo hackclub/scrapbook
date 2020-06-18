@@ -108,6 +108,7 @@
   margin: 0;
   flex: 1 1 auto;
   font-size: 48px;
+  line-height: 1;
 }
 
 .badge {

@@ -12,6 +12,7 @@ const Message = ({ text, color1 = 'yellow', color2 = 'green' }) => (
         margin: 0;
         font-size: 56px;
         line-height: 1;
+        padding-bottom: 12px;
       }
       @media (min-width: 32em) {
         h1 {

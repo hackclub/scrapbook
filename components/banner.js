@@ -18,13 +18,17 @@ const Banner = ({
           grid-template-columns: 48px 1fr;
           padding: 12px;
           border-radius: 9px;
-          max-width: 640px;
+          max-width: 720px;
           background-color: var(--colors-blue);
           color: var(--colors-white);
           margin: 0 auto 24px;
         }
         .banner-avatar {
           border-radius: 6px;
+        }
+        .post-text :global(a) {
+          color: inherit;
+          font-weight: bold;
         }
       `}</style>
     </aside>
