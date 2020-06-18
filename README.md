@@ -16,7 +16,7 @@ Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [
 
 ## CSS customization
 
-To customize the CSS on your profile page, run `/setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
+To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
 ### Colors & fonts
 
@@ -61,7 +61,7 @@ Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.moz
 
 ## Custom domains
 
-To put your profile on your own domain, run `/setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.zachlatta.com`](https://scrapbook.zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
+To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.zachlatta.com`](https://scrapbook.zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 <small>
   (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this

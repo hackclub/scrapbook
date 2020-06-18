@@ -7,7 +7,7 @@ import Message from '../components/message'
 import Post from '../components/post'
 import { useRouter } from 'next/router'
 
-const Header = () => (
+const Header = ({ children }) => (
   <>
     <Meta
       as={Head}
@@ -17,6 +17,7 @@ const Header = () => (
       image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
+      {children}
       <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
         Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
@@ -33,7 +34,7 @@ const Header = () => (
     <style jsx>{`
       header {
         text-align: center;
-        padding: 0 0 48px;
+        padding: 0 12px 48px;
       }
       h1 {
         color: var(--colors-orange);
@@ -43,7 +44,7 @@ const Header = () => (
         line-height: 1;
       }
       p {
-        font-size: 16px;
+        font-size: 20px;
         color: var(--colors-text);
       }
       @media (min-width: 32em) {
@@ -119,15 +120,16 @@ export default ({ initialData }) => {
 
   return (
     <main>
-      {/*
-      <Banner
-        isVisible={router.query?.ref === 'github'}
-        title="Hello, GitHubber!"
-      >
-        This is placeholder text.
+      <Header>
+        <Banner
+          avatar='/octocat.svg'
+          isVisible={router.query?.ref === 'github'}
+          title="Hello, GitHubber!"
+        >
+          To start posting on the Scrapbook,{' '}
+          <a href="https://hackclub.com/slack/">join our Slack community</a>.
       </Banner>
-      */}
-      <Header />
+      </Header>
       <Masonry
         breakpointCols={{
           default: 4,

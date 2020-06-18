@@ -16,15 +16,22 @@ const Banner = ({
           display: grid;
           grid-gap: 12px;
           grid-template-columns: 48px 1fr;
-          padding: 12px;
-          border-radius: 9px;
+          padding: 12px 12px 6px;
+          border-radius: 12px;
           max-width: 720px;
           background-color: var(--colors-blue);
           color: var(--colors-white);
-          margin: 0 auto 24px;
+          margin: 12px auto;
+          text-align: left;
         }
         .banner-avatar {
           border-radius: 6px;
+        }
+        .post-header-name {
+          font-size: 18px;
+        }
+        .post-text {
+          line-height: 1.375;
         }
         .post-text :global(a) {
           color: inherit;
