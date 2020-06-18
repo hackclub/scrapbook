@@ -15,6 +15,7 @@ const Join = () => {
           margin-left: 16px;
           text-decoration: none;
           text-transform: uppercase;
+          color: #fff;
           transition: 0.125s background-color ease-in-out;
         }
         a:hover,
