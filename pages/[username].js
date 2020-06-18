@@ -132,8 +132,8 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           href={
             profile.css.includes('gist.githubusercontent')
               ? profile.css
-                  .replace('githubusercontent.', 'github.')
-                  .split('/raw')?.[0]
+                .replace('githubusercontent.', 'github.')
+                .split('/raw')?.[0]
               : profile.css
           }
           target="_blank"
@@ -164,7 +164,9 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     return (
       <Profile {...data}>
         <Banner isVisible={router.query.welcome}>
-          Welcome to your scrapbook page!
+          Woah, sweet!!! We're communicating via a website now!...welcome to your scrapbook page!
+          <br /><br />
+          Did you know you can <a href="https://scrapbook.hackclub.com/msw" target="_blank">customize your scrapbook profile</a>? <a href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU" target="_blank">Join the #scrapbook-css channel to see how!</a>
         </Banner>
       </Profile>
     )
