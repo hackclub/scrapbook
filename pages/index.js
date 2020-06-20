@@ -178,6 +178,12 @@ export default ({ initialData }) => {
           }
         }
       `}</style>
+      <div className="ending-message">
+        <span>
+          <Icon size={24} glyph="bolt" title="reached the end" />
+          You've reached the end, why not <a href="https://hackclub.com/slack/">make your own post?</a>
+        </span>
+      </div>
     </main>
   )
 }
