@@ -36,7 +36,7 @@ const Nav = () => {
         </Link>
       )}
       <Link href="/about">
-        <a className="nav-link">About</a>
+        <a className="nav-link nav-link-about">About</a>
       </Link>
       <a
         href="https://github.com/hackclub/summer-scrapbook"
