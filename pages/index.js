@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
+import Icon from '@hackclub/icons'
 import useSWR from 'swr'
 import Masonry from 'react-masonry-css'
 import Banner from '../components/banner'
+import Footer from '../components/footer'
 import Message from '../components/message'
 import Post from '../components/post'
 import { useRouter } from 'next/router'
@@ -178,13 +180,10 @@ export default ({ initialData }) => {
           }
         }
       `}</style>
-      <div className="ending-message">
-        <span>
-          <Icon size={24} glyph="bolt" title="reached the end" />
-          You've reached the end, why not <a href="https://hackclub.com/slack/">make your own post?</a>
-        </span>
-      </div>
-    </main>
+    
+   
+    <Footer />
+    </main> 
   )
 }
 
