@@ -85,13 +85,15 @@ To put your profile on your own domain, run `/scrappy setdomain <domain>` in Sla
   feature.)
 </small>
 
-## Website Widget
+## Website widget
 
-Want to showcase your streak on your personal website? We've created a small widget that you can put on your website with two lines of code. It shows up in the bottom right corner. Just replace `username` with you Scrappy username. Here’s the code snippet:
-```
+Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with you Scrappy username. Here’s the code snippet:
+
+```js
 <script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username')</script>
 ```
+
 ## Public API
 
 The backend is powered by Airtable served over [Airbridge](https://github.com/hackclub/api2), but the site exposes a public JSON API powered by [Next.js API routes](https://nextjs.org/docs/api-routes/introduction) that reformats data in a more useful way. The live site runs entirely on this API.
