@@ -3,6 +3,7 @@ import Meta from '@hackclub/meta'
 import useSWR from 'swr'
 import Masonry from 'react-masonry-css'
 import Banner from '../components/banner'
+import Footer from '../components/footer'
 import Message from '../components/message'
 import Post from '../components/post'
 import { useRouter } from 'next/router'
@@ -144,6 +145,7 @@ export default ({ initialData }) => {
           <Post key={post.id} {...post} />
         ))}
       </Masonry>
+      <Footer />
       <style jsx global>{`
         h1 {
           padding: 16px;
@@ -178,7 +180,7 @@ export default ({ initialData }) => {
           }
         }
       `}</style>
-    </main>
+    </main> 
   )
 }
 
