@@ -13,7 +13,7 @@ import FourOhFour from './404'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
+export const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
   <main className="container">
     <Meta
       as={Head}
