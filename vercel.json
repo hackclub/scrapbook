@@ -8,13 +8,10 @@
       "destination": "/api/users"
     }
   ],
-   "routes": [
+     "headers": [
     {
-      "src": "/(.*)",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      },
-      "continue": true
+      "source": "/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
     }
   ]
 }
