@@ -1,4 +1,5 @@
 import { map } from 'lodash'
+import { allowAllOrigins } from '../../lib/api'
 
 export const getUsernames = () =>
   fetch(
@@ -7,4 +8,5 @@ export const getUsernames = () =>
     .then(r => r.json())
     .then(u => map(u, 'fields.Username'))
 
-export default async (req, res) => getUsernames().then(u => res.json(u || []))
+export default async (req, res) =>
+  getUsernames().then(u => allowAllOrigins(res).json(u || []))

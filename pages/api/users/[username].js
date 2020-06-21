@@ -1,5 +1,6 @@
 import { find, reverse, orderBy, filter } from 'lodash'
 import { getRawUsers, transformUser } from './index'
+import { allowAllOrigins } from '../../../lib/api'
 
 export const getProfile = async (username) => {
   const accounts = await getRawUsers()
@@ -30,5 +31,5 @@ export default async (req, res) => {
   const profile = await getProfile(req.query.username)
   if (!profile?.id) return res.status(404).json({ status: 404, error: 'Cannot locate user' })
   const posts = await getPosts(profile) || []
-  res.json({ profile, posts })
+  allowAllOrigins(res).json({ profile, posts })
 }

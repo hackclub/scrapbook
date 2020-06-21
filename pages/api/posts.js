@@ -1,5 +1,6 @@
 import { find, reverse, orderBy, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
+import { allowAllOrigins } from '../../lib/api'
 
 export const getRawPosts = () =>
   fetch(
@@ -30,5 +31,5 @@ export const getPosts = async () => {
 
 export default async (req, res) => {
   const posts = await getPosts()
-  res.json(posts)
+  allowAllOrigins(res).json(posts)
 }

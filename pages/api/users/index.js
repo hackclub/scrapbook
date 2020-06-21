@@ -12,6 +12,8 @@ export const makeAvatar = (username = '') =>
   ).replace(/\%20/g, '+')}&size=192&background=${getColor(username).replace('#', '')}&color=fff`
 */
 
+import { allowAllOrigins } from '../../../lib/api'
+
 const full = `?select=${JSON.stringify({
   filterByFormula: '{Full Slack Member?} = 1'
 })}`
@@ -36,4 +38,5 @@ export const transformUser = (user = {}) => ({
 export const getProfiles = () =>
   getRawUsers().then(users => users.map(transformUser))
 
-export default async (req, res) => getProfiles().then(u => res.json(u || []))
+export default async (req, res) =>
+  getProfiles().then(u => allowAllOrigins(res).json(u || []))
