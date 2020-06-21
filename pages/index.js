@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import Icon from '@hackclub/icons'
 import useSWR from 'swr'
 import Masonry from 'react-masonry-css'
 import Banner from '../components/banner'
@@ -146,6 +145,7 @@ export default ({ initialData }) => {
           <Post key={post.id} {...post} />
         ))}
       </Masonry>
+      <Footer />
       <style jsx global>{`
         h1 {
           padding: 16px;
@@ -180,9 +180,6 @@ export default ({ initialData }) => {
           }
         }
       `}</style>
-    
-   
-    <Footer />
     </main> 
   )
 }
