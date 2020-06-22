@@ -28,11 +28,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         profile.username
       }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
-      }${
-        profile.streakDisplay
-          ? `&caption=${profile.streakCount}-day streak`
-          : ''
-      }`}
+      }&caption=${profile.streakCount}-day streak`}
     />
     {profile.css && (
       <link
@@ -61,17 +57,19 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         <div>
           <h1 className="header-title-name">{profile.username}</h1>
           <section className="header-content">
-            {profile.streakDisplay && (
-              <span
-                className={`badge header-streak header-streak-${
-                  profile.streakCount !== 1 ? 'plural' : 'singular'
-                }`}
-              >
-                <Icon size={32} glyph="admin-badge" title="Streak icon" />
-                {profile.streakCount}
-                -day streak
-              </span>
-            )}
+            <span
+              className={`badge header-streak header-streak-${
+                profile.streakCount !== 1
+                  ? profile.streakCount === 0
+                    ? 'zero'
+                    : 'plural'
+                  : 'singular'
+              }`}
+            >
+              <Icon size={32} glyph="admin-badge" title="Streak icon" />
+              {profile.streakCount}
+              -day streak
+            </span>
             <a
               href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
               target="_blank"

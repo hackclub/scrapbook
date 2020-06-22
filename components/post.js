@@ -48,20 +48,21 @@ const Post = ({
             <div className="post-header-container">
               <span className="post-header-name">
                 <strong>@{user.username}</strong>
-                {user.streakDisplay && (
-                  <span
-                    className="badge post-header-streak"
-                    title={`${user.streakCount}-day streak`}
-                  >
-                    {user.streakCount}
-                    <Icon size={24} glyph="admin-badge" title="Streak icon" />
-                  </span>
-                )}
+                <span
+                  className={`badge post-header-streak ${
+                    user.streakCount === 0 ? 'header-streak-zero' : ''
+                  }`}
+                  title={`${user.streakCount}-day streak`}
+                >
+                  {user.streakCount}
+                  <Icon size={24} glyph="admin-badge" title="Streak icon" />
+                </span>
                 {user.css && (
                   <Icon
                     size={24}
                     glyph="rep"
                     title="Has a customized profile"
+                    className="post-header-css"
                   />
                 )}
               </span>
