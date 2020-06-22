@@ -74,7 +74,7 @@ const Post = ({
               <LazyLoadImage
                 alt={img.filename}
                 effect="blur"
-                src={img.thumbnails?.large?.url}
+                src={img.thumbnails?.large?.url || img.url}
                 placeholderSrc={img.thumbnails?.small?.url}
                 visibleByDefault
               />
