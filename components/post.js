@@ -60,7 +60,7 @@ const Post = ({
         </time>
       </a>
     </Link>
-    <p className="post-text">{text}</p>
+    <p className="post-text" dangerouslySetInnerHTML={{ __html: text }}></p>
     {attachments.length > 0 && (
       <div className="post-attachments">
         {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
