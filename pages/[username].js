@@ -23,16 +23,16 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         profile.streakDisplay
           ? `(currently a ${profile.streakCount}-day streak!)`
           : ''
-        } making things in the Hack Club community this summer.`}
+      } making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-        }.png?brand=Scrapbook${
+      }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
-        }${
+      }${
         profile.streakDisplay
           ? `&caption=${profile.streakCount}-day streak`
           : ''
-        }`}
+      }`}
     />
     {profile.css && (
       <link
@@ -65,7 +65,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               <span
                 className={`badge header-streak header-streak-${
                   profile.streakCount !== 1 ? 'plural' : 'singular'
-                  }`}
+                }`}
               >
                 <Icon size={32} glyph="admin-badge" title="Streak icon" />
                 {profile.streakCount}
@@ -73,9 +73,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               </span>
             )}
             <a
-              href={`https://app.slack.com/client/T0266FRGM/user_profile/${
-                profile.slack
-                }`}
+              href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
               target="_blank"
               className="header-link header-link-slack"
             >
@@ -109,7 +107,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           values={heatmap}
           showWeekdayLabels
           classForValue={v => (v?.count ? `color-${v.count}` : 'color-empty')}
-          titleForValue={v => v?.date ? `${v?.date} updates: ${v?.count}` : ''}
+          titleForValue={v =>
+            v?.date ? `${v?.date} updates: ${v?.count}` : ''
+          }
           width={128}
         />
       </aside>
@@ -132,8 +132,8 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           href={
             profile.css.includes('gist.githubusercontent')
               ? profile.css
-                .replace('githubusercontent.', 'github.')
-                .split('/raw')?.[0]
+                  .replace('githubusercontent.', 'github.')
+                  .split('/raw')?.[0]
               : profile.css
           }
           target="_blank"
@@ -164,11 +164,22 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     return (
       <Profile {...data}>
         <Banner isVisible={router.query.welcome === 'true'}>
-          Woah!!! We’re communicating via a website now!…welcome to your scrapbook page!
+          Woah!!! We’re communicating via a website now!…welcome to your
+          scrapbook page!
           <br />
-          Did you know you can <a href="https://scrapbook.hackclub.com/msw" target="_blank">customize your scrapbook profile</a>?
+          Did you know you can{' '}
+          <a href="https://scrapbook.hackclub.com/msw" target="_blank">
+            customize your scrapbook profile
+          </a>
+          ?
           <br />
-          <a href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU" target="_blank">Join the #scrapbook-css channel</a> to see how.
+          <a
+            href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU"
+            target="_blank"
+          >
+            Join the #scrapbook-css channel
+          </a>{' '}
+          to see how.
         </Banner>
       </Profile>
     )
