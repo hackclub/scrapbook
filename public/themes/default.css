@@ -204,6 +204,9 @@
   font-size: 16px;
   word-break: break-all;
   word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  padding-bottom: 3px;
 }
 .post-header > svg {
   color: var(--colors-pink);
@@ -216,10 +219,10 @@
   max-height: 20px;
 }
 .post-header-date {
-  margin-left: auto;
   color: var(--colors-muted);
+  font-family: 14px;
 }
-.post-header-date:first-child {
+.post-header > .post-header-date {
   margin-left: 0;
   color: var(--colors-text);
   font-size: 18px;

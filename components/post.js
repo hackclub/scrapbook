@@ -28,7 +28,13 @@ const Post = ({
   >
     <Link href="/[profile]" as={`/${user.username}`}>
       <a className="post-header">
-        {!profile && (
+        {profile ? (
+          <time className="post-header-date" dateTime={postedAt}>
+            {postedAt?.startsWith('20')
+              ? convertTimestampToDate(postedAt)
+              : postedAt}
+          </time>
+        ) : (
           <>
             {user.avatar && (
               <img
@@ -39,26 +45,34 @@ const Post = ({
                 className="post-header-avatar"
               />
             )}
-            <strong className="post-header-name">@{user.username}</strong>
-            {user.streakDisplay && (
-              <span
-                className="badge post-header-streak"
-                title={`${user.streakCount}-day streak`}
-              >
-                {user.streakCount}
-                <Icon size={24} glyph="admin-badge" title="Streak icon" />
+            <div className="post-header-container">
+              <span className="post-header-name">
+                <strong>@{user.username}</strong>
+                {user.streakDisplay && (
+                  <span
+                    className="badge post-header-streak"
+                    title={`${user.streakCount}-day streak`}
+                  >
+                    {user.streakCount}
+                    <Icon size={24} glyph="admin-badge" title="Streak icon" />
+                  </span>
+                )}
+                {user.css && (
+                  <Icon
+                    size={24}
+                    glyph="rep"
+                    title="Has a customized profile"
+                  />
+                )}
               </span>
-            )}
-            {user.css && (
-              <Icon size={24} glyph="rep" title="Has a customized profile" />
-            )}
+              <time className="post-header-date" dateTime={postedAt}>
+                {postedAt?.startsWith('20')
+                  ? convertTimestampToDate(postedAt)
+                  : postedAt}
+              </time>
+            </div>
           </>
         )}
-        <time className="post-header-date" dateTime={postedAt}>
-          {postedAt?.startsWith('20')
-            ? convertTimestampToDate(postedAt)
-            : postedAt}
-        </time>
       </a>
     </Link>
     <Content>{text}</Content>
