@@ -67,7 +67,7 @@ const Post = ({
           img => (
             <a
               key={img.filename}
-              href={img.thumbnails?.full?.url}
+              href={img.thumbnails?.full?.url || img.url}
               target="_blank"
               className="post-attachment"
             >
@@ -76,6 +76,7 @@ const Post = ({
                 effect="blur"
                 src={img.thumbnails?.large?.url}
                 placeholderSrc={img.thumbnails?.small?.url}
+                visibleByDefault
               />
             </a>
           )
