@@ -230,6 +230,9 @@
   font-size: 18px;
   word-wrap: break-word;
 }
+.post-text a {
+  color: var(--colors-blue);
+}
 
 .post-attachments {
   display: grid;

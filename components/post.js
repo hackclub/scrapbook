@@ -3,6 +3,7 @@ import { filter } from 'lodash'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
+import Content from './content'
 import Video from './video'
 
 const Post = ({
@@ -60,7 +61,7 @@ const Post = ({
         </time>
       </a>
     </Link>
-    <p className="post-text">{text}</p>
+    <Content>{text}</Content>
     {attachments.length > 0 && (
       <div className="post-attachments">
         {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
