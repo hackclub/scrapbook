@@ -7,5 +7,11 @@
       "source": "/api/profiles",
       "destination": "/api/users"
     }
+  ],
+     "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    }
   ]
 }

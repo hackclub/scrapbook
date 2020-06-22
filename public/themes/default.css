@@ -35,10 +35,12 @@
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin-left: auto;
   margin-right: auto;
   font-size: 20px;
   -webkit-text-fill-color: currentColor;
+}
+.nav-link-about {
+  margin-left: auto;
 }
 .nav-link-github {
   line-height: 0;

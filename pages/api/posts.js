@@ -8,7 +8,7 @@ export const getRawPosts = () =>
 
 export const getPosts = async () => {
   let posts = await getRawPosts()
-  const users = await getRawUsers(true)
+  const users = await getRawUsers(false)
   posts = posts
     .map(p => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
