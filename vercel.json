@@ -2,13 +2,7 @@
   "github": {
     "silent": true
   },
-  "rewrites": [
-    {
-      "source": "/api/profiles",
-      "destination": "/api/users"
-    }
-  ],
-     "headers": [
+  "headers": [
     {
       "source": "/(.*)",
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]

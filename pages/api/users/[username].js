@@ -3,10 +3,14 @@ import { getRawUsers, transformUser } from './index'
 import { formatTS } from '../posts'
 
 export const getProfile = async username => {
-  const accounts = await getRawUsers()
-  if (!accounts) console.error('Could not fetch accounts')
-  const user = find(accounts, ['fields.Username', username]) || {}
-  // console.log('User', user)
+  const opts = {
+    maxRecords: 1,
+    filterByFormula: `{Username} = "${username}"`
+  }
+  const user = await fetch(
+    `https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts?select=${JSON.stringify(opts)}`
+  ).then(r => r.json()).then(a => Array.isArray(a) ? a[0] : null)
+  if (!user) console.error('Could not fetch account')
   return user && user?.fields?.Username ? transformUser(user) : {}
 }
 

@@ -239,8 +239,15 @@
 .post-text a {
   color: var(--colors-blue);
 }
-.post-text .post-text-mention {
+a.post-text-mention {
   color: var(--colors-purple);
+  display: inline-flex;
+  align-items: baseline;
+}
+.post-text-mention-avatar {
+  border-radius: 50%;
+  margin-right: 4px;
+  align-self: flex-end;
 }
 
 .post-attachments {

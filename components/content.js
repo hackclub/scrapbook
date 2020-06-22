@@ -1,7 +1,7 @@
 // Credit to https://blog.rstankov.com/building-auto-link-component-in-react/
 import { memo } from 'react'
 import { last } from 'lodash'
-import Link from 'next/link'
+import Mention from './mention'
 
 export const mapLinks = (text, link, mention) =>
   text.split(/(<.+?\|?\S+>)|(@\S+)/).map((chunk, i) => {
@@ -28,11 +28,7 @@ const Content = memo(({ children }) => (
           {children}
         </a>
       ),
-      (username, i) => (
-        <Link href="/[username]" as={`/${username}`} key={username + i}>
-          <a className="post-text-mention">@{username}</a>
-        </Link>
-      )
+      (username, i) => <Mention username={username} key={username + i} />
     )}
   </p>
 ))
