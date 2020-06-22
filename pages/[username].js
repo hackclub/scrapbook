@@ -67,8 +67,12 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               }`}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
-              {profile.streakCount}
-              -day streak
+              <span className="header-streak-count">
+                {profile.streakCount}
+              </span>
+              <span className="header-streak-desc">
+                -day streak
+              </span>
             </span>
             <a
               href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
