@@ -19,6 +19,7 @@ const Post = ({
   attachments = [],
   mux = [],
   postedAt,
+  scrollPosition,
   muted = false
 }) => (
   <section
@@ -92,6 +93,7 @@ const Post = ({
                 effect="blur"
                 src={img.thumbnails?.large?.url || img.url}
                 placeholderSrc={img.thumbnails?.small?.url}
+                scrollPosition={scrollPosition}
                 visibleByDefault
               />
             </a>

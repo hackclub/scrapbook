@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import useSWR from 'swr'
-import Masonry from 'react-masonry-css'
 import Banner from '../components/banner'
 import Footer from '../components/footer'
 import Message from '../components/message'
-import Post from '../components/post'
+import Posts from '../components/posts'
 import { useRouter } from 'next/router'
 
 const Header = ({ children }) => (
@@ -43,6 +42,7 @@ const Header = ({ children }) => (
         margin: 0;
         font-size: 36px;
         line-height: 1;
+        padding: 16px;
       }
       p {
         font-size: 20px;
@@ -123,64 +123,17 @@ export default ({ initialData }) => {
     <main>
       <Header>
         <Banner
-          avatar='/octocat.svg'
+          avatar="/octocat.svg"
           isVisible={router.query?.ref === 'github'}
           title="Hello, GitHubber!"
         >
           To start posting on the Scrapbook,{' '}
           <a href="https://hackclub.com/slack/">join our Slack community</a>.
-      </Banner>
+        </Banner>
       </Header>
-      <Masonry
-        breakpointCols={{
-          default: 4,
-          1100: 3,
-          700: 2,
-          500: 1
-        }}
-        className="masonry-posts"
-        columnClassName="masonry-posts-column"
-      >
-        {data.map(post => (
-          <Post key={post.id} {...post} />
-        ))}
-      </Masonry>
+      <Posts posts={data} />
       <Footer />
-      <style jsx global>{`
-        h1 {
-          padding: 16px;
-        }
-
-        .masonry-posts {
-          display: flex;
-          width: 100%;
-          max-width: 100%;
-        }
-
-        .masonry-posts-column {
-          background-clip: padding-box;
-        }
-
-        .post {
-          margin-bottom: 1px;
-        }
-
-        @media (min-width: 32em) {
-          .masonry-posts {
-            padding-right: 24px;
-          }
-
-          .masonry-posts-column {
-            padding-left: 24px;
-          }
-
-          .post {
-            border-radius: 12px;
-            margin-bottom: 24px;
-          }
-        }
-      `}</style>
-    </main> 
+    </main>
   )
 }
 
