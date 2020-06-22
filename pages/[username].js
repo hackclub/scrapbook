@@ -67,12 +67,8 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               }`}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
-              <span className="header-streak-count">
-                {profile.streakCount}
-              </span>
-              <span className="header-streak-desc">
-                -day streak
-              </span>
+              <span className="header-streak-count">{profile.streakCount}</span>
+              <span className="header-streak-desc">-day streak</span>
             </span>
             <a
               href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
@@ -143,7 +139,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         >
           CSS:{' '}
           {profile.css.includes('gist.githubusercontent')
-            ? `Gist by @${profile.css.match(/\.com\/(\w+)(?=\/)/)?.[1]}`
+            ? `Gist by @${profile.css.split('.com/')?.[1]?.split('/')?.[0]}`
             : profile.css}
         </a>
       </footer>
