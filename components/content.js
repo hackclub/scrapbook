@@ -16,7 +16,7 @@ export const mapLinks = (text, link, mention) =>
         .replace(/\/$/, '')
       return link(url, children, i)
     }
-    return chunk
+    return chunk?.replace('&amp;', '&')
   })
 
 const Content = memo(({ children }) => (
