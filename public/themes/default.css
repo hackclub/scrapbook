@@ -236,6 +236,9 @@
 .post-text a {
   color: var(--colors-blue);
 }
+.post-text .post-text-mention {
+  color: var(--colors-purple);
+}
 
 .post-attachments {
   display: grid;
