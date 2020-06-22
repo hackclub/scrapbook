@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
@@ -27,10 +28,28 @@ const Join = () => (
 const Nav = () => {
   const { pathname } = useRouter()
   const home = pathname === '/'
+  // This is a hack for using the right link on custom domains
+  const [ext, setExt] = useState(false)
+  useEffect(() => {
+    try {
+      const l = document.createElement('a')
+      l.href = window.location.href
+      console.log(l.hostname)
+      if (!l.hostname.includes('scrapbook.hackclub')) setExt(true)
+    } catch (e) {}
+  }, [])
+
   return (
     <nav className="nav">
       <Flag />
-      {!home && (
+      {!home && ext ? (
+        <a
+          href="https://scrapbook.hackclub.com/"
+          className="nav-link nav-link-home"
+        >
+          Scrapbook
+        </a>
+      ) : (
         <Link href="/">
           <a className="nav-link nav-link-home">Scrapbook</a>
         </Link>
