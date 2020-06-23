@@ -1,4 +1,4 @@
-import { find, reverse, orderBy, filter } from 'lodash'
+import { map, find, reverse, orderBy, filter } from 'lodash'
 import { getRawUsers, transformUser } from './index'
 import { formatTS } from '../posts'
 
@@ -8,8 +8,12 @@ export const getProfile = async username => {
     filterByFormula: `{Username} = "${username}"`
   }
   const user = await fetch(
-    `https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts?select=${JSON.stringify(opts)}`
-  ).then(r => r.json()).then(a => Array.isArray(a) ? a[0] : null)
+    `https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts?select=${JSON.stringify(
+      opts
+    )}`
+  )
+    .then(r => r.json())
+    .then(a => (Array.isArray(a) ? a[0] : null))
   if (!user) console.error('Could not fetch account')
   return user && user?.fields?.Username ? transformUser(user) : {}
 }
@@ -19,21 +23,17 @@ export const getPosts = async user => {
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
   ).then(r => r.json())
   if (!allUpdates) console.error('Could not fetch posts')
-  const updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
-  const posts = reverse(
-    orderBy(
-      updates.map(({ id, fields }) => ({
-        id,
-        postedAt: formatTS(fields['Message Timestamp']),
-        text: fields['Text'] || '',
-        attachments: fields['Attachments'] || [],
-        mux: fields['Mux Playback IDs']?.split(' ') || []
-      })),
-      'postedAt'
-    )
-  )
+  let updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
+  updates = orderBy(updates, u => u.fields['Post Time'])
+  updates = reverse(updates).map(({ id, fields }) => ({
+    id,
+    postedAt: formatTS(fields['Message Timestamp']),
+    text: fields['Text'] || '',
+    attachments: fields['Attachments'] || [],
+    mux: fields['Mux Playback IDs']?.split(' ') || []
+  }))
 
-  return posts
+  return updates
 }
 
 export default async (req, res) => {
