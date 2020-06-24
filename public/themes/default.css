@@ -29,7 +29,7 @@
 }
 .nav-link:hover,
 .nav-link:focus {
-  color: var(--colors-cyan);
+  color: var(--colors-purple);
 }
 .nav-link-home {
   font-weight: bold;
@@ -184,11 +184,15 @@
 
 .post {
   padding: 16px;
-  background-color: var(--colors-elevated);
+background-color: #44475a;
+border: 3px solid #ff79c6;
   position: relative;
   width: 100%;
 }
-
+.post:hover {
+border: 3px solid var(--colors-purple);
+background-color: #282a36;
+}
 .post-header {
   color: inherit;
   text-decoration: none;

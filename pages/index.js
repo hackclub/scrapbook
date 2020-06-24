@@ -25,7 +25,7 @@ const Header = ({ children }) => (
       </p>
     </header>
     <style jsx global>{`
-      @media (prefers-color-scheme: dark) {
+     @media (prefers-color-scheme: dark) {
         :root {
           --colors-text: var(--colors-snow);
         }
