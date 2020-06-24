@@ -203,10 +203,10 @@ export default props => {
 }
 
 export const getStaticPaths = async () => {
-  // const { getUsernames } = require('./api/usernames')
-  // const usernames = await getUsernames()
-  // const paths = usernames.map(username => ({ params: { username } }))
-  return { paths: [], fallback: true }
+  const { getUsernames } = require('./api/usernames')
+  const usernames = await getUsernames()
+  const paths = usernames.map(username => ({ params: { username } }))
+  return { paths, fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
