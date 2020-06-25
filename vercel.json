@@ -17,4 +17,5 @@
       "source": "/customizer/(.*)",
       "destination": "https://scrapbook-customizer.vercel.app/$1"
     }
+  ]
 }
