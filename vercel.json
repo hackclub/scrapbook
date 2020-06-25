@@ -7,5 +7,10 @@
       "source": "/(.*)",
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
     }
-  ]
+  ],
+  "rewrites": [
+    {
+      "source": "/customizer/(.*)",
+      "destination": "https://scrapbook-customizer.vercel.app/"
+    },
 }
