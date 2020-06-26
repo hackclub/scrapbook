@@ -83,7 +83,7 @@ const Post = ({
         {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
           img => (
             <a
-              key={img.filename}
+              key={img.url}
               href={img.thumbnails?.full?.url || img.url}
               target="_blank"
               className="post-attachment"
@@ -102,7 +102,7 @@ const Post = ({
         {filter(attachments, a => a?.type?.toString().startsWith('audio')).map(
           aud => (
             <audio
-              key={aud.filename}
+              key={aud.url}
               className="post-attachment"
               src={aud.url}
               controls
