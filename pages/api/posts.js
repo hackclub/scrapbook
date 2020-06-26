@@ -10,7 +10,7 @@ export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : '')
 
 export const getPosts = async () => {
   let posts = await getRawPosts()
-  const users = await getRawUsers(false)
+  const users = await getRawUsers(true)
   posts = posts
     .map(p => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
