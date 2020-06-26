@@ -12,9 +12,13 @@ export const makeAvatar = (username = '') =>
   ).replace(/\%20/g, '+')}&size=192&background=${getColor(username).replace('#', '')}&color=fff`
 */
 
-export const getRawUsers = () =>
+const full = `?select=${JSON.stringify({
+  filterByFormula: '{Full Slack Member?} = 1'
+})}`
+export const getRawUsers = (onlyFull = false) =>
   fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
+      (onlyFull ? full : '')
   ).then(r => r.json())
 
 export const transformUser = (user = {}) => ({
