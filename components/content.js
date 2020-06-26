@@ -4,7 +4,7 @@ import { last } from 'lodash'
 import Mention from './mention'
 
 export const mapLinks = (text, link, mention) =>
-  text.split(/(<.+?\|?\S+>)|(@\S+)/).map((chunk, i) => {
+  text.split(/(<.+?\|?\S+>)|(@\w+)/).map((chunk, i) => {
     if (chunk?.startsWith('@')) {
       return mention(chunk.replace('@', ''), i)
     }
@@ -28,7 +28,9 @@ const Content = memo(({ children }) => (
           {children}
         </a>
       ),
-      (username, i) => <Mention username={username} key={username + i} />
+      (username, i) => (
+        <Mention username={username} key={username + i} />
+      )
     )}
   </p>
 ))

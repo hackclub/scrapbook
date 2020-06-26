@@ -14,7 +14,7 @@ export const getProfile = async username => {
   )
     .then(r => r.json())
     .then(a => (Array.isArray(a) ? a[0] : null))
-  if (!user) console.error('Could not fetch account')
+  if (!user) console.error('Could not fetch account', username)
   return user && user?.fields?.Username ? transformUser(user) : {}
 }
 
