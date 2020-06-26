@@ -45,7 +45,7 @@ const Header = ({ children }) => (
         padding: 16px;
       }
       p {
-        font-size: 20px;
+        font-size: 18px;
         color: var(--colors-text);
       }
       @media (min-width: 32em) {

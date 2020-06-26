@@ -7,9 +7,9 @@ const Posts = ({ posts = [], scrollPosition }) => [
     key="masonry"
     breakpointCols={{
       default: 4,
-      1100: 3,
-      700: 2,
-      500: 1
+      960: 3,
+      600: 2,
+      480: 1
     }}
     className="masonry-posts"
     columnClassName="masonry-posts-column"
@@ -30,7 +30,7 @@ const Posts = ({ posts = [], scrollPosition }) => [
     }
 
     .post {
-      margin-bottom: 1px;
+      margin-bottom: 2px;
     }
 
     @media (min-width: 32em) {
