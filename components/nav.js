@@ -35,25 +35,26 @@ const Nav = () => {
       const l = document.createElement('a')
       l.href = window.location.href
       console.log(l.hostname)
-      if (!l.hostname.includes('scrapbook.hackclub')) setExt(true)
+      if (!l.hostname.includes('.hackclub.')) setExt(true)
     } catch (e) {}
   }, [])
 
   return (
     <nav className="nav">
       <Flag />
-      {!home && ext ? (
-        <a
-          href="https://scrapbook.hackclub.com/"
-          className="nav-link nav-link-home"
-        >
-          Scrapbook
-        </a>
-      ) : (
-        <Link href="/">
-          <a className="nav-link nav-link-home">Scrapbook</a>
-        </Link>
-      )}
+      {!home &&
+        (ext ? (
+          <a
+            href="https://scrapbook.hackclub.com/"
+            className="nav-link nav-link-home"
+          >
+            Scrapbook
+          </a>
+        ) : (
+          <Link href="/">
+            <a className="nav-link nav-link-home">Scrapbook</a>
+          </Link>
+        ))}
       <Link href="/about">
         <a className="nav-link nav-link-about">About</a>
       </Link>
