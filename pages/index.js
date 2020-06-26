@@ -104,13 +104,7 @@ export default ({ initialData }) => {
     return (
       <main className="container">
         <Header />
-        <p>Unable to get posts. Check your connection?</p>
-        <style jsx>{`
-          p {
-            text-align: center;
-            font-size: 20px;
-          }
-        `}</style>
+        <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
       </main>
     )
   }
