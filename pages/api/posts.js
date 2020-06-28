@@ -12,7 +12,7 @@ export const getRawPosts = async (max = null) => {
   ).then(r => r.json())
 }
 
-export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : '')
+export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
 export const getPosts = async (max = null) => {
   const users = await getRawUsers(true)
@@ -28,6 +28,7 @@ export const getPosts = async (max = null) => {
         id,
         user,
         postedAt: formatTS(fields['Message Timestamp']),
+        timestamp: fields['Message Timestamp'] || null,
         text: fields['Text'] || '',
         attachments: fields['Attachments'] || [],
         mux: fields['Mux Playback IDs']?.split(' ') || []
