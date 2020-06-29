@@ -96,7 +96,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               </a>
             )}
              <a href="https://workshops.hackclub.com/orpheus/">
-                <img src="https://raw.githubusercontent.com/hackclub/dinosaurs/master/dinosaur_waving.png" width={30} />
+                <img src="https://github.com/hackclub/dinosaurs/blob/master/orpheus-the-riveter-surprised-bubble.png?raw=true" width={30} />
              </a>
           </section>
         </div>
