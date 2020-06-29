@@ -6,6 +6,7 @@ import Footer from '../components/footer'
 import Message from '../components/message'
 import Posts from '../components/posts'
 import { useRouter } from 'next/router'
+import { orderBy } from 'lodash'
 
 const Header = ({ children }) => (
   <>
