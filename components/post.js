@@ -55,7 +55,7 @@ const Post = ({
                   }`}
                   title={`${user.streakCount}-day streak`}
                 >
-                  {user.streakCount}
+                  {`${user.streakCount <= 7 ? user.streakCount : '7+'}`}
                   <Icon size={24} glyph="admin-badge" title="Streak icon" />
                 </span>
                 {user.css && (
