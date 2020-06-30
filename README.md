@@ -2,7 +2,7 @@
 
 **Share updates of your learning every day**: Every day this summer, [Hack Clubbers](https://hackclub.com/) are learning & building projects, sharing short video & photo updates each day.
 
-We at Hack Club HQ made this because the times of ouur lives when we’ve really improved our skills came from **showing up every day**. Even if we didn’t make something amazing every day, the consistency was key. Scrapbook is a tool to help us all do that while stuck at home this summer.
+We at Hack Club HQ made this because the times of our lives when we’ve really improved our skills came from **showing up every day**. Even if we didn’t make something amazing every day, the consistency was key. Scrapbook is a tool to help us all do that while stuck at home this summer.
 
 This repo is the website for [Hack Club](https://hackclub.com/)’s [Summer Scrapbook](https://scrapbook.hackclub.com/), which is part of the [2020 Summer of Making](https://summer.hackclub.com/).
 
