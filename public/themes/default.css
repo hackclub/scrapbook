@@ -220,6 +220,7 @@
   padding-left: 10px;
   font-size: 12px;
   max-height: 20px;
+  white-space: nowrap;
 }
 .post-header-date {
   color: var(--colors-muted);
