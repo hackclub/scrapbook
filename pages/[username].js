@@ -156,6 +156,8 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   })
   if (!data) {
     return <Message text="Loading…" />
+  } else if (error && data) {
+    return <Profile heatmap={initialData.heatmap} {...data} />
   } else if (error) {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
