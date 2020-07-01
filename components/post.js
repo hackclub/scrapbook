@@ -5,6 +5,29 @@ import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
+import LazyImage from './lazy-image'
+
+const PostImg = ({ img }) => {
+  const lg = img.thumbnails?.large || {}
+  const isPortrait = lg?.height > lg?.width
+  const aspectRatio = isPortrait
+    ? lg?.height / lg?.width
+    : lg?.width / lg?.height
+  return (
+    <a
+      href={img.thumbnails?.full?.url || img.url}
+      target="_blank"
+      className="post-attachment"
+    >
+      <LazyImage
+        alt={img.filename}
+        src={img.thumbnails?.large?.url || img.url}
+        width={img.thumbnails?.large?.width}
+        height={img.thumbnails?.large?.height}
+      />
+    </a>
+  )
+}
 
 const Post = ({
   id = new Date().toISOString(),
@@ -88,13 +111,11 @@ const Post = ({
               target="_blank"
               className="post-attachment"
             >
-              <LazyLoadImage
+              <LazyImage
                 alt={img.filename}
-                effect="blur"
                 src={img.thumbnails?.large?.url || img.url}
-                placeholderSrc={img.thumbnails?.small?.url}
-                scrollPosition={scrollPosition}
-                visibleByDefault
+                width={img.thumbnails?.large?.width}
+                height={img.thumbnails?.large?.height}
               />
             </a>
           )
