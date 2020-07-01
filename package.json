@@ -12,6 +12,7 @@
   "dependencies": {
     "@hackclub/icons": "^0.0.3",
     "@hackclub/meta": "^1.0.0",
+    "@hackclub/react-calendar-heatmap": "^1.8.2",
     "@mdx-js/loader": "^1.6.6",
     "@next/mdx": "^9.4.4",
     "fathom-client": "^3.0.0",
@@ -19,7 +20,6 @@
     "lodash": "^4.17.15",
     "next": "^9.4.4",
     "react": "^16.13.1",
-    "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^16.13.1",
     "react-lazy-load-image-component": "^1.5.0",
     "react-masonry-css": "^1.0.14",

@@ -1060,6 +1060,14 @@
   resolved "https://registry.yarnpkg.com/@hackclub/meta/-/meta-1.0.0.tgz#421731bd87e8fdeb4cc33afd12d68c8266ce79ae"
   integrity sha512-Xm1QgCxWAzG8ekV3xSf0gZ/6gCL4BuaKl3EjAy3e8QhoKDCjO7O4TtlfeUyLoJvIHzgYN/1sbZtkZ1VE6Pw5XA==
 
+"@hackclub/react-calendar-heatmap@^1.8.2":
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/@hackclub/react-calendar-heatmap/-/react-calendar-heatmap-1.8.2.tgz#b499a44e43b27a25f0b366b9dccf9fa8c06ae63b"
+  integrity sha512-7RKMQsr0+NeecQ425A5+22B+B7VXvsO9kO1W70Pd9YGW/aGU1ryPmHei5FPAKfAOVTj10weLulAQU5K2k3fM+g==
+  dependencies:
+    memoize-one "^5.1.1"
+    prop-types "^15.7.2"
+
 "@mdx-js/loader@^1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-1.6.6.tgz#de7438f3b18b097d66380f8698123a91c587a2f9"
@@ -3821,7 +3829,7 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
-memoize-one@^5.0.0:
+memoize-one@^5.0.0, memoize-one@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
@@ -4872,7 +4880,7 @@ prop-types-exact@1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@^15.6.2:
+prop-types@15.7.2, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
