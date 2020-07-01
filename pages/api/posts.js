@@ -3,7 +3,7 @@ import { getRawUsers, transformUser } from './users'
 
 export const getRawPosts = async (max = null) => {
   const opts = {
-    sort: [{ field: 'Post Time', direction: 'desc' }]
+    sort: [{ field: 'Message Timestamp', direction: 'desc' }]
   }
   if (max) opts.maxRecords = max
   return await fetch(
