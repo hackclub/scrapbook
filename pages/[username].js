@@ -31,7 +31,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
       }&caption=${
         profile.streakCount <= 7
           ? profile.streakCount + '-day streak'
-          : '7+ day streak'
+          : '7%2b day streak'
       }`}
     />
     {profile.css && (
