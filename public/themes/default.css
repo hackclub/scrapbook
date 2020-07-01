@@ -235,6 +235,7 @@
 .post-text {
   font-size: 18px;
   word-wrap: break-word;
+  white-space: pre-line;
 }
 .post-text a {
   color: var(--colors-blue);
@@ -248,6 +249,16 @@ a.post-text-mention {
   border-radius: 50%;
   margin-right: 4px;
   align-self: flex-end;
+}
+.post-text pre,
+.post-text code {
+  background-color: var(--colors-background);
+  border-radius: 3px;
+  color: var(--colors-purple);
+  font-family: var(--fonts-mono);
+  font-size: 0.9em;
+  white-space: pre-wrap;
+  padding: 0 0.25em;
 }
 
 .post-attachments {
