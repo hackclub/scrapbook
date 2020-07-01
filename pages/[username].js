@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import CalendarHeatmap from 'react-calendar-heatmap'
+import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Banner from '../components/banner'
 import Message from '../components/message'
@@ -44,12 +44,6 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
     {children}
     <header className="header">
       <div className="header-col-1">
-        {/* <Link href="/" passHref>
-          <a className="header-back">
-            <Icon glyph="view-back" size={24} />
-            All scraps
-          </a>
-        </Link> */}
         {profile.avatar && (
           <img
             src={profile.avatar}
@@ -115,7 +109,6 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           titleForValue={v =>
             v?.date ? `${v?.date} updates: ${v?.count}` : ''
           }
-          width={128}
         />
       </aside>
     </header>
@@ -167,7 +160,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
     return (
-      <Profile {...data}>
+      <Profile heatmap={initialData.heatmap} {...data}>
         <Banner isVisible={router.query.welcome === 'true'}>
           Woah!!! We’re communicating via a website now!…welcome to your
           scrapbook page!
