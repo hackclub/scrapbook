@@ -210,8 +210,18 @@ export default props => {
 }
 
 export const getStaticPaths = async () => {
-  const { getUsernames } = require('./api/usernames')
-  const usernames = await getUsernames()
+  const { map } = require('lodash')
+  const usernames = await fetch(
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
+      `?select=${JSON.stringify({
+        filterByFormula: '{Full Slack Member?} = 1',
+        fields: ['Username'],
+        sort: [{ field: 'Streak Count', direction: 'desc' }],
+        maxRecords: 150
+      })}`
+  )
+    .then(r => r.json())
+    .then(u => map(u, 'fields.Username'))
   const paths = usernames.map(username => ({ params: { username } }))
   return { paths, fallback: true }
 }
