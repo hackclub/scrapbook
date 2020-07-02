@@ -156,13 +156,13 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   })
   if (!data) {
     return <Message text="Loading…" />
-  } else if (error) {
+  } else if (error && !data) {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
     return (
       <Profile heatmap={initialData.heatmap} {...data}>
         <Banner isVisible={router.query.welcome === 'true'}>
-          Woah!!! We’re communicating via a website now!…welcome to your
+          Woah!!! We’re communicating via a website now…welcome to your
           scrapbook page!
           <br />
           Did you know you can{' '}
