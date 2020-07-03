@@ -25,6 +25,7 @@ export const transformUser = (user = {}) => ({
   id: user?.id,
   username: user?.fields['Username'] || null,
   avatar: user?.fields['Avatar']?.[0]?.thumbnails?.large?.url || null,
+  webring: user?.fields['Webring'] || [],
   css: user?.fields['CSS URL'] || null,
   streakCount: user?.fields['Streak Count'] || 1,
   slack: user?.fields['ID'] || '',

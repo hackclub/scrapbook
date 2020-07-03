@@ -6,6 +6,7 @@ import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Banner from '../components/banner'
 import Message from '../components/message'
+import { StaticMention } from '../components/mention'
 import Post from '../components/post'
 import ExamplePosts from '../components/example-posts'
 import FourOhFour from './404'
@@ -13,7 +14,13 @@ import FourOhFour from './404'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
+const Profile = ({
+  profile = {},
+  heatmap = [],
+  webring = [],
+  posts = [],
+  children
+}) => (
   <main className="container">
     <Meta
       as={Head}
@@ -71,31 +78,33 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
                   : '7+ day streak'
               }`}</span>
             </span>
-            <a
-              href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
-              target="_blank"
-              className="header-link header-link-slack"
-            >
-              <Icon size={32} glyph="slack-fill" />
-            </a>
-            {profile.github && (
+            <div className="header-links">
               <a
-                href={profile.github}
+                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
                 target="_blank"
-                className="header-link header-link-github"
+                className="header-link header-link-slack"
               >
-                <Icon size={32} glyph="github" />
+                <Icon size={32} glyph="slack-fill" />
               </a>
-            )}
-            {profile.website && (
-              <a
-                href={profile.website}
-                target="_blank"
-                className="header-link header-link-website"
-              >
-                <Icon size={32} glyph="link" />
-              </a>
-            )}
+              {profile.github && (
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  className="header-link header-link-github"
+                >
+                  <Icon size={32} glyph="github" />
+                </a>
+              )}
+              {profile.website && (
+                <a
+                  href={profile.website}
+                  target="_blank"
+                  className="header-link header-link-website"
+                >
+                  <Icon size={32} glyph="link" />
+                </a>
+              )}
+            </div>
           </section>
         </div>
       </div>
@@ -111,6 +120,20 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           }
         />
       </aside>
+      {webring.length > 0 && (
+        <aside className="header-col-3 header-webring">
+          <h2>Webring</h2>
+          <div class="header-webring-mentions">
+            {webring.map(u => (
+              <StaticMention
+                user={u}
+                className="header-webring-mention"
+                key={u.id}
+              />
+            ))}
+          </div>
+        </aside>
+      )}
     </header>
     <article className="posts">
       {posts.map(post => (
@@ -160,7 +183,11 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     return <Message text="Error" color1="orange" color2="pink" />
   } else {
     return (
-      <Profile heatmap={initialData.heatmap} {...data}>
+      <Profile
+        heatmap={initialData.heatmap}
+        webring={initialData.webring}
+        {...data}
+      >
         <Banner isVisible={router.query.welcome === 'true'}>
           Woah!!! We’re communicating via a website now…welcome to your
           scrapbook page!
@@ -236,7 +263,17 @@ export const getStaticProps = async ({ params }) => {
       date,
       count: days[date].length || 0
     }))
-    return { props: { profile, heatmap, posts }, unstable_revalidate: 1 }
+    let webring = []
+    if (profile.webring) {
+      webring = await Promise.all(
+        profile.webring.map(async id => await getProfile(id, 'id'))
+      )
+    }
+    console.log(webring)
+    return {
+      props: { profile, webring, heatmap, posts },
+      unstable_revalidate: 1
+    }
   } catch (error) {
     console.error(error)
     return { props: {} }
