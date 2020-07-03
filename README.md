@@ -74,7 +74,7 @@ The backend is powered by Airtable served over [Airbridge](https://github.com/ha
 
 - [`/api/posts`](https://scrapbook.hackclub.com/api/posts) – Get all posts (used on the homepage)
 - [`/api/users`](https://scrapbook.hackclub.com/api/users) – Get all users
-- [`/api/users/:username`](https://scrapbook.hackclub.com/api/users/zrl) – Get a specific user’s profile + posts
+- [`/api/users/:username`](https://scrapbook.hackclub.com/api/users/zrl) – Get a specific user’s profile + posts 
 
 ---
 
