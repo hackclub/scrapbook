@@ -36,11 +36,15 @@ Behind the scenes, the site ([all open source!](https://github.com/hackclub/summ
 
 To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
-Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonappah" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
+Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
 
 ### Colors & fonts
 
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
+
+<details>
+  
+<summary>Default values</summary>
 
 ```css
 :root {
@@ -76,6 +80,8 @@ Some “relative” colors use these colors for various components:
 - `--colors-text` – page text color
 - `--colors-elevated` – “elevated” content, like the posts
 - `--colors-sunken` – “sunken” content
+
+</details>
 
 Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
