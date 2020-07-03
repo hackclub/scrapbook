@@ -41,3 +41,4 @@ export default async (req, res) => {
   console.log(posts.length, 'posts')
   return res.json(posts)
 }
+                                      
