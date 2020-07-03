@@ -19,10 +19,11 @@ const Header = ({ children }) => (
     />
     <header>
       {children}
-      <h1>Hack Club’s Summer Scrapbook</h1>
+      <img src = "https://octodex.github.com/images/original.png" width = "200px"/>
+      <h1>#MyOctocat Contest</h1>
       <p>
-        Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
-        learning & making something new every day.
+        Want to submit something? Join the <a href="https://hackclub.com/slack">Hack Club</a>{' '}
+        Slack.
       </p>
     </header>
     <style jsx global>{`
@@ -38,7 +39,7 @@ const Header = ({ children }) => (
         padding: 0 12px 48px;
       }
       h1 {
-        color: var(--colors-orange);
+        color: var(--colors-slate);
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 36px;
@@ -79,8 +80,8 @@ const Header = ({ children }) => (
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-yellow),
-            var(--colors-orange)
+            var(--colors-slate),
+            var(--colors-black)
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;
@@ -119,21 +120,43 @@ export default ({ initialData }) => {
       <Header>
         <Banner
           avatar="/octocat.svg"
-          isVisible={router.query?.ref === 'github'}
           title="Hello, GitHubber!"
+          isVisible={router.query?.ref === 'github'}
         >
           To start posting on the Scrapbook,{' '}
           <a href="https://hackclub.com/slack/">join our Slack community</a>.
         </Banner>
       </Header>
       <Posts posts={data} />
-      <Footer />
+      <aside className="container banner">
+        <p className="post-text">
+          You seem to have reached the end, why not <a href="https://hackclub.com/slack/">share your Octocat?</a>
+        </p>
+        <style jsx>{`
+          .banner {
+            padding: 12px 12px 12px;
+            border-radius: 12px;
+            max-width: 720px;
+            background-color: var(--colors-blue);
+            color: var(--colors-white);
+            margin: 12px auto;
+            text-align: center;
+          }
+          .post-text {
+            line-height: 1.375;
+          }
+          .post-text a {
+            color: inherit;
+            font-weight: bold;
+          }
+        `}</style>
+      </aside>
     </main>
   )
 }
 
 export const getStaticProps = async () => {
-  const { getPosts } = require('./api/posts')
-  const initialData = await getPosts()
+  const { getOctoPosts } = require('./api/octoposts')
+  const initialData = await getOctoPosts()
   return { props: { initialData }, unstable_revalidate: 1 }
 }
