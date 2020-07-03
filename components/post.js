@@ -112,7 +112,7 @@ const Post = ({
         )}
         {mux.map(id => (
           <Video key={id} mux={id} />
-        ))}    
+        ))}
       </div>
     )}
   </section>
