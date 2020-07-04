@@ -38,7 +38,8 @@ const Post = ({
         ) : (
           <>
             {user.avatar && (
-              <Image
+              <img
+                loading="lazy"
                 src={user.avatar}
                 width={48}
                 height={48}
