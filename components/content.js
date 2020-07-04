@@ -2,13 +2,17 @@
 import { memo } from 'react'
 import { last } from 'lodash'
 import Mention from './mention'
+import Emoji from './emoji'
 
 export const formatText = text =>
   text
     .split(
-      /(<.+?\|?\S+>)|(@\w+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)/
+      /(<.+?\|?\S+>)|(@\w+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
     )
     .map((chunk, i) => {
+      if (chunk?.startsWith(':')) {
+        return <Emoji name={chunk} />
+      }
       if (chunk?.startsWith('@')) {
         const username = chunk.replace('@', '')
         return <Mention username={username} key={username + i} />
