@@ -37,7 +37,6 @@ export const getPosts = async (max = null) => {
 }
 
 export default async (req, res) => {
-  const posts = await getPosts(req.query.max ? Number(req.query.max) : 600)
-  console.log(posts.length, 'posts')
+  const posts = await getPosts(req.query.max ? Number(req.query.max) : 300)
   return res.json(posts)
 }
