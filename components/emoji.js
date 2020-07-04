@@ -14,7 +14,7 @@ const Emoji = ({ name }) => {
                     }
                     setImage("https://emoji.slack-edge.com/T0266FRGM/parrot/c9f4fddc5e03d762.gif")
                 })
-        } catch (e) { alert("POOPIE") }
+        } catch (e) { }
     }, [])
     return (
         <LazyLoadImage
