@@ -268,7 +268,6 @@ a.post-text-mention {
 }
 a.post-attachment {
   line-height: 0;
-  height: 100%;
 }
 img.is-loading {
   filter: blur(15px);
