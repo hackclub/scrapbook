@@ -1,33 +1,10 @@
 import { convertTimestampToDate } from '../lib/dates'
 import { filter } from 'lodash'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
-import LazyImage from './lazy-image'
-
-const PostImg = ({ img }) => {
-  const lg = img.thumbnails?.large || {}
-  const isPortrait = lg?.height > lg?.width
-  const aspectRatio = isPortrait
-    ? lg?.height / lg?.width
-    : lg?.width / lg?.height
-  return (
-    <a
-      href={img.thumbnails?.full?.url || img.url}
-      target="_blank"
-      className="post-attachment"
-    >
-      <LazyImage
-        alt={img.filename}
-        src={img.thumbnails?.large?.url || img.url}
-        width={img.thumbnails?.large?.width}
-        height={img.thumbnails?.large?.height}
-      />
-    </a>
-  )
-}
+import Image from './image'
 
 const Post = ({
   id = new Date().toISOString(),
@@ -61,10 +38,10 @@ const Post = ({
         ) : (
           <>
             {user.avatar && (
-              <img
-                loading="lazy"
+              <Image
                 src={user.avatar}
                 width={48}
+                height={48}
                 alt={user.username}
                 className="post-header-avatar"
               />
@@ -111,9 +88,10 @@ const Post = ({
               target="_blank"
               className="post-attachment"
             >
-              <LazyImage
+              <Image
                 alt={img.filename}
                 src={img.thumbnails?.large?.url || img.url}
+                placeholderSrc={img.thumbnails?.small?.url || img.url}
                 width={img.thumbnails?.large?.width}
                 height={img.thumbnails?.large?.height}
               />

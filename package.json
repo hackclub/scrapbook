@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@charlietango/use-native-lazy-loading": "^1.7.1",
     "@hackclub/icons": "^0.0.3",
     "@hackclub/meta": "^1.0.0",
     "@mdx-js/loader": "^1.6.6",
@@ -21,7 +22,7 @@
     "react": "^16.13.1",
     "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^16.13.1",
-    "react-lazy-load-image-component": "^1.5.0",
+    "react-intersection-observer": "^8.26.2",
     "react-masonry-css": "^1.0.14",
     "swr": "^0.2.3"
   }
