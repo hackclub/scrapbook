@@ -1,6 +1,6 @@
 import { convertTimestampToDate } from '../lib/dates'
 import { filter } from 'lodash'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { SimpleImg } from 'react-simple-img'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
