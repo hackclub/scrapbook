@@ -5,6 +5,7 @@ import NextApp from 'next/app'
 import '../public/fonts.css'
 import '../public/app.css'
 import '../public/themes/default.css'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 import Nav from '../components/nav'
 import * as Fathom from 'fathom-client'
 
