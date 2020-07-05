@@ -1,10 +1,10 @@
 import { convertTimestampToDate } from '../lib/dates'
 import { filter } from 'lodash'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
-import Image from './image'
 
 const Post = ({
   id = new Date().toISOString(),
@@ -42,7 +42,6 @@ const Post = ({
                 loading="lazy"
                 src={user.avatar}
                 width={48}
-                height={48}
                 alt={user.username}
                 className="post-header-avatar"
               />
@@ -89,12 +88,13 @@ const Post = ({
               target="_blank"
               className="post-attachment"
             >
-              <Image
+              <LazyLoadImage
                 alt={img.filename}
+                effect="blur"
                 src={img.thumbnails?.large?.url || img.url}
-                placeholderSrc={img.thumbnails?.small?.url || img.url}
-                width={img.thumbnails?.large?.width}
-                height={img.thumbnails?.large?.height}
+                placeholderSrc={img.thumbnails?.small?.url}
+                scrollPosition={scrollPosition}
+                visibleByDefault
               />
             </a>
           )

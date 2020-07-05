@@ -1,7 +1,7 @@
 import { memo, useState, useEffect } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-const Emoji = ({ name }) => {
+const Emoji = memo(({ name }) => {
     let [image, setImage] = useState()
     useEffect(() => {
         try {
@@ -25,6 +25,6 @@ const Emoji = ({ name }) => {
             visibleByDefault
         />
     )
-}
+})
 
 export default Emoji
