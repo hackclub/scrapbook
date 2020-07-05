@@ -187,8 +187,6 @@
   background-color: var(--colors-elevated);
   position: relative;
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .post-header {
@@ -280,7 +278,10 @@ a.post-text-mention {
 a.post-attachment {
   line-height: 0;
 }
-img.is-loading {
+.post-attachment img {
+  height: 100%;
+}
+.post-attachment img.is-loading {
   filter: blur(15px);
 }
 .post-attachment img,
@@ -289,7 +290,6 @@ video.post-attachment {
   background-color: var(--colors-background);
   max-width: 100%;
   max-height: 384px;
-  height: 100%;
   object-fit: contain;
 }
 video.post-attachment,
