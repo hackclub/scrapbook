@@ -270,7 +270,6 @@ a.post-text-mention {
   grid-gap: 8px;
   align-items: center;
   margin-top: 16px;
-  flex: 1 1 auto;
 }
 .post-attachment {
   width: 100%;
