@@ -13,7 +13,7 @@ export const makeAvatar = (username = '') =>
 */
 
 const full = `?select=${JSON.stringify({
-  filterByFormula: '{Full Slack Member?} = 1'
+  filterByFormula: 'AND({Full Slack Member?} = 1, NOT({CSS URL} = BLANK()))'
 })}`
 export const getRawUsers = (onlyFull = false) =>
   fetch(
