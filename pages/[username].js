@@ -7,6 +7,7 @@ import Icon from '@hackclub/icons'
 import Banner from '../components/banner'
 import Message from '../components/message'
 import Post from '../components/post'
+import AudioPlayer from '../components/audio-player'
 import ExamplePosts from '../components/example-posts'
 import FourOhFour from './404'
 
@@ -95,6 +96,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
               >
                 <Icon size={32} glyph="link" />
               </a>
+            )}
+            {profile.audio && (
+              <AudioPlayer url={profile.audio} />
             )}
           </section>
         </div>
