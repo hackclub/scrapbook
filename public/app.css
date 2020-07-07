@@ -7,6 +7,7 @@
 }
 
 :root {
+  color-scheme: light dark;
   --fonts-body: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, sans-serif;
   --fonts-display: 'Shrikhand', system-ui, -apple-system, BlinkMacSystemFont,
