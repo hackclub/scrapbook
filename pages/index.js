@@ -1,11 +1,9 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import useSWR from 'swr'
-import Banner from '../components/banner'
 import Footer from '../components/footer'
 import Message from '../components/message'
 import Posts from '../components/posts'
-import { useRouter } from 'next/router'
 import { orderBy } from 'lodash'
 
 const Header = ({ children }) => (
@@ -94,8 +92,6 @@ const Header = ({ children }) => (
 const fetcher = url => fetch(url).then(r => r.json())
 
 export default ({ initialData }) => {
-  const router = useRouter()
-
   const { data, error } = useSWR('/api/posts', fetcher, {
     initialData,
     refreshInterval: 5000
@@ -116,16 +112,7 @@ export default ({ initialData }) => {
 
   return (
     <main>
-      <Header>
-        <Banner
-          avatar="/octocat.svg"
-          isVisible={router.query?.ref === 'github'}
-          title="Hello, GitHubber!"
-        >
-          To start posting on the Scrapbook,{' '}
-          <a href="https://hackclub.com/slack/">join our Slack community</a>.
-        </Banner>
-      </Header>
+      <Header />
       <Posts posts={data} />
       <Footer />
     </main>
