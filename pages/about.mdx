@@ -96,11 +96,18 @@ To put your profile on your own domain, run `/scrappy setdomain <domain>` in Sla
 
 ## Website widget
 
-Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with you Scrappy username. Here’s the code snippet:
+Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
 
 ```js
 <script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username')</script>
+```
+
+If you have a custom domain, you can optionally link the scrapbook widget to it! Do it like this:
+
+```js
+<script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
+<script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
 ```
 
 ## Public API
