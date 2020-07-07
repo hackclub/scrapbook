@@ -21,6 +21,7 @@
     "lodash": "^4.17.15",
     "next": "^9.4.4",
     "react": "^16.13.1",
+    "react-audio-player": "^0.13.0",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2",
     "react-masonry-css": "^1.0.14",
