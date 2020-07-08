@@ -129,7 +129,7 @@
   max-height: 28px;
 }
 .header-streak-zero {
-  background-color: var(--colors-muted);
+  display: none;
 }
 
 .header-content {
