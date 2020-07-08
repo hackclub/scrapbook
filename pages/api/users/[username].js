@@ -1,4 +1,4 @@
-import { map, find, reverse, orderBy, filter } from 'lodash'
+import { map, find, orderBy } from 'lodash'
 import { getRawUsers, transformUser } from './index'
 import { getRawPosts, transformPost } from '../posts'
 
@@ -23,12 +23,7 @@ export const getPosts = async user => {
     filterByFormula: `{Username} = "${user.username}"`
   })
   if (!allUpdates) console.error('Could not fetch posts')
-  let updates = filter(allUpdates, [
-    'fields.Slack Account',
-    [user.id]
-  ]).map(({ id, fields }) => transformPost(id, fields))
-
-  return updates
+  return allUpdates.map(({ id, fields }) => transformPost(id, fields))
 }
 
 export default async (req, res) => {
