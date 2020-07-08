@@ -1,6 +1,6 @@
 import { map, find, reverse, orderBy, filter } from 'lodash'
 import { getRawUsers, transformUser } from './index'
-import { formatTS } from '../posts'
+import { getRawPosts, transformPost } from '../posts'
 
 export const getProfile = async (value, field = 'Username') => {
   const opts = JSON.stringify({
@@ -19,19 +19,12 @@ export const getProfile = async (value, field = 'Username') => {
 }
 
 export const getPosts = async user => {
-  const allUpdates = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates'
-  ).then(r => r.json())
+  const allUpdates = getRawPosts()
   if (!allUpdates) console.error('Could not fetch posts')
-  let updates = filter(allUpdates, ['fields.Slack Account', [user.id]])
-  updates = orderBy(updates, u => u.fields['Post Time'])
-  updates = reverse(updates).map(({ id, fields }) => ({
-    id,
-    postedAt: formatTS(fields['Message Timestamp']),
-    text: fields['Text'] || '',
-    attachments: fields['Attachments'] || [],
-    mux: fields['Mux Playback IDs']?.split(' ') || []
-  }))
+  let updates = filter(allUpdates, [
+    'fields.Slack Account',
+    [user.id]
+  ]).map(({ id, fields }) => transformPost(id, fields))
 
   return updates
 }
