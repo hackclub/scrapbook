@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import Feed from '../components/feed'
+import Footer from '../components/footer'
 
 const Header = ({ children }) => (
   <>
@@ -79,7 +80,7 @@ const Header = ({ children }) => (
 )
 
 export default ({ initialData }) => (
-  <Feed initialData={initialData}>
+  <Feed initialData={initialData} footer={<Footer />}>
     <Header />
   </Feed>
 )

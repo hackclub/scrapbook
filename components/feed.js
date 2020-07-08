@@ -1,12 +1,17 @@
 import useSWR from 'swr'
-import Footer from '../components/footer'
 import Message from '../components/message'
 import Posts from '../components/posts'
 import { orderBy } from 'lodash'
 
 const fetcher = url => fetch(url).then(r => r.json())
 
-const Feed = ({ src = '/api/posts', initialData, children, ...props }) => {
+const Feed = ({
+  src = '/api/posts',
+  initialData,
+  children,
+  footer,
+  ...props
+}) => {
   const { data, error } = useSWR(src, fetcher, {
     initialData,
     refreshInterval: 5000
@@ -36,7 +41,7 @@ const Feed = ({ src = '/api/posts', initialData, children, ...props }) => {
       `}</style>
       {children}
       <Posts posts={data} />
-      <Footer />
+      {footer}
     </main>
   )
 }
