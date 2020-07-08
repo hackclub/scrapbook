@@ -19,7 +19,7 @@ export const getRawUsers = (onlyFull = false) =>
   fetch(
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
       (onlyFull ? full : '')
-  ).then(r => r.json())
+  ).then((r) => r.json())
 
 export const transformUser = (user = {}) => ({
   id: user?.id,
@@ -34,6 +34,6 @@ export const transformUser = (user = {}) => ({
 })
 
 export const getProfiles = () =>
-  getRawUsers().then(users => users.map(transformUser))
+  getRawUsers().then((users) => users.map(transformUser))
 
-export default async (req, res) => getProfiles().then(u => res.json(u || []))
+export default async (req, res) => getProfiles().then((u) => res.json(u || []))
