@@ -17,7 +17,9 @@ export const getProfile = async username => {
 }
 
 export const getPosts = async user => {
-  const allUpdates = getRawPosts()
+  const allUpdates = await getRawPosts(null, {
+    filterByFormula: `{Username} = "${user.username}"`
+  })
   if (!allUpdates) console.error('Could not fetch posts')
   let updates = filter(allUpdates, [
     'fields.Slack Account',
