@@ -67,6 +67,14 @@ const Post = ({
                     className="post-header-css"
                   />
                 )}
+                {user.audio && (
+                  <Icon
+                    size={24}
+                    glyph="rss"
+                    title="Has a customized sound"
+                    className="post-header-audio"
+                  />
+                )}
               </span>
               <time className="post-header-date" dateTime={postedAt}>
                 {postedAt?.startsWith('20')

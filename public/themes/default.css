@@ -214,6 +214,9 @@
 .post-header-css {
   color: var(--colors-pink);
 }
+.post-header-audio {
+  color: var(--colors-pink);
+}
 .post-header-streak {
   margin-right: 4px;
   margin-left: 8px;
