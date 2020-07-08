@@ -21,8 +21,8 @@ const Header = ({ children }) => (
       {children}
       <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
-        Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
-        learning & making something new every day.
+        A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
+        are doing every day.
       </p>
     </header>
     <style jsx global>{`
