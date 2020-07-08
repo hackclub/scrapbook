@@ -316,3 +316,7 @@ a.post-attachment:first-child:last-child {
   font-size: 14px;
   font-family: var(--fonts-mono);
 }
+
+.header-streak-zero{
+  display: none;
+}
