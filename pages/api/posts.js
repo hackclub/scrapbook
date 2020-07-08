@@ -1,10 +1,9 @@
 import { find, reverse, orderBy, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
 
-export const getRawPosts = async (max = null, params = {}) => {
+export const getRawPosts = async (max = null) => {
   const opts = {
-    sort: [{ field: 'Message Timestamp', direction: 'desc' }],
-    ...params
+    sort: [{ field: 'Message Timestamp', direction: 'desc' }]
   }
   if (max) opts.maxRecords = max
   return await fetch(
@@ -14,16 +13,6 @@ export const getRawPosts = async (max = null, params = {}) => {
 }
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
-
-export const transformPost = (id = null, fields = {}, user = null) => ({
-  id,
-  user,
-  timestamp: fields['Message Timestamp'] || null,
-  postedAt: formatTS(fields['Message Timestamp']),
-  text: fields['Text'] || '',
-  attachments: fields['Attachments'] || [],
-  mux: fields['Mux Playback IDs']?.split(' ') || []
-})
 
 export const getPosts = async (max = null) => {
   const users = await getRawUsers(true)
@@ -35,7 +24,15 @@ export const getPosts = async (max = null) => {
         return p
       })
       .filter(p => !isEmpty(p.user))
-      .map(({ id, user, fields }) => transformPost(id, fields, user))
+      .map(({ id, user, fields }) => ({
+        id,
+        user,
+        postedAt: formatTS(fields['Message Timestamp']),
+        timestamp: fields['Message Timestamp'] || null,
+        text: fields['Text'] || '',
+        attachments: fields['Attachments'] || [],
+        mux: fields['Mux Playback IDs']?.split(' ') || []
+      }))
   )
 }
 
