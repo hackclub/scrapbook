@@ -1,10 +1,6 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import useSWR from 'swr'
-import Footer from '../components/footer'
-import Message from '../components/message'
-import Posts from '../components/posts'
-import { orderBy } from 'lodash'
+import Feed from '../components/feed'
 
 const Header = ({ children }) => (
   <>
@@ -23,13 +19,6 @@ const Header = ({ children }) => (
         learning & making something new every day.
       </p>
     </header>
-    <style jsx global>{`
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --colors-text: var(--colors-snow);
-        }
-      }
-    `}</style>
     <style jsx>{`
       header {
         text-align: center;
@@ -89,35 +78,11 @@ const Header = ({ children }) => (
   </>
 )
 
-const fetcher = url => fetch(url).then(r => r.json())
-
-export default ({ initialData }) => {
-  const { data, error } = useSWR('/api/posts', fetcher, {
-    initialData,
-    refreshInterval: 5000
-  })
-
-  if (error) {
-    return (
-      <main className="container">
-        <Header />
-        <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
-      </main>
-    )
-  }
-
-  if (!data) {
-    return <Message text="Loading…" />
-  }
-
-  return (
-    <main>
-      <Header />
-      <Posts posts={data} />
-      <Footer />
-    </main>
-  )
-}
+export default ({ initialData }) => (
+  <Feed initialData={initialData}>
+    <Header />
+  </Feed>
+)
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
