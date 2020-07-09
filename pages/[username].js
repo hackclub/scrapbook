@@ -10,6 +10,7 @@ import Post from '../components/post'
 import AudioPlayer from '../components/audio-player'
 import ExamplePosts from '../components/example-posts'
 import FourOhFour from './404'
+import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -22,8 +23,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
         profile.streakCount > 0
-          ? `(currently a ${profile.streakCount <= 7
-            ? profile.streakCount : '7+'}-day streak!) `
+          ? `(currently a ${
+              profile.streakCount <= 7 ? profile.streakCount : '7+'
+            }-day streak!) `
           : ''
       }making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
@@ -98,9 +100,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
                 <Icon size={32} glyph="link" />
               </a>
             )}
-            {profile.audio && (
-              <AudioPlayer url={profile.audio} />
-            )}
+            {profile.audio && <AudioPlayer url={profile.audio} />}
           </section>
         </div>
       </div>
@@ -110,7 +110,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
           endDate={new Date('2020-08-16')}
           values={heatmap}
           showWeekdayLabels
-          classForValue={v => (v?.count ? `color-${v.count}` : 'color-empty')}
+          classForValue={v =>
+            v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
+          }
           titleForValue={v =>
             v?.date ? `${v?.date} updates: ${v?.count}` : ''
           }

@@ -1,8 +1,8 @@
 :root {
-  --colors-one: #d6e685;
-  --colors-two: #8cc665;
-  --colors-three: #44a340;
-  --colors-four: #1e6823;
+  --colors-one: #9be9a8;
+  --colors-two: #40c463;
+  --colors-three: #30a14e;
+  --colors-four: #216e39;
 }
 
 @media (prefers-color-scheme: dark) {
