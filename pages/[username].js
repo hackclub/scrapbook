@@ -24,7 +24,7 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
         profile.streakDisplay
           ? `(currently a ${profile.streakCount}-day streak!)`
           : ''
-      } making things in the Hack Club community this summer.`}
+      }making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }.png?brand=Scrapbook${
