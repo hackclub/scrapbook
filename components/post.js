@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Content from './content'
 import Video from './video'
 import Image from './image'
+import Reaction from './reaction'
 
 const Post = ({
   id = new Date().toISOString(),
@@ -18,6 +19,7 @@ const Post = ({
   text,
   attachments = [],
   mux = [],
+  reactions = [],
   postedAt,
   muted = false
 }) => (
@@ -121,6 +123,13 @@ const Post = ({
           <Video key={id} mux={id} />
         ))}
       </div>
+    )}
+    {reactions.length > 0 && (
+      <footer className="post-reactions" aria-label="Emoji reactions">
+        {reactions.map(reaction => (
+          <Reaction key={reaction.name} {...reaction} />
+        ))}
+      </footer>
     )}
   </section>
 )

@@ -1,5 +1,6 @@
 import { find, reverse, orderBy, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
+import { stripColons } from '../../lib/emoji'
 
 export const getRawPosts = async (max = null, params = {}) => {
   const opts = {
@@ -15,6 +16,18 @@ export const getRawPosts = async (max = null, params = {}) => {
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
+export const transformReactions = (raw = []) =>
+  raw.map(str => {
+    try {
+      const parts = str.split(' ')
+      const obj = { name: stripColons(parts[0]) }
+      obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
+      return obj
+    } catch (e) {
+      return {}
+    }
+  })
+
 export const transformPost = (id = null, fields = {}, user = null) => ({
   id,
   user,
@@ -22,7 +35,8 @@ export const transformPost = (id = null, fields = {}, user = null) => ({
   postedAt: formatTS(fields['Message Timestamp']),
   text: fields['Text'] || '',
   attachments: fields['Attachments'] || [],
-  mux: fields['Mux Playback IDs']?.split(' ') || []
+  mux: fields['Mux Playback IDs']?.split(' ') || [],
+  reactions: transformReactions(fields['Filtered Emoji Reactions']) || []
 })
 
 export const getPosts = async (max = null) => {
