@@ -21,8 +21,9 @@ const Profile = ({ profile = {}, heatmap = [], posts = [], children }) => (
       name="Summer Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
-        profile.streakDisplay
-          ? `(currently a ${profile.streakCount}-day streak!)`
+        profile.streakCount > 0
+          ? `(currently a ${profile.streakCount <= 7
+            ? profile.streakCount : '7+'}-day streak!) `
           : ''
       }making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
