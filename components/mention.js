@@ -1,6 +1,20 @@
 import { memo, useState, useEffect } from 'react'
 import Link from 'next/link'
 
+export const StaticMention = memo(({ user = {}, className = '' }) => (
+  <Link href="/[username]" as={`/${user.username}`}>
+    <a className={`mention ${className}`}>
+      <img
+        src={user.avatar}
+        alt={user.username}
+        width={24}
+        className="mention-avatar"
+      />
+      @{user.username}
+    </a>
+  </Link>
+))
+
 const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
   useEffect(() => {
@@ -12,13 +26,13 @@ const Mention = memo(({ username }) => {
   }, [])
   return (
     <Link href="/[username]" as={`/${username}`}>
-      <a className="post-text-mention">
+      <a className="mention post-text-mention">
         {img && (
           <img
             src={img}
             alt={username}
             width={24}
-            className="post-text-mention-avatar"
+            className="mention-avatar post-text-mention-avatar"
           />
         )}
         @{username}
