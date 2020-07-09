@@ -14,7 +14,7 @@ export const formatText = text =>
         return <Mention username={username} key={username + i} />
       }
       if (chunk?.startsWith('<')) {
-        const parts = chunk.match(/<((.+)\|)?(\S+)>/)
+        const parts = chunk.match(/<((.+)\|)?(.+?)>/)
         const url = parts?.[2] || last(parts)
         const children = last(parts)
           ?.replace(/https?:\/\//, '')

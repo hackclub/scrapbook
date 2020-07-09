@@ -27,7 +27,8 @@ export const transformUser = (user = {}) => ({
   avatar: user?.fields['Avatar']?.[0]?.thumbnails?.large?.url || null,
   webring: user?.fields['Webring'] || [],
   css: user?.fields['CSS URL'] || null,
-  streakCount: user?.fields['Streak Count'] || 1,
+  audio: user?.fields['Audio URL'] || null,
+  streakCount: user?.fields['Streak Count'] || 0,
   slack: user?.fields['ID'] || '',
   github: user?.fields['GitHub'] || null,
   website: user?.fields['Website'] || null

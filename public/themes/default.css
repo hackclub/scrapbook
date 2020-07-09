@@ -1,8 +1,8 @@
 :root {
-  --colors-one: #d6e685;
-  --colors-two: #8cc665;
-  --colors-three: #44a340;
-  --colors-four: #1e6823;
+  --colors-one: #9be9a8;
+  --colors-two: #40c463;
+  --colors-three: #30a14e;
+  --colors-four: #216e39;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,7 +111,7 @@
   max-height: 28px;
 }
 .header-streak-zero {
-  background-color: var(--colors-muted);
+  display: none;
 }
 
 .header-content {
@@ -251,6 +251,9 @@
 .post-header-css {
   color: var(--colors-pink);
 }
+.post-header-audio {
+  color: var(--colors-orange);
+}
 .post-header-streak {
   margin-right: 4px;
   margin-left: 8px;
@@ -308,13 +311,18 @@ a.post-attachment {
   line-height: 0;
 }
 .post-attachment img {
-  border-radius: 6px;
+  height: 100%;
+}
+.post-attachment img.is-loading {
+  filter: blur(15px);
 }
 .post-attachment img,
 video.post-attachment {
-  background-color: var(--colors-sunken);
+  border-radius: 6px;
+  background-color: var(--colors-background);
   max-width: 100%;
-  max-height: 256px;
+  max-height: 384px;
+  object-fit: contain;
 }
 video.post-attachment,
 audio.post-attachment,

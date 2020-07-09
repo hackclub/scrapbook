@@ -8,8 +8,10 @@ import Banner from '../components/banner'
 import Message from '../components/message'
 import { StaticMention } from '../components/mention'
 import Post from '../components/post'
+import AudioPlayer from '../components/audio-player'
 import ExamplePosts from '../components/example-posts'
 import FourOhFour from './404'
+import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -27,10 +29,12 @@ const Profile = ({
       name="Summer Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
-        profile.streakDisplay
-          ? `(currently a ${profile.streakCount}-day streak!)`
+        profile.streakCount > 0
+          ? `(currently a ${
+              profile.streakCount <= 7 ? profile.streakCount : '7+'
+            }-day streak!) `
           : ''
-      } making things in the Hack Club community this summer.`}
+      }making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }.png?brand=Scrapbook${
@@ -105,6 +109,7 @@ const Profile = ({
                 </a>
               )}
             </div>
+            {profile.audio && <AudioPlayer url={profile.audio} />}
           </section>
         </div>
       </div>
@@ -114,7 +119,9 @@ const Profile = ({
           endDate={new Date('2020-08-16')}
           values={heatmap}
           showWeekdayLabels
-          classForValue={v => (v?.count ? `color-${v.count}` : 'color-empty')}
+          classForValue={v =>
+            v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
+          }
           titleForValue={v =>
             v?.date ? `${v?.date} updates: ${v?.count}` : ''
           }
@@ -237,7 +244,7 @@ export const getStaticPaths = async () => {
         filterByFormula: '{Full Slack Member?} = 1',
         fields: ['Username'],
         sort: [{ field: 'Streak Count', direction: 'desc' }],
-        maxRecords: 150
+        maxRecords: 75
       })}`
   )
     .then(r => r.json())

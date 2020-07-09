@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
+import Mention from '../components/mention'
 
 <Meta
   as={Head}
@@ -35,9 +36,15 @@ Behind the scenes, the site ([all open source!](https://github.com/hackclub/summ
 
 To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
+Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
+
 ### Colors & fonts
 
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
+
+<details>
+  
+<summary>Default values</summary>
 
 ```css
 :root {
@@ -74,6 +81,8 @@ Some “relative” colors use these colors for various components:
 - `--colors-elevated` – “elevated” content, like the posts
 - `--colors-sunken` – “sunken” content
 
+</details>
+
 Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 ## Custom domains
@@ -87,11 +96,18 @@ To put your profile on your own domain, run `/scrappy setdomain <domain>` in Sla
 
 ## Website widget
 
-Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with you Scrappy username. Here’s the code snippet:
+Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
 
 ```js
 <script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username')</script>
+```
+
+If you have a custom domain, you can optionally link the scrapbook widget to it! Do it like this:
+
+```js
+<script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
+<script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
 ```
 
 ## Public API
@@ -172,8 +188,8 @@ The backend is powered by Airtable served over [Airbridge](https://github.com/ha
   }
 
   pre {
-    word-break: break-all;
     word-wrap: break-word;
+    white-space: pre-wrap;
     padding: 1em;
     border-radius: 8px;
   }

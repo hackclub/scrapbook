@@ -1,8 +1,7 @@
 import Masonry from 'react-masonry-css'
 import Post from '../components/post'
-import { trackWindowScroll } from 'react-lazy-load-image-component'
 
-const Posts = ({ posts = [], scrollPosition }) => [
+const Posts = ({ posts = [] }) => [
   <Masonry
     key="masonry"
     breakpointCols={{
@@ -15,7 +14,7 @@ const Posts = ({ posts = [], scrollPosition }) => [
     columnClassName="masonry-posts-column"
   >
     {posts.map(post => (
-      <Post key={post.id} {...post} scrollPosition={scrollPosition} />
+      <Post key={post.id} {...post} />
     ))}
   </Masonry>,
   <style jsx global key="masonry-style">{`
@@ -50,4 +49,4 @@ const Posts = ({ posts = [], scrollPosition }) => [
   `}</style>
 ]
 
-export default trackWindowScroll(Posts)
+export default Posts

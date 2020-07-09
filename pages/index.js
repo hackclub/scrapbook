@@ -134,6 +134,6 @@ export default ({ initialData }) => {
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
-  const initialData = await getPosts()
+  const initialData = await getPosts(50)
   return { props: { initialData }, unstable_revalidate: 1 }
 }

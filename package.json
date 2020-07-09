@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@charlietango/use-native-lazy-loading": "^1.7.1",
     "@hackclub/icons": "^0.0.3",
     "@hackclub/meta": "^1.0.0",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
@@ -20,8 +21,9 @@
     "lodash": "^4.17.15",
     "next": "^9.4.4",
     "react": "^16.13.1",
+    "react-audio-player": "^0.13.0",
     "react-dom": "^16.13.1",
-    "react-lazy-load-image-component": "^1.5.0",
+    "react-intersection-observer": "^8.26.2",
     "react-masonry-css": "^1.0.14",
     "swr": "^0.2.3"
   }
