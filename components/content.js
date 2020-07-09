@@ -41,7 +41,7 @@ export const formatText = text =>
       if (chunk?.startsWith('_')) {
         return <i key={i}>{chunk.replace(/_/g, '')}</i>
       }
-      return chunk?.replaceAll('&amp;', '&')
+      return chunk?.replace(/&amp;/g, '&')
     })
 
 const Content = memo(({ children }) => (

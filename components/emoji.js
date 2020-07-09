@@ -1,21 +1,30 @@
 import { memo, useState, useEffect } from 'react'
 
-const HOST = 'https://summer-streaks-git-hc-53-emoji.hackclub.dev'
-/*
-  process.env.NODE_ENV === 'development'
-    ? ''
-    : 'https://scrapbook.hackclub.com'
-    */
+const stripColons = str => {
+  const colonIndex = str.indexOf(':')
+  if (colonIndex > -1) {
+    // :emoji:
+    if (colonIndex === str.length - 1) {
+      str = str.substring(0, colonIndex)
+      return stripColons(str)
+    } else {
+      str = str.substr(colonIndex + 1)
+      return stripColons(str)
+    }
+  }
+  return str
+}
 
 const CustomEmoji = memo(({ name }) => {
+  const emoji = stripColons(name)
   let [image, setImage] = useState()
   useEffect(() => {
     try {
-      fetch(HOST + '/api/emoji')
+      fetch('https://scrapbook.hackclub.com/api/emoji')
         .then(r => r.json())
         .then(emojis => {
-          if (emojis[name.replaceAll(':', '')]) {
-            setImage(emojis[name.replaceAll(':', '')])
+          if (emojis[emoji]) {
+            setImage(emojis[emoji])
             return
           }
           setImage(
@@ -26,7 +35,7 @@ const CustomEmoji = memo(({ name }) => {
   }, [])
   return (
     <img
-      alt={name + ' emoji'}
+      alt={emoji + ' emoji'}
       src={image}
       loading="lazy"
       width={18}
