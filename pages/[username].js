@@ -214,7 +214,7 @@ export const getStaticPaths = async () => {
         filterByFormula: '{Full Slack Member?} = 1',
         fields: ['Username'],
         sort: [{ field: 'Streak Count', direction: 'desc' }],
-        maxRecords: 150
+        maxRecords: 75
       })}`
   )
     .then(r => r.json())
