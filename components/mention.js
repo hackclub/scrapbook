@@ -1,4 +1,5 @@
 import { memo, useState, useEffect } from 'react'
+import { trim } from 'lodash'
 import Link from 'next/link'
 
 export const StaticMention = memo(({ user = {}, className = '' }) => (
@@ -19,7 +20,7 @@ const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
   useEffect(() => {
     try {
-      fetch(`/api/profiles/${username}/}`)
+      fetch(`/api/profiles/${trim(username)}`)
         .then(r => r.json())
         .then(profile => setImg(profile.avatar))
     } catch (e) {}
@@ -32,6 +33,7 @@ const Mention = memo(({ username }) => {
             src={img}
             alt={username}
             width={24}
+            height={24}
             className="mention-avatar post-text-mention-avatar"
           />
         )}

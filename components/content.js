@@ -2,19 +2,23 @@
 import { memo } from 'react'
 import { last } from 'lodash'
 import Mention from './mention'
+import Emoji from './emoji'
 
 export const formatText = text =>
   text
     .split(
-      /(<.+?\|?\S+>)|(@\w+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)/
+      /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
     )
     .map((chunk, i) => {
-      if (chunk?.startsWith('@')) {
-        const username = chunk.replace('@', '')
+      if (chunk?.startsWith(':')) {
+        return <Emoji name={chunk} />
+      }
+      if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
+        const username = chunk.replace(/[@<>]/g, '')
         return <Mention username={username} key={username + i} />
       }
       if (chunk?.startsWith('<')) {
-        const parts = chunk.match(/<((.+)\|)?(.+?)>/)
+        const parts = chunk.match(/<(([^\|]+)\|)?(.+?)>/)
         const url = parts?.[2] || last(parts)
         const children = last(parts)
           ?.replace(/https?:\/\//, '')
@@ -37,7 +41,7 @@ export const formatText = text =>
       if (chunk?.startsWith('_')) {
         return <i key={i}>{chunk.replace(/_/g, '')}</i>
       }
-      return chunk?.replace('&amp;', '&')
+      return chunk?.replace(/&amp;/g, '&')
     })
 
 const Content = memo(({ children }) => (
