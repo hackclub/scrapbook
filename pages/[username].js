@@ -276,13 +276,12 @@ export const getStaticProps = async ({ params }) => {
         profile.webring.map(async id => await getProfile(id, 'id'))
       )
     }
-    console.log(webring)
     return {
       props: { profile, webring, heatmap, posts },
       unstable_revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: {} }
+    return { props: { profile }, unstable_revalidate: 1 }
   }
 }
