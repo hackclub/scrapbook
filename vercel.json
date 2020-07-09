@@ -6,6 +6,15 @@
     {
       "source": "/(.*)",
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    },
+    {
+      "source": "/api/emoji",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=1000, stale-while-revalidate"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -16,6 +25,10 @@
     {
       "source": "/customizer/(.*)",
       "destination": "https://scrapbook-customizer.vercel.app/$1"
+    },
+    {
+      "source": "/api/emoji",
+      "destination": "https://badger.hackclub.dev/api/emoji"
     }
   ]
 }
