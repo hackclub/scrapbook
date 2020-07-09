@@ -330,9 +330,41 @@ a.post-attachment:first-child:last-child {
   grid-column: span 2;
 }
 
+.post-reactions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  margin-bottom: -12px;
+}
+.post-reaction {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 20px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  background-color: var(--colors-background);
+  border: 1px dashed var(--colors-sunken);
+  border-radius: 24px;
+  transition: 0.125s background-color ease-in-out;
+}
+.post-reaction:hover,
+.post-reaction:focus {
+  background-color: var(--colors-cyan);
+  border-color: var(--colors-blue);
+}
+.post-reaction img {
+  margin: 5px;
+  border-radius: 4px;
+}
+
 .css {
   display: flex;
   align-items: center;
+  justify-content: center;
   color: var(--colors-muted);
   margin-top: 32px;
 }

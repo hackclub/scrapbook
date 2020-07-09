@@ -1,19 +1,9 @@
 import { memo, useState, useEffect } from 'react'
+import { stripColons } from '../lib/emoji'
 
-const stripColons = str => {
-  const colonIndex = str.indexOf(':')
-  if (colonIndex > -1) {
-    // :emoji:
-    if (colonIndex === str.length - 1) {
-      str = str.substring(0, colonIndex)
-      return stripColons(str)
-    } else {
-      str = str.substr(colonIndex + 1)
-      return stripColons(str)
-    }
-  }
-  return str
-}
+export const EmojiImg = ({ name, ...props }) => (
+  <img alt={name + ' emoji'} loading="lazy" width={18} height={18} {...props} />
+)
 
 const CustomEmoji = memo(({ name }) => {
   const emoji = stripColons(name)
@@ -33,15 +23,7 @@ const CustomEmoji = memo(({ name }) => {
         })
     } catch (e) {}
   }, [])
-  return (
-    <img
-      alt={emoji + ' emoji'}
-      src={image}
-      loading="lazy"
-      width={18}
-      height={18}
-    />
-  )
+  return <EmojiImg src={image} name={emoji} />
 })
 
 export default CustomEmoji

@@ -1,23 +1,28 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import { useRouter } from 'next/router'
+import { EmojiImg } from '../../components/emoji'
 import Feed from '../../components/feed'
 import Message from '../../components/message'
-import { startCase } from 'lodash'
+import { find, map, flatten, startCase } from 'lodash'
 
-const Header = ({ emoji }) => (
+const Header = ({ name, url, char }) => (
   <>
     <Meta
       as={Head}
       name="Summer Scrapbook"
-      title={`${startCase(emoji)} Posts`}
+      title={`${startCase(name)} Posts`}
       description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
       image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
-      <h1>{emoji}</h1>
+      {url ? (
+        <EmojiImg src={url} name={name} width={48} height={48} />
+      ) : (
+        <h1>{char}</h1>
+      )}
       <p>
-        Posts tagged with <code>:{emoji}:</code>
+        Posts tagged with <code>:{name}:</code>
       </p>
     </header>
     <style jsx>{`
@@ -29,12 +34,13 @@ const Header = ({ emoji }) => (
         color: var(--colors-orange);
         font-family: var(--fonts-display);
         margin: 0;
+        margin-bottom: -12px;
         font-size: 36px;
         line-height: 1;
         padding: 16px;
       }
       p {
-        font-size: 16px;
+        font-size: 14px;
         color: var(--colors-muted);
       }
       code {
@@ -68,8 +74,8 @@ export default ({ emoji, posts = [] }) => {
     return <Message text="Loading…" />
   } else if (emoji) {
     return (
-      <Feed initialData={posts} src={`/api/r/${emoji}`}>
-        <Header emoji={emoji} />
+      <Feed initialData={posts} src={`/api/r/${emoji.name}`}>
+        <Header {...emoji} />
       </Feed>
     )
   } else {
@@ -83,14 +89,15 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
-  const { emoji } = params
-  if (emoji.length < 2) return console.error('No emoji') || { props: {} }
+  if (params.emoji.length < 2) return console.error('No emoji') || { props: {} }
 
   try {
-    const posts = await getPosts(emoji)
+    const posts = await getPosts(params.emoji)
+    const emoji = find(flatten(map(posts, 'reactions')), { name: params.emoji })
+    console.log(emoji)
     return { props: { emoji, posts }, unstable_revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: {} }
+    return { props: { emoji: { name: params.emoji } }, unstable_revalidate: 1 }
   }
 }

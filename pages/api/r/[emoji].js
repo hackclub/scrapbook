@@ -12,7 +12,6 @@ export const getPosts = async emoji => {
     .map(p => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
       p.user = user.id ? transformUser(user) : null
-      console.log(p.user)
       return p
     })
     .filter(p => !isEmpty(p.user))
