@@ -1,7 +1,11 @@
 import { memo, useState, useEffect } from 'react'
 
-const HOST =
-  process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+const HOST = 'https://summer-streaks-git-hc-53-emoji.hackclub.dev'
+/*
+  process.env.NODE_ENV === 'development'
+    ? ''
+    : 'https://scrapbook.hackclub.com'
+    */
 
 const CustomEmoji = memo(({ name }) => {
   let [image, setImage] = useState()
@@ -20,7 +24,15 @@ const CustomEmoji = memo(({ name }) => {
         })
     } catch (e) {}
   }, [])
-  return <img alt={name} src={image} loading="lazy" width={18} height={18} />
+  return (
+    <img
+      alt={name + ' emoji'}
+      src={image}
+      loading="lazy"
+      width={18}
+      height={18}
+    />
+  )
 })
 
 export default CustomEmoji
