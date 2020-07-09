@@ -6,8 +6,8 @@ const Posts = ({ posts = [] }) => [
     key="masonry"
     breakpointCols={{
       default: 4,
-      960: 3,
-      600: 2,
+      1024: 3,
+      640: 2,
       480: 1
     }}
     className="masonry-posts"
@@ -34,6 +34,21 @@ const Posts = ({ posts = [] }) => [
 
     @media (min-width: 32em) {
       .masonry-posts {
+        padding-right: 12px;
+      }
+
+      .masonry-posts-column {
+        padding-left: 12px;
+      }
+
+      .post {
+        border-radius: 12px;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media (min-width: 64em) {
+      .masonry-posts {
         padding-right: 24px;
       }
 
@@ -42,7 +57,6 @@ const Posts = ({ posts = [] }) => [
       }
 
       .post {
-        border-radius: 12px;
         margin-bottom: 24px;
       }
     }
