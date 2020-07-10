@@ -45,7 +45,7 @@ export const formatText = text =>
     })
 
 const Content = memo(({ children }) => (
-  <p className="post-text">{formatText(children)}</p>
+  <article className="post-text">{formatText(children)}</article>
 ))
 
 export default Content
