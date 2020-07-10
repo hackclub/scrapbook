@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { EmojiImg } from '../../components/emoji'
 import Feed from '../../components/feed'
 import Message from '../../components/message'
-import { find, map, flatten, startCase } from 'lodash'
+import Reaction from '../../components/reaction'
+import { filter, find, map, flatten, uniqBy, startCase } from 'lodash'
 
 const Header = ({ name, url, char }) => (
   <>
@@ -76,14 +77,40 @@ const Header = ({ name, url, char }) => (
   </>
 )
 
-export default ({ emoji, posts = [] }) => {
+const Footer = ({ reactions = [] }) => (
+  <footer>
+    <h2 className="headline">Related reactions</h2>
+    <article className="post-reactions">
+      {reactions.map(reaction => (
+        <Reaction key={reaction.name} {...reaction} />
+      ))}
+    </article>
+    <style jsx>{`
+      footer {
+        text-align: center;
+        padding: 24px;
+        margin: 8px auto;
+      }
+      .post-reactions {
+        justify-content: center;
+        margin-top: 12px;
+      }
+    `}</style>
+  </footer>
+)
+
+export default ({ emoji, related = [], posts = [] }) => {
   const router = useRouter()
 
   if (router.isFallback) {
     return <Message text="Loading…" />
   } else if (emoji) {
     return (
-      <Feed initialData={posts} src={`/api/r/${emoji.name}`}>
+      <Feed
+        initialData={posts}
+        src={`/api/r/${emoji.name}`}
+        footer={related.length > 1 && <Footer reactions={related} />}
+      >
         <Header {...emoji} />
       </Feed>
     )
@@ -102,9 +129,13 @@ export const getStaticProps = async ({ params }) => {
 
   try {
     const posts = await getPosts(params.emoji)
-    const emoji = find(flatten(map(posts, 'reactions')), { name: params.emoji })
-    console.log(emoji)
-    return { props: { emoji, posts }, unstable_revalidate: 1 }
+    const allReactions = flatten(map(posts, 'reactions'))
+    const emoji = find(allReactions, { name: params.emoji })
+    const related = uniqBy(
+      filter(allReactions, r => r.name !== emoji.name),
+      r => r.name
+    )
+    return { props: { emoji, posts, related }, unstable_revalidate: 1 }
   } catch (error) {
     console.error(error)
     return { props: { emoji: { name: params.emoji } }, unstable_revalidate: 1 }

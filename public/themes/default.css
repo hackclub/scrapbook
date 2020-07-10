@@ -171,6 +171,7 @@
   align-self: flex-end;
 }
 
+.headline,
 .header-webring h2 {
   color: var(--colors-muted);
   letter-spacing: 0.08em;
