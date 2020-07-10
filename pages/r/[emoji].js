@@ -21,7 +21,7 @@ const Header = ({ name, url, char }) => (
         ) : ('&images=https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/'+name+'.png'
         )}
       &caption=${
-        'Posts tagged with :' + name + ':'
+        'Posts%20tagged%20with%20:' + name + ':'
       }`}
     />
     <header>
