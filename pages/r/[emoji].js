@@ -13,7 +13,16 @@ const Header = ({ name, url, char }) => (
       name="Summer Scrapbook"
       title={`${startCase(name)} Posts`}
       description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
-      image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
+      image={`https://workshop-cards.hackclub.com/r/${
+        name
+      }.png?brand=Scrapbook${
+        url ? (
+          '&images='+url
+        ) : ('&images=https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/'+name+'.png'
+        )}
+      &caption=${
+        'Posts%20tagged%20with%20:' + name + ':'
+      }`}
     />
     <header>
       {url ? (
