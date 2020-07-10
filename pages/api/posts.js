@@ -1,4 +1,4 @@
-import { find, reverse, orderBy, isEmpty } from 'lodash'
+import { find, reverse, orderBy, compact, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
 import { stripColons } from '../../lib/emoji'
 
@@ -17,16 +17,20 @@ export const getRawPosts = async (max = null, params = {}) => {
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
 export const transformReactions = (raw = []) =>
-  raw.map(str => {
-    try {
-      const parts = str.split(' ')
-      const obj = { name: stripColons(parts[0]) }
-      obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
-      return obj
-    } catch (e) {
-      return {}
-    }
-  })
+  compact(
+    raw.map(str => {
+      try {
+        const parts = str.split(' ')
+        const name = stripColons(parts[0])
+        if (name === 'summer-of-making') return null
+        const obj = { name }
+        obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
+        return obj
+      } catch (e) {
+        return null
+      }
+    })
+  )
 
 export const transformPost = (id = null, fields = {}, user = null) => ({
   id,
