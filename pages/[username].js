@@ -130,7 +130,7 @@ const Profile = ({
       {webring.length > 0 && (
         <aside className="header-col-3 header-webring">
           <h2>Webring</h2>
-          <div class="header-webring-mentions">
+          <div className="header-webring-mentions">
             {webring.map(u => (
               <StaticMention
                 user={u}

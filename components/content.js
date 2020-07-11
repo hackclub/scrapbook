@@ -1,5 +1,5 @@
 // Credit to https://blog.rstankov.com/building-auto-link-component-in-react/
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 import { last } from 'lodash'
 import Mention from './mention'
 import Emoji from './emoji'
@@ -9,7 +9,7 @@ const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
     if (chunk?.startsWith(':')) {
-      return <Emoji name={chunk} />
+      return <Emoji name={chunk} key={i} />
     }
     if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
       const username = chunk.replace(/[@<>]/g, '')
@@ -39,7 +39,7 @@ export const formatText = text =>
     if (chunk?.startsWith('_')) {
       return <i key={i}>{chunk.replace(/_/g, '')}</i>
     }
-    return chunk?.replace(/&amp;/g, '&')
+    return <Fragment key={i}>{chunk?.replace(/&amp;/g, '&')}</Fragment>
   })
 
 const Content = memo(({ children }) => (
