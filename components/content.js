@@ -4,7 +4,7 @@ import { last } from 'lodash'
 import Mention from './mention'
 import Emoji from './emoji'
 
-const dataDetector = /(<(?:.+\|)?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
+const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
 
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
