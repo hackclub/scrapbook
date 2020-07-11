@@ -136,7 +136,9 @@ const Profile = ({
                 user={u}
                 className="header-webring-mention"
                 key={u.id}
-              />
+              >
+                {u.mutual && <Icon glyph="everything" size={24} />}
+              </StaticMention>
             ))}
           </div>
         </aside>
@@ -191,9 +193,9 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   } else {
     return (
       <Profile
+        {...data}
         heatmap={initialData.heatmap}
         webring={initialData.webring}
-        {...data}
       >
         <Banner isVisible={router.query.welcome === 'true'}>
           Woah!!! We’re communicating via a website now…welcome to your
@@ -264,7 +266,7 @@ export const getStaticProps = async ({ params }) => {
 
   try {
     const posts = await getPosts(profile)
-    const { groupBy } = require('lodash')
+    const { map, groupBy } = require('lodash')
     const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
     const heatmap = Object.keys(days).map(date => ({
       date,
@@ -273,7 +275,11 @@ export const getStaticProps = async ({ params }) => {
     let webring = []
     if (profile.webring) {
       webring = await Promise.all(
-        profile.webring.map(async id => await getProfile(id, 'id'))
+        profile.webring.map(async id => {
+          const u = await getProfile(id, 'id')
+          u.mutual = u.webring.includes(profile.id)
+          return u
+        })
       )
     }
     return {
