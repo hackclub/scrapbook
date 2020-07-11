@@ -205,6 +205,13 @@
   height: 32px;
   margin-right: 8px;
 }
+.header-webring-mention svg {
+  color: var(--colors-muted);
+}
+.header-webring-mention:hover svg,
+.header-webring-mention:focus svg {
+  color: var(--colors-cyan);
+}
 
 .posts {
   display: grid;

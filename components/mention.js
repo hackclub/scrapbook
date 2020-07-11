@@ -2,7 +2,7 @@ import { memo, useState, useEffect } from 'react'
 import { trim } from 'lodash'
 import Link from 'next/link'
 
-export const StaticMention = memo(({ user = {}, className = '' }) => (
+export const StaticMention = memo(({ user = {}, className = '', children }) => (
   <Link href="/[username]" as={`/${user.username}`}>
     <a className={`mention ${className}`}>
       <img
@@ -12,6 +12,7 @@ export const StaticMention = memo(({ user = {}, className = '' }) => (
         className="mention-avatar"
       />
       @{user.username}
+      {children}
     </a>
   </Link>
 ))
