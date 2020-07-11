@@ -4,7 +4,7 @@ import { last } from 'lodash'
 import Mention from './mention'
 import Emoji from './emoji'
 
-const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
+const dataDetector = /(<(?:.+\|)?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:.+?\|?\S+:)/
 
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
@@ -16,7 +16,7 @@ export const formatText = text =>
       return <Mention username={username} key={username + i} />
     }
     if (chunk?.startsWith('<')) {
-      const parts = chunk.match(/<(([^\|]+)\|)?(.+?)>/)
+      const parts = chunk.match(/<(([^\|]+)\|)?([^>]+?)>/)
       const url = parts?.[2] || last(parts)
       const children = last(parts)
         ?.replace(/https?:\/\//, '')
