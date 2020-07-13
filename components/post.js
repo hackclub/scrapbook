@@ -29,13 +29,15 @@ const Post = ({
     style={muted ? { opacity: muted, pointerEvents: 'none' } : null}
   >
     {profile || !user ? (
-      <header className="post-header">
-        <time className="post-header-date" dateTime={postedAt}>
-          {postedAt?.startsWith('20')
-            ? convertTimestampToDate(postedAt)
-            : postedAt}
-        </time>
-      </header>
+      <a href={slackURL}>
+        <header className="post-header">
+          <time className="post-header-date" dateTime={postedAt}>
+            {postedAt?.startsWith('20')
+              ? convertTimestampToDate(postedAt)
+              : postedAt}
+          </time>
+        </header>
+      </a>
     ) : (
       <Link href="/[profile]" as={`/${user.username}`}>
         <a className="post-header">
