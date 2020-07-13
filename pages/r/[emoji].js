@@ -5,7 +5,8 @@ import { EmojiImg } from '../../components/emoji'
 import Feed from '../../components/feed'
 import Message from '../../components/message'
 import Reaction from '../../components/reaction'
-import { filter, find, map, flatten, uniqBy, startCase } from 'lodash'
+import FourOhFour from '../404'
+import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 
 const Header = ({ name, url, char }) => (
   <>
@@ -14,16 +15,14 @@ const Header = ({ name, url, char }) => (
       name="Summer Scrapbook"
       title={`${startCase(name)} Posts`}
       description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
-      image={`https://workshop-cards.hackclub.com/r/${
-        name
-      }.png?brand=Scrapbook${
-        url ? (
-          '&images='+url
-        ) : ('&images=https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/'+name+'.png'
-        )}
-      &caption=${
-        'Posts%20tagged%20with%20:' + name + ':'
-      }`}
+      image={`https://workshop-cards.hackclub.com/r/${name}.png?brand=Scrapbook${
+        url
+          ? '&images=' + url
+          : '&images=https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/' +
+            name +
+            '.png'
+      }
+      &caption=${'Posts%20tagged%20with%20:' + name + ':'}`}
     />
     <header>
       {url ? (
@@ -88,8 +87,8 @@ const Footer = ({ reactions = [] }) => (
     <style jsx>{`
       footer {
         text-align: center;
-        padding: 24px;
-        margin: 8px auto;
+        padding: 24px 24px 48px;
+        margin: auto;
       }
       .post-reactions {
         justify-content: center;
@@ -99,8 +98,12 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-export default ({ emoji, related = [], posts = [] }) => {
+export default ({ status, emoji, related = [], posts = [] }) => {
   const router = useRouter()
+
+  if (status === 404) {
+    return <FourOhFour />
+  }
 
   if (router.isFallback) {
     return <Message text="Loading…" />
@@ -125,19 +128,26 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
-  if (params.emoji.length < 2) return console.error('No emoji') || { props: {} }
+  const name = params.emoji.toLowerCase()
+
+  const lost = { props: { status: 404 }, unstable_revalidate: 1 }
+  if (name.length < 2) return console.error('No emoji') || lost
 
   try {
-    const posts = await getPosts(params.emoji)
+    const posts = await getPosts(name)
+    if (!posts || posts.length === 0) return lost
     const allReactions = flatten(map(posts, 'reactions'))
-    const emoji = find(allReactions, { name: params.emoji })
-    const related = uniqBy(
-      filter(allReactions, r => r.name !== emoji.name),
-      r => r.name
+    const emoji = find(allReactions, { name })
+    const related = orderBy(
+      uniqBy(
+        filter(allReactions, r => r.name !== name),
+        r => r.name
+      ),
+      'name'
     )
     return { props: { emoji, posts, related }, unstable_revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name: params.emoji } }, unstable_revalidate: 1 }
+    return { props: { emoji: { name } }, unstable_revalidate: 1 }
   }
 }
