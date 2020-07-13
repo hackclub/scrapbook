@@ -132,7 +132,7 @@ const Post = ({
         {reactions.map(reaction => (
           <Reaction key={reaction.name} {...reaction} />
         ))}
-        <a className="post-reaction" title={startCase(name)} href={slackURL}>
+        <a className="post-reaction" href={slackURL}>
           +
         </a>
       </footer>
