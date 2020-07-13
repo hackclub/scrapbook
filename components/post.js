@@ -21,6 +21,7 @@ const Post = ({
   mux = [],
   reactions = [],
   postedAt,
+  slackURL,
   muted = false
 }) => (
   <section
