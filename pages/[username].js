@@ -113,7 +113,24 @@ const Profile = ({
           </section>
         </div>
       </div>
-      <aside className="header-col-2 header-chart" aria-hidden>
+      {webring.length > 0 && (
+        <aside className="header-col-2 header-webring">
+          <h2>Webring</h2>
+          <div className="header-webring-mentions">
+            {webring.map(u => (
+              <StaticMention
+                user={u}
+                className="header-webring-mention"
+                title={u.mutual ? 'in each others’ webrings' : null}
+                key={u.id}
+              >
+                {u.mutual && <Icon glyph="everything" size={24} />}
+              </StaticMention>
+            ))}
+          </div>
+        </aside>
+      )}
+      <aside className="header-col-3 header-chart" aria-hidden>
         <CalendarHeatmap
           startDate={new Date('2020-06-14')}
           endDate={new Date('2020-08-16')}
@@ -127,22 +144,6 @@ const Profile = ({
           }
         />
       </aside>
-      {webring.length > 0 && (
-        <aside className="header-col-3 header-webring">
-          <h2>Webring</h2>
-          <div className="header-webring-mentions">
-            {webring.map(u => (
-              <StaticMention
-                user={u}
-                className="header-webring-mention"
-                key={u.id}
-              >
-                {u.mutual && <Icon glyph="everything" size={24} />}
-              </StaticMention>
-            ))}
-          </div>
-        </aside>
-      )}
     </header>
     <article className="posts">
       {posts.map(post => (

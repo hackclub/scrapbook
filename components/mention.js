@@ -2,20 +2,22 @@ import { memo, useState, useEffect } from 'react'
 import { trim } from 'lodash'
 import Link from 'next/link'
 
-export const StaticMention = memo(({ user = {}, className = '', children }) => (
-  <Link href="/[username]" as={`/${user.username}`}>
-    <a className={`mention ${className}`}>
-      <img
-        src={user.avatar}
-        alt={user.username}
-        width={24}
-        className="mention-avatar"
-      />
-      @{user.username}
-      {children}
-    </a>
-  </Link>
-))
+export const StaticMention = memo(
+  ({ user = {}, className = '', children, ...props }) => (
+    <Link href="/[username]" as={`/${user.username}`}>
+      <a className={`mention ${className}`} {...props}>
+        <img
+          src={user.avatar}
+          alt={user.username}
+          width={24}
+          className="mention-avatar"
+        />
+        @{user.username}
+        {children}
+      </a>
+    </Link>
+  )
+)
 
 const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
