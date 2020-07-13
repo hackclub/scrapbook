@@ -131,6 +131,9 @@ const Post = ({
       <footer className="post-reactions" aria-label="Emoji reactions">
         {reactions.map(reaction => (
           <Reaction key={reaction.name} {...reaction} />
+          <a className="post-reaction" title={startCase(name)} href={slackURL}>
+            +
+          </a>
         ))}
       </footer>
     )}
