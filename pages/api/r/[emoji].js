@@ -5,7 +5,8 @@ import { getRawPosts, transformPost } from '../posts'
 export const getPosts = async emoji => {
   const users = await getRawUsers(true)
   const allUpdates = await getRawPosts(null, {
-    filterByFormula: `FIND(":${emoji}:", ARRAYJOIN({Filtered Emoji Reactions}, ',')) >= 1`
+    filterByFormula: `FIND(":${emoji}:", ARRAYJOIN({Filtered Emoji Reactions}, ',')) >= 1`,
+    maxRecords: 256
   })
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates
