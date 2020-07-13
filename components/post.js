@@ -124,7 +124,7 @@ const Post = ({
         ))}
       </div>
     )}
-    {reactions.length > 0 && (
+    {reactions.length > 0 && !profile && (
       <footer className="post-reactions" aria-label="Emoji reactions">
         {reactions.map(reaction => (
           <Reaction key={reaction.name} {...reaction} />
