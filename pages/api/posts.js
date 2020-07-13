@@ -37,6 +37,7 @@ export const transformPost = (id = null, fields = {}, user = null) => ({
   user,
   timestamp: fields['Message Timestamp'] || null,
   postedAt: formatTS(fields['Message Timestamp']),
+  slackURL: fields['Slack URL'] || '',
   text: fields['Text'] || '',
   attachments: fields['Attachments'] || [],
   mux: fields['Mux Playback IDs']?.split(' ') || [],
