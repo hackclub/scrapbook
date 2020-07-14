@@ -40,9 +40,11 @@ const Profile = ({
       }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${
-        profile.streakCount <= 7
-          ? profile.streakCount + '-day streak'
-          : '7%2b day streak'
+        0 < profile.streakCount
+          ? profile.streakCount <= 7
+            ? profile.streakCount + '-day streak'
+            : '7%2b day streak'
+          : ''
       }`}
     />
     {profile.css && (
