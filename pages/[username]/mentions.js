@@ -28,24 +28,12 @@ const Profile = ({
       as={Head}
       name="Summer Scrapbook"
       title={`@${profile.username}'s mentions`}
-      description={`Follow @${profile.username}’s progress ${
-        profile.streakCount > 0
-          ? `(currently a ${
-              profile.streakCount <= 7 ? profile.streakCount : '7+'
-            }-day streak!) `
-          : ''
-      }making things in the Hack Club community this summer.`}
+      description={`@${profile.username}’s mentions on Hack Club's Summer Scrapbook`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-      }.png?brand=Scrapbook${
+      }'s.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
-      }&caption=${
-        0 < profile.streakCount
-          ? profile.streakCount <= 7
-            ? profile.streakCount + '-day streak'
-            : '7%2b day streak'
-          : ''
-      }`}
+      }&caption=${`mentions on the Scrapbook.`}`}
     />
     {children}
     <header>
@@ -61,7 +49,7 @@ const Profile = ({
         )}
         <div>
         <p>
-          <a href = {`/${profile.username}`}><code>@{profile.username}</code></a>'s mentions
+          <a href = {`/${profile.username}`}><code>@{profile.username}'s</code></a> mentions
         </p>
         </div>
     </header>
@@ -70,6 +58,7 @@ const Profile = ({
         <Post key={post.id} user={profile} {...post} />
       ))}
       {posts.length === 1 && <ExamplePosts />}
+      {posts.length === 0 && <><p></p><p className="noMentions">No mentions yet :(</p></>}
     </article>
     <style jsx>{`
       header {
@@ -108,6 +97,9 @@ const Profile = ({
         h1 {
           font-size: 64px;
         }
+      }
+      .noMentions{
+        text-align: center;
       }
     `}</style>
   </main>
