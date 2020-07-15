@@ -1,4 +1,4 @@
-import { map, find, orderBy } from 'lodash'
+import { map, find,isEmpty, orderBy } from 'lodash'
 import { getRawUsers, transformUser } from './index'
 import { getRawPosts, transformPost } from '../posts'
 
@@ -22,17 +22,27 @@ export const getPosts = async user => {
   const allUpdates = await getRawPosts(null, {
     filterByFormula: `{Username} = "${user.username}"`
   })
+  
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates.map(({ id, fields }) => transformPost(id, fields))
 }
 
 export const getMentions = async user => {
+  const users = await getRawUsers(true)
   const allUpdates = await getRawPosts(null, {
     filterByFormula: `IF(FIND("@${user.username}",{text})>0,TRUE(),FALSE())`,
   })
   if (!allUpdates) console.error('Could not fetch posts')
-  return allUpdates.map(({ id, fields }) => transformPost(id, fields))
+  return allUpdates
+  .map(p => {
+    const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
+    p.user = user.id ? transformUser(user) : null
+    return p
+  })
+  .filter(p => !isEmpty(p.user))
+  .map(({ id, user, fields }) => transformPost(id, fields, user))
 }
+
 
 export default async (req, res) => {
   const profile = await getProfile(req.query.username)
