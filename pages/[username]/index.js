@@ -4,13 +4,13 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Banner from '../components/banner'
-import Message from '../components/message'
-import { StaticMention } from '../components/mention'
-import Post from '../components/post'
-import AudioPlayer from '../components/audio-player'
-import ExamplePosts from '../components/example-posts'
-import FourOhFour from './404'
+import Banner from '../../components/banner'
+import Message from '../../components/message'
+import { StaticMention } from '../../components/mention'
+import Post from '../../components/post'
+import AudioPlayer from '../../components/audio-player'
+import ExamplePosts from '../../components/example-posts'
+import FourOhFour from '../404'
 import { clamp } from 'lodash'
 
 const HOST =
@@ -259,7 +259,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { getProfile, getPosts } = require('./api/users/[username]')
+  const { getProfile, getPosts } = require('../api/users/[username]')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
 

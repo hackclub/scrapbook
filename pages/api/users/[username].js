@@ -26,6 +26,14 @@ export const getPosts = async user => {
   return allUpdates.map(({ id, fields }) => transformPost(id, fields))
 }
 
+export const getMentions = async user => {
+  const allUpdates = await getRawPosts(null, {
+    filterByFormula: `IF(FIND("@${user.username}",{text})>0,TRUE(),FALSE())`,
+  })
+  if (!allUpdates) console.error('Could not fetch posts')
+  return allUpdates.map(({ id, fields }) => transformPost(id, fields))
+}
+
 export default async (req, res) => {
   const profile = await getProfile(req.query.username)
   if (!profile?.id)
