@@ -116,24 +116,12 @@ const Profile = ({
 const fetcher = url => fetch(url).then(r => r.json())
 
 const Page = ({ username = '', router = {}, initialData = {} }) => {
-  const { data, error } = useSWR(`/api/users/${username}`, fetcher, {
-    initialData,
-    refreshInterval: 5000
-  })
-  if (!data) {
-    return <Message text="Loading…" />
-  } else if (error && !data) {
-    return <Message text="Error" color1="orange" color2="pink" />
-  } else {
-    return (
-      <Profile
-        {...data}
-        heatmap={initialData.heatmap}
-        webring={initialData.webring}
-      >
-      </Profile>
-    )
-  }
+  return (
+    <Profile
+      {...initialData}
+    >
+    </Profile>
+  )
 }
 
 export default props => {
