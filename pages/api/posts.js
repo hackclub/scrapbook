@@ -39,7 +39,7 @@ export const transformPost = (id = null, fields = {}, user = null) => ({
   postedAt: formatTS(fields['Message Timestamp']),
   text: fields['Text'] || '',
   attachments: fields['Attachments'] || [],
-  mux: fields['Mux Playback IDs']?.split(' ') || [],
+  mux: fields['Mux Playback IDs']?.split(',') || [],
   reactions: transformReactions(fields['Filtered Emoji Reactions']) || []
 })
 
