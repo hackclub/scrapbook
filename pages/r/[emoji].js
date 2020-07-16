@@ -123,7 +123,22 @@ export default ({ status, emoji, related = [], posts = [] }) => {
 }
 
 export const getStaticPaths = async () => {
-  return { paths: [], fallback: true }
+  const names = [
+    'art',
+    'package',
+    'hardware',
+    'swift',
+    'rustlang',
+    'slack',
+    'github',
+    'vsc',
+    'car',
+    'musical_note',
+    'robot_face',
+    'birthday'
+  ]
+  const paths = names.map(emoji => ({ params: { emoji } }))
+  return { paths, fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
