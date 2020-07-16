@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
+import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
 
-const Header = ({ children }) => (
+const Header = ({ reactions, children }) => (
   <>
     <Meta
       as={Head}
@@ -19,6 +20,12 @@ const Header = ({ children }) => (
         Daily updates from <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
         learning & making something new every day.
       </p>
+      <article className="post-reactions">
+        <h2 className="headline">Explore</h2>
+        {reactions.map(reaction => (
+          <Reaction key={reaction.name} {...reaction} />
+        ))}
+      </article>
     </header>
     <style jsx>{`
       header {
@@ -75,18 +82,45 @@ const Header = ({ children }) => (
           -webkit-text-fill-color: transparent;
         }
       }
+      .post-reactions {
+        justify-content: center;
+        align-items: center;
+        margin-top: 12px;
+      }
+      h2 {
+        margin: 0 16px 12px;
+        font-size: 18px;
+      }
     `}</style>
   </>
 )
 
-export default ({ initialData }) => (
+export default ({ reactions, initialData }) => (
   <Feed initialData={initialData} footer={<Footer />}>
-    <Header />
+    <Header reactions={reactions} />
   </Feed>
 )
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
-  const initialData = await getPosts(50)
-  return { props: { initialData }, unstable_revalidate: 1 }
+  const initialData = await getPosts(64)
+  const { find, compact, map, flatten } = require('lodash')
+  const names = [
+    'art',
+    'package',
+    'hardware',
+    'swift',
+    'rustlang',
+    'slack',
+    'github',
+    'vsc',
+    'car',
+    'musical_note',
+    'robot_face',
+    'birthday'
+  ]
+  const reactions = compact(
+    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
+  )
+  return { props: { reactions, initialData }, unstable_revalidate: 1 }
 }
