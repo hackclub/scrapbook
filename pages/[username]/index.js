@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import Link from 'next/link'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
@@ -85,6 +86,14 @@ const Profile = ({
               }`}</span>
             </span>
             <div className="header-links">
+              <Link
+                href="/[username]/mentions"
+                as={`/${profile.username}/mentions`}
+              >
+                <a className="header-link header-link-mentions">
+                  <Icon size={32} glyph="mention" />
+                </a>
+              </Link>
               <a
                 href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
                 target="_blank"
