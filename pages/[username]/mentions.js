@@ -1,29 +1,17 @@
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import Head from 'next/head'
+import Link from 'next/link'
 import Meta from '@hackclub/meta'
-import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Banner from '../../components/banner'
 import Message from '../../components/message'
-import { StaticMention } from '../../components/mention'
-import Post from '../../components/post'
-import AudioPlayer from '../../components/audio-player'
-import ExamplePosts from '../../components/example-posts'
+import Posts from '../../components/posts'
 import FourOhFour from '../404'
-import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const Profile = ({
-  profile = {},
-  heatmap = [],
-  webring = [],
-  posts = [],
-  children
-}) => (
-  <main className="container">
+const Profile = ({ profile = {}, posts = [] }) => (
+  <>
     <Meta
       as={Head}
       name="Summer Scrapbook"
@@ -35,92 +23,100 @@ const Profile = ({
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${`mentions on the Scrapbook.`}`}
     />
-    {children}
+    {profile.css && (
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href={HOST + `/api/css?url=${profile.css}`}
+      />
+    )}
     <header>
-        {profile.avatar && (
-          <div>
-            <img
-              src={profile.avatar}
-              width={96}
-              alt={profile.username}
-              className="header-title-avatar"
-            />
-          </div>
-        )}
-        <div>
-        <p>
-          <a href = {`/${profile.username}`}><code>@{profile.username}'s</code></a> mentions
-        </p>
-        </div>
+      {profile.avatar && (
+        <img
+          src={profile.avatar}
+          width={96}
+          alt={profile.username}
+          className="header-title-avatar"
+        />
+      )}
+      <div>
+        <Link href="/[username]" as={`/${profile.username}`}>
+          <a className="header-back">
+            <Icon glyph="view-back" size={24} />@{profile.username}
+          </a>
+        </Link>
+        <h1>Mentions</h1>
+      </div>
     </header>
-    <article className="posts">
-      {posts.map(post => (
-        <Post key={post.id} user={profile} {...post} />
-      ))}
-      {posts.length === 1 && <ExamplePosts />}
-      {posts.length === 0 && <><p></p><p className="noMentions">No mentions yet :(</p></>}
-    </article>
+    {posts.length === 0 && (
+      <h2 className="headline blankslate">No mentions yet :(</h2>
+    )}
+    <Posts posts={posts} />
     <style jsx>{`
       header {
-        margin:auto;
-        text-align:center;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 16px 48px;
       }
-      a {
-        text-decoration: none;
+      .header-title-avatar {
+        margin-left: 0;
+        margin-right: 16px;
       }
-      img{
-        margin:auto;
+      h1 {
+        margin: 0;
+        line-height: 1;
+        font-size: 48px;
       }
       p {
         font-size: 14px;
         color: var(--colors-muted);
       }
-      code {
-        font-size: 14px;
-        color: var(--colors-purple);
+      .header-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        margin-left: -12px;
+        color: var(--colors-muted);
+        font-weight: bold;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: box-shadow 0.125s ease-in-out;
       }
-      @media (min-width: 32em) {
-        h1 {
-          font-size: 48px;
-        }
-        p {
-          font-size: 24px;
-        }
-        header {
-          padding: 24px 0 48px;
-        }
-        code {
-          font-size: 24px;
-        }
+      .header-back:focus,
+      .header-back:hover {
+        box-shadow: 0 0 0 2px;
+        outline: none;
+      }
+      .header-back svg {
+        margin-right: 8px;
       }
       @media (min-width: 48em) {
+        .header-title-avatar {
+          margin-right: 32px;
+        }
         h1 {
           font-size: 64px;
         }
       }
-      .noMentions{
+      .blankslate {
         text-align: center;
       }
     `}</style>
-  </main>
+  </>
 )
 
-const fetcher = url => fetch(url).then(r => r.json())
-
 const Page = ({ username = '', router = {}, initialData = {} }) => {
-  return (
-    <Profile
-      {...initialData}
-    >
-    </Profile>
-  )
+  return <Profile {...initialData}></Profile>
 }
 
 export default props => {
   const router = useRouter()
 
   if (router.isFallback) {
-    return <Message text="Loading…" />
+    return <Message text="Loading…" color1="cyan" color2="blue" />
   } else if (props.profile?.username) {
     return (
       <Page
@@ -135,20 +131,7 @@ export default props => {
 }
 
 export const getStaticPaths = async () => {
-  const { map } = require('lodash')
-  const usernames = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-      `?select=${JSON.stringify({
-        filterByFormula: '{Full Slack Member?} = 1',
-        fields: ['Username'],
-        sort: [{ field: 'Streak Count', direction: 'desc' }],
-        maxRecords: 75
-      })}`
-  )
-    .then(r => r.json())
-    .then(u => map(u, 'fields.Username'))
-  const paths = usernames.map(username => ({ params: { username } }))
-  return { paths, fallback: true }
+  return { paths: [], fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
