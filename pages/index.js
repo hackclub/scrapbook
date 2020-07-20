@@ -22,7 +22,7 @@ const Header = ({ children }) => (
       <h1>Hack Club’s Summer Scrapbook</h1>
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
-        are doing every day.
+        are learning & making every day.
       </p>
     </header>
     <style jsx global>{`
