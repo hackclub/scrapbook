@@ -8,7 +8,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --check ."
+    "format": "prettier --write --check ."
   },
   "dependencies": {
     "@charlietango/use-native-lazy-loading": "^1.7.1",
