@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --check ."
   },
   "dependencies": {
     "@charlietango/use-native-lazy-loading": "^1.7.1",
@@ -26,5 +27,8 @@
     "react-intersection-observer": "^8.26.2",
     "react-masonry-css": "^1.0.14",
     "swr": "^0.2.3"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
   }
 }
