@@ -80,7 +80,7 @@ const Footer = ({ reactions = [] }) => (
   <footer>
     <h2 className="headline">Related reactions</h2>
     <article className="post-reactions">
-      {reactions.map(reaction => (
+      {reactions.map((reaction) => (
         <Reaction key={reaction.name} {...reaction} />
       ))}
     </article>
@@ -137,7 +137,7 @@ export const getStaticPaths = async () => {
     'robot_face',
     'birthday'
   ]
-  const paths = names.map(emoji => ({ params: { emoji } }))
+  const paths = names.map((emoji) => ({ params: { emoji } }))
   return { paths, fallback: true }
 }
 
@@ -155,8 +155,8 @@ export const getStaticProps = async ({ params }) => {
     const emoji = find(allReactions, { name })
     const related = orderBy(
       uniqBy(
-        filter(allReactions, r => r.name !== name),
-        r => r.name
+        filter(allReactions, (r) => r.name !== name),
+        (r) => r.name
       ),
       'name'
     )

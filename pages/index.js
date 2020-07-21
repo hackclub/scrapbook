@@ -22,7 +22,7 @@ const Header = ({ reactions, children }) => (
       </p>
       <article className="post-reactions">
         <h2 className="headline">Explore</h2>
-        {reactions.map(reaction => (
+        {reactions.map((reaction) => (
           <Reaction key={reaction.name} {...reaction} />
         ))}
       </article>
@@ -120,7 +120,7 @@ export const getStaticProps = async () => {
     'birthday'
   ]
   const reactions = compact(
-    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
+    names.map((name) => find(flatten(map(initialData, 'reactions')), { name }))
   )
   return { props: { reactions, initialData }, unstable_revalidate: 1 }
 }

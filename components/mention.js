@@ -24,8 +24,8 @@ const Mention = memo(({ username }) => {
   useEffect(() => {
     try {
       fetch(`/api/profiles/${trim(username)}`)
-        .then(r => r.json())
-        .then(profile => setImg(profile.avatar))
+        .then((r) => r.json())
+        .then((profile) => setImg(profile.avatar))
     } catch (e) {}
   }, [])
   return (

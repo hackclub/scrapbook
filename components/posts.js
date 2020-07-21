@@ -13,7 +13,7 @@ const Posts = ({ posts = [] }) => [
     className="masonry-posts"
     columnClassName="masonry-posts-column"
   >
-    {posts.map(post => (
+    {posts.map((post) => (
       <Post key={post.id} {...post} />
     ))}
   </Masonry>,

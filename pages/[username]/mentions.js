@@ -112,7 +112,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   return <Profile {...initialData}></Profile>
 }
 
-export default props => {
+export default (props) => {
   const router = useRouter()
 
   if (router.isFallback) {

@@ -128,7 +128,7 @@ const Profile = ({
         <aside className="header-col-2 header-webring">
           <h2>Webring</h2>
           <div className="header-webring-mentions">
-            {webring.map(u => (
+            {webring.map((u) => (
               <StaticMention
                 user={u}
                 className="header-webring-mention"
@@ -147,17 +147,17 @@ const Profile = ({
           endDate={new Date('2020-08-16')}
           values={heatmap}
           showWeekdayLabels
-          classForValue={v =>
+          classForValue={(v) =>
             v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
           }
-          titleForValue={v =>
+          titleForValue={(v) =>
             v?.date ? `${v?.date} updates: ${v?.count}` : ''
           }
         />
       </aside>
     </header>
     <article className="posts">
-      {posts.map(post => (
+      {posts.map((post) => (
         <Post key={post.id} user={profile} profile {...post} />
       ))}
       {posts.length === 1 && <ExamplePosts />}
@@ -191,7 +191,7 @@ const Profile = ({
   </main>
 )
 
-const fetcher = url => fetch(url).then(r => r.json())
+const fetcher = (url) => fetch(url).then((r) => r.json())
 
 const Page = ({ username = '', router = {}, initialData = {} }) => {
   const { data, error } = useSWR(`/api/users/${username}`, fetcher, {
@@ -232,7 +232,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   }
 }
 
-export default props => {
+export default (props) => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -261,9 +261,9 @@ export const getStaticPaths = async () => {
         maxRecords: 75
       })}`
   )
-    .then(r => r.json())
-    .then(u => map(u, 'fields.Username'))
-  const paths = usernames.map(username => ({ params: { username } }))
+    .then((r) => r.json())
+    .then((u) => map(u, 'fields.Username'))
+  const paths = usernames.map((username) => ({ params: { username } }))
   return { paths, fallback: true }
 }
 
@@ -279,15 +279,15 @@ export const getStaticProps = async ({ params }) => {
   try {
     const posts = await getPosts(profile)
     const { map, groupBy } = require('lodash')
-    const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
-    const heatmap = Object.keys(days).map(date => ({
+    const days = groupBy(posts, (p) => p.postedAt?.substring(0, 10))
+    const heatmap = Object.keys(days).map((date) => ({
       date,
       count: days[date].length || 0
     }))
     let webring = []
     if (profile.webring) {
       webring = await Promise.all(
-        profile.webring.map(async id => {
+        profile.webring.map(async (id) => {
           const u = await getProfile(id, 'id')
           u.mutual = u.webring.includes(profile.id)
           return u

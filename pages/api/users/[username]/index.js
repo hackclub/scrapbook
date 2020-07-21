@@ -12,13 +12,13 @@ export const getProfile = async (value, field = 'Username') => {
   const user = await fetch(
     `https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts?select=${opts}`
   )
-    .then(r => r.json())
-    .then(a => (Array.isArray(a) ? a[0] : null))
+    .then((r) => r.json())
+    .then((a) => (Array.isArray(a) ? a[0] : null))
   if (!user) console.error('Could not fetch account', value)
   return user && user?.fields?.Username ? transformUser(user) : {}
 }
 
-export const getPosts = async user => {
+export const getPosts = async (user) => {
   const allUpdates = await getRawPosts(null, {
     filterByFormula: `{Username} = "${user.username}"`
   })
@@ -27,19 +27,19 @@ export const getPosts = async user => {
   return allUpdates.map(({ id, fields }) => transformPost(id, fields))
 }
 
-export const getMentions = async user => {
+export const getMentions = async (user) => {
   const users = await getRawUsers(true)
   const allUpdates = await getRawPosts(null, {
     filterByFormula: `IF(FIND("@${user.username}",{text})>0,TRUE(),FALSE())`
   })
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates
-    .map(p => {
+    .map((p) => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
       p.user = user.id ? transformUser(user) : null
       return p
     })
-    .filter(p => !isEmpty(p.user))
+    .filter((p) => !isEmpty(p.user))
     .map(({ id, user, fields }) => transformPost(id, fields, user))
 }
 
@@ -50,7 +50,7 @@ export default async (req, res) => {
   let webring = []
   if (profile.webring) {
     webring = await Promise.all(
-      profile.webring.map(async id => await getProfile(id, 'id'))
+      profile.webring.map(async (id) => await getProfile(id, 'id'))
     )
   }
   const posts = (await getPosts(profile)) || []

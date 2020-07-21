@@ -2,7 +2,7 @@ import { map, find, isEmpty, orderBy, filter } from 'lodash'
 import { getRawUsers, transformUser } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
-export const getPosts = async emoji => {
+export const getPosts = async (emoji) => {
   const users = await getRawUsers(true)
   const allUpdates = await getRawPosts(null, {
     filterByFormula: `FIND(":${emoji}:", ARRAYJOIN({Filtered Emoji Reactions}, ',')) >= 1`,
@@ -10,12 +10,12 @@ export const getPosts = async emoji => {
   })
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates
-    .map(p => {
+    .map((p) => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
       p.user = user.id ? transformUser(user) : null
       return p
     })
-    .filter(p => !isEmpty(p.user))
+    .filter((p) => !isEmpty(p.user))
     .map(({ id, user, fields }) => transformPost(id, fields, user))
 }
 

@@ -90,43 +90,43 @@ const Post = ({
     <Content>{text}</Content>
     {attachments.length > 0 && (
       <div className="post-attachments">
-        {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
-          img => (
-            <a
-              key={img.url}
-              href={img.thumbnails?.full?.url || img.url}
-              target="_blank"
-              className="post-attachment"
-            >
-              <Image
-                alt={img.filename}
-                src={img.thumbnails?.large?.url || img.url}
-                placeholderSrc={img.thumbnails?.small?.url || img.url}
-                width={img.thumbnails?.large?.width}
-                height={img.thumbnails?.large?.height}
-              />
-            </a>
-          )
-        )}
-        {filter(attachments, a => a?.type?.toString().startsWith('audio')).map(
-          aud => (
-            <audio
-              key={aud.url}
-              className="post-attachment"
-              src={aud.url}
-              controls
-              preload="metadata"
+        {filter(attachments, (a) =>
+          a?.type?.toString().startsWith('image')
+        ).map((img) => (
+          <a
+            key={img.url}
+            href={img.thumbnails?.full?.url || img.url}
+            target="_blank"
+            className="post-attachment"
+          >
+            <Image
+              alt={img.filename}
+              src={img.thumbnails?.large?.url || img.url}
+              placeholderSrc={img.thumbnails?.small?.url || img.url}
+              width={img.thumbnails?.large?.width}
+              height={img.thumbnails?.large?.height}
             />
-          )
-        )}
-        {mux.map(id => (
+          </a>
+        ))}
+        {filter(attachments, (a) =>
+          a?.type?.toString().startsWith('audio')
+        ).map((aud) => (
+          <audio
+            key={aud.url}
+            className="post-attachment"
+            src={aud.url}
+            controls
+            preload="metadata"
+          />
+        ))}
+        {mux.map((id) => (
           <Video key={id} mux={id} />
         ))}
       </div>
     )}
     {reactions.length > 0 && !profile && (
       <footer className="post-reactions" aria-label="Emoji reactions">
-        {reactions.map(reaction => (
+        {reactions.map((reaction) => (
           <Reaction key={reaction.name} {...reaction} />
         ))}
       </footer>

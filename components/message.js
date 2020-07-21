@@ -7,7 +7,7 @@ const Message = ({ text, color1 = 'yellow', color2 = 'green' }) => (
         padding: 32px 16px;
       }
       h1 {
-        color: var(--colors-${color2});
+        color: var(--colors- ${color2});
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 56px;
@@ -23,8 +23,8 @@ const Message = ({ text, color1 = 'yellow', color2 = 'green' }) => (
         h1 {
           background-image: radial-gradient(
             ellipse farthest-corner at top left,
-            var(--colors-${color1}),
-            var(--colors-${color2})
+            var(--colors- ${color1}),
+            var(--colors- ${color2})
           );
           background-repeat: no-repeat;
           -webkit-background-clip: text;

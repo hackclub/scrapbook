@@ -44,8 +44,8 @@ const Video = ({ mux, ...props }) => {
       playsInline
       loop
       preload="metadata"
-      onMouseOver={e => e.target.play()}
-      onMouseOut={e => e.target.pause()}
+      onMouseOver={(e) => e.target.play()}
+      onMouseOut={(e) => e.target.pause()}
       {...props}
     />
   )

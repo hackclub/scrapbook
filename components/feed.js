@@ -3,7 +3,7 @@ import Message from '../components/message'
 import Posts from '../components/posts'
 import { orderBy } from 'lodash'
 
-const fetcher = url => fetch(url).then(r => r.json())
+const fetcher = (url) => fetch(url).then((r) => r.json())
 
 const Feed = ({
   src = '/api/posts',
@@ -21,7 +21,7 @@ const Feed = ({
     return (
       <main className="container">
         {children}
-        <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
+        <Posts posts={orderBy([initialData, data], (a) => a.length)[0]} />
       </main>
     )
   }

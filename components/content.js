@@ -6,7 +6,7 @@ import Emoji from './emoji'
 
 const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^:\s]{2,24}:)/
 
-export const formatText = text =>
+export const formatText = (text) =>
   text.split(dataDetector).map((chunk, i) => {
     if (chunk?.startsWith(':')) {
       return <Emoji name={chunk} key={i} />

@@ -1,4 +1,4 @@
-const Flag = props => (
+const Flag = (props) => (
   <a
     title="Hack Club"
     href="https://hackclub.com/"

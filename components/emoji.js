@@ -11,8 +11,8 @@ const CustomEmoji = memo(({ name }) => {
   useEffect(() => {
     try {
       fetch('https://scrapbook.hackclub.com/api/emoji')
-        .then(r => r.json())
-        .then(emojis => {
+        .then((r) => r.json())
+        .then((emojis) => {
           if (emojis[emoji]) {
             setImage(emojis[emoji])
             return
