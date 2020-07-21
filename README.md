@@ -1,6 +1,7 @@
 # [Summer Scrapbook](https://scrapbook.hackclub.com/)
 
 ![format](https://github.com/hackclub/summer-scrapbook/workflows/format/badge.svg)
+
 ![build](https://github.com/hackclub/summer-scrapbook/workflows/build/badge.svg)
 
 **Share updates of your learning every day**: Every day this summer, [Hack Clubbers](https://hackclub.com/) are learning & building projects, sharing short video & photo updates each day.
