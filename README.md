@@ -18,6 +18,8 @@ Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [
 
 To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
+Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
+
 ### Colors & fonts
 
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
@@ -67,6 +69,22 @@ To put your profile on your own domain, run `/scrappy setdomain <domain>` in Sla
   (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this
   feature.)
 </small>
+
+## Website widget
+
+Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
+
+```js
+<script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
+<script>displayScrapbookUsername('username')</script>
+```
+
+If you have a custom domain, you can optionally link the scrapbook widget to it! Do it like this:
+
+```js
+<script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
+<script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
+```
 
 ## Public API
 
