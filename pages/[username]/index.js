@@ -41,10 +41,12 @@ const Profile = ({
           }.png?brand=Scrapbook${
           profile.avatar ? `&images=${profile.avatar}` : ''
           }&caption=${
-          0 < profile.streakCount && !profile.streaksToggledOff
-            ? profile.streakCount <= 7
-              ? profile.streakCount + '-day streak'
-              : '7%2b day streak'
+          !profile.streaksToggledOff ?
+            0 < profile.streakCount
+              ? profile.streakCount <= 7
+                ? profile.streakCount + '-day streak'
+                : '7%2b day streak'
+              : ''
             : ''
           }`}
       />
@@ -77,6 +79,7 @@ const Profile = ({
                       : 'plural'
                     : 'singular'
                   }`}
+                isVisible={!profile.streaksToggledOff}
               >
                 <Icon size={32} glyph="admin-badge" title="Streak icon" />
                 <span className="header-streak-count">{`${
