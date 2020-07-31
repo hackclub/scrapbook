@@ -18,7 +18,7 @@ const full = `?select=${JSON.stringify({
 export const getRawUsers = (onlyFull = false) =>
   fetch(
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-      (onlyFull ? full : '')
+    (onlyFull ? full : '')
   ).then((r) => r.json())
 
 export const transformUser = (user = {}) => ({
@@ -29,6 +29,7 @@ export const transformUser = (user = {}) => ({
   css: user?.fields['CSS URL'] || null,
   audio: user?.fields['Audio URL'] || null,
   streakCount: user?.fields['Streak Count'] || 0,
+  streakToggledOff: user?.fields['Streaks Toggled Off'] || null,
   slack: user?.fields['ID'] || '',
   github: user?.fields['GitHub'] || null,
   website: user?.fields['Website'] || null
