@@ -41,7 +41,7 @@ const Profile = ({
           }.png?brand=Scrapbook${
           profile.avatar ? `&images=${profile.avatar}` : ''
           }&caption=${
-          0 < profile.streakCount && !streaksToggledOff
+          0 < profile.streakCount && !profile.streaksToggledOff
             ? profile.streakCount <= 7
               ? profile.streakCount + '-day streak'
               : '7%2b day streak'
