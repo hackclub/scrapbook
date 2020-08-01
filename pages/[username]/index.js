@@ -257,12 +257,12 @@ export const getStaticPaths = async () => {
   const { map } = require('lodash')
   const usernames = await fetch(
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-    `?select=${JSON.stringify({
-      filterByFormula: '{Full Slack Member?} = 1',
-      fields: ['Username'],
-      sort: [{ field: 'Streak Count', direction: 'desc' }],
-      maxRecords: 75
-    })}`
+      `?select=${JSON.stringify({
+        filterByFormula: '{Full Slack Member?} = 1',
+        fields: ['Username'],
+        sort: [{ field: 'Streak Count', direction: 'desc' }],
+        maxRecords: 75
+      })}`
   )
     .then(r => r.json())
     .then(u => map(u, 'fields.Username'))

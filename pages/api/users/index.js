@@ -18,7 +18,7 @@ const full = `?select=${JSON.stringify({
 export const getRawUsers = (onlyFull = false) =>
   fetch(
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-    (onlyFull ? full : '')
+      (onlyFull ? full : '')
   ).then((r) => r.json())
 
 export const transformUser = (user = {}) => ({
