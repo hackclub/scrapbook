@@ -48,7 +48,7 @@ const Profile = ({
               : '7%2b day streak'
             : ''
           : ''
-    }`}
+      }`}
     />
     {profile.css && (
       <link
@@ -78,7 +78,7 @@ const Profile = ({
                     ? 'zero'
                     : 'plural'
                   : 'singular'
-                }`}
+              }`}
               isVisible={!profile.streaksToggledOff}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
@@ -86,7 +86,7 @@ const Profile = ({
                 profile.streakCount <= 7
                   ? profile.streakCount + '-day streak'
                   : '7+ day streak'
-                }`}</span>
+              }`}</span>
             </span>
             <div className="header-links">
               <Link
@@ -177,8 +177,8 @@ const Profile = ({
           href={
             profile.css.includes('gist.githubusercontent')
               ? profile.css
-                .replace('githubusercontent.', 'github.')
-                .split('/raw')?.[0]
+                  .replace('githubusercontent.', 'github.')
+                  .split('/raw')?.[0]
               : profile.css
           }
           target="_blank"
@@ -192,7 +192,7 @@ const Profile = ({
       </footer>
     )}
   </main>
-  )
+)
 
 const fetcher = url => fetch(url).then(r => r.json())
 
