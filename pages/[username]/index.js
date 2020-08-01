@@ -24,174 +24,174 @@ const Profile = ({
   posts = [],
   children
 }) => (
-    <main className="container">
-      <Meta
-        as={Head}
-        name="Summer Scrapbook"
-        title={`@${profile.username}`}
-        description={`Follow @${profile.username}’s progress ${
-          profile.streakCount > 0 && !profile.streaksToggledOff
-            ? `(currently a ${
-            profile.streakCount <= 7 ? profile.streakCount : '7+'
-            }-day streak!) `
+  <main className="container">
+    <Meta
+      as={Head}
+      name="Summer Scrapbook"
+      title={`@${profile.username}`}
+      description={`Follow @${profile.username}’s progress ${
+        profile.streakCount > 0 && !profile.streaksToggledOff
+          ? `(currently a ${
+          profile.streakCount <= 7 ? profile.streakCount : '7+'
+          }-day streak!) `
+          : ''
+        }making things in the Hack Club community this summer.`}
+      image={`https://workshop-cards.hackclub.com/@${
+        profile.username
+        }.png?brand=Scrapbook${
+        profile.avatar ? `&images=${profile.avatar}` : ''
+        }&caption=${
+        !profile.streaksToggledOff ?
+          0 < profile.streakCount
+            ? profile.streakCount <= 7
+              ? profile.streakCount + '-day streak'
+              : '7%2b day streak'
             : ''
-          }making things in the Hack Club community this summer.`}
-        image={`https://workshop-cards.hackclub.com/@${
-          profile.username
-          }.png?brand=Scrapbook${
-          profile.avatar ? `&images=${profile.avatar}` : ''
-          }&caption=${
-          !profile.streaksToggledOff ?
-            0 < profile.streakCount
-              ? profile.streakCount <= 7
-                ? profile.streakCount + '-day streak'
-                : '7%2b day streak'
-              : ''
-            : ''
-          }`}
+          : ''
+        }`}
+    />
+    {profile.css && (
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href={HOST + `/api/css?url=${profile.css}`}
       />
-      {profile.css && (
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href={HOST + `/api/css?url=${profile.css}`}
-        />
-      )}
-      {children}
-      <header className="header">
-        <div className="header-col-1">
-          {profile.avatar && (
-            <img
-              src={profile.avatar}
-              width={96}
-              alt={profile.username}
-              className="header-title-avatar"
-            />
-          )}
-          <div>
-            <h1 className="header-title-name">{profile.username}</h1>
-            <section className="header-content">
-              <span
-                className={`badge header-streak header-streak-${
-                  profile.streakCount !== 1
-                    ? profile.streakCount === 0
-                      ? 'zero'
-                      : 'plural'
-                    : 'singular'
-                  }`}
-                isVisible={!profile.streaksToggledOff}
-              >
-                <Icon size={32} glyph="admin-badge" title="Streak icon" />
-                <span className="header-streak-count">{`${
-                  profile.streakCount <= 7
-                    ? profile.streakCount + '-day streak'
-                    : '7+ day streak'
-                  }`}</span>
-              </span>
-              <div className="header-links">
-                <Link
-                  href="/[username]/mentions"
-                  as={`/${profile.username}/mentions`}
-                >
-                  <a className="header-link header-link-mentions">
-                    <Icon size={32} glyph="mention" />
-                  </a>
-                </Link>
-                <a
-                  href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
-                  target="_blank"
-                  className="header-link header-link-slack"
-                >
-                  <Icon size={32} glyph="slack-fill" />
-                </a>
-                {profile.github && (
-                  <a
-                    href={profile.github}
-                    target="_blank"
-                    className="header-link header-link-github"
-                  >
-                    <Icon size={32} glyph="github" />
-                  </a>
-                )}
-                {profile.website && (
-                  <a
-                    href={profile.website}
-                    target="_blank"
-                    className="header-link header-link-website"
-                  >
-                    <Icon size={32} glyph="link" />
-                  </a>
-                )}
-              </div>
-              {profile.audio && <AudioPlayer url={profile.audio} />}
-            </section>
-          </div>
-        </div>
-        {webring.length > 0 && (
-          <aside className="header-col-2 header-webring">
-            <h2>Webring</h2>
-            <div className="header-webring-mentions">
-              {webring.map(u => (
-                <StaticMention
-                  user={u}
-                  className="header-webring-mention"
-                  title={u.mutual ? 'in each others’ webrings' : null}
-                  key={u.id}
-                >
-                  {u.mutual && <Icon glyph="everything" size={24} />}
-                </StaticMention>
-              ))}
-            </div>
-          </aside>
+    )}
+    {children}
+    <header className="header">
+      <div className="header-col-1">
+        {profile.avatar && (
+          <img
+            src={profile.avatar}
+            width={96}
+            alt={profile.username}
+            className="header-title-avatar"
+          />
         )}
-        <aside className="header-col-3 header-chart" aria-hidden>
-          <CalendarHeatmap
-            startDate={new Date('2020-06-14')}
-            endDate={new Date('2020-08-16')}
-            values={heatmap}
-            showWeekdayLabels
-            classForValue={v =>
-              v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
-            }
-            titleForValue={v =>
-              v?.date ? `${v?.date} updates: ${v?.count}` : ''
-            }
-          />
+        <div>
+          <h1 className="header-title-name">{profile.username}</h1>
+          <section className="header-content">
+            <span
+              className={`badge header-streak header-streak-${
+                profile.streakCount !== 1
+                  ? profile.streakCount === 0
+                    ? 'zero'
+                    : 'plural'
+                  : 'singular'
+                }`}
+              isVisible={!profile.streaksToggledOff}
+            >
+              <Icon size={32} glyph="admin-badge" title="Streak icon" />
+              <span className="header-streak-count">{`${
+                profile.streakCount <= 7
+                  ? profile.streakCount + '-day streak'
+                  : '7+ day streak'
+                }`}</span>
+            </span>
+            <div className="header-links">
+              <Link
+                href="/[username]/mentions"
+                as={`/${profile.username}/mentions`}
+              >
+                <a className="header-link header-link-mentions">
+                  <Icon size={32} glyph="mention" />
+                </a>
+              </Link>
+              <a
+                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
+                target="_blank"
+                className="header-link header-link-slack"
+              >
+                <Icon size={32} glyph="slack-fill" />
+              </a>
+              {profile.github && (
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  className="header-link header-link-github"
+                >
+                  <Icon size={32} glyph="github" />
+                </a>
+              )}
+              {profile.website && (
+                <a
+                  href={profile.website}
+                  target="_blank"
+                  className="header-link header-link-website"
+                >
+                  <Icon size={32} glyph="link" />
+                </a>
+              )}
+            </div>
+            {profile.audio && <AudioPlayer url={profile.audio} />}
+          </section>
+        </div>
+      </div>
+      {webring.length > 0 && (
+        <aside className="header-col-2 header-webring">
+          <h2>Webring</h2>
+          <div className="header-webring-mentions">
+            {webring.map(u => (
+              <StaticMention
+                user={u}
+                className="header-webring-mention"
+                title={u.mutual ? 'in each others’ webrings' : null}
+                key={u.id}
+              >
+                {u.mutual && <Icon glyph="everything" size={24} />}
+              </StaticMention>
+            ))}
+          </div>
         </aside>
-      </header>
-      <article className="posts">
-        {posts.map(post => (
-          <Post key={post.id} user={profile} profile {...post} />
-        ))}
-        {posts.length === 1 && <ExamplePosts />}
-      </article>
-      {profile.css && (
-        <footer className="css" title="External CSS URL">
-          <Icon
-            glyph="embed"
-            size={32}
-            className="css-icon"
-            aria-label="Code link icon"
-          />
-          <a
-            href={
-              profile.css.includes('gist.githubusercontent')
-                ? profile.css
-                  .replace('githubusercontent.', 'github.')
-                  .split('/raw')?.[0]
-                : profile.css
-            }
-            target="_blank"
-            className="css-link"
-          >
-            CSS:{' '}
-            {profile.css.includes('gist.githubusercontent')
-              ? `Gist by @${profile.css.split('.com/')?.[1]?.split('/')?.[0]}`
-              : profile.css}
-          </a>
-        </footer>
       )}
-    </main>
+      <aside className="header-col-3 header-chart" aria-hidden>
+        <CalendarHeatmap
+          startDate={new Date('2020-06-14')}
+          endDate={new Date('2020-08-16')}
+          values={heatmap}
+          showWeekdayLabels
+          classForValue={v =>
+            v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
+          }
+          titleForValue={v =>
+            v?.date ? `${v?.date} updates: ${v?.count}` : ''
+          }
+        />
+      </aside>
+    </header>
+    <article className="posts">
+      {posts.map(post => (
+        <Post key={post.id} user={profile} profile {...post} />
+      ))}
+      {posts.length === 1 && <ExamplePosts />}
+    </article>
+    {profile.css && (
+      <footer className="css" title="External CSS URL">
+        <Icon
+          glyph="embed"
+          size={32}
+          className="css-icon"
+          aria-label="Code link icon"
+        />
+        <a
+          href={
+            profile.css.includes('gist.githubusercontent')
+              ? profile.css
+                .replace('githubusercontent.', 'github.')
+                .split('/raw')?.[0]
+              : profile.css
+          }
+          target="_blank"
+          className="css-link"
+        >
+          CSS:{' '}
+          {profile.css.includes('gist.githubusercontent')
+            ? `Gist by @${profile.css.split('.com/')?.[1]?.split('/')?.[0]}`
+            : profile.css}
+        </a>
+      </footer>
+    )}
+  </main>
   )
 
 const fetcher = url => fetch(url).then(r => r.json())
