@@ -32,15 +32,15 @@ const Profile = ({
       description={`Follow @${profile.username}’s progress ${
         profile.streakCount > 0 && !profile.streaksToggledOff
           ? `(currently a ${
-          profile.streakCount <= 7 ? profile.streakCount : '7+'
-          }-day streak!) `
+              profile.streakCount <= 7 ? profile.streakCount : '7+'
+            }-day streak!) `
           : ''
-        }making things in the Hack Club community this summer.`}
+      }making things in the Hack Club community this summer.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
-        }.png?brand=Scrapbook${
+      }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
-        }&caption=${
+      }&caption=${
         !profile.streaksToggledOff ?
           0 < profile.streakCount
             ? profile.streakCount <= 7
@@ -48,7 +48,7 @@ const Profile = ({
               : '7%2b day streak'
             : ''
           : ''
-        }`}
+    }`}
     />
     {profile.css && (
       <link
