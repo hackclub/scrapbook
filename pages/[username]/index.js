@@ -74,7 +74,7 @@ const Profile = ({
             <span
               className={`badge header-streak header-streak-${
                 profile.streakCount !== 1
-                  ? profile.streakCount === 0
+                  ? (profile.streakCount === 0 || profile.streaksToggledOff)
                     ? 'zero'
                     : 'plural'
                   : 'singular'
