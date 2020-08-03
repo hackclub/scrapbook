@@ -46,4 +46,31 @@ const Mention = memo(({ username }) => {
   )
 })
 
+export const AltMention = memo(({ username }) => {
+  const [img, setImg] = useState(null)
+  useEffect(() => {
+    try {
+      fetch(`/api/profiles/${trim(username)}`)
+        .then(r => r.json())
+        .then(profile => setImg(profile.avatar))
+    } catch (e) {}
+  }, [])
+  return (
+    <Link href="/[username]" as={`/${username}`}>
+      <a className="mention post-text-mention-alt">
+        {img && (
+          <img
+            src={img}
+            alt={username}
+            width={24}
+            height={24}
+            className="mention-avatar post-text-mention-avatar alt-mention-avatar"
+          />
+        )}
+        @{username}
+      </a>
+    </Link>
+  )
+})
+
 export default Mention

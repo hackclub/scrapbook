@@ -178,6 +178,10 @@
   align-self: flex-end;
 }
 
+.alt-mention-avatar {
+  margin-left: 4px;
+}
+
 .headline,
 .header-webring h2 {
   color: var(--colors-muted);
@@ -306,6 +310,9 @@
 }
 a.post-text-mention {
   color: var(--colors-purple);
+}
+a.post-text-mention-alt {
+  color: var(--colors-background);
 }
 .post-text pre,
 .post-text code {
