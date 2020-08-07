@@ -46,7 +46,7 @@ const Mention = memo(({ username }) => {
   )
 })
 
-export const AltMention = memo(({ username }) => {
+export const StyleMention = memo(({ username }) => {
   const [img, setImg] = useState(null)
   useEffect(() => {
     try {
@@ -58,6 +58,7 @@ export const AltMention = memo(({ username }) => {
   return (
     <Link href="/[username]" as={`/${username}`}>
       <a className="mention post-text-mention-alt">
+        Styled by 
         {img && (
           <img
             src={img}

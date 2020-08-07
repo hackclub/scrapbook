@@ -3,6 +3,28 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
+import { StyleMention } from './mention'
+
+const StyleCredit = () => (
+  <a className="badge">
+    <AltMention username="sampoder" />
+    <style jsx>{`
+      a {
+        background-color: var(--colors-blue);
+        color: var(--colors-background);
+        padding: 3px 12px 1px;
+        margin-left: 16px;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.125s background-color ease-in-out;
+      }
+      a:hover,
+      a:focus {
+        background-color: var(--colors-purple);
+      }
+    `}</style>
+  </a>
+)
 
 const Header = ({ reactions, children }) => (
   <>
@@ -26,6 +48,7 @@ const Header = ({ reactions, children }) => (
           <Reaction key={reaction.name} {...reaction} />
         ))}
       </article>
+      <StyleCredit />
     </header>
     <style jsx>{`
       header {

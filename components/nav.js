@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
-import { AltMention } from './mention'
 
 const Join = () => (
   <a href="https://hackclub.com/slack/" className="badge">
@@ -26,26 +25,7 @@ const Join = () => (
   </a>
 )
 
-const StyleCredit = () => (
-  <a href="https://hackclub.com/slack/" className="badge">
-    Styled by <AltMention username="sampoder" />
-    <style jsx>{`
-      a {
-        background-color: var(--colors-blue);
-        color: var(--colors-background);
-        padding: 3px 12px 1px;
-        margin-left: 16px;
-        text-decoration: none;
-        text-transform: uppercase;
-        transition: 0.125s background-color ease-in-out;
-      }
-      a:hover,
-      a:focus {
-        background-color: var(--colors-purple);
-      }
-    `}</style>
-  </a>
-)
+
 
 const Nav = () => {
   const { pathname } = useRouter()
@@ -88,7 +68,6 @@ const Nav = () => {
         <Icon glyph="github" size={32} />
       </a>
       {home && <Join />}
-      {home && <StyleCredit />}
     </nav>
   )
 }
