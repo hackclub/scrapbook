@@ -3,11 +3,11 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
-import { StyleMention } from './mention'
+import { StyleMention } from '../components/mention'
 
 const StyleCredit = () => (
-  <a className="badge">
-    <AltMention username="sampoder" />
+  <a className="badge" style={{ marginTop: '15px' }}>
+    <StyleMention username="sampoder" />
     <style jsx>{`
       a {
         background-color: var(--colors-blue);
@@ -145,5 +145,5 @@ export const getStaticProps = async () => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData }, unstable_revalidate: 1 }
+  return { props: { reactions, initialData }, revalidate: 1 }
 }
