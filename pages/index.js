@@ -145,5 +145,5 @@ export const getStaticProps = async () => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData }, revalidate: 1 }
+  return { props: { reactions, initialData }, unstable_revalidate: 1 }
 }
