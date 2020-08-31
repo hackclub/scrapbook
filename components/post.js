@@ -88,7 +88,7 @@ const Post = ({
       </Link>
     )}
     <Content>{text}</Content>
-    {attachments.length > 0 && (
+    {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
         {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
           img => (
