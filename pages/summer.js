@@ -3,6 +3,7 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/summer-feed'
 import Footer from '../components/footer'
+import {Button} from '@hackclub/theme'
 
 const Header = ({ reactions, children }) => (
   <>
