@@ -3,7 +3,6 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/summer-feed'
 import Footer from '../components/footer'
-import {Button} from '@hackclub/theme'
 
 const Header = ({ reactions, children }) => (
   <>
@@ -23,9 +22,6 @@ const Header = ({ reactions, children }) => (
         Scrapbook was originally built for the summer and whilst it is now a permanent feature of the community 
         we've kept this page up as an archive. 
       </p>
-      <Button as="a" href="https://summer.hackclub.com">
-        Learn more
-      </Button>
     </header>
     <style jsx>{`
       header {
