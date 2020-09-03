@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
-import Feed from '../components/feed'
+import Feed from '../components/summer-feed'
 import Footer from '../components/footer'
 
 const Header = ({ reactions, children }) => (
@@ -15,25 +15,25 @@ const Header = ({ reactions, children }) => (
     />
     <header>
       {children}
-      <h1>Hack Club’s Scrapbook</h1>
-      <p>
-        A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
-        are learning & making every day.
+      <h1>Hack Club’s Summer Scrapbook</h1>
+      <p style={{ maxWidth: '900px', margin: 'auto' }}>
+        This page contains everything that Hack Clubbers
+        got up to over the <a href="https://summer.hackclub.com/">Summer of Making</a>.
+        Scrapbook was originally built for the summer and whilst it is now a permanent feature of the community 
+        we've kept this page up as an archive. 
       </p>
-      <article className="post-reactions">
-        <h2 className="headline">Explore</h2>
-        {reactions.map(reaction => (
-          <Reaction key={reaction.name} {...reaction} />
-        ))}
-      </article>
     </header>
     <style jsx>{`
       header {
         text-align: center;
         padding: 0 12px 48px;
+        margin-bottom: 30px;
+        background: #f46b45;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
       }
       h1 {
-        color: var(--colors-orange);
+        color: var(--colors-white);
         font-family: var(--fonts-display);
         margin: 0;
         font-size: 36px;
@@ -42,7 +42,7 @@ const Header = ({ reactions, children }) => (
       }
       p {
         font-size: 18px;
-        color: var(--colors-text);
+        color: #fff;
       }
       @media (min-width: 32em) {
         h1 {
@@ -61,7 +61,8 @@ const Header = ({ reactions, children }) => (
         }
       }
       a {
-        color: var(--colors-orange);
+        font-weight: 600;
+        color: white;
         text-decoration: none;
       }
       a:hover,
@@ -70,18 +71,7 @@ const Header = ({ reactions, children }) => (
         text-decoration-style: wavy;
         text-underline-position: under;
       }
-      @supports (-webkit-background-clip: text) {
-        h1 {
-          background-image: radial-gradient(
-            ellipse farthest-corner at top left,
-            var(--colors-yellow),
-            var(--colors-orange)
-          );
-          background-repeat: no-repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      }
+    
       .post-reactions {
         justify-content: center;
         align-items: center;
@@ -91,18 +81,38 @@ const Header = ({ reactions, children }) => (
         margin: 0 16px 12px;
         font-size: 18px;
       }
+      .nav-link-home{
+        display: none;
+      }
     `}</style>
   </>
 )
 
 export default ({ reactions, initialData }) => (
+  <>
   <Feed initialData={initialData} footer={<Footer />}>
     <Header reactions={reactions} />
   </Feed>
+  <style>{`
+    .nav {
+      color: #fff;
+      background: #f46b45;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .nav-link{
+      color: #fff;
+    }
+    .nav-link-home{
+      
+    } 
+  
+  `}</style>
+  </>
 )
 
 export const getStaticProps = async () => {
-  const { getPosts } = require('./api/posts')
+  const { getPosts } = require('./api/summer-posts')
   const initialData = await getPosts(64)
   const { find, compact, map, flatten } = require('lodash')
   const names = [
