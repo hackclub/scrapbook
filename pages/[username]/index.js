@@ -27,7 +27,7 @@ const Profile = ({
   <main className="container">
     <Meta
       as={Head}
-      name="Summer Scrapbook"
+      name="Hack Club's Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
         profile.streakCount > 0
@@ -35,7 +35,7 @@ const Profile = ({
               profile.streakCount <= 7 ? profile.streakCount : '7+'
             }-day streak!) `
           : ''
-      }making things in the Hack Club community this summer.`}
+      }making things in the Hack Club community.`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }.png?brand=Scrapbook${

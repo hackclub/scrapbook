@@ -14,9 +14,9 @@ const Profile = ({ profile = {}, posts = [] }) => (
   <>
     <Meta
       as={Head}
-      name="Summer Scrapbook"
+      name="Hack Club's Scrapbook"
       title={`@${profile.username}'s mentions`}
-      description={`@${profile.username}’s mentions on Hack Club's Summer Scrapbook`}
+      description={`@${profile.username}’s mentions on Hack Club's Scrapbook`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }'s.png?brand=Scrapbook${

@@ -12,9 +12,9 @@ const Header = ({ name, url, char }) => (
   <>
     <Meta
       as={Head}
-      name="Summer Scrapbook"
+      name="Hack Club's Scrapbook"
       title={`${startCase(name)} Posts`}
-      description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
+      description="A daily streak system & portfolio for your projects. Join the Hack Club community for the get yours started."
       image={`https://workshop-cards.hackclub.com/r/${name}.png?brand=Scrapbook${
         url
           ? '&images=' + url

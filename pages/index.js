@@ -8,9 +8,9 @@ const Header = ({ reactions, children }) => (
   <>
     <Meta
       as={Head}
-      name="Summer of Making"
-      title="Summer Scrapbook"
-      description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
+      name="Hack Club's Scrapbook"
+      title="Home"
+      description="A daily streak system & portfolio for your projects. Join the Hack Club community & get yours started."
       image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
