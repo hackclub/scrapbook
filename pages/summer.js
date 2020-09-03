@@ -22,6 +22,9 @@ const Header = ({ reactions, children }) => (
         Scrapbook was originally built for the summer and whilst it is now a permanent feature of the community 
         we've kept this page up as an archive. 
       </p>
+      <Button as="a" href="https://summer.hackclub.com">
+        Learn more
+      </Button>
     </header>
     <style jsx>{`
       header {
