@@ -95,11 +95,11 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-export default ({ reactions, initialData }) => (
-  <Feed initialData={initialData} footer={<Footer />}>
-    <Header reactions={reactions} />
-  </Feed>
-)
+const IndexPage = ({ reactions, initialData }) => <Feed initialData={initialData} footer={<Footer />}>
+  <Header reactions={reactions} />
+</Feed>;
+
+export default IndexPage;
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')

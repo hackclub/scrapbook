@@ -232,7 +232,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   }
 }
 
-export default props => {
+const UserPage = props => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -248,7 +248,9 @@ export default props => {
   } else {
     return <FourOhFour />
   }
-}
+};
+
+export default UserPage;
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
