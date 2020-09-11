@@ -25,6 +25,7 @@
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2",
     "react-masonry-css": "^1.0.14",
+    "react-tooltip": "^4.2.9",
     "swr": "^0.2.3"
   }
 }

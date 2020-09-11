@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
+import dynamic from 'next/dynamic'
 import Icon from '@hackclub/icons'
 import Banner from '../../components/banner'
 import Message from '../../components/message'
@@ -16,6 +17,10 @@ import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
+const ReactTooltipNoSSR = dynamic(() => import('react-tooltip'), {
+  ssr: false
+})
 
 const Profile = ({
   profile = {},
@@ -150,10 +155,11 @@ const Profile = ({
           classForValue={v =>
             v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
           }
-          titleForValue={v =>
-            v?.date ? `${v?.date} updates: ${v?.count}` : ''
-          }
+          tooltipDataAttrs={v => ({
+            'data-tip': v?.date ? `${v?.date} updates: ${v?.count}` : ''
+          })}
         />
+        <ReactTooltipNoSSR />
       </aside>
     </header>
     <article className="posts">
