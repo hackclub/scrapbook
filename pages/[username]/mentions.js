@@ -128,9 +128,9 @@ const Mentions = props => {
   } else {
     return <FourOhFour />
   }
-};
+}
 
-export default Mentions;
+export default Mentions
 
 export const getStaticPaths = async () => {
   return { paths: [], fallback: true }

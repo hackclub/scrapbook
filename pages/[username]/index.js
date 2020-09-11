@@ -18,9 +18,7 @@ import { clamp } from 'lodash'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const ReactTooltipNoSSR = dynamic(() => import('react-tooltip'), {
-  ssr: false
-})
+const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 const Profile = ({
   profile = {},
@@ -159,7 +157,7 @@ const Profile = ({
             'data-tip': v?.date ? `${v?.date} updates: ${v?.count}` : ''
           })}
         />
-        <ReactTooltipNoSSR />
+        <Tooltip />
       </aside>
     </header>
     <article className="posts">
@@ -254,9 +252,9 @@ const UserPage = props => {
   } else {
     return <FourOhFour />
   }
-};
+}
 
-export default UserPage;
+export default UserPage
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
