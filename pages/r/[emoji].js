@@ -145,7 +145,7 @@ export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
 
-  const lost = { props: { status: 404 }, unstable_revalidate: 1 }
+  const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
 
   try {
@@ -160,9 +160,9 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts, related }, unstable_revalidate: 1 }
+    return { props: { emoji, posts, related }, revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name } }, unstable_revalidate: 1 }
+    return { props: { emoji: { name } }, revalidate: 1 }
   }
 }

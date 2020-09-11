@@ -147,10 +147,10 @@ export const getStaticProps = async ({ params }) => {
     const posts = await getMentions(profile)
     return {
       props: { profile, posts },
-      unstable_revalidate: 1
+      revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, unstable_revalidate: 1 }
+    return { props: { profile }, revalidate: 1 }
   }
 }
