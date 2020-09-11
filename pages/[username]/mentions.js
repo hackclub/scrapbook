@@ -112,7 +112,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   return <Profile {...initialData}></Profile>
 }
 
-export default props => {
+const Mentions = props => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -128,7 +128,9 @@ export default props => {
   } else {
     return <FourOhFour />
   }
-}
+};
+
+export default Mentions;
 
 export const getStaticPaths = async () => {
   return { paths: [], fallback: true }
@@ -147,10 +149,10 @@ export const getStaticProps = async ({ params }) => {
     const posts = await getMentions(profile)
     return {
       props: { profile, posts },
-      unstable_revalidate: 1
+      revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, unstable_revalidate: 1 }
+    return { props: { profile }, revalidate: 1 }
   }
 }

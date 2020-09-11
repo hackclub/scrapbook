@@ -232,7 +232,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   }
 }
 
-export default props => {
+const UserPage = props => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -248,7 +248,9 @@ export default props => {
   } else {
     return <FourOhFour />
   }
-}
+};
+
+export default UserPage;
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
@@ -296,10 +298,10 @@ export const getStaticProps = async ({ params }) => {
     }
     return {
       props: { profile, webring, heatmap, posts },
-      unstable_revalidate: 1
+      revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, unstable_revalidate: 1 }
+    return { props: { profile }, revalidate: 1 }
   }
 }
