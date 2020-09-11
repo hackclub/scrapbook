@@ -95,11 +95,11 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-export default ({ reactions, initialData }) => (
-  <Feed initialData={initialData} footer={<Footer />}>
-    <Header reactions={reactions} />
-  </Feed>
-)
+const IndexPage = ({ reactions, initialData }) => <Feed initialData={initialData} footer={<Footer />}>
+  <Header reactions={reactions} />
+</Feed>;
+
+export default IndexPage;
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
@@ -122,5 +122,5 @@ export const getStaticProps = async () => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData }, unstable_revalidate: 1 }
+  return { props: { reactions, initialData }, revalidate: 1 }
 }
