@@ -29,7 +29,7 @@ export const transformUser = (user = {}) => ({
   css: user?.fields['CSS URL'] || null,
   audio: user?.fields['Audio URL'] || null,
   streakCount: user?.fields['Streak Count'] || 0,
-  streakToggledOff: user?.fields['Streaks Toggled Off'] || null,
+  displayStreak: !user?.fields['Streaks Toggled Off'],
   slack: user?.fields['ID'] || '',
   github: user?.fields['GitHub'] || null,
   website: user?.fields['Website'] || null
