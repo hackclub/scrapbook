@@ -13,7 +13,7 @@ const Post = ({
   user = {
     username: 'abc',
     avatar: '',
-    streakDisplay: false,
+    displayStreak: false,
     streakCount: 0
   },
   text,
@@ -54,7 +54,7 @@ const Post = ({
               <strong>@{user.username}</strong>
               <span
                 className={`badge post-header-streak ${
-                  user.streakCount === 0 ? 'header-streak-zero' : ''
+                  !user.displayStreak || user.streakCount === 0 ? 'header-streak-zero' : ''
                 }`}
                 title={`${user.streakCount}-day streak`}
               >
