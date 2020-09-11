@@ -35,7 +35,7 @@ const Profile = ({
       name="Summer Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
-        profile.streakCount > 0
+        profile.displayStreak && 0 < profile.streakCount
           ? `(currently a ${
               profile.streakCount <= 7 ? profile.streakCount : '7+'
             }-day streak!) `
@@ -46,7 +46,7 @@ const Profile = ({
       }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${
-        0 < profile.streakCount
+        profile.displayStreak && 0 < profile.streakCount
           ? profile.streakCount <= 7
             ? profile.streakCount + '-day streak'
             : '7%2b day streak'
@@ -76,11 +76,11 @@ const Profile = ({
           <section className="header-content">
             <span
               className={`badge header-streak header-streak-${
-                profile.streakCount !== 1
-                  ? profile.streakCount === 0
-                    ? 'zero'
+                profile.displayStreak && 0 < profile.streakCount
+                  ? profile.streakCount === 1
+                    ? 'singular'
                     : 'plural'
-                  : 'singular'
+                  : 'zero'
               }`}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
