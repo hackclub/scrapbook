@@ -6,7 +6,7 @@ import Icon from '@hackclub/icons'
 import Message from '../../components/message'
 import Posts from '../../components/posts'
 import FourOhFour from '../404'
-import { proxy } from '../lib/images'
+import { proxy } from '../../lib/images'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
