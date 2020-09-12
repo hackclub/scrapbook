@@ -5,6 +5,10 @@ module.exports = withMDX({
   async rewrites() {
     return [
       {
+        source: '/attachments/:path*{/}?',
+        destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
+      },
+      {
         source: '/customizer/',
         destination: 'https://scrapbook-customizer.vercel.app/'
       },
@@ -15,6 +19,35 @@ module.exports = withMDX({
       {
         source: '/api/emoji/',
         destination: 'https://badger.hackclub.dev/api/emoji'
+      }
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }]
+      },
+      {
+        source: '/api/emoji/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'max-age=1000, stale-while-revalidate'
+          }
+        ]
+      },
+      {
+        source: '/attachments/(.+)/',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET, OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type' },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=60000, immutable'
+          }
+        ]
       }
     ]
   }

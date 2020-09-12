@@ -1,4 +1,5 @@
 import { convertTimestampToDate } from '../lib/dates'
+import { proxy } from '../lib/images'
 import { filter } from 'lodash'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
@@ -42,7 +43,7 @@ const Post = ({
           {user.avatar && (
             <img
               loading="lazy"
-              src={user.avatar}
+              src={proxy(user.avatar)}
               width={48}
               height={48}
               alt={user.username}
@@ -54,7 +55,9 @@ const Post = ({
               <strong>@{user.username}</strong>
               <span
                 className={`badge post-header-streak ${
-                  !user.displayStreak || user.streakCount === 0 ? 'header-streak-zero' : ''
+                  !user.displayStreak || user.streakCount === 0
+                    ? 'header-streak-zero'
+                    : ''
                 }`}
                 title={`${user.streakCount}-day streak`}
               >
@@ -94,14 +97,14 @@ const Post = ({
           img => (
             <a
               key={img.url}
-              href={img.thumbnails?.full?.url || img.url}
+              href={proxy(img.thumbnails?.full?.url || img.url)}
               target="_blank"
               className="post-attachment"
             >
               <Image
                 alt={img.filename}
-                src={img.thumbnails?.large?.url || img.url}
-                placeholderSrc={img.thumbnails?.small?.url || img.url}
+                src={proxy(img.thumbnails?.large?.url || img.url)}
+                placeholderSrc={proxy(img.thumbnails?.small?.url || img.url)}
                 width={img.thumbnails?.large?.width}
                 height={img.thumbnails?.large?.height}
               />

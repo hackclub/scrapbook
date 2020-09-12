@@ -28,7 +28,7 @@ export const formatText = text =>
         ?.replace(/https?:\/\//, '')
         .replace(/\/$/, '')
       return (
-        <a href={url} target="_blank" key={i}>
+        <a href={url} target="_blank" rel="noopener" key={i}>
           {children}
         </a>
       )

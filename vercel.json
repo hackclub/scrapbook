@@ -1,20 +1,3 @@
 {
-  "github": {
-    "silent": true
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
-    },
-    {
-      "source": "/api/emoji",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "max-age=1000, stale-while-revalidate"
-        }
-      ]
-    }
-  ]
+  "github": { "silent": true }
 }
