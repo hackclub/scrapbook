@@ -301,6 +301,9 @@
   word-wrap: break-word;
   white-space: pre-line;
 }
+.post-emoji {
+  object-fit: contain;
+}
 .post-text a {
   color: var(--colors-blue);
 }

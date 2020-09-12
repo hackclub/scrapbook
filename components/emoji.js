@@ -2,7 +2,14 @@ import { memo, useState, useEffect } from 'react'
 import { stripColons } from '../lib/emoji'
 
 export const EmojiImg = ({ name, ...props }) => (
-  <img alt={name + ' emoji'} loading="lazy" width={18} height={18} {...props} />
+  <img
+    alt={name + ' emoji'}
+    loading="lazy"
+    className="post-emoji"
+    width={18}
+    height={18}
+    {...props}
+  />
 )
 
 const CustomEmoji = memo(({ name }) => {
