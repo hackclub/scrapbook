@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
-import dynamic from 'next/dynamic'
 import Icon from '@hackclub/icons'
+import { proxy } from '../lib/images'
 import Banner from '../../components/banner'
 import Message from '../../components/message'
 import { StaticMention } from '../../components/mention'
@@ -63,7 +64,7 @@ const Profile = ({
       <div className="header-col-1">
         {profile.avatar && (
           <img
-            src={profile.avatar}
+            src={proxy(profile.avatar)}
             width={96}
             alt={profile.username}
             className="header-title-avatar"

@@ -1,4 +1,5 @@
 import { convertTimestampToDate } from '../lib/dates'
+import { proxy } from '../lib/images'
 import { filter } from 'lodash'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
@@ -6,14 +7,6 @@ import Content from './content'
 import Video from './video'
 import Image from './image'
 import Reaction from './reaction'
-
-const proxy = str =>
-  str
-    ? str.replace(
-        'https://dl.airtable.com/.attachmentThumbnails',
-        '/attachments'
-      ) + '/'
-    : ''
 
 const Post = ({
   id = new Date().toISOString(),
@@ -50,7 +43,7 @@ const Post = ({
           {user.avatar && (
             <img
               loading="lazy"
-              src={user.avatar}
+              src={proxy(user.avatar)}
               width={48}
               height={48}
               alt={user.username}
