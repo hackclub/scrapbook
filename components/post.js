@@ -8,8 +8,12 @@ import Image from './image'
 import Reaction from './reaction'
 
 const proxy = str =>
-  str.replace('https://dl.airtable.com/.attachmentThumbnails', '/attachments') +
-  '/'
+  str
+    ? str.replace(
+        'https://dl.airtable.com/.attachmentThumbnails',
+        '/attachments'
+      ) + '/'
+    : ''
 
 const Post = ({
   id = new Date().toISOString(),
