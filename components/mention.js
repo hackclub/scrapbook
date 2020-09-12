@@ -23,7 +23,7 @@ const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
   useEffect(() => {
     try {
-      fetch(`/api/profiles/${trim(username)}`)
+      fetch(`/api/profiles/${trim(username)}/`)
         .then(r => r.json())
         .then(profile => setImg(profile.avatar))
     } catch (e) {}

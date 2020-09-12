@@ -11,21 +11,21 @@
   },
   "dependencies": {
     "@charlietango/use-native-lazy-loading": "^1.7.1",
-    "@hackclub/icons": "^0.0.3",
+    "@hackclub/icons": "^0.0.4",
     "@hackclub/meta": "^1.0.0",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
-    "@mdx-js/loader": "^1.6.8",
-    "@next/mdx": "^9.4.4",
+    "@mdx-js/loader": "^1.6.16",
+    "@next/mdx": "^9.5.3",
     "fathom-client": "^3.0.0",
-    "hls.js": "^0.14.3",
-    "lodash": "^4.17.19",
+    "hls.js": "^0.14.12",
+    "lodash": "^4.17.20",
     "next": "^9.5.3",
     "react": "^16.13.1",
     "react-audio-player": "^0.13.0",
     "react-dom": "^16.13.1",
-    "react-intersection-observer": "^8.26.2",
+    "react-intersection-observer": "^8.28.5",
     "react-masonry-css": "^1.0.14",
     "react-tooltip": "^4.2.9",
-    "swr": "^0.2.3"
+    "swr": "^0.3.2"
   }
 }
