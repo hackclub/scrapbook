@@ -9,13 +9,13 @@ const Header = ({ reactions, children }) => (
     <Meta
       as={Head}
       name="Summer of Making"
-      title="Summer Scrapbook"
+      title="Scrapbook"
       description="A daily streak system & portfolio for your summer projects. Join the Hack Club community for the Summer of Making & get yours started."
       image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
       {children}
-      <h1>Hack Club’s Summer Scrapbook</h1>
+      <h1>Hack Club’s Scrapbook</h1>
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
         are learning & making every day.
