@@ -114,7 +114,7 @@
   max-height: 28px;
 }
 .header-streak-zero {
-  display: none;
+  display: none !important;
 }
 
 .header-content {
