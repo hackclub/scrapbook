@@ -51,7 +51,7 @@ const Mention = memo(({ username }) => {
           </a>
         </Link>
       )}
-      {(!user && !img) && <span>@{username}</span>}
+      {(user && !img) && <span>@{username}</span>}
     </span>
   )
 })
