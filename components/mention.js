@@ -34,7 +34,7 @@ const Mention = memo(({ username }) => {
   }, [])
   return (
     <span>
-      {!(user && !img) && (
+      {(!user || img) && (
         <Link href="/[username]" as={`/${username}`}>
           <a className="mention post-text-mention">
             {img && (
@@ -51,7 +51,7 @@ const Mention = memo(({ username }) => {
           </a>
         </Link>
       )}
-      {!(user && img) && <span>@{username}</span>}
+      {(!user && !img) && <span>@{username}</span>}
     </span>
   )
 })
