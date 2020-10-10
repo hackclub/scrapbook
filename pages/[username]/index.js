@@ -23,19 +23,25 @@ const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 //Get dates for Heatmap!
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-var yyyy = today.getFullYear();
-today = yyyy + '-' + mm + '-' + dd;
+var today = new Date()
+var dd = String(today.getDate()).padStart(2, '0')
+var mm = String(today.getMonth() + 1).padStart(2, '0')
+var yyyy = today.getFullYear()
+var todayString = yyyy + '-' + mm + '-' + dd
 
-var sixtyThreeDaysAgo = today.getDate() - 10;
-var sixtyThreeDaysAgoDD = String(today.getDate()).padStart(2, '0');
-var sixtyThreeDaysAgoMM = String(today.getMonth() + 1).padStart(2, '0'); 
-var sixtyThreeDaysAgoYYYY = today.getFullYear();
-sixtyThreeDaysAgo = yyyy + '-' + mm + '-' + dd;
+var sixtyThreeDaysAgo = new Date();
+sixtyThreeDaysAgo.setDate(today.getDate() - 63)
+console.log(sixtyThreeDaysAgo)
+var sixtyThreeDaysAgoDD = String(sixtyThreeDaysAgo.getDate()).padStart(2, '0')
+var sixtyThreeDaysAgoMM = String(sixtyThreeDaysAgo.getMonth() + 1).padStart(
+  2,
+  '0'
+)
+var sixtyThreeDaysAgoYYYY = sixtyThreeDaysAgo.getFullYear()
+sixtyThreeDaysAgo =
+  sixtyThreeDaysAgoYYYY + '-' + sixtyThreeDaysAgoMM + '-' + sixtyThreeDaysAgoDD
 
-
+console.log(`${sixtyThreeDaysAgo} ${todayString}`)
 
 const Profile = ({
   profile = {},
@@ -166,7 +172,7 @@ const Profile = ({
       <aside className="header-col-3 header-chart" aria-hidden>
         <CalendarHeatmap
           startDate={sixtyThreeDaysAgo}
-          endDate={today}
+          endDate={todayString}
           values={heatmap}
           showWeekdayLabels
           classForValue={v =>
