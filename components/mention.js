@@ -31,21 +31,26 @@ const Mention = memo(({ username }) => {
     } catch (e) {}
   }, [])
   return (
-    <Link href="/[username]" as={`/${username}`}>
-      <a className="mention post-text-mention">
-        {img && (
-          <img
-            src={proxy(img)}
-            alt={username}
-            loading="lazy"
-            width={24}
-            height={24}
-            className="mention-avatar post-text-mention-avatar"
-          />
-        )}
-        @{username}
-      </a>
-    </Link>
+    <span>
+      {img && (
+        <Link href="/[username]" as={`/${username}`}>
+          <a className="mention post-text-mention">
+            {img && (
+              <img
+                src={proxy(img)}
+                alt={username}
+                loading="lazy"
+                width={24}
+                height={24}
+                className="mention-avatar post-text-mention-avatar"
+              />
+            )}
+            @{username}
+          </a>
+        </Link>
+      )}
+      {!img && <span>@{username}</span>}
+    </span>
   )
 })
 
