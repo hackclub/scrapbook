@@ -21,6 +21,22 @@ const HOST =
 
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
+//Get dates for Heatmap!
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+var yyyy = today.getFullYear();
+today = yyyy + '-' + mm + '-' + dd;
+
+var sixtyThreeDaysAgo = today.getDate() - 10;
+var sixtyThreeDaysAgoDD = String(today.getDate()).padStart(2, '0');
+var sixtyThreeDaysAgoMM = String(today.getMonth() + 1).padStart(2, '0'); 
+var sixtyThreeDaysAgoYYYY = today.getFullYear();
+sixtyThreeDaysAgo = yyyy + '-' + mm + '-' + dd;
+
+
+
 const Profile = ({
   profile = {},
   heatmap = [],
@@ -149,8 +165,8 @@ const Profile = ({
       )}
       <aside className="header-col-3 header-chart" aria-hidden>
         <CalendarHeatmap
-          startDate={new Date('2020-06-14')}
-          endDate={new Date('2020-08-16')}
+          startDate={sixtyThreeDaysAgo}
+          endDate={today}
           values={heatmap}
           showWeekdayLabels
           classForValue={v =>
