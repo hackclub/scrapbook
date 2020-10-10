@@ -23,16 +23,18 @@ export const StaticMention = memo(
 
 const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
+  const [user, setUser] = useState(null)
   useEffect(() => {
     try {
       fetch(`/api/profiles/${trim(username)}/`)
         .then(r => r.json())
         .then(profile => setImg(profile.avatar))
+      setUser(true)
     } catch (e) {}
   }, [])
   return (
     <span>
-      {img && (
+      {!(user && !img) && (
         <Link href="/[username]" as={`/${username}`}>
           <a className="mention post-text-mention">
             {img && (
@@ -49,7 +51,7 @@ const Mention = memo(({ username }) => {
           </a>
         </Link>
       )}
-      {!img && <span>@{username}</span>}
+      {!(user && img) && <span>@{username}</span>}
     </span>
   )
 })
