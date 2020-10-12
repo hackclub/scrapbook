@@ -1,3 +1,3 @@
 export default (req, res) => {
-    res.send(req)
+   res.json({ req: req })
 }
