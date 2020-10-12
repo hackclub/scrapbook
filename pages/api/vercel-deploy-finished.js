@@ -1,3 +1,3 @@
 export default (req, res) => {
-   res.json({ req: req })
+   res.redirect(req.query.project-dashboard-url+'/settings/domains')
 }
