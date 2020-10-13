@@ -339,7 +339,6 @@ a.post-attachment {
 }
 .post-attachment img {
   height: 100%;
-  object-fit: cover;
 }
 .post-attachment img.is-loading {
   filter: blur(15px);
