@@ -4,6 +4,7 @@
   "author": "Lachlan Campbell <lachlan@hackclub.com>",
   "license": "MIT",
   "private": true,
+  "keywords": [],
   "scripts": {
     "dev": "next",
     "build": "next build",
