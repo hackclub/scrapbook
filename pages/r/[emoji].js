@@ -8,6 +8,9 @@ import Reaction from '../../components/reaction'
 import FourOhFour from '../404'
 import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 
+const HOST =
+  process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
 const Header = ({ name, url, char }) => (
   <>
     <Meta
@@ -98,7 +101,7 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-export default ({ status, emoji, related = [], posts = [] }) => {
+export default ({ status, emoji, related = [], posts = [], css }) => {
   const router = useRouter()
 
   if (status === 404) {
@@ -114,6 +117,11 @@ export default ({ status, emoji, related = [], posts = [] }) => {
         src={`/api/r/${emoji.name}`}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href={HOST + `/api/css?url=${css}`}
+        />
         <Header {...emoji} />
       </Feed>
     )
@@ -144,6 +152,14 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
+  let css = await fetch(
+    'http://sampoder-api.herokuapp.com/v0.1/Scrapbook/Emoji%20CSS?select=' +
+      JSON.stringify({ filterByFormula: `{Emoji} = "${params.emoji}"` })
+  ).then(r => r.json())
+
+  css = css.length > 0 ? css[0].fields['CSS URL'] : ''
+
+  console.log(css)
 
   const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
@@ -160,9 +176,9 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts, related }, revalidate: 1 }
+    return { props: { emoji, posts, related, css: css }, revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name } }, revalidate: 1 }
+    return { props: { emoji: { name }, css: css }, revalidate: 1 }
   }
 }
