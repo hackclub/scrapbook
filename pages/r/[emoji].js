@@ -153,7 +153,7 @@ export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
   let css = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Scrapbook/Emoji%20CSS?select=' +
+    'https://api2.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Emoji%20CSS?select=' +
       JSON.stringify({ filterByFormula: `{Emoji} = "${params.emoji}"` })
   ).then(r => r.json())
 
