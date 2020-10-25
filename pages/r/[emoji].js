@@ -153,7 +153,7 @@ export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
   let css = await fetch(
-    'http://sampoder-api.herokuapp.com/v0.1/Scrapbook/Emoji%20CSS?select=' +
+    'https://airbridge.hackclub.com/v0.1/Scrapbook/Emoji%20CSS?select=' +
       JSON.stringify({ filterByFormula: `{Emoji} = "${params.emoji}"` })
   ).then(r => r.json())
 
