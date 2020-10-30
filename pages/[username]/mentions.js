@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import Meta from '@hackclub/meta'
 import Icon from '@hackclub/icons'
 import Message from '../../components/message'
@@ -33,9 +34,10 @@ const Profile = ({ profile = {}, posts = [] }) => (
     )}
     <header>
       {profile.avatar && (
-        <img
-          src={proxy(profile.avatar)}
+        <Image
+          src={profile.avatar}
           width={96}
+          height={96}
           alt={profile.username}
           className="header-title-avatar"
         />
