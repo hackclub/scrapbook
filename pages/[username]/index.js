@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import Image from 'next/image
+import Image from 'next/image'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
