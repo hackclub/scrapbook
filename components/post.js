@@ -5,7 +5,7 @@ import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
-import Image from './image'
+import Image from 'next/image'
 import Reaction from './reaction'
 
 const Post = ({
@@ -41,9 +41,9 @@ const Post = ({
       <Link href="/[profile]" as={`/${user.username}`} prefetch={false}>
         <a className="post-header">
           {user.avatar && (
-            <img
+            <Image
               loading="lazy"
-              src={proxy(user.avatar)}
+              src={user.avatar}
               width={48}
               height={48}
               alt={user.username}
@@ -103,10 +103,11 @@ const Post = ({
             >
               <Image
                 alt={img.filename}
-                src={proxy(img.thumbnails?.large?.url || img.url)}
-                placeholderSrc={proxy(img.thumbnails?.small?.url || img.url)}
+                src={img.thumbnails?.large?.url || img.url}
+                loading="lazy"
                 width={img.thumbnails?.large?.width}
                 height={img.thumbnails?.large?.height}
+                unsized={!img.thumbnails?.large?.width}
               />
             </a>
           )
@@ -130,7 +131,7 @@ const Post = ({
     {reactions.length > 0 && !profile && (
       <footer className="post-reactions" aria-label="Emoji reactions">
         {reactions.map(reaction => (
-          <Reaction key={reaction.name} {...reaction} />
+          <Reaction key={id + reaction.name} {...reaction} />
         ))}
       </footer>
     )}

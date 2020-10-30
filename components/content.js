@@ -12,7 +12,7 @@ export const formatText = text =>
       return <Emoji name={chunk} key={i} />
     }
     if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
-      const punct = /([,!:.'"’”]|’s|'s)+$/g
+      const punct = /([,!:.'"’”]|’s|'s|\))+$/g
       const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
       return (
         <Fragment key={i}>

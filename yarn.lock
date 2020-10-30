@@ -1101,11 +1101,6 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@charlietango/use-native-lazy-loading@^1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@charlietango/use-native-lazy-loading/-/use-native-lazy-loading-1.9.0.tgz#825b9ccb284b9632d70ec7f03b77fbe65f8ce3fc"
-  integrity sha512-lIOJYxF+RXT9T1cDvfhmjfUyiePT6BaQY4fjknm36TKGH7OJpdY1yJrspqdK1sfL0botxSH8aADszqmi2TGGFQ==
-
 "@hackclub/icons@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@hackclub/icons/-/icons-0.0.5.tgz#12506ff5d29fad488d82c5f09a2514d763cfcf68"
@@ -4557,11 +4552,6 @@ react-dom@^17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
-react-intersection-observer@^8.29.1:
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.29.1.tgz#8c6f494ca81b39aee9f509f12d29443fc66a2256"
-  integrity sha512-JLxJ4V0L73ailfvbYQ2/lfAyirtud1WsRsYnzHyVLMfQff1AIG1lWdC5XaGSK4yb9jZHVbbNsrVIO3PJm03koQ==
-
 react-is@16.13.1, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -5293,10 +5283,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-swr@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.6.tgz#b1d59439e5114fdf95bb408e1c628ff48f967aac"
-  integrity sha512-LHbX9vVQSW8Kgyr86zz2fVVKmmT13qxB61uXuUAg6NT4cGu6afzAzT2SVCGEh8pJAD2o8NTZMgclIUxIAbvk7Q==
+swr@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.7.tgz#331c704b135fd0f320f48a7355e11e624efb5cd0"
+  integrity sha512-/w7ZFBRpyWZJTOfl1OPsf93goeBPnfBXgJ7BBqqRGNidynqTO2sqinlLbXBbTNcNdoJwNJLVEjn2aDHJh5p1Kw==
   dependencies:
     dequal "2.0.2"
 
