@@ -1,8 +1,9 @@
 import { memo, useState, useEffect } from 'react'
 import { stripColons } from '../lib/emoji'
+import Image from 'next/image'
 
 export const EmojiImg = ({ name, ...props }) => (
-  <img
+  <Image
     alt={name + ' emoji'}
     loading="lazy"
     className="post-emoji"

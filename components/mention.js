@@ -1,17 +1,18 @@
 import { memo, useState, useEffect } from 'react'
 import { trim } from 'lodash'
-import { proxy } from '../lib/images'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const StaticMention = memo(
   ({ user = {}, className = '', children, ...props }) => (
     <Link href="/[username]" as={`/${user.username}`}>
       <a className={`mention ${className}`} {...props}>
-        <img
-          src={proxy(user.avatar)}
+        <Image
+          src={user.avatar}
           alt={user.username}
           loading="lazy"
           width={24}
+          height={24}
           className="mention-avatar"
         />
         @{user.username}
@@ -34,8 +35,8 @@ const Mention = memo(({ username }) => {
     <Link href="/[username]" as={`/${username}`}>
       <a className="mention post-text-mention">
         {img && (
-          <img
-            src={proxy(img)}
+          <Image
+            src={img}
             alt={username}
             loading="lazy"
             width={24}

@@ -2,6 +2,13 @@ const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'mdx'],
   trailingSlash: true,
+  images: {
+    domains: [
+      'dl.airtable.com',
+      'emoji.slack-edge.com',
+      'cloud-lp0r5yk68.vercel.app'
+    ]
+  },
   async rewrites() {
     return [
       {

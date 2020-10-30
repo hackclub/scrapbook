@@ -105,18 +105,20 @@ export default IndexPage
 
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
-  const initialData = await getPosts(72)
+  const initialData = await getPosts(64)
   const { find, compact, map, flatten } = require('lodash')
   const names = [
     'art',
     'package',
     'hardware',
+    'vsc',
+    'nextjs',
+    'js',
     'vercel',
     'swift',
     'rustlang',
     'slack',
     'github',
-    'vsc',
     'car',
     'musical_note',
     'robot_face',
