@@ -29,8 +29,7 @@ const dateString = (dt = [
 ].join('-'))
 const dt = new Date()
 const todayString = dateString(dt)
-const startDate = dt.setDate(new Date().getDate() - 63)
-const startDateString = dateString(startDate)
+const startDateString = dateString(dt.setDate(dt.getDate() - 63))
 
 const Profile = ({
   profile = {},
