@@ -12,11 +12,11 @@ module.exports = withMDX({
   },
   async rewrites() {
     return [
+      { source: '/summer', destination: '/r/summer-of-making' },
       {
         source: '/attachments/:path*{/}?',
         destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
       },
-      { source: '/summer', destination: '/r/som' },
       {
         source: '/customizer/',
         destination: 'https://scrapbook-customizer.vercel.app/'

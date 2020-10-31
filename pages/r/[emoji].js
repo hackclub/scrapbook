@@ -19,7 +19,7 @@ const Header = ({ name, url, char }) => (
       as={Head}
       name="Hack Club Scrapbook"
       title={`${formatName(name)} Posts`}
-      description="A daily streak system & portfolio for your projects. Join the Hack Club community for the get yours started."
+      description="A daily streak system & portfolio for your projects. Join the Hack Club community of high school hackers to get yours started."
       image={`https://workshop-cards.hackclub.com/r/${formatName(
         name
       )}.png?brand=Scrapbook${
@@ -41,26 +41,26 @@ const Header = ({ name, url, char }) => (
         Posts tagged with <code>:{name}:</code>
       </p>
     </header>
-    {name === 'som' && (
-      <>
-        <p style={{ maxWidth: '600px', margin: 'auto' }}>
-          This page contains everything Hack Clubbers got up to over the{' '}
-          <a href="https://summer.hackclub.com/">2020 Summer of Making</a>.
-          Scrapbook was originally built for the summer and whilst it’s now a
-          permanent feature of the community, we’ve kept this page up as an
-          archive.
-        </p>
+    {name === 'summer-of-making' && (
+      <p className="post-text">
+        This page contains everything Hack Clubbers got up to over the{' '}
+        <a href="https://summer.hackclub.com/">
+          2020&nbsp;Summer&nbsp;of&nbsp;Making
+        </a>
+        . Scrapbook was originally built for the summer and whilst it’s now a
+        permanent feature of the community, we’ve kept this page up as an
+        archive.
         <style>{`
-          .nav {
-            color: #fff;
-            background: #f46b45;
-            background: linear-gradient(to right, #eea849, #f46b45);
-          }
-          .nav-link {
-            color: #fff;
-          }
-        `}</style>
-      </>
+        .nav {
+          color: #fff;
+          background: #f46b45;
+          background: linear-gradient(to right, #eea849, #f46b45);
+        }
+        .nav-link {
+          color: #fff;
+        }
+      `}</style>
+      </p>
     )}
     <style jsx>{`
       header {
@@ -81,8 +81,24 @@ const Header = ({ name, url, char }) => (
       }
       p {
         margin-top: 8px;
-        font-size: 14px;
         color: var(--colors-muted);
+        text-align: center;
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      header + p {
+        font-size: 20px;
+        margin-bottom: 48px;
+      }
+      header + p > a {
+        background: linear-gradient(to right, #eea849, #f46b45);
+        color: #fff;
+        padding: 0 6px;
+        margin: 0 4px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
       }
       code {
         font-size: inherit;
@@ -163,6 +179,7 @@ export default Page
 
 export const getStaticPaths = async () => {
   const names = [
+    'summer-of-making',
     'art',
     'package',
     'hardware',
