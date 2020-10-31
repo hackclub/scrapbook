@@ -16,9 +16,11 @@ const Profile = ({ profile = {}, posts = [] }) => (
   <>
     <Meta
       as={Head}
-      name="Summer Scrapbook"
-      title={`@${profile.username}'s mentions`}
-      description={`@${profile.username}’s mentions on Hack Club's Summer Scrapbook`}
+      name="Hack Club Scrapbook"
+      title={`@${profile.username}’s mentions`}
+      description={`@${profile.username}’s ${posts.length} mention${
+        posts.length === 1 ? '' : 's'
+      } on the Hack Club Scrapbook`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }'s.png?brand=Scrapbook${

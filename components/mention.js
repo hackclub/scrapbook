@@ -4,15 +4,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const StaticMention = memo(
-  ({ user = {}, className = '', children, ...props }) => (
+  ({ user = {}, className = '', size = 24, children, ...props }) => (
     <Link href={`/${user.username}`}>
       <a className={`mention ${className}`} {...props}>
         <Image
           src={user.avatar}
           alt={user.username}
           loading="lazy"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
           className="mention-avatar"
         />
         @{user.username}

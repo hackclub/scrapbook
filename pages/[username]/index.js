@@ -31,7 +31,7 @@ const Profile = ({
   <main className="container">
     <Meta
       as={Head}
-      name="Summer Scrapbook"
+      name="Hack Club Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
         profile.displayStreak && 0 < profile.streakCount
@@ -71,9 +71,9 @@ const Profile = ({
             className="header-title-avatar"
           />
         )}
-        <div>
+        <section>
           <h1 className="header-title-name">{profile.username}</h1>
-          <section className="header-content">
+          <div className="header-content">
             <span
               className={`badge header-streak header-streak-${
                 profile.displayStreak && 0 < profile.streakCount
@@ -126,8 +126,8 @@ const Profile = ({
               )}
             </div>
             {profile.audio && <AudioPlayer url={profile.audio} />}
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
       {webring.length > 0 && (
         <aside className="header-col-2 header-webring">
@@ -138,6 +138,7 @@ const Profile = ({
                 user={u}
                 className="header-webring-mention"
                 title={u.mutual ? 'in each others’ webrings' : null}
+                size={96}
                 key={u.id}
               >
                 {u.mutual && <Icon glyph="everything" size={24} />}
