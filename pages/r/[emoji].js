@@ -105,7 +105,7 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-export default ({ status, emoji, related = [], posts = [], css }) => {
+const Page = ({ status, emoji, related = [], posts = [], css }) => {
   const router = useRouter()
 
   if (status === 404) {
@@ -133,6 +133,8 @@ export default ({ status, emoji, related = [], posts = [], css }) => {
     return <FourOhFour />
   }
 }
+
+export default Page
 
 export const getStaticPaths = async () => {
   const names = [
@@ -169,7 +171,7 @@ export const getStaticProps = async ({ params }) => {
   if (name.length < 2) return console.error('No emoji') || lost
 
   try {
-    const posts = await getPosts(name)
+    const posts = await getPosts(name, 48)
     if (!posts || posts.length === 0) return lost
     const allReactions = flatten(map(posts, 'reactions'))
     const emoji = find(allReactions, { name })
