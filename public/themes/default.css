@@ -331,6 +331,7 @@ a.post-text-mention {
   margin-top: 16px;
 }
 .post-attachment {
+  width: 100%;
   border-radius: 6px;
   overflow: hidden;
   text-align: center;
