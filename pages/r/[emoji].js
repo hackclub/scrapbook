@@ -11,14 +11,18 @@ import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
+const formatName = name => startCase(name).replace(/js/i, 'JS')
+
 const Header = ({ name, url, char }) => (
   <>
     <Meta
       as={Head}
-      name="Hack Club's Scrapbook"
-      title={`${startCase(name)} Posts`}
+      name="Hack Club Scrapbook"
+      title={`${formatName(name)} Posts`}
       description="A daily streak system & portfolio for your projects. Join the Hack Club community for the get yours started."
-      image={`https://workshop-cards.hackclub.com/r/${name}.png?brand=Scrapbook${
+      image={`https://workshop-cards.hackclub.com/r/${formatName(
+        name
+      )}.png?brand=Scrapbook${
         url
           ? '&images=' + url
           : '&images=https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/' +
@@ -37,6 +41,27 @@ const Header = ({ name, url, char }) => (
         Posts tagged with <code>:{name}:</code>
       </p>
     </header>
+    {name === 'som' && (
+      <>
+        <p style={{ maxWidth: '600px', margin: 'auto' }}>
+          This page contains everything Hack Clubbers got up to over the{' '}
+          <a href="https://summer.hackclub.com/">2020 Summer of Making</a>.
+          Scrapbook was originally built for the summer and whilst it’s now a
+          permanent feature of the community, we’ve kept this page up as an
+          archive.
+        </p>
+        <style>{`
+          .nav {
+            color: #fff;
+            background: #f46b45;
+            background: linear-gradient(to right, #eea849, #f46b45);
+          }
+          .nav-link {
+            color: #fff;
+          }
+        `}</style>
+      </>
+    )}
     <style jsx>{`
       header {
         text-align: center;

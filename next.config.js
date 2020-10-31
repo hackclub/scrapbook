@@ -16,6 +16,7 @@ module.exports = withMDX({
         source: '/attachments/:path*{/}?',
         destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
       },
+      { source: '/summer', destination: '/r/som' },
       {
         source: '/customizer/',
         destination: 'https://scrapbook-customizer.vercel.app/'
