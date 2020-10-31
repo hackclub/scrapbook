@@ -22,11 +22,12 @@ const HOST =
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 // Calculate heatmap date range
-const dateString = (dt = [
-  dt.getFullYear(),
-  String(dt.getMonth() + 1).padStart(2, '0'),
-  String(dt.getDate()).padStart(2, '0')
-].join('-'))
+const dateString = dt =>
+  [
+    dt.getFullYear(),
+    String(dt.getMonth() + 1).padStart(2, '0'),
+    String(dt.getDate()).padStart(2, '0')
+  ].join('-')
 const dt = new Date()
 const todayString = dateString(dt)
 const startDateString = dateString(dt.setDate(dt.getDate() - 63))
