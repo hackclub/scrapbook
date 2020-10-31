@@ -3,6 +3,7 @@ module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'mdx'],
   trailingSlash: true,
   images: {
+    imageSizes: [18, 24, 48, 96],
     domains: [
       'dl.airtable.com',
       'emoji.slack-edge.com',

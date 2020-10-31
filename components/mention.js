@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export const StaticMention = memo(
   ({ user = {}, className = '', children, ...props }) => (
-    <Link href="/[username]" as={`/${user.username}`}>
+    <Link href={`/${user.username}`}>
       <a className={`mention ${className}`} {...props}>
         <Image
           src={user.avatar}
@@ -32,7 +32,7 @@ const Mention = memo(({ username }) => {
     } catch (e) {}
   }, [])
   return (
-    <Link href="/[username]" as={`/${username}`}>
+    <Link href={`/${username}`}>
       <a className="mention post-text-mention">
         {img && (
           <Image
