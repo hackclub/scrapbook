@@ -312,6 +312,9 @@ div + .post-header-container {
   word-wrap: break-word;
   white-space: pre-line;
 }
+.post-text > div {
+  display: inline-block;
+}
 .post-emoji {
   object-fit: contain;
 }
