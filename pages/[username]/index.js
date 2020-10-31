@@ -21,27 +21,16 @@ const HOST =
 
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
-//Get dates for Heatmap!
-
-var today = new Date()
-var dd = String(today.getDate()).padStart(2, '0')
-var mm = String(today.getMonth() + 1).padStart(2, '0')
-var yyyy = today.getFullYear()
-var todayString = yyyy + '-' + mm + '-' + dd
-
-var sixtyThreeDaysAgo = new Date();
-sixtyThreeDaysAgo.setDate(today.getDate() - 63)
-console.log(sixtyThreeDaysAgo)
-var sixtyThreeDaysAgoDD = String(sixtyThreeDaysAgo.getDate()).padStart(2, '0')
-var sixtyThreeDaysAgoMM = String(sixtyThreeDaysAgo.getMonth() + 1).padStart(
-  2,
-  '0'
-)
-var sixtyThreeDaysAgoYYYY = sixtyThreeDaysAgo.getFullYear()
-sixtyThreeDaysAgo =
-  sixtyThreeDaysAgoYYYY + '-' + sixtyThreeDaysAgoMM + '-' + sixtyThreeDaysAgoDD
-
-console.log(`${sixtyThreeDaysAgo} ${todayString}`)
+// Calculate heatmap date range
+const dateString = (dt = [
+  dt.getFullYear(),
+  String(dt.getMonth() + 1).padStart(2, '0'),
+  String(dt.getDate()).padStart(2, '0')
+].join('-'))
+const dt = new Date()
+const todayString = dateString(dt)
+const startDate = dt.setDate(new Date().getDate() - 63)
+const startDateString = dateString(startDate)
 
 const Profile = ({
   profile = {},
@@ -171,7 +160,7 @@ const Profile = ({
       )}
       <aside className="header-col-3 header-chart" aria-hidden>
         <CalendarHeatmap
-          startDate={sixtyThreeDaysAgo}
+          startDate={startDateString}
           endDate={todayString}
           values={heatmap}
           showWeekdayLabels
