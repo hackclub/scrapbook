@@ -22,10 +22,10 @@ const HOST =
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 // Calculate heatmap date range
+const today = new Date()
 const dateString = dt => dt.toISOString().substring(0, 10)
-const dt = new Date()
-const todayString = dateString(dt)
-const startDateString = dateString(dt.setDate(dt.getDate() - 63))
+const heatmapEnd = dateString(today)
+const heatmapStart = dateString(new Date(today.setDate(today.getDate() - 62)))
 
 const Profile = ({
   profile = {},
@@ -155,8 +155,8 @@ const Profile = ({
       )}
       <aside className="header-col-3 header-chart" aria-hidden>
         <CalendarHeatmap
-          startDate={startDateString}
-          endDate={todayString}
+          startDate={heatmapStart}
+          endDate={heatmapEnd}
           values={heatmap}
           showWeekdayLabels
           classForValue={v =>
