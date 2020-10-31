@@ -106,7 +106,7 @@ const Post = ({
                 src={img.thumbnails?.large?.url || img.url}
                 loading="lazy"
                 width={img.thumbnails?.large?.width}
-                height={img.thumbnails?.large?.height}
+                height={img.thumbnails?.large?.height > 384 ? 600 : img.thumbnails?.large?.height}
                 unsized={!img.thumbnails?.large?.width}
               />
             </a>
