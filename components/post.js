@@ -50,7 +50,7 @@ const Post = ({
               className="post-header-avatar"
             />
           )}
-          <div className="post-header-container">
+          <section className="post-header-container">
             <span className="post-header-name">
               <strong>@{user.username}</strong>
               <span
@@ -86,7 +86,7 @@ const Post = ({
                 ? convertTimestampToDate(postedAt)
                 : postedAt}
             </time>
-          </div>
+          </section>
         </a>
       </Link>
     )}

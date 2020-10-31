@@ -172,10 +172,15 @@
   align-items: baseline;
   text-decoration: none;
 }
-.mention-avatar {
+.mention div:first-child {
   border-radius: 50%;
+  overflow: hidden;
   margin-right: 4px;
   align-self: flex-end;
+}
+.post-text-mention div:first-child {
+  width: 24px;
+  height: 24px;
 }
 
 .headline,
@@ -258,6 +263,9 @@
   margin-bottom: 8px;
   line-height: 1;
 }
+.post-header div:first-child {
+  flex-shrink: 0;
+}
 .post-header-avatar {
   width: 48px;
   height: 48px;
@@ -279,6 +287,7 @@ div + .post-header-container {
 }
 .post-header-audio {
   color: var(--colors-orange);
+  transform: rotate(45deg);
 }
 .post-header-streak {
   margin-right: 4px;
