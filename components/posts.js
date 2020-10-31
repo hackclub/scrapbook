@@ -5,10 +5,11 @@ const Posts = ({ posts = [] }) => [
   <Masonry
     key="masonry"
     breakpointCols={{
-      default: 4,
+      10000: 4,
       1024: 3,
       640: 2,
-      480: 1
+      480: 1,
+      default: 1
     }}
     className="masonry-posts"
     columnClassName="masonry-posts-column"

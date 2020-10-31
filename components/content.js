@@ -4,16 +4,22 @@ import { last } from 'lodash'
 import Mention from './mention'
 import Emoji from './emoji'
 
-const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^:\s]{2,24}:)/
+const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/
 
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
-    if (chunk?.startsWith(':')) {
+    if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
       return <Emoji name={chunk} key={i} />
     }
     if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
-      const username = chunk.replace(/[@<>]/g, '')
-      return <Mention username={username} key={username + i} />
+      const punct = /([,!:.'"’”]|’s|'s|\))+$/g
+      const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
+      return (
+        <Fragment key={i}>
+          <Mention username={username} />
+          {chunk.match(punct)}
+        </Fragment>
+      )
     }
     if (chunk?.startsWith('<')) {
       const parts = chunk.match(/<(([^\|]+)\|)?([^>]+?)>/)
@@ -22,7 +28,7 @@ export const formatText = text =>
         ?.replace(/https?:\/\//, '')
         .replace(/\/$/, '')
       return (
-        <a href={url} target="_blank" key={i}>
+        <a href={url} target="_blank" rel="noopener" key={i}>
           {children}
         </a>
       )

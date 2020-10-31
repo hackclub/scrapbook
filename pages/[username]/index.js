@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import Image from 'next/image'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
@@ -17,6 +19,8 @@ import { clamp } from 'lodash'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
+const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
+
 const Profile = ({
   profile = {},
   heatmap = [],
@@ -27,10 +31,10 @@ const Profile = ({
   <main className="container">
     <Meta
       as={Head}
-      name="Hack Club's Scrapbook"
+      name="Hack Club Scrapbook"
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
-        profile.streakCount > 0
+        profile.displayStreak && 0 < profile.streakCount
           ? `(currently a ${
               profile.streakCount <= 7 ? profile.streakCount : '7+'
             }-day streak!) `
@@ -41,7 +45,7 @@ const Profile = ({
       }.png?brand=Scrapbook${
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${
-        0 < profile.streakCount
+        profile.displayStreak && 0 < profile.streakCount
           ? profile.streakCount <= 7
             ? profile.streakCount + '-day streak'
             : '7%2b day streak'
@@ -59,23 +63,24 @@ const Profile = ({
     <header className="header">
       <div className="header-col-1">
         {profile.avatar && (
-          <img
+          <Image
             src={profile.avatar}
             width={96}
+            height={96}
             alt={profile.username}
             className="header-title-avatar"
           />
         )}
-        <div>
+        <section>
           <h1 className="header-title-name">{profile.username}</h1>
-          <section className="header-content">
+          <div className="header-content">
             <span
               className={`badge header-streak header-streak-${
-                profile.streakCount !== 1
-                  ? profile.streakCount === 0
-                    ? 'zero'
+                profile.displayStreak && 0 < profile.streakCount
+                  ? profile.streakCount === 1
+                    ? 'singular'
                     : 'plural'
-                  : 'singular'
+                  : 'zero'
               }`}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
@@ -121,8 +126,8 @@ const Profile = ({
               )}
             </div>
             {profile.audio && <AudioPlayer url={profile.audio} />}
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
       {webring.length > 0 && (
         <aside className="header-col-2 header-webring">
@@ -133,6 +138,7 @@ const Profile = ({
                 user={u}
                 className="header-webring-mention"
                 title={u.mutual ? 'in each others’ webrings' : null}
+                size={96}
                 key={u.id}
               >
                 {u.mutual && <Icon glyph="everything" size={24} />}
@@ -150,10 +156,11 @@ const Profile = ({
           classForValue={v =>
             v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
           }
-          titleForValue={v =>
-            v?.date ? `${v?.date} updates: ${v?.count}` : ''
-          }
+          tooltipDataAttrs={v => ({
+            'data-tip': v?.date ? `${v?.date} updates: ${v?.count}` : ''
+          })}
         />
+        <Tooltip />
       </aside>
     </header>
     <article className="posts">
@@ -232,7 +239,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   }
 }
 
-export default props => {
+const UserPage = props => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -249,6 +256,8 @@ export default props => {
     return <FourOhFour />
   }
 }
+
+export default UserPage
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
@@ -296,10 +305,10 @@ export const getStaticProps = async ({ params }) => {
     }
     return {
       props: { profile, webring, heatmap, posts },
-      unstable_revalidate: 1
+      revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, unstable_revalidate: 1 }
+    return { props: { profile }, revalidate: 1 }
   }
 }

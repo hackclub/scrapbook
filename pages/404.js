@@ -3,7 +3,7 @@ import Meta from '@hackclub/meta'
 import Link from 'next/link'
 import Icon from '@hackclub/icons'
 
-export default () => (
+const pageNotFound = () => (
   <main>
     <Meta as={Head} name="Hack Club's Scrapbook" title="404" />
     <h1>404!</h1>
@@ -48,3 +48,5 @@ export default () => (
     `}</style>
   </main>
 )
+
+export default pageNotFound

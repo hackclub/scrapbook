@@ -8,9 +8,9 @@ const Header = ({ reactions, children }) => (
   <>
     <Meta
       as={Head}
-      name="Hack Club's Scrapbook"
+      name="Hack Club Scrapbook"
       title="Home"
-      description="A daily streak system & portfolio for your projects. Join the Hack Club community & get yours started."
+      description="A daily streak system & portfolio for your projects. Join the Hack Club community of high school hackers & get yours started."
       image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
     />
     <header>
@@ -95,25 +95,30 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-export default ({ reactions, initialData }) => (
+const IndexPage = ({ reactions, initialData }) => (
   <Feed initialData={initialData} footer={<Footer />}>
     <Header reactions={reactions} />
   </Feed>
 )
 
+export default IndexPage
+
 export const getStaticProps = async () => {
   const { getPosts } = require('./api/posts')
-  const initialData = await getPosts(64)
+  const initialData = await getPosts(48)
   const { find, compact, map, flatten } = require('lodash')
   const names = [
     'art',
     'package',
     'hardware',
+    'vsc',
+    'nextjs',
+    'js',
+    'vercel',
     'swift',
     'rustlang',
     'slack',
     'github',
-    'vsc',
     'car',
     'musical_note',
     'robot_face',
@@ -122,5 +127,5 @@ export const getStaticProps = async () => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData }, unstable_revalidate: 1 }
+  return { props: { reactions, initialData }, revalidate: 1 }
 }

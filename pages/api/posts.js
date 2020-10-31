@@ -22,7 +22,7 @@ export const transformReactions = (raw = []) =>
       try {
         const parts = str.split(' ')
         const name = stripColons(parts[0])
-        if (name === 'summer-of-making') return null
+        if (name === 'aom') return null
         const obj = { name }
         obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
         return obj

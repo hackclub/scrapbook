@@ -114,7 +114,7 @@
   max-height: 28px;
 }
 .header-streak-zero {
-  display: none;
+  display: none !important;
 }
 
 .header-content {
@@ -172,10 +172,15 @@
   align-items: baseline;
   text-decoration: none;
 }
-.mention-avatar {
+.mention div:first-child {
   border-radius: 50%;
+  overflow: hidden;
   margin-right: 4px;
   align-self: flex-end;
+}
+.post-text-mention div:first-child {
+  width: 24px;
+  height: 24px;
 }
 
 .headline,
@@ -258,11 +263,16 @@
   margin-bottom: 8px;
   line-height: 1;
 }
+.post-header div:first-child {
+  flex-shrink: 0;
+}
 .post-header-avatar {
   width: 48px;
   height: 48px;
   border-radius: 24px;
-  margin-right: 8px;
+}
+div + .post-header-container {
+  padding-left: 8px;
 }
 .post-header-name {
   font-size: 16px;
@@ -277,6 +287,7 @@
 }
 .post-header-audio {
   color: var(--colors-orange);
+  transform: rotate(45deg);
 }
 .post-header-streak {
   margin-right: 4px;
@@ -300,6 +311,9 @@
   font-size: 18px;
   word-wrap: break-word;
   white-space: pre-line;
+}
+.post-emoji {
+  object-fit: contain;
 }
 .post-text a {
   color: var(--colors-blue);
@@ -326,7 +340,6 @@ a.post-text-mention {
   margin-top: 16px;
 }
 .post-attachment {
-  width: 100%;
   border-radius: 6px;
   overflow: hidden;
   text-align: center;
@@ -336,6 +349,7 @@ a.post-attachment {
 }
 .post-attachment img {
   height: 100%;
+  object-fit: cover;
 }
 .post-attachment img.is-loading {
   filter: blur(15px);

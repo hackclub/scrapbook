@@ -1,10 +1,11 @@
 import { convertTimestampToDate } from '../lib/dates'
+import { proxy } from '../lib/images'
 import { filter } from 'lodash'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
-import Image from './image'
+import Image from 'next/image'
 import Reaction from './reaction'
 
 const Post = ({
@@ -13,7 +14,7 @@ const Post = ({
   user = {
     username: 'abc',
     avatar: '',
-    streakDisplay: false,
+    displayStreak: false,
     streakCount: 0
   },
   text,
@@ -40,7 +41,7 @@ const Post = ({
       <Link href="/[profile]" as={`/${user.username}`} prefetch={false}>
         <a className="post-header">
           {user.avatar && (
-            <img
+            <Image
               loading="lazy"
               src={user.avatar}
               width={48}
@@ -49,12 +50,14 @@ const Post = ({
               className="post-header-avatar"
             />
           )}
-          <div className="post-header-container">
+          <section className="post-header-container">
             <span className="post-header-name">
               <strong>@{user.username}</strong>
               <span
                 className={`badge post-header-streak ${
-                  user.streakCount === 0 ? 'header-streak-zero' : ''
+                  !user.displayStreak || user.streakCount === 0
+                    ? 'header-streak-zero'
+                    : ''
                 }`}
                 title={`${user.streakCount}-day streak`}
               >
@@ -83,7 +86,7 @@ const Post = ({
                 ? convertTimestampToDate(postedAt)
                 : postedAt}
             </time>
-          </div>
+          </section>
         </a>
       </Link>
     )}
@@ -94,16 +97,17 @@ const Post = ({
           img => (
             <a
               key={img.url}
-              href={img.thumbnails?.full?.url || img.url}
+              href={proxy(img.thumbnails?.full?.url || img.url)}
               target="_blank"
               className="post-attachment"
             >
               <Image
                 alt={img.filename}
                 src={img.thumbnails?.large?.url || img.url}
-                placeholderSrc={img.thumbnails?.small?.url || img.url}
+                loading="lazy"
                 width={img.thumbnails?.large?.width}
                 height={img.thumbnails?.large?.height}
+                unsized={!img.thumbnails?.large?.width}
               />
             </a>
           )
@@ -127,7 +131,7 @@ const Post = ({
     {reactions.length > 0 && !profile && (
       <footer className="post-reactions" aria-label="Emoji reactions">
         {reactions.map(reaction => (
-          <Reaction key={reaction.name} {...reaction} />
+          <Reaction key={id + reaction.name} {...reaction} />
         ))}
       </footer>
     )}

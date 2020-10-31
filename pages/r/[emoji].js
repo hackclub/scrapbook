@@ -8,6 +8,9 @@ import Reaction from '../../components/reaction'
 import FourOhFour from '../404'
 import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 
+const HOST =
+  process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
 const Header = ({ name, url, char }) => (
   <>
     <Meta
@@ -37,6 +40,9 @@ const Header = ({ name, url, char }) => (
     <style jsx>{`
       header {
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 0 12px 48px;
       }
       h1 {
@@ -49,6 +55,7 @@ const Header = ({ name, url, char }) => (
         padding: 16px;
       }
       p {
+        margin-top: 8px;
         font-size: 14px;
         color: var(--colors-muted);
       }
@@ -81,7 +88,7 @@ const Footer = ({ reactions = [] }) => (
     <h2 className="headline">Related reactions</h2>
     <article className="post-reactions">
       {reactions.map(reaction => (
-        <Reaction key={reaction.name} {...reaction} />
+        <Reaction key={'footer' + reaction.name} {...reaction} />
       ))}
     </article>
     <style jsx>{`
@@ -98,7 +105,7 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-export default ({ status, emoji, related = [], posts = [] }) => {
+const Page = ({ status, emoji, related = [], posts = [], css }) => {
   const router = useRouter()
 
   if (status === 404) {
@@ -114,6 +121,11 @@ export default ({ status, emoji, related = [], posts = [] }) => {
         src={`/api/r/${emoji.name}`}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href={HOST + `/api/css?url=${css}`}
+        />
         <Header {...emoji} />
       </Feed>
     )
@@ -122,12 +134,16 @@ export default ({ status, emoji, related = [], posts = [] }) => {
   }
 }
 
+export default Page
+
 export const getStaticPaths = async () => {
   const names = [
     'art',
     'package',
     'hardware',
     'swift',
+    'vercel',
+    'js',
     'rustlang',
     'slack',
     'github',
@@ -144,12 +160,18 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
+  let css = await fetch(
+    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Emoji%20CSS?select=' +
+      JSON.stringify({ filterByFormula: `{Emoji} = "${params.emoji}"` })
+  ).then(r => r.json())
 
-  const lost = { props: { status: 404 }, unstable_revalidate: 1 }
+  css = css.length > 0 ? css[0].fields['CSS URL'] : ''
+
+  const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
 
   try {
-    const posts = await getPosts(name)
+    const posts = await getPosts(name, 48)
     if (!posts || posts.length === 0) return lost
     const allReactions = flatten(map(posts, 'reactions'))
     const emoji = find(allReactions, { name })
@@ -160,9 +182,9 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts, related }, unstable_revalidate: 1 }
+    return { props: { emoji, posts, related, css }, revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name } }, unstable_revalidate: 1 }
+    return { props: { emoji: { name }, css }, revalidate: 1 }
   }
 }

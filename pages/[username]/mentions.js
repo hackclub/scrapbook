@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import Meta from '@hackclub/meta'
 import Icon from '@hackclub/icons'
 import Message from '../../components/message'
 import Posts from '../../components/posts'
 import FourOhFour from '../404'
+import { proxy } from '../../lib/images'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -14,9 +16,11 @@ const Profile = ({ profile = {}, posts = [] }) => (
   <>
     <Meta
       as={Head}
-      name="Hack Club's Scrapbook"
-      title={`@${profile.username}'s mentions`}
-      description={`@${profile.username}’s mentions on Hack Club's Scrapbook`}
+      name="Hack Club Scrapbook"
+      title={`@${profile.username}’s mentions`}
+      description={`@${profile.username}’s ${posts.length} mention${
+        posts.length === 1 ? '' : 's'
+      } on the Hack Club Scrapbook`}
       image={`https://workshop-cards.hackclub.com/@${
         profile.username
       }'s.png?brand=Scrapbook${
@@ -32,9 +36,10 @@ const Profile = ({ profile = {}, posts = [] }) => (
     )}
     <header>
       {profile.avatar && (
-        <img
+        <Image
           src={profile.avatar}
           width={96}
+          height={96}
           alt={profile.username}
           className="header-title-avatar"
         />
@@ -112,7 +117,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
   return <Profile {...initialData}></Profile>
 }
 
-export default props => {
+const Mentions = props => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -129,6 +134,8 @@ export default props => {
     return <FourOhFour />
   }
 }
+
+export default Mentions
 
 export const getStaticPaths = async () => {
   return { paths: [], fallback: true }
@@ -147,10 +154,10 @@ export const getStaticProps = async ({ params }) => {
     const posts = await getMentions(profile)
     return {
       props: { profile, posts },
-      unstable_revalidate: 1
+      revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, unstable_revalidate: 1 }
+    return { props: { profile }, revalidate: 1 }
   }
 }
