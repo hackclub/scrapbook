@@ -88,7 +88,7 @@ const Footer = ({ reactions = [] }) => (
     <h2 className="headline">Related reactions</h2>
     <article className="post-reactions">
       {reactions.map(reaction => (
-        <Reaction key={reaction.name} {...reaction} />
+        <Reaction key={'footer' + reaction.name} {...reaction} />
       ))}
     </article>
     <style jsx>{`
