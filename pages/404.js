@@ -5,7 +5,7 @@ import Icon from '@hackclub/icons'
 
 const pageNotFound = () => (
   <main>
-    <Meta as={Head} name="Summer Scrapbook" title="404" />
+    <Meta as={Head} name="Hack Club's Scrapbook" title="404" />
     <h1>404!</h1>
     <Link href="/">
       <a className="badge">

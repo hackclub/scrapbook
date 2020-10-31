@@ -23,6 +23,6 @@ export default async (req, res) => {
   const { emoji } = req.query
   if (!emoji)
     return res.status(404).json({ status: 404, error: 'Missing emoji name' })
-  const posts = (await getPosts(emoji)) || []
+  const posts = (await getPosts(emoji, 1024)) || []
   res.json(posts)
 }
