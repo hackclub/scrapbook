@@ -3,11 +3,6 @@
   --colors-two: #40c463;
   --colors-three: #30a14e;
   --colors-four: #216e39;
-
-  --colors-one: #ffee4a;
-  --colors-two: #ffc501;
-  --colors-three: #fe9600;
-  --colors-four: #03001c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +12,6 @@
     --colors-sheet: var(--colors-darkless);
     --colors-elevated: var(--colors-darkless);
     --colors-sunken: var(--colors-darker);
-
-    --colors-one: #631c03;
-    --colors-two: #bd561d;
-    --colors-three: #fa7a18;
-    --colors-four: #fddf68;
   }
 }
 
