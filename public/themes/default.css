@@ -350,10 +350,6 @@ a.post-text-mention {
 a.post-attachment {
   line-height: 0;
 }
-.post-attachment img {
-  height: 100%;
-  object-fit: cover;
-}
 .post-attachment img.is-loading {
   filter: blur(15px);
 }
@@ -397,9 +393,12 @@ a.post-attachment:first-child:last-child {
   background-color: var(--colors-cyan);
   border-color: var(--colors-blue);
 }
-.post-reaction img {
-  margin: 5px;
+.post-reaction > div {
+  margin: 5px !important;
   border-radius: 4px;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
 }
 
 .css {
