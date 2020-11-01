@@ -33,7 +33,7 @@ const Header = ({ name, url, char }) => (
     />
     <header>
       {url ? (
-        <EmojiImg src={url} name={name} width={48} height={48} />
+        <EmojiImg src={url} key={url} name={name} width={48} height={48} />
       ) : (
         <h1>{char}</h1>
       )}
