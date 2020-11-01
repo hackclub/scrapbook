@@ -38,6 +38,7 @@ const Profile = ({ profile = {}, posts = [] }) => (
       {profile.avatar && (
         <Image
           src={profile.avatar}
+          key={profile.avatar}
           width={96}
           height={96}
           alt={profile.username}
