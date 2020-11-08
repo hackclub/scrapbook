@@ -15,9 +15,7 @@ export const StaticMention = memo(
           height={size}
           className="mention-avatar"
         />
-        <span style={{ marginLeft: '3.5px' }}>
           @{user.username}
-        </span>
         {children}
       </a>
     </Link>
@@ -46,9 +44,7 @@ const Mention = memo(({ username }) => {
             className="mention-avatar post-text-mention-avatar"
           />
         )}
-        <span style={{ marginLeft: '3.5px' }}>
           @{username}
-        </span>
       </a>
     </Link>
   )
