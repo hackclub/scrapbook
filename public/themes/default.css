@@ -178,12 +178,11 @@
   margin-right: 4px;
   align-self: flex-end;
 }
-.post-text-mention div:first-child img {
-  margin-right: 4px;
-}
+
 .post-text-mention div:first-child {
   width: 24px;
   height: 24px;
+  margin-right: 4px!important;
 }
 
 .headline,
