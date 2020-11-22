@@ -66,3 +66,5 @@ img {
 .react-calendar-heatmap-weekday-label {
   font-size: 8px;
 }
+
+.__react_component_tooltip { pointer-events: auto !important; }
