@@ -7,6 +7,8 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
+import dynamic from 'next/dynamic'
+const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 const Post = ({
   id = new Date().toISOString(),
@@ -22,6 +24,7 @@ const Post = ({
   mux = [],
   reactions = [],
   postedAt,
+  slackUrl,
   muted = false
 }) => (
   <section
@@ -31,11 +34,27 @@ const Post = ({
   >
     {profile || !user ? (
       <header className="post-header">
-        <time className="post-header-date" dateTime={postedAt}>
+        <time
+          className="post-header-date"
+          data-tip
+          data-for={`tip-${id}`}
+          dateTime={postedAt}
+        >
           {postedAt?.startsWith('20')
             ? convertTimestampToDate(postedAt)
             : postedAt}
         </time>
+        <a href={slackUrl} target="_blank" rel="noopener noreferrer">
+          <Tooltip
+            id={`tip-${id}`}
+            place="top"
+            effect="solid"
+            delayShow={0}
+            delayHide={1000}
+          >
+            View on Slack ⧉
+          </Tooltip>
+        </a>
       </header>
     ) : (
       <Link href="/[profile]" as={`/${user.username}`} prefetch={false}>

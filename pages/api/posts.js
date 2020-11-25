@@ -36,6 +36,7 @@ export const transformPost = (id = null, fields = {}, user = null) => ({
   id,
   user,
   timestamp: fields['Message Timestamp'] || null,
+  slackUrl: fields['Slack URL'],
   postedAt: formatTS(fields['Message Timestamp']),
   text: fields['Text'] || '',
   attachments: fields['Attachments'] || [],
