@@ -27,6 +27,10 @@ module.exports = withMDX({
         destination: 'https://scrapbook-customizer.vercel.app/$1'
       },
       {
+        source: '/avatar/(.*)/',
+        destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
+      },
+      {
         source: '/api/emoji/',
         destination: 'https://badger.hackclub.dev/api/emoji'
       }
