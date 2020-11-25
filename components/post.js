@@ -44,7 +44,7 @@ const Post = ({
             ? convertTimestampToDate(postedAt)
             : postedAt}
         </time>
-        <a href={slackUrl}>
+        <a href={slackUrl} target="_blank" rel="noopener noreferrer">
           <Tooltip
             id={`tip-${id}`}
             place="top"
@@ -52,7 +52,7 @@ const Post = ({
             delayShow={0}
             delayHide={1000}
           >
-            View on Slack.
+            View on Slack ⧉
           </Tooltip>
         </a>
       </header>
