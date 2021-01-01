@@ -3,7 +3,7 @@ import { stripColons } from '../lib/emoji'
 import Image from 'next/image'
 
 export const EmojiImg = ({ name, ...props }) => (
-  <div style={{ height: '18px', verticalAlign: 'middle' }}>
+  <div style={{ height: height ? `${height}px` : '18px', verticalAlign: 'middle' }}>
     <Image
       alt={name + ' emoji'}
       loading="lazy"
