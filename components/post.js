@@ -127,7 +127,7 @@ const Post = ({
                 loading="lazy"
                 width={img.thumbnails?.large?.width}
                 height={img.thumbnails?.large?.height}
-                unsized={!img.thumbnails?.large?.width}
+                layout={!img.thumbnails?.large?.width ? 'fill' : null}
               />
             </a>
           )

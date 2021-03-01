@@ -7,6 +7,7 @@ import '../public/app.css'
 import '../public/themes/default.css'
 import Nav from '../components/nav'
 import * as Fathom from 'fathom-client'
+import NProgress from '../components/nprogress'
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter()
@@ -23,6 +24,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <Nav />
+      <NProgress color={'#ec3750'} />
       <Component {...pageProps} />
     </>
   )
