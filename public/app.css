@@ -30,16 +30,14 @@
   --colors-cyan: #00ffff;
   --colors-blue: #00a4ff;
   --colors-purple: #c210ff;
+  --colors-red: #ec3750;
 
   --colors-text: var(--colors-black);
   --colors-background: var(--colors-snow);
   --colors-sheet: var(--colors-white);
   --colors-elevated: var(--colors-white);
   --colors-sunken: var(--colors-smoke);
-<<<<<<< Updated upstream
-=======
   --colors-progress: var(--colors-red);
->>>>>>> Stashed changes
 }
 
 html {
