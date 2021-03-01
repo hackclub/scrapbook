@@ -7,7 +7,7 @@ class NProgressContainer extends React.Component {
   static defaultProps = {
     color: '#ec3750',
     showAfterMs: 300,
-    spinner: true
+    spinner: false
   }
 
   timer = null
@@ -51,7 +51,7 @@ class NProgressContainer extends React.Component {
           pointer-events: none;
         }
         #nprogress .bar {
-          background: ${color};
+          background: var(--colors-secondary);
           position: fixed;
           z-index: 1031;
           top: 0;
@@ -65,20 +65,21 @@ class NProgressContainer extends React.Component {
           right: 0px;
           width: 100px;
           height: 100%;
-          box-shadow: 0 0 10px ${color}, 0 0 5px ${color};
+          box-shadow: 0 0 10px var(--colors-secondary), 0 0 5px var(--colors-secondary);
           opacity: 1;
           -webkit-transform: rotate(3deg) translate(0px, -4px);
           -ms-transform: rotate(3deg) translate(0px, -4px);
           transform: rotate(3deg) translate(0px, -4px);
         }
         #nprogress .spinner {
-          display: ${spinner ? 'block' : 'none'};
+          display: none;
           position: fixed;
           z-index: 1031;
           top: 15px;
           right: 15px;
         }
         #nprogress .spinner-icon {
+          display: none;
           width: 18px;
           height: 18px;
           box-sizing: border-box;
