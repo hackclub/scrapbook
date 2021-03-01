@@ -58,6 +58,7 @@ Some “relative” colors use these colors for various components:
 - `--colors-text` – page text color
 - `--colors-elevated` – “elevated” content, like the posts
 - `--colors-sunken` – “sunken” content
+- `--colors-progress` – the color of the progress bar
 
 Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
