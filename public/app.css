@@ -36,6 +36,10 @@
   --colors-sheet: var(--colors-white);
   --colors-elevated: var(--colors-white);
   --colors-sunken: var(--colors-smoke);
+<<<<<<< Updated upstream
+=======
+  --colors-progress: var(--colors-red);
+>>>>>>> Stashed changes
 }
 
 html {
