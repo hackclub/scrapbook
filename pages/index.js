@@ -11,7 +11,7 @@ const Header = ({ reactions, children }) => (
       name="Hack Club Scrapbook"
       title="Home"
       description="A daily streak system & portfolio for your projects. Join the Hack Club community of high school hackers & get yours started."
-      image="https://assets.hackclub.com/log/2020-06-18_scrapbook.jpg"
+      image="https://cloud-53i932gta-hack-club-bot.vercel.app/0scrapbook.jpg"
     />
     <header>
       {children}
