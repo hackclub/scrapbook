@@ -8,7 +8,7 @@ This repo is the website for [Hack Club](https://hackclub.com/)’s [Scrapbook](
 
 ## How do I join?
 
-[Join the Hack Club Slack to participate.](https://hack.af/som-slack/)
+[Join the Hack Club Slack](https://hackclub.com/slack) to participate, then join the `#scrapbook` channel.
 
 ## How does it work?
 
