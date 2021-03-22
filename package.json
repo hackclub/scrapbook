@@ -26,6 +26,6 @@
     "react-dom": "^17.0.1",
     "react-masonry-css": "^1.0.14",
     "react-tooltip": "^4.2.15",
-    "swr": "^0.5.3"
+    "swr": "^0.5.4"
   }
 }
