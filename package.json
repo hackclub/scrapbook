@@ -19,7 +19,7 @@
     "fathom-client": "^3.0.0",
     "hls.js": "^0.14.17",
     "lodash": "^4.17.21",
-    "next": "^10.0.8",
+    "next": "^10.0.9",
     "nprogress": "^0.2.0",
     "react": "^17.0.1",
     "react-audio-player": "^0.14.0",
