@@ -20,9 +20,9 @@
     "lodash": "^4.17.21",
     "next": "^10.0.9",
     "nprogress": "^0.2.0",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-audio-player": "^0.14.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-masonry-css": "^1.0.14",
     "react-tooltip": "^4.2.15",
     "swr": "^0.5.4"
