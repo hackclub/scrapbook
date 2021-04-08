@@ -40,40 +40,40 @@ If you’d like to change the page-wide fonts or colors, you can change yours wi
   
   <summary>Default values</summary>
 
-  ```css
-  :root {
-    --colors-pink: #ff62dc;
-    --colors-orange: #ff5b00;
-    --colors-yellow: #f7ff00;
-    --colors-green: #28ff00;
-    --colors-cyan: #00ffff;
-    --colors-blue: #00a4ff;
-    --colors-purple: #c210ff;
+```css
+:root {
+  --colors-pink: #ff62dc;
+  --colors-orange: #ff5b00;
+  --colors-yellow: #f7ff00;
+  --colors-green: #28ff00;
+  --colors-cyan: #00ffff;
+  --colors-blue: #00a4ff;
+  --colors-purple: #c210ff;
 
-    --colors-darker: #151613;
-    --colors-dark: #20201d;
-    --colors-darkless: #2b2b27;
-    --colors-black: #1d201d;
-    --colors-slate: #3b413a;
-    --colors-muted: #777f76;
-    --colors-smoke: #d5d8d5;
-    --colors-snow: #f5f5f4;
-    --colors-white: #ffffff;
+  --colors-darker: #151613;
+  --colors-dark: #20201d;
+  --colors-darkless: #2b2b27;
+  --colors-black: #1d201d;
+  --colors-slate: #3b413a;
+  --colors-muted: #777f76;
+  --colors-smoke: #d5d8d5;
+  --colors-snow: #f5f5f4;
+  --colors-white: #ffffff;
 
-    --fonts-body: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, sans-serif;
-    --fonts-display: 'Shrikhand', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, sans-serif;
-    --fonts-mono: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
-  }
-  ```
+  --fonts-body: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  --fonts-display: 'Shrikhand', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  --fonts-mono: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+}
+```
 
-  Some “relative” colors use these colors for various components:
+Some “relative” colors use these colors for various components:
 
-  - `--colors-background` – page background color
-  - `--colors-text` – page text color
-  - `--colors-elevated` – “elevated” content, like the posts
-  - `--colors-sunken` – “sunken” content
+- `--colors-background` – page background color
+- `--colors-text` – page text color
+- `--colors-elevated` – “elevated” content, like the posts
+- `--colors-sunken` – “sunken” content
 
 </details>
 
@@ -105,6 +105,10 @@ If you have a custom domain, you can optionally link the scrapbook widget to it!
 <script src="https://summer.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
 ```
+
+## RSS feed
+
+Want to get an RSS feed of your Scrapbook posts? Just append `.rss` to the end of your Scrapbook profile's URL, like so: https://scrapbook.hackclub.com/(username).rss
 
 ## macOS app
 

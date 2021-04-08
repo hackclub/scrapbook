@@ -37,6 +37,10 @@ module.exports = withMDX({
       {
         source: '/api/emoji/',
         destination: 'https://badger.hackclub.dev/api/emoji'
+      },
+      {
+        source: '/:username.rss',
+        destination: '/api/rss/:username'
       }
     ]
   },
