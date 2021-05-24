@@ -18,7 +18,7 @@
     "@next/mdx": "^10.0.4",
     "hls.js": "^1.0.3",
     "lodash": "^4.17.21",
-    "next": "^10.2.0",
+    "next": "^10.2.2",
     "nprogress": "^0.2.0",
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",
