@@ -59,7 +59,7 @@ const Nav = () => {
         <a className="nav-link nav-link-about">About</a>
       </Link>
       <a
-        href="https://github.com/hackclub/summer-scrapbook"
+        href="https://github.com/hackclub/scrapbook"
         className="nav-link nav-link-github"
         title="GitHub"
       >
