@@ -125,9 +125,9 @@ const Post = ({
                 alt={img.filename}
                 src={img.thumbnails?.large?.url || img.url}
                 loading="lazy"
-                width={img.thumbnails?.large?.width}
-                height={img.thumbnails?.large?.height}
-                layout={!img.thumbnails?.large?.width ? 'fill' : null}
+                width={img.thumbnails?.large?.width || img.width}
+                height={img.thumbnails?.large?.height || img.height}
+                layout={!(img.thumbnails?.large?.width || img.width) ? 'fill' : null}
               />
             </a>
           )
