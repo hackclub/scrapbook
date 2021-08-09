@@ -301,7 +301,12 @@ export const getStaticProps = async ({ params }) => {
       webring = await Promise.all(
         profile.webring.map(async id => {
           const u = await getProfile(id, 'slackID')
-          u.mutual = u.webring.includes(profile.slackID)
+          try {
+            u.mutual = u.webring.includes(profile.slackID)
+          } catch {
+            u.mutual = false
+          }
+
           return u
         })
       )

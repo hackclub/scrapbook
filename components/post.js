@@ -15,9 +15,14 @@ const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif']
 const audioFileTypes = ['mp3', 'wav', 'aiff', 'm4a']
 
 function endsWithAny(suffixes, string) {
-  return suffixes.some(function (suffix) {
-    return string.endsWith(suffix)
-  })
+  try{
+    return suffixes.some(function (suffix) {
+      return string.endsWith(suffix)
+    })
+  }
+  catch{
+    return false
+  }
 }
 
 const Post = ({
