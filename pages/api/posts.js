@@ -46,7 +46,7 @@ export const transformPost = p => ({
   postedAt: formatTS(p.messageTimestamp),
   text: p.text != null ? p.text : '',
   attachments: p.attachments,
-  muxPlaybackIDs: p.muxPlaybackIDs,
+  mux: p.muxPlaybackIDs,
   reactions: transformReactions(p.emojiReactions) || []
 })
 
