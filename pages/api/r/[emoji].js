@@ -4,19 +4,23 @@ import { getRawPosts, transformPost } from '../posts'
 
 export const getPosts = async (emoji, maxRecords = 256) => {
   const users = await getRawUsers(true)
-  const allUpdates = await getRawPosts(null, {
-    filterByFormula: `FIND(":${emoji}:", ARRAYJOIN({Filtered Emoji Reactions}, ',')) >= 1`,
-    maxRecords
+  const allUpdates = await getRawPosts(maxRecords, {
+    where: {
+      emojiReactions: {
+        some: {
+          emojiTypeName: emoji
+        }
+      }
+    }
   })
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates
     .map(p => {
-      const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-      p.user = user.id ? user : null
+      p.user = find(users, { slackID: p.accountsSlackID }) || {}
       return p
     })
     .filter(p => !isEmpty(p.user))
-    .map(({ id, user, fields }) => transformPost(id, fields, user))
+    .map(p => transformPost(p))
 }
 
 export default async (req, res) => {
