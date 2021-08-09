@@ -1,47 +1,63 @@
-import { find, reverse, orderBy, compact, isEmpty } from 'lodash'
+import { find, reverse, orderBy, compact, isEmpty, xorBy } from 'lodash'
 import { getRawUsers, transformUser } from './users'
 import { stripColons } from '../../lib/emoji'
+import prisma from '../../lib/prisma'
 
 export const getRawPosts = async (max = null, params = {}) => {
   const opts = {
-    sort: [{ field: 'Message Timestamp', direction: 'desc' }],
+    orderBy: {
+      messageTimestamp: 'desc'
+    },
+    include: {
+      emojiReactions: {
+        include: {
+          EmojiType: true
+        }
+      } // Return all fields
+    },
     ...params
   }
   if (max) opts.take = max
-  return await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates?select=' +
-      JSON.stringify(opts)
-  ).then(r => r.json())
+  return await prisma.updates.findMany(opts)
 }
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
 export const transformReactions = (raw = []) =>
   compact(
-    raw.map(str => {
+    raw.map(emoji => {
       try {
-        const parts = str.split(' ')
-        const name = stripColons(parts[0])
+        const { name, emojiSource } = emoji.EmojiType
         if (name === 'aom') return null
         const obj = { name }
-        obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
+        obj[emojiSource.startsWith('http') ? 'url' : 'char'] = emojiSource
         return obj
       } catch (e) {
+        console.log(e)
         return null
       }
     })
   )
 
-export const transformPost = (id = null, fields = {}, user = null) => ({
+export const transformPost = (
+  id = null,
+  user = null,
+  messageTimestamp = null,
+  channel = 'C01504DCLVD',
+  text = '',
+  attachments = [],
+  muxPlaybackIDs = [],
+  emojiReactions = []
+) => ({
   id,
   user,
-  timestamp: fields['Message Timestamp'] || null,
-  slackUrl: fields['Slack URL'],
-  postedAt: formatTS(fields['Message Timestamp']),
-  text: fields['Text'] || '',
-  attachments: fields['Attachments'] || [],
-  mux: fields['Mux Playback IDs']?.split(',') || [],
-  reactions: transformReactions(fields['Filtered Emoji Reactions']) || []
+  timestamp: messageTimestamp || null,
+  slackUrl: `https://hackclub.slack.com/archives/${channel}/p1628524815020800`,
+  postedAt: formatTS(messageTimestamp),
+  text: text,
+  attachments,
+  muxPlaybackIDs,
+  reactions: transformReactions(emojiReactions) || []
 })
 
 export const getPosts = async (max = null) => {
@@ -49,12 +65,32 @@ export const getPosts = async (max = null) => {
   return await getRawPosts(max).then(posts =>
     posts
       .map(p => {
-        const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-        p.user = user?.fields ? transformUser(user) : null
+        p.user = find(users, { slackID: p.accountsSlackID }) || {}
         return p
       })
       .filter(p => !isEmpty(p.user))
-      .map(({ id, user, fields }) => transformPost(id, fields, user))
+      .map(
+        ({
+          id,
+          user,
+          messageTimestamp,
+          text,
+          channel,
+          attachments,
+          muxPlaybackIDs,
+          emojiReactions
+        }) =>
+          transformPost(
+            id,
+            user,
+            messageTimestamp,
+            text,
+            channel,
+            attachments,
+            muxPlaybackIDs,
+            emojiReactions
+          )
+      )
   )
 }
 
