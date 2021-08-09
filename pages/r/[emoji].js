@@ -207,7 +207,7 @@ export const getStaticProps = async ({ params }) => {
       'https://gist.githubusercontent.com/cjdenio/efc9f7645025288725c2d2e5aa095ccf/raw/cc90f61afdcae44c8819ee7e2b0ac021c5d6abe8/zachday-2020.css'
   }
 
-  css = cssURLs[name] || ''
+  let css = cssURLs[name] || ''
 
   const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
