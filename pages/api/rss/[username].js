@@ -12,14 +12,13 @@ export default async (req, res) => {
 
   const posts = await getPosts({ username })
 
-  posts.forEach(({ text, postedAt, attachments, mux }) => {
+  posts.forEach(({ text, attachments, mux }) => {
     feed.item({
       title: `${username}'s scrapbook update`,
       description: text,
       enclosure: attachments[0]
         ? {
-            url: attachments[0].url,
-            type: attachments[0].type
+            url: attachments[0]
           }
         : {
             url: `https://image.mux.com/${mux[0]}/thumbnail.jpg?width=512&fit_mode=pad&time=0`,
