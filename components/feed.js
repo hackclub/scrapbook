@@ -38,6 +38,9 @@ const Feed = ({
             --colors-text: var(--colors-snow);
           }
         }
+        .container{
+          max-width: 999rem!important;
+        }
       `}</style>
       {children}
       <Posts posts={data} />
