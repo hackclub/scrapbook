@@ -19,7 +19,7 @@ export const getProfile = async (value, field = 'username') => {
 export const getPosts = async user => {
   const allUpdates = await getRawPosts(null, {
     where: {
-      accountsSlackID: user.slackID
+      username: user.username
     }
   })
 
