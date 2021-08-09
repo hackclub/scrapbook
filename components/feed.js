@@ -20,6 +20,16 @@ const Feed = ({
   if (error) {
     return (
       <main className="container">
+        <style jsx global>{`
+          @media (prefers-color-scheme: dark) {
+            :root {
+              --colors-text: var(--colors-snow);
+            }
+          }
+          .container {
+            max-width: 999rem !important;
+          }
+        `}</style>
         {children}
         <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
       </main>
@@ -38,8 +48,8 @@ const Feed = ({
             --colors-text: var(--colors-snow);
           }
         }
-        .container{
-          max-width: 999rem!important;
+        .container {
+          max-width: 999rem !important;
         }
       `}</style>
       {children}
