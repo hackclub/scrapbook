@@ -39,25 +39,16 @@ export const transformReactions = (raw = []) =>
     })
   )
 
-export const transformPost = (
-  id = null,
-  user = null,
-  messageTimestamp = null,
-  channel = 'C01504DCLVD',
-  text = '',
-  attachments = [],
-  muxPlaybackIDs = [],
-  emojiReactions = []
-) => ({
-  id,
-  user,
-  timestamp: messageTimestamp || null,
-  slackUrl: `https://hackclub.slack.com/archives/${channel}/p1628524815020800`,
-  postedAt: formatTS(messageTimestamp),
-  text: text,
-  attachments,
-  muxPlaybackIDs,
-  reactions: transformReactions(emojiReactions) || []
+export const transformPost = p => ({
+  id: p.id,
+  user: p.user,
+  timestamp: p.messageTimestamp || null,
+  slackUrl: `https://hackclub.slack.com/archives/${p.channel}/p1628524815020800`,
+  postedAt: formatTS(p.messageTimestamp),
+  text: p.text,
+  attachments: p.attachments,
+  muxPlaybackIDs: p.muxPlaybackIDs,
+  reactions: transformReactions(p.emojiReactions) || []
 })
 
 export const getPosts = async (max = null) => {
@@ -69,28 +60,7 @@ export const getPosts = async (max = null) => {
         return p
       })
       .filter(p => !isEmpty(p.user))
-      .map(
-        ({
-          id,
-          user,
-          messageTimestamp,
-          text,
-          channel,
-          attachments,
-          muxPlaybackIDs,
-          emojiReactions
-        }) =>
-          transformPost(
-            id,
-            user,
-            messageTimestamp,
-            text,
-            channel,
-            attachments,
-            muxPlaybackIDs,
-            emojiReactions
-          )
-      )
+      .map(p => transformPost(p))
   )
 }
 
