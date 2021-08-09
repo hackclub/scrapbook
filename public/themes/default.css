@@ -82,6 +82,9 @@
     align-items: center;
     margin-top: 24px;
   }
+  .post {
+    width: calc(100vw - 32px)!important;
+  }
 }
 
 .header-title-avatar {
