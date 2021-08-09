@@ -1,0 +1,69 @@
+// This needs to be synced with hackclub/scrappy
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Accounts {
+  slackID                 String     @unique
+  username                String     @unique
+  streakCount             Int?
+  maxStreaks              Int?
+  displayStreak           Boolean?
+  streaksToggledOff       Boolean?
+  customDomain            String?
+  cssURL                  String?
+  website                 String?
+  github                  String?
+  fullSlackMember         Boolean?
+  avatar                  String?
+  webring                 String[]
+  updates                 Updates[]
+  newMember               Boolean
+  timezoneOffset          Int
+  timezone                String
+  pronouns                String?
+  customAudioURL          String?
+  lastUsernameUpdatedTime DateTime?
+  webhookURL              String?
+
+}
+
+model Updates {
+  id               String           @id @default(cuid())
+  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
+  accountsSlackID  String?
+  postTime         DateTime?
+  text             String?
+  attachments      String[]
+  muxAssetIDs      String[]
+  muxPlaybackIDs   String[]
+  muxAssetStatuses String?
+  messageTimestamp Float?
+  backupAssetID    String?
+  backupPlaybackID String?
+  isLargeVideo     Boolean?
+  emojiReactions   EmojiReactions[]
+  channel          String?
+}
+
+model EmojiType {
+  name           String           @unique
+  emojiSource    String?
+  emojiReactions EmojiReactions[]
+}
+
+model EmojiReactions {
+  id            String     @id @default(cuid())
+  update        Updates?   @relation(fields: [updateId], references: [id])
+  updateId      String?
+  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
+  emojiTypeName String?
+  usersReacted  String[]
+  updatedAt     DateTime   @default(now()) @map("created_at")
+}

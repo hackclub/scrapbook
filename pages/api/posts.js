@@ -7,7 +7,7 @@ export const getRawPosts = async (max = null, params = {}) => {
     sort: [{ field: 'Message Timestamp', direction: 'desc' }],
     ...params
   }
-  if (max) opts.maxRecords = max
+  if (max) opts.take = max
   return await fetch(
     'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates?select=' +
       JSON.stringify(opts)

@@ -1,10 +1,6 @@
 import { map } from 'lodash'
+import prisma from '../../lib/prisma'
 
-export const getUsernames = () =>
-  fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts'
-  )
-    .then((r) => r.json())
-    .then((u) => map(u, 'fields.Username'))
+export const getUsernames = () => prisma.accounts.findMany().then(u => map(u, 'username'))
 
-export default async (req, res) => getUsernames().then((u) => res.json(u || []))
+export default async (req, res) => getUsernames().then(u => res.json(u || []))
