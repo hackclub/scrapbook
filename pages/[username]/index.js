@@ -268,17 +268,13 @@ export default UserPage
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
-  const usernames = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-      `?select=${JSON.stringify({
-        filterByFormula: '{Full Slack Member?} = 1',
-        fields: ['Username'],
-        sort: [{ field: 'Streak Count', direction: 'desc' }],
-        maxRecords: 75
-      })}`
-  )
-    .then(r => r.json())
-    .then(u => map(u, 'fields.Username'))
+  const { getUsernames } = require('../api/usernames')
+  let usernames = await getUsernames({
+    where: { fullSlackMember: true },
+    orderBy: { streakCount: 'desc' },
+    take: 75
+  })
+  console.log(usernames)
   const paths = usernames.map(username => ({ params: { username } }))
   return { paths, fallback: true }
 }
@@ -294,7 +290,7 @@ export const getStaticProps = async ({ params }) => {
 
   try {
     const posts = await getPosts(profile)
-    const { map, groupBy } = require('lodash')
+    const { groupBy } = require('lodash')
     const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
     const heatmap = Object.keys(days).map(date => ({
       date,
@@ -304,8 +300,8 @@ export const getStaticProps = async ({ params }) => {
     if (profile.webring) {
       webring = await Promise.all(
         profile.webring.map(async id => {
-          const u = await getProfile(id, 'id')
-          u.mutual = u.webring.includes(profile.id)
+          const u = await getProfile(id, 'slackID')
+          u.mutual = u.webring.includes(profile.slackID)
           return u
         })
       )

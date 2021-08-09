@@ -9,9 +9,7 @@ export const getProfile = async (value, field = 'username') => {
   const opts = {
     where
   }
-  console.log(opts)
   const user = await prisma.accounts.findFirst(opts)
-  console.log(user)
   if (!user) console.error('Could not fetch account', value)
   return user && user?.username ? user : {}
 }
@@ -19,7 +17,7 @@ export const getProfile = async (value, field = 'username') => {
 export const getPosts = async user => {
   const allUpdates = await getRawPosts(null, {
     where: {
-      username: user.username
+      Accounts: { username: user.username}
     }
   })
 

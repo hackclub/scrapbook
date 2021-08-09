@@ -29,8 +29,10 @@ const CustomEmoji = memo(({ name }) => {
         .then(r => r.json())
         .then(emojis => {
           if (emojis[emoji]) {
-            setImage(emojis[emoji])
-            return
+            if (emojis[emoji].includes('http')) {
+              setImage(emojis[emoji])
+              return
+            }
           }
           setImage(
             'https://emoji.slack-edge.com/T0266FRGM/parrot/c9f4fddc5e03d762.gif'

@@ -33,7 +33,6 @@ export const transformReactions = (raw = []) =>
         obj[emojiSource.startsWith('http') ? 'url' : 'char'] = emojiSource
         return obj
       } catch (e) {
-        console.log(e)
         return null
       }
     })
@@ -41,11 +40,11 @@ export const transformReactions = (raw = []) =>
 
 export const transformPost = p => ({
   id: p.id,
-  user: p.user,
+  user: p.user ? p.user : {},
   timestamp: p.messageTimestamp || null,
   slackUrl: `https://hackclub.slack.com/archives/${p.channel}/p1628524815020800`,
   postedAt: formatTS(p.messageTimestamp),
-  text: p.text,
+  text: p.text != null ? p.text : '',
   attachments: p.attachments,
   muxPlaybackIDs: p.muxPlaybackIDs,
   reactions: transformReactions(p.emojiReactions) || []

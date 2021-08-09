@@ -10,6 +10,16 @@ import Reaction from './reaction'
 import dynamic from 'next/dynamic'
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
+const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif']
+
+const audioFileTypes = ['mp3', 'wav', 'aiff', 'm4a']
+
+function endsWithAny(suffixes, string) {
+  return suffixes.some(function (suffix) {
+    return string.endsWith(suffix)
+  })
+}
+
 const Post = ({
   id = new Date().toISOString(),
   profile = false,
@@ -112,37 +122,26 @@ const Post = ({
     <Content>{text}</Content>
     {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
-        {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
-          img => (
-            <a
-              key={img.url}
-              href={proxy(img.thumbnails?.full?.url || img.url)}
-              target="_blank"
-              title={img.filename}
-              className="post-attachment"
-            >
-              <Image
-                alt={img.filename}
-                src={img.thumbnails?.large?.url || img.url}
-                loading="lazy"
-                width={img.thumbnails?.large?.width || img.width}
-                height={img.thumbnails?.large?.height || img.height}
-                layout={!(img.thumbnails?.large?.width || img.width) ? 'fill' : null}
-              />
-            </a>
-          )
-        )}
-        {filter(attachments, a => a?.type?.toString().startsWith('audio')).map(
-          aud => (
-            <audio
-              key={aud.url}
-              className="post-attachment"
-              src={aud.url}
-              controls
-              preload="metadata"
-            />
-          )
-        )}
+        {filter(attachments, a => endsWithAny(imageFileTypes, a)).map(img => (
+          <a
+            key={img}
+            href={img}
+            target="_blank"
+            title={img}
+            className="post-attachment"
+          >
+            <img key={img} alt={img} src={img} loading="lazy" title={img} />
+          </a>
+        ))}
+        {filter(attachments, a => endsWithAny(audioFileTypes, a)).map(aud => (
+          <audio
+            key={aud.url}
+            className="post-attachment"
+            src={aud.url}
+            controls
+            preload="metadata"
+          />
+        ))}
         {mux.map(id => (
           <Video key={id} mux={id} />
         ))}
