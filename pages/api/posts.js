@@ -1,5 +1,5 @@
-import { find, reverse, orderBy, compact, isEmpty, xorBy } from 'lodash'
-import { getRawUsers, transformUser } from './users'
+import { find, compact, isEmpty } from 'lodash'
+import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
 
@@ -13,7 +13,7 @@ export const getRawPosts = async (max = null, params = {}) => {
         include: {
           EmojiType: true
         }
-      } // Return all fields
+      }
     },
     ...params
   }

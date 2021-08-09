@@ -1,5 +1,3 @@
-import { transformUser } from '../index'
-
 export const getProfile = async (value, field = 'Username') => {
   const opts = JSON.stringify({
     maxRecords: 1,
@@ -13,7 +11,7 @@ export const getProfile = async (value, field = 'Username') => {
     .then(r => r.json())
     .then(a => (Array.isArray(a) ? a[0] : null))
   if (!user) console.error('Could not fetch account', value)
-  return user && user?.fields?.Username ? transformUser(user) : {}
+  return user && user?.username ? user : {}
 }
 
 export default async (req, res) => {

@@ -1,5 +1,5 @@
 import { map, find, isEmpty, orderBy } from 'lodash'
-import { getRawUsers, transformUser } from '../index'
+import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 
 export const getProfile = async (value, field = 'Username') => {
@@ -15,7 +15,7 @@ export const getProfile = async (value, field = 'Username') => {
     .then(r => r.json())
     .then(a => (Array.isArray(a) ? a[0] : null))
   if (!user) console.error('Could not fetch account', value)
-  return user && user?.fields?.Username ? transformUser(user) : {}
+  return user && user?.username ? user : {}
 }
 
 export const getPosts = async user => {
@@ -36,7 +36,7 @@ export const getMentions = async user => {
   return allUpdates
     .map(p => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-      p.user = user.id ? transformUser(user) : null
+      p.user = user.id ? user : null
       return p
     })
     .filter(p => !isEmpty(p.user))

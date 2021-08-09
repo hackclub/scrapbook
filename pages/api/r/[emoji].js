@@ -1,5 +1,5 @@
 import { map, find, isEmpty, orderBy, filter } from 'lodash'
-import { getRawUsers, transformUser } from '../users/index'
+import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
 export const getPosts = async (emoji, maxRecords = 256) => {
@@ -12,7 +12,7 @@ export const getPosts = async (emoji, maxRecords = 256) => {
   return allUpdates
     .map(p => {
       const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-      p.user = user.id ? transformUser(user) : null
+      p.user = user.id ? user : null
       return p
     })
     .filter(p => !isEmpty(p.user))
