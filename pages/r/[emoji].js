@@ -202,12 +202,12 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
-  let css = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Emoji%20CSS?select=' +
-      JSON.stringify({ filterByFormula: `{Emoji} = "${params.emoji}"` })
-  ).then(r => r.json())
+  let cssURLs = {
+    'zachday-2020':
+      'https://gist.githubusercontent.com/cjdenio/efc9f7645025288725c2d2e5aa095ccf/raw/cc90f61afdcae44c8819ee7e2b0ac021c5d6abe8/zachday-2020.css'
+  }
 
-  css = css.length > 0 ? css[0].fields['CSS URL'] : ''
+  css = cssURLs[name] || ''
 
   const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
