@@ -89,7 +89,7 @@ If you have a custom domain, you can optionally link the scrapbook widget to it!
 
 ## Public API
 
-The backend is powered by Airtable served over [Airbridge](https://github.com/hackclub/api2), but the site exposes a public JSON API powered by [Next.js API routes](https://nextjs.org/docs/api-routes/introduction) that reformats data in a more useful way. The live site runs entirely on this API.
+This site exposes a public JSON API powered by [Next.js API routes](https://nextjs.org/docs/api-routes/introduction). The live site runs entirely on this API.
 
 - [`/api/posts`](https://scrapbook.hackclub.com/api/posts) – Get all posts (used on the homepage)
 - [`/api/users`](https://scrapbook.hackclub.com/api/users) – Get all users
