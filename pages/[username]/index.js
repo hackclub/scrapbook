@@ -58,7 +58,7 @@ const Profile = ({
           : ''
       }`}
     />
-    {profile.css && (
+    {profile.cssURL && (
       <link
         rel="stylesheet"
         type="text/css"
