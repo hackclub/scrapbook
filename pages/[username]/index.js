@@ -187,7 +187,7 @@ const Profile = ({
         <a
           href={
             profile.cssURL.includes('gist.githubusercontent')
-              ? profile.css
+              ? profile.cssURL
                   .replace('githubusercontent.', 'github.')
                   .split('/raw')?.[0]
               : profile.cssURL
@@ -198,7 +198,7 @@ const Profile = ({
           CSS:{' '}
           {profile.cssURL.includes('gist.githubusercontent')
             ? `Gist by @${profile.cssURL.split('.com/')?.[1]?.split('/')?.[0]}`
-            : profile.css}
+            : profile.cssURL}
         </a>
       </footer>
     )}
