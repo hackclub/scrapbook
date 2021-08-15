@@ -62,7 +62,7 @@ const Profile = ({
       <link
         rel="stylesheet"
         type="text/css"
-        href={HOST + `/api/css?url=${profile.css}`}
+        href={HOST + `/api/css?url=${profile.cssURL}`}
       />
     )}
     {children}
@@ -132,7 +132,7 @@ const Profile = ({
                 </a>
               )}
             </div>
-            {profile.audio && <AudioPlayer url={profile.audio} />}
+            {profile.customAudioURL && <AudioPlayer url={profile.customAudioURL} />}
           </div>
         </section>
       </div>
@@ -176,7 +176,7 @@ const Profile = ({
       ))}
       {posts.length === 1 && <ExamplePosts />}
     </article>
-    {profile.css && (
+    {profile.cssURL && (
       <footer className="css" title="External CSS URL">
         <Icon
           glyph="embed"
@@ -186,18 +186,18 @@ const Profile = ({
         />
         <a
           href={
-            profile.css.includes('gist.githubusercontent')
+            profile.cssURL.includes('gist.githubusercontent')
               ? profile.css
                   .replace('githubusercontent.', 'github.')
                   .split('/raw')?.[0]
-              : profile.css
+              : profile.cssURL
           }
           target="_blank"
           className="css-link"
         >
           CSS:{' '}
-          {profile.css.includes('gist.githubusercontent')
-            ? `Gist by @${profile.css.split('.com/')?.[1]?.split('/')?.[0]}`
+          {profile.cssURL.includes('gist.githubusercontent')
+            ? `Gist by @${profile.cssURL.split('.com/')?.[1]?.split('/')?.[0]}`
             : profile.css}
         </a>
       </footer>
