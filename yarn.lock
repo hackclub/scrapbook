@@ -426,10 +426,10 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-2.28.0-17.89facabd0366f63911d089156a7a70125bfbcd27.tgz#6dbccdce64f792dbc21c99daef80ec03020c110d"
   integrity sha512-BWTvF1mGxjG8EtG215uhxdeW5Uf5aiH4xhfzcFPFC3Ux5BdEM1uEBrLIixX67mI+ZNhqNZSBPf0DSf2I1IsaZw==
 
-"@prisma/engines@2.28.0-17.89facabd0366f63911d089156a7a70125bfbcd27":
-  version "2.28.0-17.89facabd0366f63911d089156a7a70125bfbcd27"
-  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.28.0-17.89facabd0366f63911d089156a7a70125bfbcd27.tgz#5a563ead03405fc6ccb33fe48f8b3a8712be391e"
-  integrity sha512-r3/EnwKjbu2qz13I98hPQQdeFrOEcwdjlrB9CcoSoqRCjSHLnpdVMUvRfYuRKIoEF7p941R7/Fov0/CxOLF/MQ==
+"@prisma/engines@2.31.0-11.c6aa2685dff09984e6656f5d99a90b9e90eabbce":
+  version "2.31.0-11.c6aa2685dff09984e6656f5d99a90b9e90eabbce"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.31.0-11.c6aa2685dff09984e6656f5d99a90b9e90eabbce.tgz#40915f4c0f741ae55a308a1bb0e4805451dbea84"
+  integrity sha512-zQXMLIJEApmbHZNhx+lwpfyadHJDO4tOEomprSaW2ORpV4yQTev62mvoygJIMEY4WhhxTzVvuS+OWBDl72hl5Q==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
@@ -2002,12 +2002,12 @@ postcss@8.2.15:
     nanoid "^3.1.23"
     source-map "^0.6.1"
 
-prisma@2.28.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/prisma/-/prisma-2.28.0.tgz#33adb56e336d4c4569ec2f49df9b606771df15d0"
-  integrity sha512-f83KPLy3xk07KMY4e5otNwP2I+GsdftjOfu3e8snXylnyAC1oEpRZNe7rmONr0vAI+Qgz3LFRArhWUE/dFjKIA==
+prisma@2.30.1:
+  version "2.30.1"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-2.30.1.tgz#56c7a8eafb931cdfc49667b886fbe43fd783d668"
+  integrity sha512-8LULJLwwFOmM9ut0oYw450kAbCYakZP8k+++TNZWvdj5O9G7vtHm12yExsl4wIw/YrYQXcaExN53FSTNUS+Pxg==
   dependencies:
-    "@prisma/engines" "2.28.0-17.89facabd0366f63911d089156a7a70125bfbcd27"
+    "@prisma/engines" "2.31.0-11.c6aa2685dff09984e6656f5d99a90b9e90eabbce"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
