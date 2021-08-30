@@ -28,6 +28,6 @@
     "react-masonry-css": "^1.0.16",
     "react-tooltip": "^4.2.21",
     "rss": "^1.2.2",
-    "swr": "^0.5.6"
+    "swr": "^1.0.0"
   }
 }
