@@ -107,7 +107,7 @@ const Profile = ({
                 </a>
               </Link>
               <a
-                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
+                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
                 target="_blank"
                 className="header-link header-link-slack"
               >
