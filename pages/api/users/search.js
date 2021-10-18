@@ -16,7 +16,7 @@ export const searchUsers = async query => {
 export default async (req, res) => {
   const { query } = req.body
 
-  searchUsers(query)
+  const searchResult = await searchUsers(query)
 
   res.json(searchResult)
 }

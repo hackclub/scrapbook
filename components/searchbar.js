@@ -1,15 +1,13 @@
 import Icon from '@hackclub/icons'
 
-const TextBox = props => {
+const SearchBar = props => {
   return (
     <>
       <div className="position-wrapper">
         <div className="input-container">
           <Icon glyph="search" size={25} />
           <input
-            onChange={event => {
-              props.textSetter(event.target.value)
-            }}
+            onChange={props.onChange}
             type="text"
             placeholder={props.placeholder}
           />
@@ -17,18 +15,38 @@ const TextBox = props => {
       </div>
       <style jsx>
         {`
+          @media (prefers-color-scheme: dark) {
+            input {
+              background-color: var(--colors-darkless);
+              color: white;
+            }
+
+            .input-container {
+              background-color: var(--colors-darkless);
+              border: 1px solid grey;
+            }
+          }
+
+          @media (prefers-color-scheme: light) {
+            input {
+              background-color: white;
+            }
+
+            .input-container {
+              background-color: white;
+              border: 1px solid #ddd;
+            }
+          }
+
           .input-container {
             padding-left: 0.8rem;
             padding-right: 0.8rem;
-
-            background-color: white;
-            border: 1px solid #ddd;
 
             display: flex;
             justify-items: center;
             align-items: center;
 
-            width: 500px;
+            width: 400px;
 
             border-radius: 25px;
           }
@@ -45,6 +63,7 @@ const TextBox = props => {
             margin-left: 0.5rem;
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
+            ${props.centerText ? 'text-align:center' : ''};
           }
 
           input:focus {
@@ -56,4 +75,4 @@ const TextBox = props => {
   )
 }
 
-export default TextBox
+export default SearchBar

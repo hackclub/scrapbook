@@ -2,14 +2,11 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import Image from 'next/image'
 import Link from 'next/link'
-import TextBox from '../components/textbox'
+import TextBox from '../components/searchbar'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 const searchPage = props => {
-  const [searchState, setSearchState] = useState('')
-  const router = useRouter()
-
   return (
     <>
       <main>
@@ -21,19 +18,7 @@ const searchPage = props => {
           image="https://cloud-53i932gta-hack-club-bot.vercel.app/0scrapbook.jpg"
         />
 
-        <section className="search-bar-box">
-          <form
-            onSubmit={() => {
-              router.push(`/search/?q=${searchState}`)
-            }}
-          >
-            <TextBox
-              placeholder="Find Hack Clubbers!"
-              textSetter={setSearchState}
-            />
-          </form>
-        </section>
-
+        <h1 className="header">Search results</h1>
         <section>
           <ul>
             {props.initialData.length > 0 ? (
@@ -64,23 +49,27 @@ const searchPage = props => {
       </main>
       <style jsx>
         {`
+          @media (prefers-color-scheme: dark) {
+            .profile-card {
+              background-color: var(--colors-darkless);
+            }
+          }
+
+          @media (prefers-color-scheme: light) {
+            .profile-card {
+              background-color: white;
+            }
+          }
+
           main {
             padding-left: 1rem;
             padding-right: 1rem;
           }
 
-          section {
-            display: flex;
-            justify-content: center;
-          }
-
           .profile-card {
             display: flex;
             align-items: center;
-            justify-content: center;
-            max-width: 400px;
 
-            background-color: white;
             border-radius: 15px;
 
             padding-top: 1rem;
@@ -97,6 +86,11 @@ const searchPage = props => {
             margin-bottom: 1rem;
             margin-top: 1rem;
           }
+
+          .header {
+            border-bottom: 1px solid grey;
+            margin-bottom: 1rem;
+          }
         `}
       </style>
     </>
@@ -109,7 +103,7 @@ export const getServerSideProps = async context => {
   const { searchUsers } = require('./api/users/search')
   const initialData = await searchUsers(query.q)
 
-  return { props: { initialData } }
+  return { props: { initialData, query: query.q } }
 }
 
 export default searchPage

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
+import Searcher from './searcher'
 
 const Join = () => (
   <a href="https://hackclub.com/slack/" className="badge">
@@ -40,33 +41,38 @@ const Nav = () => {
   }, [])
 
   return (
-    <nav className="nav">
-      <Flag />
-      {!home &&
-        (ext ? (
-          <a
-            href="https://scrapbook.hackclub.com/"
-            className="nav-link nav-link-home"
-          >
-            Scrapbook
-          </a>
-        ) : (
-          <Link href="/">
-            <a className="nav-link nav-link-home">Scrapbook</a>
-          </Link>
-        ))}
-      <Link href="/about/" passHref>
-        <a className="nav-link nav-link-about">About</a>
-      </Link>
-      <a
-        href="https://github.com/hackclub/scrapbook"
-        className="nav-link nav-link-github"
-        title="GitHub"
-      >
-        <Icon glyph="github" size={32} />
-      </a>
-      {home && <Join />}
-    </nav>
+    <>
+      <nav className="nav test">
+        <Flag />
+
+        {!home &&
+          (ext ? (
+            <a
+              href="https://scrapbook.hackclub.com/"
+              className="nav-link nav-link-home"
+            >
+              Scrapbook
+            </a>
+          ) : (
+            <Link href="/">
+              <a className="nav-link nav-link-home">Scrapbook</a>
+            </Link>
+          ))}
+
+        <Searcher />
+        <Link href="/about/" passHref>
+          <a className="nav-link nav-link-about">About</a>
+        </Link>
+        <a
+          href="https://github.com/hackclub/scrapbook"
+          className="nav-link nav-link-github"
+          title="GitHub"
+        >
+          <Icon glyph="github" size={32} />
+        </a>
+        {home && <Join />}
+      </nav>
+    </>
   )
 }
 

@@ -3,13 +3,10 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
-import TextBox from '../components/textbox'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 const Header = ({ reactions, children }) => {
-  const [searchState, setSearchState] = useState('')
-  const router = useRouter()
   return (
     <>
       <Meta
@@ -33,16 +30,6 @@ const Header = ({ reactions, children }) => {
             <Reaction key={reaction.name} {...reaction} />
           ))}
         </article>
-        <form
-          onSubmit={() => {
-            router.push(`/search/?q=${searchState}`)
-          }}
-        >
-          <TextBox
-            placeholder="Find Hack Clubbers!"
-            textSetter={setSearchState}
-          />
-        </form>
       </header>
       <style jsx>{`
         header {
