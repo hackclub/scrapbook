@@ -83,7 +83,7 @@
     margin-top: 24px;
   }
   .post {
-    width: calc(100vw - 32px)!important;
+    width: calc(100vw - 32px) !important;
   }
 }
 
@@ -184,7 +184,7 @@
 .post-text-mention div:first-child {
   width: 24px;
   height: 24px;
-  margin-right: 4px!important;
+  margin-right: 4px !important;
   align-self: flex-end;
 }
 
