@@ -1,29 +1,33 @@
 import SearchBar from './searchbar'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-const Searcher = () => {
+const Searcher = props => {
   const [searchState, setSearchState] = useState()
   const [profileData, setProfileData] = useState([])
+  const [users, setUsers] = useState([])
   const router = useRouter()
 
+  useEffect(() => {
+    fetch('/api/users')
+      .then(response => response.json())
+      .then(data => setUsers(data))
+  }, [])
+
   const updateProfiles = queryData => {
-    fetch('/api/users/search', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: queryData
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        setProfileData(data)
-      })
+    if (!users || users.length <= 0) {
+      return []
+    }
+
+    const filteredArr = users.filter(
+      user => user.username.indexOf(queryData) !== -1
+    )
+
+    console.log(users)
+    setProfileData(filteredArr)
+    //setProfile(data)
   }
   return (
     <>
@@ -90,21 +94,22 @@ const Searcher = () => {
 
           .searchbox-container {
             width: 100%;
-            position: relative;
+            position: absolute;
           }
 
           .profile-card {
             display: flex;
             align-items: center;
             justify-content: center;
-            max-width: 400px;
 
+            width: 100%;
             border-radius: 15px;
 
             padding-top: 1rem;
             padding-bottom: 1rem;
             padding-left: 2rem;
             padding-right: 2rem;
+            margin-bottom: 0.5rem;
           }
 
           .username {
@@ -113,7 +118,8 @@ const Searcher = () => {
 
           .search-result-container {
             max-width: 500px;
-            display: flex;
+            max-height: 500px;
+            overflow: auto;
             border-radius: 15px;
             position: absolute;
             margin-left: auto;
@@ -121,6 +127,9 @@ const Searcher = () => {
             left: 0;
             right: 0;
             text-align: center;
+
+            background-color: var(--colors-background);
+            padding: 1rem;
 
             ${profileData && profileData.length > 0 && searchState !== ''
               ? ''
