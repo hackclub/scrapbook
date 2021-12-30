@@ -1,6 +1,6 @@
 // Edit here: https://codepen.io/lachlanjc/pen/MWKpvZP?editors=0011
 function displayScrapbookUsername(username, customDomain) {
-  fetch('https://scrapbook.hackclub.com/api/users/' + username).then(function (res) {
+  fetch('https://scrapbook.hackclub.com/api/users/' + username + "/").then(function (res) {
     return res.json();
   }).then(function (data) {
     return data.profile.streakCount;
