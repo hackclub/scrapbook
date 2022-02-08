@@ -1,0 +1,181 @@
+/* grabbed from https://replit.com/@MaxWofford/cartridge-experiment#cartridge/style.css */
+
+/* reg bold */
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2")
+      format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2")
+      format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* reg ital bold */
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2")
+      format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2")
+      format("woff2");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2")
+      format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* regular */
+@font-face {
+  font-family: "Phantom Sans";
+  src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2")
+      format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --hc-font-sans: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --hc-font-mono: "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  /* recommend not using these variables directly-- they won't change along with light/dark mode */
+  --black: #1f2d3d;
+  --slate: #3c4858;
+  --muted: #8492a6;
+  --smoke: #e0e6ed;
+  --snow: #f9fafc;
+  --white: #fff;
+
+  /* base colors */
+  --red: #ec3750;
+  --orange: #ff8c37;
+  --yellow: #f1c40f;
+  --green: #33d6a6;
+  --cyan: #5bc0de;
+  --blue: #338eda;
+  --purple: #a633d6;
+
+  --lighter: #CECBB8;
+  --light: #DDDAC7;
+  --lightless: #CAC4B0;
+
+  /* dark colors from bank are a little too dark for this theme, let's make our own colors */
+  /* --darkless: #252429; */
+  /* --dark: #17171d; */
+  --darkless: #535352;
+  --dark: #3E4040;
+  --darker: #28282e;
+}
+
+.cartridge {
+  background: var(--darkless);
+  color: var(--smoke);
+  min-width: 10rem;
+  min-height: 4rem;
+  border-radius: 5px;
+  display: inline-block;
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+}
+
+.cartridge .content-area {
+  margin: 1em;
+  border-radius: 5px;
+  background: var(--dark);
+  transform: translateZ(20px);
+}
+
+.cartridge:after {
+  content: '████████████████';
+  writing-mode: vertical-rl;
+  position: absolute;
+  color: var(--yellow);
+  font-size: 0.5em;
+  letter-spacing: 0.1rem;
+  top: 50%;
+  left: 99%;
+  background: inherit;
+  padding: 0.5rem;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: 1em;
+  transform: translateY(-50%) translateZ(-1px);
+}
+
+.cartridge img.preview {
+  transform: translateZ(20px);
+  margin: 1em;
+  height: 250px;
+  width: 250px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.cartridge .arrow {
+  position: absolute;
+  color: var(--dark);
+  transform: translateY(-50%) rotate(-270deg) scaleX(12);
+  top: 50%;
+  font-size: 0.5em;
+  right: 0;
+}
+
+.cartridge .content-area {
+  background: var(--dark);
+}
+
+.cartridge .logo {
+  font-family: var(--hc-font-sans);
+  background: var(--red);
+  border-top-right-radius: 3em;
+  border-bottom-left-radius: 5px;
+  transform: translateZ(20px);
+  padding: 0.5em;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.cartridge .logo span {
+  display: block;
+}
+.cartridge .logo span:first-child {
+  /* color: var(--); */
+}
+.cartridge .logo span:last-child {
+  /* color: var(--smoke); */
+  font-size: 1.5em;
+  font-weight: bold;
+}
