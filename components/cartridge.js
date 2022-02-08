@@ -8,8 +8,8 @@ const spriteToImage = (asset) => {
   // from https://github.com/hackclub/gamelab/blob/d3e482167374d9e770fb70b21da94941ad3d38e3/pixel-editor/pixel-editor.js#L516
   const [gridW, gridH] = asset.data.size
   const canvas = document.createElement('canvas')
-  canvas.width = gridW
-  canvas.height = gridH
+  canvas.width = Math.max(gridW, gridH)
+  canvas.height = Math.max(gridW, gridH)
   const ctx = canvas.getContext('2d')
   const pixels = new Uint8ClampedArray(
     gridW * gridH * 4
@@ -41,16 +41,20 @@ const Cartridge = ({id}) => {
 
   useEffect(async () => {
     const url = `https://project-bucket-hackclub.s3.eu-west-1.amazonaws.com/${id}.json`;
-    const cartridgeData = await fetch(url, { mode: "cors" }).then((r) => r.json());
-    const spriteData = cartridgeData?.assets?.find(asset => {
-      return asset?.type == 'sprite' && asset?.name == 'logo'
-    })
-    if (spriteData) {
-      setSpriteLogo(spriteToImage(spriteData))
+    try {
+      const cartridgeData = await fetch(url, { mode: "cors" }).then((r) => r.json());
+      const spriteData = cartridgeData?.assets?.find(asset => {
+        return asset?.type == 'sprite' && asset?.name == 'logo'
+      })
+      if (spriteData) {
+        setSpriteLogo(spriteToImage(spriteData))
+      }
+      setName(cartridgeData?.name)
+      setVersion(cartridgeData?.version)
+      setStatus('success')
+    } catch (e) {
+      setStatus('failed')
     }
-    setName(cartridgeData?.name)
-    setVersion(cartridgeData?.version)
-    setStatus('success')
   }, [id])
 
   const logo = () => {
