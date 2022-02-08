@@ -34,27 +34,22 @@ const spriteToImage = (asset) => {
 }
 
 const Cartridge = ({id}) => {
-  const contentRef = useRef()
   const [status, setStatus] = useState("loading")
-  const [cartridge, setCartridge] = useState({})
   const [spriteLogo, setSpriteLogo] = useState(null)
-
-  useEffect(() => {
-    if (contentRef) {
-      window.VanillaTilt.init(contentRef)
-    }
-  }, [contentRef])
+  const [version, setVersion] = useState('-')
+  const [name, setName] = useState('gamelab')
 
   useEffect(async () => {
     const url = `https://project-bucket-hackclub.s3.eu-west-1.amazonaws.com/${id}.json`;
     const cartridgeData = await fetch(url, { mode: "cors" }).then((r) => r.json());
-    setCartridge(cartridgeData)
     const spriteData = cartridgeData?.assets?.find(asset => {
       return asset?.type == 'sprite' && asset?.name == 'logo'
     })
     if (spriteData) {
       setSpriteLogo(spriteToImage(spriteData))
     }
+    setName(cartridgeData?.name)
+    setVersion(cartridgeData?.version)
     setStatus('success')
   }, [id])
 
@@ -71,9 +66,14 @@ const Cartridge = ({id}) => {
   // based on https://replit.com/@MaxWofford/cartridge-experiment#cartridge/index.html
   return(
     <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="container">
-      <Tilt className="cartridge">
+      <Tilt className="cartridge" options={{ max: 10 }}>
         <div className="arrow">▲</div>
         <div className="content-area">
+          <div className="header">
+            <div className="name">{name}</div>
+            <div className="version">{version}</div>
+            <div className="play"></div>
+          </div>
           <img className="preview" src={logo()} />
           <div className="logo">
             <span>made with:</span>
