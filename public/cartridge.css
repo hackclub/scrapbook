@@ -131,14 +131,14 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   width: 1em;
-  transform: translateY(-50%) translateZ(-1px);
+  transform: translateY(-50%);
 }
 
 .cartridge img.preview {
   transform: translateZ(20px);
-  margin: 1em;
-  height: 250px;
   width: 250px;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -146,14 +146,31 @@
 .cartridge .arrow {
   position: absolute;
   color: var(--dark);
-  transform: translateY(-50%) rotate(-270deg) scaleX(12);
+  transform: translateY(-50%) translateZ(1px) rotate(-270deg) scaleX(12);
   top: 50%;
   font-size: 0.5em;
   right: 0;
 }
 
-.cartridge .content-area {
-  background: var(--dark);
+.cartridge .header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 0.5em;
+  padding-bottom: -0.5em;
+  font-family: var(--hc-font-sans);
+  background: var(--darker);
+  transform: translateZ(15px);
+  display: inline-block;
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.cartridge .header .version {
+  font-style: italic;
+  opacity: 0.5;
 }
 
 .cartridge .logo {
@@ -161,7 +178,7 @@
   background: var(--red);
   border-top-right-radius: 3em;
   border-bottom-left-radius: 5px;
-  transform: translateZ(20px);
+  transform: translateZ(25px);
   padding: 0.5em;
   display: inline-block;
   position: absolute;

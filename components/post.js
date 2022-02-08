@@ -125,7 +125,6 @@ const Post = ({
         </a>
       </Link>
     )}
-    <Content>{text}</Content>
     {(text) && (<Cartridges text={text} />)}
     {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
