@@ -12,7 +12,7 @@ const Cartridges = ({text}) => {
 
   return (
     <>
-      {detectedIDs.map((id, i) => (
+      {detectedIDs.map(id => (
         <Cartridge id={id} key={id} />
       ))}
     </>
