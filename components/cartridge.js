@@ -40,17 +40,35 @@ const Cartridge = ({id}) => {
   const [name, setName] = useState('gamelab')
 
   useEffect(() => {
+    let isMounted = true;
+    try {
+      fetch(`/api/cartridges/${id.trim()}/logo`)
+        .then(r => r.json())
+        .then(logo => {
+          if (isMounted && Object.keys(logo).length > 0) {
+            setStatus("success")
+            setSpriteLogo(logo)
+          }
+        }).catch(e => { console.log(e) })
+    } catch(e) { if (isMounted) { setStatus('failed') } }
+    return () => { isMounted = false }
+  }, [])
+
+  useEffect(() => {
+    let isMounted = true;
     try {
       fetch(`/api/cartridges/${id.trim()}/`)
         .then(r => r.json())
         .then(cartridge => {
-          setStatus("success")
-          setVersion(cartridge.version)
-          setName(cartridge.name)
-          setSpriteLogo(cartridge.logo)
+          if (isMounted) {
+            setStatus("success")
+            setVersion(cartridge.version)
+            setName(cartridge.name)
+          }
         })
-    } catch (e) { console.log(e) }
-  }, [id])
+    } catch(e) { if (isMounted) { setStatus('failed') } }
+    return () => { isMounted = false }
+  }, [])
 
   const logo = () => {
     if (status == 'loading') {
