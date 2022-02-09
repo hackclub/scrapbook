@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState } from "react"
 import Tilt from 'react-tilt'
 
 const defaultLogo = "https://cloud-dtoqnx6gl-hack-club-bot.vercel.app/0yellow.png"
@@ -39,31 +39,26 @@ const Cartridge = ({id}) => {
   const [version, setVersion] = useState('-')
   const [name, setName] = useState('gamelab')
 
-  useEffect(async () => {
-    const url = `https://project-bucket-hackclub.s3.eu-west-1.amazonaws.com/${id}.json`;
+  useEffect(() => {
     try {
-      const cartridgeData = await fetch(url, { mode: "cors" }).then((r) => r.json());
-      const spriteData = cartridgeData?.assets?.find(asset => {
-        return asset?.type == 'sprite' && asset?.name == 'logo'
-      })
-      if (spriteData) {
-        setSpriteLogo(spriteToImage(spriteData))
-      }
-      setName(cartridgeData?.name)
-      setVersion(cartridgeData?.version)
-      setStatus('success')
-    } catch (e) {
-      setStatus('failed')
-    }
+      fetch(`/api/cartridges/${id.trim()}/`)
+        .then(r => r.json())
+        .then(cartridge => {
+          setStatus("success")
+          setVersion(cartridge.version)
+          setName(cartridge.name)
+          setSpriteLogo(cartridge.logo)
+        })
+    } catch (e) { console.log(e) }
   }, [id])
 
   const logo = () => {
     if (status == 'loading') {
-      return loadingLogo
+      return <img className="preview" src={loadingLogo} />
     } else if (spriteLogo) {
-      return spriteLogo
+      return <img className="preview" src={spriteToImage(spriteLogo)} />
     } else {
-      return defaultLogo
+      return <img className="preview" src={defaultLogo} />
     }
   }
 
@@ -78,7 +73,7 @@ const Cartridge = ({id}) => {
             <div className="version">{version}</div>
             <div className="play"></div>
           </div>
-          <img className="preview" src={logo()} />
+          {logo()}
           <div className="logo">
             <span>made with:</span>
             <span>gamelab</span>
