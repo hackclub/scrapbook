@@ -38,9 +38,22 @@ const Cartridge = ({id}) => {
   const [spriteLogo, setSpriteLogo] = useState(null)
   const [version, setVersion] = useState('-')
   const [name, setName] = useState('gamelab')
+  const [scores, setScores] = useState([])
 
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
+    fetch(`/api/cartridges/${id}/scores`)
+      .then(r => r.json())
+      .then(s => {
+        if (isMounted) {
+          setScores(s)
+        }
+      }).catch(e => {console.log(e)})
+    return () => { isMounted = false }
+  }, [])
+
+  useEffect(() => {
+    let isMounted = true
     try {
       fetch(`/api/cartridges/${id.trim()}/logo`)
         .then(r => r.json())
@@ -72,31 +85,31 @@ const Cartridge = ({id}) => {
 
   const logo = () => {
     if (status == 'loading') {
-      return <img className="preview" src={loadingLogo} />
+      return loadingLogo
     } else if (spriteLogo) {
-      return <img className="preview" src={spriteToImage(spriteLogo)} />
+      return spriteToImage(spriteLogo)
     } else {
-      return <img className="preview" src={defaultLogo} />
+      return defaultLogo
     }
   }
 
   // based on https://replit.com/@MaxWofford/cartridge-experiment#cartridge/index.html
   return(
     <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="container">
-      <Tilt className="cartridge" options={{ max: 10 }}>
+      <Tilt className="cartridge" options={{ max: 10,  }}>
         <div className="arrow">▲</div>
         <div className="content-area">
           <div className="header">
             <div className="name">{name}</div>
-            <div className="version">{version}</div>
             <div className="play"></div>
           </div>
-          {logo()}
+          <img className="preview" src={logo()} />
           <div className="logo">
             <span>made with:</span>
             <span>gamelab</span>
           </div>
         </div>
+        <div className="version">{version}</div>
       </Tilt>
     </a>
   )
