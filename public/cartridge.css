@@ -129,6 +129,7 @@
   left: 99%;
   background: inherit;
   padding: 0.5rem;
+  padding-right: 0.1rem;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   width: 1em;
@@ -136,7 +137,7 @@
 }
 
 .cartridge img.preview {
-  transform: translateZ(20px);
+  transform: translateZ(21px);
   width: 250px;
   max-width: 100%;
   height: auto;
@@ -153,6 +154,18 @@
   right: 0;
 }
 
+.cartridge .version {
+  position: absolute;
+  color: var(--darkless);
+  transform: translateY(-50%) translateZ(20px) rotate(270deg);
+  top: 50%;
+  right: -0.5em;
+  background: var(--dark);
+  border-radius: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 .cartridge .header {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -167,11 +180,17 @@
 }
 
 .cartridge .header .version {
+  text-align: left;
   font-style: italic;
   opacity: 0.5;
+  font-family: var(--hc-font-mono);
+}
+.cartridge .header .version:before {
+  content: 'v'
 }
 
 .cartridge .logo {
+  text-align: left;
   font-family: var(--hc-font-sans);
   background: var(--red);
   border-top-right-radius: 3em;
