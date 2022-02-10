@@ -46,8 +46,7 @@ const Header = ({ name, url, char }) => (
         This page contains all the projects Hack Clubbers have built using{' '}
         <a href="https://github.com/hackclub/gamelab" target="_blank">
           gamelab
-        </a>, an open-source game engine for beginners. You can get your own
-        projects on this page by posting a gamelab link in the #scrapbook channel of the Hack Club Slack.
+        </a>, an open-source game engine for beginners.
         <style>{`
         .nav {
           color: #fff;
@@ -71,6 +70,7 @@ const Header = ({ name, url, char }) => (
         }
       `}</style>
       </p>
+      <p> You can get your own projects on this page by posting a Game Lab share link in the #scrapbook channel of the Hack Club Slack. </p>
     )}
     <style jsx>{`
       header {
