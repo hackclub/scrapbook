@@ -9,7 +9,8 @@ module.exports = withMDX({
       'dl.airtable.com',
       'emoji.slack-edge.com',
       'cloud-lp0r5yk68.vercel.app',
-      'avatars.slack-edge.com'
+      'avatars.slack-edge.com',
+      'secure.gravatar.com',
     ]
   },
   async rewrites() {
