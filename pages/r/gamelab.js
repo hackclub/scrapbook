@@ -50,6 +50,9 @@ const Header = ({ name, url, char }) => (
         <br/>
         <br/>
         You can get your own projects on this page by posting a Game Lab share link in the #scrapbook channel of the Hack Club Slack.
+        <br/>
+        <br/>
+        Click on a cartridge to try the game!
         <style>{`
         .nav {
           color: #fff;
