@@ -97,7 +97,6 @@ const Cartridge = ({id}) => {
   return(
     <div className="cartridge-container">
       <Tilt className="cartridge" options={{ max: 10,  }}>
-        <div className="arrow">▲</div>
         <div className="content-area">
           <div className="header">
             <div className="name">{name}</div>

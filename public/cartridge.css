@@ -100,136 +100,24 @@
 }
 
 .cartridge {
-  background: var(--darkless);
-  color: var(--smoke);
-  min-width: 10rem;
-  min-height: 4rem;
+  background: var(--lighter);
   border-radius: 5px;
-  display: inline-block;
-  transform-style: preserve-3d;
-  transform: perspective(1000px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
-
-.cartridge .content-area {
-  margin: 1em;
-  border-radius: 5px;
-  background: var(--dark);
-  transform: translateZ(20px);
-  text-align: center;
-}
-
-.cartridge:after {
-  content: '████████████████';
-  writing-mode: vertical-rl;
-  position: absolute;
-  color: var(--yellow);
-  font-size: 0.5em;
-  letter-spacing: 0.1rem;
-  top: 50%;
-  left: 99%;
-  background: inherit;
-  padding: 0.5rem;
-  padding-right: 0.1rem;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  width: 1em;
-  transform: translateY(-50%);
-}
-
-.cartridge img.preview {
-  transform: translateZ(21px);
-  max-width: 250px;
-  max-height: 250px;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor;
-  -webkit-optimize-contrast: nearest-neighbor;
-}
-
-.cartridge .arrow {
-  position: absolute;
-  color: var(--dark);
-  transform: translateY(-50%) translateZ(1px) rotate(-270deg) scaleX(12);
-  top: 50%;
-  font-size: 0.5em;
-  right: 0;
-}
-
 .cartridge .version {
-  position: absolute;
-  color: var(--darkless);
-  transform: translateY(-50%) translateZ(20px) rotate(270deg);
-  top: 50%;
-  right: -0.5em;
-  background: var(--dark);
-  border-radius: 1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
-.cartridge .header {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  padding: 0.5em;
-  padding-bottom: -0.5em;
-  font-family: var(--hc-font-sans);
-  background: var(--darker);
-  transform: translateZ(15px);
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.cartridge .header .version {
-  text-align: left;
-  font-style: italic;
-  opacity: 0.5;
-  font-family: var(--hc-font-mono);
-}
-.cartridge .header .version:before {
-  content: 'v'
-}
-
-.cartridge .logo {
-  text-align: left;
-  font-family: var(--hc-font-sans);
-  background: var(--red);
-  border-top-right-radius: 3em;
-  border-bottom-left-radius: 5px;
-  transform: translateZ(25px);
-  padding: 0.5em;
-  display: inline-block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.cartridge .logo span {
-  display: block;
-}
-.cartridge .logo span:first-child {
-  /* color: var(--); */
-}
-.cartridge .logo span:last-child {
-  /* color: var(--smoke); */
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.cartridge .play {
-  color: var(--colors-white);
-  background: var(--colors-two) !important;
+  color: var(--light);
+  background: var(--darkless);
+  /* transform: rotate('90deg'); */
+  transform: rotate(-90deg);
   border-radius: 5px;
-  text-decoration: none;
-  padding: 5px;
-}
-
-.cartridge-container {
-  margin: 0 auto;
-  display: inline-block;
-  width: 100%;
   text-align: center;
+}
+.cartridge .version:after {
+  content: '███████████';
+  display: block;
+  letter-spacing: 1px;
+  transform: scaleX(50%);
 }
