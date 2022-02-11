@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import { useRouter } from 'next/router'
 import { EmojiImg } from '../../components/emoji'
+import { emojiInfo } from '../../lib/emoji'
 import Feed from '../../components/feed'
 import Message from '../../components/message'
 import Reaction from '../../components/reaction'
@@ -41,7 +42,7 @@ const Header = ({ name, url, char, CustomComponent }) => (
         Posts tagged with <code>:{name}:</code>
       </p>
     </header>
-    <CustomComponent />
+    {typeof emojiInfo[name] != "undefined" && emojiInfo[name]?.customComponent}
     <style jsx>{`
       header {
         text-align: center;
@@ -148,7 +149,7 @@ const Page = ({ status, emoji, related = [], posts = [], css, customComponent })
           type="text/css"
           href={HOST + css.includes('http') ? `/api/css?url=${css}` : css}
         />
-        <Header CustomComponent={customComponent} {...emoji} />
+        <Header {...emoji} />
       </Feed>
     )
   } else {
@@ -183,11 +184,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
-  const { emojiInfo } = require('../../lib/emoji')
   const name = params.emoji.toLowerCase()
-  const info = emojiInfo[name] || {}
-  const css = info.css || ''
-  const customComponent = info.customComponent || <></>
+  const css = (emojiInfo[name] || {}).css || ''
 
   const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
