@@ -44,6 +44,7 @@ const Header = ({ name, url, char }) => (
     {name === 'gamelab' && (
       <p className="header-text">
         <h1>gamelab arcade</h1>
+        <br/>
         This page contains all the projects Hack Clubbers have built using{' '}
         <a href="https://workshops.hackclub.com/gamelab" target="_blank">
           gamelab
