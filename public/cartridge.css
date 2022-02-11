@@ -138,11 +138,16 @@
 
 .cartridge img.preview {
   transform: translateZ(21px);
-  width: 250px;
-  max-width: 100%;
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
   height: auto;
   object-fit: contain;
+
+  image-rendering: crisp-edges;
   image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+  -webkit-optimize-contrast: nearest-neighbor;
 }
 
 .cartridge .arrow {
