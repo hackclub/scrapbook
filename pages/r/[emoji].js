@@ -13,7 +13,7 @@ const HOST =
 
 const formatName = name => startCase(name).replace(/js/i, 'JS')
 
-const Header = ({ name, url, char }) => (
+const Header = ({ name, url, char, CustomComponent }) => (
   <>
     <Meta
       as={Head}
@@ -41,65 +41,7 @@ const Header = ({ name, url, char }) => (
         Posts tagged with <code>:{name}:</code>
       </p>
     </header>
-    {name === 'summer-of-making' && (
-      <p className="post-text">
-        This page contains everything Hack Clubbers got up to over the{' '}
-        <a href="https://summer.hackclub.com/">
-          2020&nbsp;Summer&nbsp;of&nbsp;Making
-        </a>
-        . Scrapbook was originally built for the summer and whilst it’s now a
-        permanent feature of the community, we’ve kept this page up as an
-        archive.
-        <style>{`
-        .nav {
-          color: #fff;
-          background: #f46b45;
-          background: linear-gradient(to right, #eea849, #f46b45);
-        }
-        .nav-link {
-          color: #fff;
-        }
-      `}</style>
-      </p>
-    )}
-    {name === 'gamelab' && (
-      <p className="header-text">
-        This page contains all the projects Hack Clubbers have built using{' '}
-        <a href="https://github.com/hackclub/gamelab" target="_blank">
-          gamelab
-        </a>
-        , an open-source game engine for beginners.
-        <br />
-        <br />
-        You can get your own projects on this page by posting a Game Lab share
-        link in the #scrapbook channel of the Hack Club Slack.
-        <br />
-        <br />
-        Click on a cartridge to try the game!
-        <style>{`
-        .nav {
-          color: #fff;
-          background: #f46b45;
-          background: linear-gradient(to right, #eea849, #f46b45);
-        }
-        .nav-link {
-          color: #fff;
-        }
-
-        .post-text {
-          display: none;
-        }
-        .post {
-          background: var(--lighter);
-        }
-        @media (prefers-color-scheme: dark) {
-          .post {
-            background: var(--dark);
-          }
-        }
-      `}</style>
-      </p>
-    )}
+    <CustomComponent />
     <style jsx>{`
       header {
         text-align: center;
@@ -184,7 +126,7 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-const Page = ({ status, emoji, related = [], posts = [], css }) => {
+const Page = ({ status, emoji, related = [], posts = [], css, customComponent }) => {
   const router = useRouter()
 
   if (status === 404) {
@@ -206,7 +148,7 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
           type="text/css"
           href={HOST + css.includes('http') ? `/api/css?url=${css}` : css}
         />
-        <Header {...emoji} />
+        <Header customComponent={customComponent} {...emoji} />
       </Feed>
     )
   } else {
@@ -241,14 +183,11 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
+  const { emojiInfo } = require('../../lib/emoji')
   const name = params.emoji.toLowerCase()
-  let cssURLs = {
-    gamelab: '/themes/gamelab.css',
-    'zachday-2020':
-      'https://gist.githubusercontent.com/cjdenio/efc9f7645025288725c2d2e5aa095ccf/raw/cc90f61afdcae44c8819ee7e2b0ac021c5d6abe8/zachday-2020.css'
-  }
-
-  let css = cssURLs[name] || ''
+  const info = emojiInfo[name] || {}
+  const css = info.css || ''
+  const customComponent = info.customComponent || <></>
 
   const lost = { props: { status: 404 }, revalidate: 1 }
   if (name.length < 2) return console.error('No emoji') || lost
@@ -265,9 +204,9 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts, related, css }, revalidate: 1 }
+    return { props: { emoji, posts, related, css, customComponent }, revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name }, css }, revalidate: 1 }
+    return { props: { emoji: { name }, css, customComponent }, revalidate: 1 }
   }
 }
