@@ -82,7 +82,6 @@ const Header = ({ name, url, char }) => (
         link in the #scrapbook channel of the Hack&nbsp;Club&nbsp;Slack.
         <br />
         <br />
-        Click on a cartridge to try the game!
         <style>{`
         .nav {
           color: #fff;
