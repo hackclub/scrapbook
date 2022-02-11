@@ -63,6 +63,8 @@ const Header = ({ name, url, char }) => (
       </p>
     )}
     {name === 'gamelab' && (
+      <>
+      <h2 style={{textAlign: 'center', fontSize: '3em'}}>The Game&nbsp;Lab Arcade</h2>
       <p className="header-text">
         This page contains all the projects Hack Clubbers have built using{' '}
         <a href="https://github.com/hackclub/gamelab" target="_blank">
@@ -99,6 +101,7 @@ const Header = ({ name, url, char }) => (
         }
       `}</style>
       </p>
+      </>
     )}
     <style jsx>{`
       header {
