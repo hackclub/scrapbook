@@ -148,7 +148,7 @@ const Page = ({ status, emoji, related = [], posts = [], css, customComponent })
           type="text/css"
           href={HOST + css.includes('http') ? `/api/css?url=${css}` : css}
         />
-        <Header customComponent={customComponent} {...emoji} />
+        <Header CustomComponent={customComponent} {...emoji} />
       </Feed>
     )
   } else {
