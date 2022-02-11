@@ -198,7 +198,7 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
       <Feed
         initialData={posts}
         src={`/api/r/${emoji.name}`}
-        cartridgeOnly={name === 'gamelab'}
+        cartridgeOnly={emoji.name === 'gamelab'}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
         <link
