@@ -62,6 +62,44 @@ const Header = ({ name, url, char }) => (
       `}</style>
       </p>
     )}
+    {name === 'gamelab' && (
+      <p className="header-text">
+        This page contains all the projects Hack Clubbers have built using{' '}
+        <a href="https://github.com/hackclub/gamelab" target="_blank">
+          gamelab
+        </a>
+        , an open-source game engine for beginners.
+        <br />
+        <br />
+        You can get your own projects on this page by posting a Game Lab share
+        link in the #scrapbook channel of the Hack Club Slack.
+        <br />
+        <br />
+        Click on a cartridge to try the game!
+        <style>{`
+        .nav {
+          color: #fff;
+          background: #f46b45;
+          background: linear-gradient(to right, #eea849, #f46b45);
+        }
+        .nav-link {
+          color: #fff;
+        }
+
+        .post-text {
+          display: none;
+        }
+        .post {
+          background: var(--lighter);
+        }
+        @media (prefers-color-scheme: dark) {
+          .post {
+            background: var(--dark);
+          }
+        }
+      `}</style>
+      </p>
+    )}
     <style jsx>{`
       header {
         text-align: center;
@@ -160,12 +198,13 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
       <Feed
         initialData={posts}
         src={`/api/r/${emoji.name}`}
+        cartridgeOnly={name === 'gamelab'}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
         <link
           rel="stylesheet"
           type="text/css"
-          href={HOST + `/api/css?url=${css}`}
+          href={HOST + css.includes('http') ? `/api/css?url=${css}` : css}
         />
         <Header {...emoji} />
       </Feed>
@@ -193,7 +232,8 @@ export const getStaticPaths = async () => {
     'car',
     'musical_note',
     'robot_face',
-    'birthday'
+    'birthday',
+    'gamelab'
   ]
   const paths = names.map(emoji => ({ params: { emoji } }))
   return { paths, fallback: true }
@@ -203,6 +243,7 @@ export const getStaticProps = async ({ params }) => {
   const { getPosts } = require('../api/r/[emoji]')
   const name = params.emoji.toLowerCase()
   let cssURLs = {
+    gamelab: '/themes/gamelab.css',
     'zachday-2020':
       'https://gist.githubusercontent.com/cjdenio/efc9f7645025288725c2d2e5aa095ccf/raw/cc90f61afdcae44c8819ee7e2b0ac021c5d6abe8/zachday-2020.css'
   }
