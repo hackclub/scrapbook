@@ -14,7 +14,7 @@ const HOST =
 
 const formatName = name => startCase(name).replace(/js/i, 'JS')
 
-const Header = ({ name, url, char, CustomComponent }) => (
+const Header = ({ name, url, char }) => (
   <>
     <Meta
       as={Head}
@@ -127,7 +127,7 @@ const Footer = ({ reactions = [] }) => (
   </footer>
 )
 
-const Page = ({ status, emoji, related = [], posts = [], css, customComponent }) => {
+const Page = ({ status, emoji, related = [], posts = [], css }) => {
   const router = useRouter()
 
   if (status === 404) {
@@ -202,9 +202,9 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts, related, css, customComponent }, revalidate: 1 }
+    return { props: { emoji, posts, related, css }, revalidate: 1 }
   } catch (error) {
     console.error(error)
-    return { props: { emoji: { name }, css, customComponent }, revalidate: 1 }
+    return { props: { emoji: { name }, css }, revalidate: 1 }
   }
 }
