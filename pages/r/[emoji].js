@@ -78,8 +78,8 @@ const Header = ({ name, url, char }) => (
         , an open-source game engine for beginners.
         <br />
         <br />
-        You can get your own projects on this page by posting a Game Lab share
-        link in the #scrapbook channel of the Hack Club Slack.
+        You can get your own projects on this page by posting a Game&nbsp;Lab share
+        link in the #scrapbook channel of the Hack&nbsp;Club&nbsp;Slack.
         <br />
         <br />
         Click on a cartridge to try the game!
