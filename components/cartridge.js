@@ -95,7 +95,7 @@ const Cartridge = ({id}) => {
 
   // based on https://replit.com/@MaxWofford/cartridge-experiment#cartridge/index.html
   return(
-    <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="container">
+    <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="cartridge-container">
       <Tilt className="cartridge" options={{ max: 10,  }}>
         <div className="arrow">▲</div>
         <div className="content-area">
