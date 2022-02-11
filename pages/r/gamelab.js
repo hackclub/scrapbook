@@ -44,7 +44,7 @@ const Header = ({ name, url, char }) => (
     {name === 'gamelab' && (
       <p className="header-text">
         This page contains all the projects Hack Clubbers have built using{' '}
-        <a href="https://github.com/hackclub/gamelab" target="_blank">
+        <a href="https://workshops.hackclub.com/gamelab" target="_blank">
           gamelab
         </a>, an open-source game engine for beginners.
         <br/>
