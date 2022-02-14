@@ -95,15 +95,13 @@ const Cartridge = ({id}) => {
 
   // based on https://replit.com/@MaxWofford/cartridge-experiment#cartridge/index.html
   return(
-    <div className="cartridge-container">
+    <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="cartridge-container">
       <Tilt className="cartridge" options={{ max: 10,  }}>
         <div className="arrow">▲</div>
         <div className="content-area">
           <div className="header">
             <div className="name">{name}</div>
-            <a href={`https://gamelab.hackclub.com?id=${id}`} target="_blank" className="play">
-              ►
-            </a>
+            <div className="play"></div>
           </div>
           <img className="preview" src={logo()} />
           <div className="logo">
@@ -113,7 +111,7 @@ const Cartridge = ({id}) => {
         </div>
         <div className="version">{version}</div>
       </Tilt>
-    </div>
+    </a>
   )
 }
 export default Cartridge

@@ -219,14 +219,6 @@
   font-weight: bold;
 }
 
-.cartridge .play {
-  color: var(--colors-white);
-  background: var(--colors-two) !important;
-  border-radius: 5px;
-  text-decoration: none;
-  padding: 5px;
-}
-
 .cartridge-container {
   margin: 0 auto;
   display: inline-block;
