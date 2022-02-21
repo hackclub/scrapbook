@@ -33,6 +33,6 @@
     "swr": "^1.2.1"
   },
   "devDependencies": {
-    "babel-plugin-superjson-next": "^0.4.2"
+    "babel-plugin-superjson-next": "^0.4.3"
   }
 }
