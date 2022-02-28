@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
 
+/*
+TODO
+
+- dark mode support
+- error handling
+
+*/
+
 const styles = `
   #root {
     background: #f5f5f4;
@@ -93,19 +101,31 @@ const styles = `
 //   })
 
 
-function shipPost(obj) {
+async function shipPost(obj) {
+
+
   try {
-    fetch("https://misguided.enterprises/clubscraps/submit", {
+    const res = await fetch("https://misguided.enterprises/clubscraps/submit", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(obj)
     })
+
+    return (await res.json()).ok;
+
   } catch (err) {
     console.log(err);
-  }
 
+    return false;
+  }
+}
+
+const submissionSuccessOptions = {
+  "": "",
+  "succeeded": <div>Post Submitted!</div>,
+  "failed": <div>Post Failed!</div>,
 }
 
 
@@ -117,6 +137,7 @@ export default function Page({ link }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [submissionSuccess, setSubmissionSuccess] = useState("");
 
   function preventDefaults(e) {
     e.preventDefault();
@@ -153,7 +174,7 @@ export default function Page({ link }) {
     setDropping(false);
   }
 
-  const shipIt = e => {
+  const shipIt = async (e) => {
     const link = linkData;
 
     const ship = { 
@@ -164,13 +185,9 @@ export default function Page({ link }) {
       description 
     }
 
-    console.log("shipping", ship);
+    const shipStatus = await shipPost(ship)
 
-    try {
-      shipPost(ship)
-    } catch (err) {
-      console.log(err);
-    }
+    setSubmissionSuccess(shipStatus ? "succeeded" : "failed");
   }
 
   const valid = () => {
@@ -284,6 +301,8 @@ export default function Page({ link }) {
             {valid() ? "Ship It!" : "Please fill out all fields."}
           </button>
         </div>
+
+        {submissionSuccessOptions[submissionSuccess]}
 
       </div>
     </div>
