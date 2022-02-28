@@ -132,7 +132,9 @@ const Profile = ({
                 </a>
               )}
             </div>
-            {profile.customAudioURL && <AudioPlayer url={profile.customAudioURL} />}
+            {profile.customAudioURL && (
+              <AudioPlayer url={profile.customAudioURL} />
+            )}
           </div>
         </section>
       </div>
@@ -208,7 +210,7 @@ const Profile = ({
 const fetcher = url => fetch(url).then(r => r.json())
 
 const Page = ({ username = '', router = {}, initialData = {} }) => {
-  const { data, error } = useSWR(`/api/users/${username}`, fetcher, {
+  const { data, error } = useSWR(`/api/users/${username}/`, fetcher, {
     initialData,
     refreshInterval: 5000
   })
