@@ -243,6 +243,7 @@ export default function Page({ link }) {
           <img 
             style={{
               "maxHeight": "200px", 
+              borderRadius: 5,
               border: imgSrc === "" ? "none" : "1px dashed black"
             }} 
             src={imgSrc} 
