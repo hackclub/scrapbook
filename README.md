@@ -66,11 +66,6 @@ Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.moz
 
 To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`zachlatta.com`](https://zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
-<small>
-  (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this
-  feature.)
-</small>
-
 ## Website widget
 
 Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
