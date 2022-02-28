@@ -82,15 +82,31 @@ const styles = `
   }
 `
 
-const shipPost = (obj) => 
-  fetch("/api/clubscraps", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(obj)
-  })
+// const shipPost = (obj) => 
+//   fetch("/api/clubscraps", {
+//     method: "POST",
+//     mode: "cors",
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(obj)
+//   })
+
+
+function shipPost(obj) {
+  try {
+    fetch("https://misguided.enterprises/clubscraps/submit", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+  } catch (err) {
+    console.log(err);
+  }
+
+}
 
 
 export default function Page({ link }) {
