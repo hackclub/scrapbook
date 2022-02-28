@@ -29,7 +29,6 @@
     "react-tilt": "^0.1.4",
     "react-tooltip": "^4.2.21",
     "rss": "^1.2.2",
-    "styled-jsx": "^5.0.0",
     "superjson": "^1.8.1",
     "swr": "^1.2.1"
   },
