@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 /*
+
 TODO
 
 - dark mode support
@@ -126,6 +127,7 @@ const submissionSuccessOptions = {
   "": "",
   "succeeded": <div>Post Submitted!</div>,
   "failed": <div>Post Failed!</div>,
+  "awaiting": <div>Shipping Post!</div>,
 }
 
 
@@ -176,6 +178,8 @@ export default function Page({ link }) {
 
   const shipIt = async (e) => {
     const link = linkData;
+
+    setSubmissionSuccess("awaiting");
 
     const ship = { 
       name, 
@@ -297,7 +301,7 @@ export default function Page({ link }) {
 
 
         <div className="notif-button">
-          <button disabled={!valid()} onClick={shipIt}>
+          <button disabled={!valid() || ["awaiting", "succeeded"].includes(submissionSuccess)} onClick={shipIt}>
             {valid() ? "Ship It!" : "Please fill out all fields."}
           </button>
         </div>
