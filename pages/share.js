@@ -11,7 +11,6 @@ TODO
 
 const styles = `
   #root {
-    /* background: #f5f5f4; */
     width: 100vw;
     height: 100vh;
     display: flex;
