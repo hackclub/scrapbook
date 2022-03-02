@@ -70,6 +70,12 @@ const styles = `
 
   .form-item select {
     width: 50%;
+    padding: 4px;
+    border-radius: 4px;
+    width: 50%;
+    box-sizing: border-box;
+    margin: 0px;
+    border: 0px;
   }
 
   .form-item option {
@@ -158,6 +164,15 @@ const submissionSuccessOptions = {
   "awaiting": <div>Shipping Post!</div>,
 }
 
+const sortAlphabetically = (arr) => arr.sort((a, b) => {
+  a = a.toLowerCase();
+  b = b.toLowerCase();
+
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
+})
+
 
 export default function Page({ link, clubs }) {
 
@@ -170,6 +185,7 @@ export default function Page({ link, clubs }) {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [submissionSuccess, setSubmissionSuccess] = useState("");
+  const [club, setClub] = useState("");
 
   function preventDefaults(e) {
     e.preventDefault();
@@ -216,7 +232,8 @@ export default function Page({ link, clubs }) {
       email, 
       link, 
       image: imgSrc, 
-      description 
+      description,
+      club
     }
 
     const shipStatus = await shipPost(ship)
@@ -230,10 +247,15 @@ export default function Page({ link, clubs }) {
       email, 
       linkData, 
       imgSrc, 
-      description 
+      description,
+      club
     ]
 
     return shipFields.every(x => x !== "");
+  }
+
+  const handleClubInput = (e) => {
+    setClub(e.target.value);
   }
 
   return (
@@ -277,8 +299,8 @@ export default function Page({ link, clubs }) {
 
         <div className="form-item">
           <span>Club</span>
-          <select>
-            {clubs.map( (club, i) => <option key={"club:" + i} value={club["Venue"]}>{club["Venue"]}</option>)}
+          <select onInput={handleClubInput}>
+            {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
           </select>
         </div>
 
@@ -356,7 +378,7 @@ export async function getServerSideProps({ query }) {
   let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
     .then(res => res.json());
 
-  clubs = clubs.map(club => club.fields);
+  clubs = sortAlphabetically(clubs.map(club => club.fields["Venue"]));
 
   return { props: { link, clubs } }
 }  
