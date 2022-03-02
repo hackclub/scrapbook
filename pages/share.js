@@ -68,6 +68,14 @@ const styles = `
     margin: 5px;
   }
 
+  .form-item select {
+    width: 50%;
+  }
+
+  .form-item option {
+    width: 50%;
+  }
+
   .form-item input {
     padding: 8px;
     border-radius: 4px;
@@ -151,7 +159,9 @@ const submissionSuccessOptions = {
 }
 
 
-export default function Page({ link }) {
+export default function Page({ link, clubs }) {
+
+  console.log(clubs);
 
   const [dropping, setDropping] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
@@ -266,6 +276,13 @@ export default function Page({ link }) {
         </div>
 
         <div className="form-item">
+          <span>Club</span>
+          <select>
+            {clubs.map( (club, i) => <option key={"club:" + i} value={club["Venue"]}>{club["Venue"]}</option>)}
+          </select>
+        </div>
+
+        <div className="form-item">
           <span>Project Link</span>
           <input 
             id="project-link" 
@@ -336,5 +353,15 @@ export default function Page({ link }) {
 export async function getServerSideProps({ query }) {
   const { link } = query;
 
-  return { props: { link } }
+  let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
+    .then(res => res.json());
+
+  clubs = clubs.map(club => club.fields);
+
+  return { props: { link, clubs } }
 }  
+
+
+
+
+
