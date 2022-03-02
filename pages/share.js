@@ -377,7 +377,8 @@ export async function getServerSideProps({ query }) {
   let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
     .then(res => res.json());
 
-  clubs = sortAlphabetically(clubs.map(club => club.fields["Venue"]));
+  clubs = [...new Set(clubs.map(club => club.fields["Venue"]))];
+  clubs = sortAlphabetically(clubs);
 
   return { props: { link, clubs } }
 }  
