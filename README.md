@@ -110,9 +110,9 @@ Those with access to HQ's Vercel account can also generate their own `.env` file
 1. Install Vercel's CLI (if you haven't already)
    - `yarn global add vercel`
 1. Link Vercel to your account for deployment
-   - `yarn vercel`
+   - `vercel`
 1. Pull environment variables from Vercel
-   - `yarn vercel pull`
+   - `vercel pull`
 
 ---
 
