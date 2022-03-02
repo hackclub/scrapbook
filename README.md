@@ -93,6 +93,22 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
 - [`/api/r/:emoji`](https://scrapbook.hackclub.com/api/r/hardware) – Get all posts tagged with a specific emoji
 - [`/:username.png`](https://scrapbook.hackclub.com/sampoder.png) – Get a user's avatar as an image URL
 
+## Running Locally
+
+1. Clone this repository
+   - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
+1. Install dependencies
+   - `yarn`
+1. Link Vercel to your account for deployment
+   - `yarn vercel`
+   - _Note_: The project name in Vercel is `summer-streaks`
+1. Pull environment variables from Vercel
+   - `yarn vercel pull`
+1. Start server
+   - `yarn dev`
+1. View your server
+   - `open http://localhost:3000/`
+
 ---
 
 By [@lachlanjc](https://lachlanjc.com) for Hack Club, 2020. MIT License.
