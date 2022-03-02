@@ -101,12 +101,18 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
 ## Running Locally
 
 1. Clone this repository
-  - `git clone git@github.com:hackclub/scrapbook.git`
+   - `git clone git@github.com:hackclub/scrapbook.git`
 1. Install `npm` dependencies
-  - `npm install`
-1. Pull environment variables from Vercel and add them to a `.env` file at the root of the project
+   - `npm install`
+1. Install Vercel CLI
+   - `brew install vercel`
+1. Link Vercel to your account for deployment
+   - `vercel`
+   - _Note_: The project name in Vercel is `summer-streaks`
+1. Pull environment variables from Vercel
+   - `vercel env pull`
 1. Start server
-  - `npm run dev`
+   - `npm run dev`
 1. View your server at `http://localhost:3000/`
 
 ---
