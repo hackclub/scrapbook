@@ -103,7 +103,7 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
    - `yarn vercel`
    - _Note_: The project name in Vercel is `summer-streaks`
 1. Pull environment variables from Vercel
-   - `yarn vercel env pull`
+   - `yarn vercel pull`
 1. Start server
    - `yarn dev`
 1. View your server
