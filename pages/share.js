@@ -26,7 +26,6 @@ const styles = `
     max-width: 500px;
     width: 60vw;
     padding-bottom: 20px;
-    background: var(--theme-ui-colors-sunken,#e0e6ed);
     border-radius: 12px;
     padding: 16px;
   }
@@ -49,6 +48,7 @@ const styles = `
     margin: 0px;
     border: 0px;
     box-sizing: border-box;
+    border: 1px solid black;
   }
 
   .notif-button button:hover {
@@ -298,7 +298,7 @@ export default function Page({ link, clubs }) {
         <div className="form-item">
           <span>Club</span>
           <select onInput={handleClubInput}>
-            <option value="HQ">HQ</option>
+            <option value=""></option>
             {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
           </select>
         </div>
