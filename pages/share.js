@@ -16,8 +16,8 @@ const styles = `
     display: flex;
     align-items: center;
     flex-direction: column;
-    font-family: monospace;
-    font-size: 12pt;
+    /* font-family: monospace; */
+    /* font-size: 12pt; */
     margin: 0px;
   }
 
@@ -26,10 +26,13 @@ const styles = `
     max-width: 500px;
     width: 60vw;
     padding-bottom: 20px;
+    background: var(--theme-ui-colors-sunken,#e0e6ed);
+    border-radius: 12px;
+    padding: 16px;
   }
 
   #notifcontent input {
-    font-family: monospace;
+    /* font-family: monospace; */
   }
 
   .notif-button {
@@ -40,8 +43,17 @@ const styles = `
   }
 
   .notif-button button {
-    font-family: monospace;
+    font-family: inherit;
     padding: 5px;
+    border-radius: 4px;
+    margin: 0px;
+    border: 0px;
+    box-sizing: border-box;
+  }
+
+  .notif-button button:hover {
+    opacity: 0.8;
+    cursor: pointer;
   }
 
   .notif-header {
@@ -57,8 +69,12 @@ const styles = `
   }
 
   .form-item input {
-    padding: 3px;
+    padding: 8px;
+    border-radius: 4px;
     width: 50%;
+    box-sizing: border-box;
+    margin: 0px;
+    border: 0px;
   }
 
   .scrapbook-embed {
@@ -75,7 +91,12 @@ const styles = `
     width: 70%;
     resize: vertical;
     min-height: 70px;
-    padding: 5px;
+    font-family: inherit;
+    padding: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 0px;
+    border: 0px;
   }
 
   .image-drop {
@@ -294,7 +315,7 @@ export default function Page({ link }) {
             className="form-item-textarea" 
             value={description} 
             onChange={ e => setDescription(e.target.value) } 
-            placeholder="Write at least 2 sentences describing the steps you made to make your project and what you learned.">
+            placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned.">
             </textarea>
         </div>
 
@@ -312,8 +333,8 @@ export default function Page({ link }) {
   )
 }
 
-Page.getInitialProps = async ({ query }) => {
+export async function getServerSideProps({ query }) {
   const { link } = query;
 
-  return { link }
+  return { props: { link } }
 }  
