@@ -106,7 +106,8 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
    - `yarn vercel env pull`
 1. Start server
    - `yarn dev`
-1. View your server at `http://localhost:3000/`
+1. View your server
+   - `open http://localhost:3000/`
 
 ---
 
