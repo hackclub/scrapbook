@@ -96,7 +96,7 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
 ## Running Locally
 
 1. Clone this repository
-   - `git clone git@github.com:hackclub/scrapbook.git`
+   - `git clone git@github.com:hackclub/scrapbook.git; cd scrapbook`
 1. Install dependencies
    - `yarn`
 1. Link Vercel to your account for deployment
