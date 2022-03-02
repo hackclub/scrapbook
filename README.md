@@ -99,14 +99,20 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
    - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install dependencies
    - `yarn`
-1. Link Vercel to your account for deployment
-   - `yarn vercel`
-1. Pull environment variables from Vercel
-   - `yarn vercel pull`
+1. Ask `@sampoder` for the `.env` file
 1. Start server
    - `yarn dev`
 1. View your server
    - `open http://localhost:3000/`
+
+Those with access to HQ's Vercel account can also generate their own `.env` file:
+
+1. Install Vercel's CLI (if you haven't already)
+   - `yarn global add vercel`
+1. Link Vercel to your account for deployment
+   - `yarn vercel`
+1. Pull environment variables from Vercel
+   - `yarn vercel pull`
 
 ---
 
