@@ -176,8 +176,6 @@ const sortAlphabetically = (arr) => arr.sort((a, b) => {
 
 export default function Page({ link, clubs }) {
 
-  console.log(clubs);
-
   const [dropping, setDropping] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
   const [linkData, setLinkData] = useState(link ? link : "");
@@ -300,6 +298,7 @@ export default function Page({ link, clubs }) {
         <div className="form-item">
           <span>Club</span>
           <select onInput={handleClubInput}>
+            <option value="HQ">HQ</option>
             {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
           </select>
         </div>
