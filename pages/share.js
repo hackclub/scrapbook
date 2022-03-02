@@ -300,6 +300,7 @@ export default function Page({ link, clubs }) {
           <select onInput={handleClubInput}>
             <option value=""></option>
             {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
+            <option value="other">other</option>
           </select>
         </div>
 
@@ -378,6 +379,8 @@ export async function getServerSideProps({ query }) {
     .then(res => res.json());
 
   clubs = sortAlphabetically(clubs.map(club => club.fields["Venue"]));
+
+  clubs = clubs.filter(club => club && club.trim() !== "");
 
   return { props: { link, clubs } }
 }  
