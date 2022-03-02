@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 
 TODO
 
-- dark mode support
-- error handling
+- [x] dark mode support
+- [x] error handling
 
 */
 
@@ -294,7 +294,7 @@ export default function Page({ link }) {
             className="form-item-textarea" 
             value={description} 
             onChange={ e => setDescription(e.target.value) } 
-            placeholder="Describe your project, introduce yourself if this is your first time posting.">
+            placeholder="Write at least 2 sentences describing the steps you made to make your project and what you learned.">
             </textarea>
         </div>
 
