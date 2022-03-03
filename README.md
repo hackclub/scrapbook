@@ -12,7 +12,7 @@ Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [
 
 ## How do I join?
 
-Your Scrapbook is automatically generated when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated when you post a message in the `#scrapbook` channel.
+Your Scrapbook is automatically generated for you when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel.
 
 A post requires just two things: a description and an image. Your image can be dragged straight into Slack and Scrapbook will take care of the rest. [An example message](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419) into Slack might look like:
 
@@ -25,7 +25,7 @@ _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/au
 
 ## Scrappy, the Slack Bot
 
-Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), handles not only the automatic generation of things, but provides some features as well! These features are also documented if you send the message `/scrappy` in Slack.
+Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not only handles the automatic generation of things, but provides some helpful commands as well. These commands are also documented in our Slack if you send the message `/scrappy` in any channel.
 
 - `/scrappy-togglestreaks`: toggles your streak count on/off in your status
 - `/scrappy-togglestreaks all`: opts out of streaks completely
