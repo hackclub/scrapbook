@@ -18,9 +18,9 @@ A post requires just two things: a description and an image. Your image can be d
 
 ```
 learned Express generator today - now back to a ton of (organized) files
-
-![Example Scrapbook post image](https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png)
 ```
+![Example Scrapbook post image](https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png)
+
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
 
 ## Scrappy, the Slack Bot
