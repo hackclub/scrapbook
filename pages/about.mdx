@@ -18,13 +18,42 @@ Originally built for the [Summer of Making](https://summer.hackclub.com/), use S
 
 We at Hack Club HQ made this because the times of our lives when we’ve really improved our skills came from **showing up every day**. Even if we didn’t make something amazing every day, the consistency was key. Scrapbook is a tool to help us all do that with ease.
 
-## How do I join?
-
-[Join the Hack Club Slack](https://hackclub.com/slack) to participate, then join the `#scrapbook` channel.
-
 ## How does it work?
 
-Behind the scenes, the site ([all open source!](https://github.com/hackclub/summer-scrapbook)) runs on [Next.js](https://nextjs.org), React.js, & [SWR](https://swr.now.sh) for data fetching. All pages are [static-rendered](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation), hosted on [Vercel](https://vercel.com). Videos are hosted by [Mux](https://mux.com). The custom domains use a [Vercel serverless function](https://github.com/hackclub/summer-domains). The [Slack integration](https://github.com/hackclub/scrappy) runs on [Express.js](https://expressjs.com), hosted on [Heroku](https://heroku.com). All the data is stored in a [PostgreSQL](https://www.postgresql.org) database, fetched using [Prisma](https://prisma.io). We built it in a week.
+Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [SWR](https://swr.now.sh) for data fetching. All pages are [static-rendered](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation), hosted on [Vercel](https://vercel.com). Videos are hosted by [Mux](https://mux.com). The custom domains use a [Vercel serverless function](https://github.com/hackclub/summer-domains). The [Slack integration](https://github.com/hackclub/scrappy) runs on [Express.js](https://expressjs.com), hosted on [Heroku](https://heroku.com). All the data is stored in a [PostgreSQL](https://www.postgresql.org) database, fetched using [Prisma](https://prisma.io). We built it in a week whilst preparing for the [2020 Summer of Making](https://summer.hackclub.com/).
+
+## How do I join?
+
+Your Scrapbook is automatically generated for you when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel.
+
+A post requires just two things: a description and an image. Your image can be dragged straight into Slack and Scrapbook will take care of the rest. [An example message](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419) into Slack might look like:
+
+```
+learned Express generator today - now back to a ton of (organized) files
+```
+<img src="https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png" />
+
+_Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
+
+## Scrappy, the Slack Bot
+
+Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not only handles the automatic generation of things, but provides some helpful commands as well. These commands are also documented in our Slack if you send the message `/scrappy` in any channel.
+
+- `/scrappy-togglestreaks`: toggles your streak count on/off in your status
+- `/scrappy-togglestreaks all`: opts out of streaks completely
+- `/scrappy-open`: opens your scrapbook (or another user's if you specify a username)
+- `/scrappy-setcss`: adds a custom CSS file to your scrapbook profile. Check out this cool example!
+- `/scrappy-setdomain`: links a custom domain to your scrapbook profile, e.g. [https://zachlatta.com](https://zachlatta.com)
+- `/scrappy-setusername`: change your profile username
+- `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
+- `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
+- `/scrappy-webring`: adds or removes someone to your webring
+- *Remove* a post: delete the Slack message and Scrappy will automatically update for you
+- *Edit* a post: edit the Slack message and it will automatically update for you
+
+## Custom domains
+
+To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`zachlatta.com`](https://zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 ## CSS customization
 
@@ -37,7 +66,7 @@ Want to preview your CSS before adding it to your profile? Check out <Mention us
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
 
 <details>
-  
+
   <summary>Default values</summary>
 
 ```css
@@ -78,17 +107,6 @@ Some “relative” colors use these colors for various components:
 </details>
 
 Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
-
-## Custom domains
-
-To put your profile on your own domain, run `/scrappy-setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`zachlatta.com`](https://zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
-
-_Sadly, we have ran out of space and can't register any more domains._
-
-<small>
-  (Unfortunately, if your DNS is managed by Vercel, you’re not able to use this
-  feature.)
-</small>
 
 ## Website widget
 
@@ -213,5 +231,9 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
   code {
     padding: 0 0.25em;
     border-radius: 0.125em;
+  }
+
+  pre code {
+    padding: 0;
   }
 `}</style>
