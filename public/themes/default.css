@@ -230,11 +230,6 @@
   align-self: center;
 }
 
-/* .mention-avatar {
-  border-radius: 50%;
-  overflow: hidden;
-} */
-
 .header-webring-mention svg {
   color: var(--colors-muted);
   position: absolute;
