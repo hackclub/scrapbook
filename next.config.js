@@ -11,6 +11,8 @@ module.exports = withMDX({
       'cloud-lp0r5yk68.vercel.app',
       'avatars.slack-edge.com',
       'secure.gravatar.com',
+      'i.imgur.com',
+      'placedog.net',
     ]
   },
   async rewrites() {

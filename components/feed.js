@@ -13,7 +13,7 @@ const Feed = ({
   ...props
 }) => {
   const { data, error } = useSWR(src, fetcher, {
-    initialData,
+    fallbackData: initialData,
     refreshInterval: 5000
   })
 

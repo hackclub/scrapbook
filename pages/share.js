@@ -1,37 +1,32 @@
 import React, { useState } from 'react'
+import Posts from '../components/posts'
 
 /*
 
 TODO
 
-- [x] dark mode support
-- [x] error handling
+- [ ] see other scrapbook posts
+- [ ] see preview of your own scrapbook post
+- [ ] clubs dropdown autofill
+- [ ] get pfp (figure out implementation)
+- [ ] page scrolls horizontally (fix padding)
+- [ ] page scrolls vertically
+- [ ] autofill image from url
 
 */
 
 const styles = `
   #root {
-    width: 100vw;
-    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
-    /* font-family: monospace; */
-    /* font-size: 12pt; */
     margin: 0px;
   }
 
   #notifcontent {
-    min-width: 300px;
-    max-width: 500px;
-    width: 60vw;
     padding-bottom: 20px;
     border-radius: 12px;
     padding: 16px;
-  }
-
-  #notifcontent input {
-    /* font-family: monospace; */
   }
 
   .notif-button {
@@ -57,15 +52,7 @@ const styles = `
   }
 
   .notif-header {
-    text-align: center;
     margin-bottom: 15px;
-  }
-
-  .form-item {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    margin: 5px;
   }
 
   .form-item select {
@@ -89,16 +76,6 @@ const styles = `
     box-sizing: border-box;
     margin: 0px;
     border: 0px;
-  }
-
-  .scrapbook-embed {
-    border: none;
-    width: 80vw;
-    height: 50vh;
-    border-radius: 5px;
-    border: solid 1px grey;
-    padding: 10px;
-    box-sizing: border-box;
   }
 
   .form-item-textarea {
@@ -125,20 +102,7 @@ const styles = `
   }
 `
 
-// const shipPost = (obj) => 
-//   fetch("/api/clubscraps", {
-//     method: "POST",
-//     mode: "cors",
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(obj)
-//   })
-
-
 async function shipPost(obj) {
-
-
   try {
     const res = await fetch("https://misguided.enterprises/clubscraps/submit", {
       method: "POST",
@@ -147,12 +111,9 @@ async function shipPost(obj) {
       },
       body: JSON.stringify(obj)
     })
-
     return (await res.json()).ok;
-
   } catch (err) {
     console.log(err);
-
     return false;
   }
 }
@@ -174,7 +135,7 @@ const sortAlphabetically = (arr) => arr.sort((a, b) => {
 })
 
 
-export default function Page({ link, clubs }) {
+export default function Page({ link, clubs, initialData }) {
 
   const [dropping, setDropping] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
@@ -184,6 +145,16 @@ export default function Page({ link, clubs }) {
   const [description, setDescription] = useState("");
   const [submissionSuccess, setSubmissionSuccess] = useState("");
   const [club, setClub] = useState("");
+  const preview = () => ({
+    id: 1,
+    user: {
+      username: name || 'woof',
+      avatar: 'https://placedog.net/500'
+    },
+    text: description || 'feed me (woof woof)',
+    attachments: [imgSrc || 'https://lawcall.com/wp-content/uploads/2015/03/Dog-Eating.jpg'],
+    postedAt: 'just now',
+  })
 
   function preventDefaults(e) {
     e.preventDefault();
@@ -199,7 +170,7 @@ export default function Page({ link, clubs }) {
     setDropping(false);
 
     const reader = new FileReader();
-    reader.onloadend = function() {
+    reader.onloadend = function () {
       setImgSrc(reader.result);
     }
 
@@ -225,11 +196,11 @@ export default function Page({ link, clubs }) {
 
     setSubmissionSuccess("awaiting");
 
-    const ship = { 
-      name, 
-      email, 
-      link, 
-      image: imgSrc, 
+    const ship = {
+      name,
+      email,
+      link,
+      image: imgSrc,
       description,
       club
     }
@@ -240,11 +211,11 @@ export default function Page({ link, clubs }) {
   }
 
   const valid = () => {
-    const shipFields = [ 
-      name, 
-      email, 
-      linkData, 
-      imgSrc, 
+    const shipFields = [
+      name,
+      email,
+      linkData,
+      imgSrc,
       description,
       club
     ]
@@ -258,8 +229,8 @@ export default function Page({ link, clubs }) {
 
   return (
     <div id="root">
-
-      <style jsx>{`
+      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+        <style jsx>{`
 
         ${styles}
 
@@ -267,106 +238,117 @@ export default function Page({ link, clubs }) {
 
       `}</style>
 
-      <div id="notifcontent">
-        <h2 className="notif-header">
-          Share your project with your club and the Hack Club community!
-        </h2>
-        <div>Fill out the form below to post to <a target="_blank" href="https://scrapbook.hackclub.com">Scrapbook</a>!</div>
-        <hr></hr>
-        <div className="form-item">
-          <span>Full Name</span>
-          <input 
-            id="name" 
-            type="text" 
-            value={name} 
-            onChange={ e => setName(e.target.value) } 
-            placeholder="Fiona Hackworth">
+        <div id="notifcontent" style={{ textAlign: 'left' }}>
+          <h1 className="notif-header">
+            Share your project with your club and the Hack Club community!
+          </h1>
+          <div className="form-item">
+            <div>Full Name</div>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Fiona Hackworth">
             </input>
-        </div>
-
-        <div className="form-item">
-          <span>Email</span>
-          <input 
-            id="email" 
-            type="email" 
-            value={email} 
-            onChange={ e => setEmail(e.target.value) } 
-            placeholder="fiona@hackclub.com">
-            </input>
-        </div>
-
-        <div className="form-item">
-          <span>Club</span>
-          <select onInput={handleClubInput}>
-            <option value=""></option>
-            {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
-            <option value="other">other</option>
-          </select>
-        </div>
-
-        <div className="form-item">
-          <span>Project Link</span>
-          <input 
-            id="project-link" 
-            type="text" 
-            value={linkData} 
-            onChange={ e => setLinkData(e.target.value) } 
-            placeholder="a link to your project">
-            </input>
-        </div>
-
-
-        <div className="form-item">
-          <span>Project Image</span>
-          <div 
-            className="image-drop" 
-            style={{ background: dropping ? "#d4f7d3" : ""}}
-            onDragEnter={onDragEnter}
-            onDragLeave={onDragLeave}
-            onDragOver={onDragOver}
-            onDrop={onDrop}>
-            Drop image here.
-            <input 
-              className="image-drop-input" 
-              type="file" 
-              id="img" 
-              name="img" 
-              accept="image/*">
-              </input>
           </div>
-        </div>
-        <div style={{ width: "100%", display: "flex", flexDirection: "row-reverse" }}>
-          <img 
-            style={{
-              "maxHeight": "200px", 
-              borderRadius: 5,
-              border: imgSrc === "" ? "none" : "1px dashed black"
-            }} 
-            src={imgSrc} 
-            className="image-preview">
+
+          <div className="form-item">
+            <div>Email</div>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="fiona@hackclub.com">
+            </input>
+          </div>
+
+          <div className="form-item">
+            <div>Club</div>
+            <select onInput={handleClubInput}>
+              <option value=""></option>
+              {clubs.map((club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
+              <option value="other">other</option>
+            </select>
+          </div>
+
+          <div className="form-item">
+            <div>Project Link</div>
+            <input
+              id="project-link"
+              type="text"
+              value={linkData}
+              onChange={e => setLinkData(e.target.value)}
+              placeholder="a link to your project">
+            </input>
+          </div>
+
+
+          <div className="form-item">
+            <span>Project Image</span>
+            <div
+              className="image-drop"
+              style={{ background: dropping ? "#d4f7d3" : "" }}
+              onDragEnter={onDragEnter}
+              onDragLeave={onDragLeave}
+              onDragOver={onDragOver}
+              onDrop={onDrop}>
+              Drop image here.
+              <input
+                className="image-drop-input"
+                type="file"
+                id="img"
+                name="img"
+                accept="image/*">
+              </input>
+            </div>
+          </div>
+          <div style={{ width: "100%", display: "flex", flexDirection: "row-reverse" }}>
+            <img
+              style={{
+                "maxHeight": "200px",
+                borderRadius: 5,
+                border: imgSrc === "" ? "none" : "1px dashed black"
+              }}
+              src={imgSrc}
+              className="image-preview">
             </img>
-        </div>
+          </div>
 
 
-        <div className="form-item">
-          <div>Description</div>
-          <textarea 
-            className="form-item-textarea" 
-            value={description} 
-            onChange={ e => setDescription(e.target.value) } 
-            placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned.">
+          <div className="form-item">
+            <div>Description</div>
+            <textarea
+              className="form-item-textarea"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned.">
             </textarea>
+          </div>
+
+
+          <div className="notif-button">
+            <button disabled={!valid() || ["awaiting", "succeeded"].includes(submissionSuccess)} onClick={shipIt}>
+              {valid() ? "Ship It!" : "Please fill out all fields."}
+            </button>
+          </div>
+
+          {submissionSuccessOptions[submissionSuccess]}
+
+          <hr />
         </div>
-
-
-        <div className="notif-button">
-          <button disabled={!valid() || ["awaiting", "succeeded"].includes(submissionSuccess)} onClick={shipIt}>
-            {valid() ? "Ship It!" : "Please fill out all fields."}
-          </button>
-        </div>
-
-        {submissionSuccessOptions[submissionSuccess]}
-
+        <Posts 
+          posts={[preview(), ...initialData]} 
+          breakpointCols={{
+            10000: 2,
+            1024: 1,
+            640: 1,
+            480: 1,
+            default: 1
+          }} 
+        />
+        <div />
       </div>
     </div>
   )
@@ -374,6 +356,8 @@ export default function Page({ link, clubs }) {
 
 export async function getServerSideProps({ query }) {
   const { link } = query;
+  const { getPosts } = require('./api/posts')
+  const initialData = await getPosts(4)
 
   let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
     .then(res => res.json());
@@ -383,9 +367,8 @@ export async function getServerSideProps({ query }) {
 
   clubs = clubs.filter(club => club && club.trim() !== "");
 
-  return { props: { link, clubs } }
-}  
-
+  return { props: { link, clubs, initialData } }
+}
 
 
 
