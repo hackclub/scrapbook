@@ -21,27 +21,20 @@ const submissionSuccessOptions = {
   "awaiting": <div>Shipping Post!</div>,
 }
 
-const sortAlphabetically = (arr) => arr.sort((a, b) => {
-  a = a.toLowerCase();
-  b = b.toLowerCase();
-
-  if (a < b) return -1;
-  if (a > b) return 1;
-  return 0;
-})
-
-export default function Page({ link, clubs, initialData }) {
+export default function Page({ link, initialData }) {
   const [dropping, setDropping] = useState(false);
+
   const [postData, setPostData] = useState({
     image: '',
     name: '',
     email: '',
     description: '',
     club: '',
-    link: ''
+    link: link
   });
   
   const [submissionSuccess, setSubmissionSuccess] = useState("");
+
   const preview = () => ({
     id: 1,
     user: {
@@ -74,8 +67,7 @@ export default function Page({ link, clubs, initialData }) {
 
   const onDrop = (e) => {
     preventDefaults(e);
-    const dt = e.dataTransfer;
-    const files = dt.files;
+    const files = e.dataTransfer.files;
     const input = document.querySelector(".image-drop-input");
     input.files = files;
     setDropping(false);
@@ -93,15 +85,13 @@ export default function Page({ link, clubs, initialData }) {
     setSubmissionSuccess(ok ? "succeeded" : "failed");
   }
 
-  const valid = () => {
-    return Object.values(postData).every(x => x !== "");
-  }
+  const valid = () => Object.values(postData).every(x => x !== "");
 
   return (
     <div>
-      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-        <div id="notifcontent" style={{ textAlign: 'left' }}>
-          <h1 className="notif-header">
+      <div className='grid'>
+        <div style={{ textAlign: 'left' }}>
+          <h1>
             Share your project with your club and the Hack Club community!
           </h1>
           <Input  
@@ -147,7 +137,6 @@ export default function Page({ link, clubs, initialData }) {
                 id="img"
                 name="img"
                 accept="image/*"
-                
               >
               </input>
             </div>
@@ -166,7 +155,6 @@ export default function Page({ link, clubs, initialData }) {
             </button>
           </div>
           {submissionSuccessOptions[submissionSuccess]}
-          <hr />
         </div>
         <Posts 
           posts={[preview(), ...initialData]} 
@@ -180,6 +168,14 @@ export default function Page({ link, clubs, initialData }) {
         />
         <div />
       </div>
+      <style jsx>
+        {`
+          .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+          }
+        `}
+      </style>
     </div>
   )
 }
@@ -188,9 +184,5 @@ export async function getServerSideProps({ query }) {
   const { link } = query;
   const { getPosts } = require('./api/r/[emoji]')
   const initialData = await getPosts('ship', 4)
-  let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
-    .then(res => res.json());
-  clubs = sortAlphabetically([...new Set(clubs.map(club => club.fields["Venue"]))]);
-  clubs = clubs.filter(club => club && club.trim() !== "");
-  return { props: { link, clubs, initialData } }
+  return { props: { link, initialData } }
 }
