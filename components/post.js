@@ -16,12 +16,11 @@ const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif']
 const audioFileTypes = ['mp3', 'wav', 'aiff', 'm4a']
 
 function endsWithAny(suffixes, string) {
-  try{
+  try {
     return suffixes.some(function (suffix) {
       return string.endsWith(suffix)
     })
-  }
-  catch{
+  } catch {
     return false
   }
 }
@@ -126,16 +125,13 @@ const Post = ({
       </Link>
     )}
     <Content>{text}</Content>
-    {(text) && (<Cartridges text={text} />)}
+    {text && <Cartridges text={text} />}
     {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
-        {filter(attachments, a => a?.startsWith('data:image')).map(img => (
-          <a
-            key={img}
-            href={img}
-            target="_blank"
-            className="post-attachment"
-          >
+        {filter(attachments, a =>
+          typeof a == 'string' ? a.startsWith('data:image') : false
+        ).map(img => (
+          <a key={img} href={img} target="_blank" className="post-attachment">
             <img key={img} src={img} />
           </a>
         ))}
