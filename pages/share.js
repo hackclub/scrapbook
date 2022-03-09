@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Posts from '../components/posts'
+import { emailToPfp } from '../lib/email'
 
 /*
 
 TODO
 
-- [ ] see other scrapbook posts
-- [ ] see preview of your own scrapbook post
+- [x] see other scrapbook posts
+- [x] see preview of your own scrapbook post
 - [ ] clubs dropdown autofill
 - [ ] get pfp (figure out implementation)
 - [ ] page scrolls horizontally (fix padding)
@@ -149,9 +150,9 @@ export default function Page({ link, clubs, initialData }) {
     id: 1,
     user: {
       username: name || 'Fiona Hackwoof',
-      avatar: 'https://placedog.net/500'
+      avatar: emailToPfp(postData.email) || 'https://placedog.net/500'
     },
-    text: description || 'feed me (woof woof)',
+    text: [description, linkData].join('\n') || 'feed me (woof woof)',
     attachments: [imgSrc || 'https://lawcall.com/wp-content/uploads/2015/03/Dog-Eating.jpg'],
     postedAt: 'just now',
   })

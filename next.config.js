@@ -13,6 +13,7 @@ module.exports = withMDX({
       'secure.gravatar.com',
       'i.imgur.com',
       'placedog.net',
+      'www.gravatar.com',
     ]
   },
   async rewrites() {
