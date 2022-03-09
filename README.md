@@ -17,7 +17,7 @@ learned Express generator today - now back to a ton of (organized) files
 
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
 
-## Scrappy, the Slack Bot
+## Scrappy (the Slack Bot)
 
 Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not only handles the automatic generation of things, but provides some helpful commands as well. These commands are also documented in our Slack if you send the message `/scrappy` in any channel.
 
