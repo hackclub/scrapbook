@@ -180,7 +180,7 @@ export default function Page({ link, initialData }) {
         />
         <div />
       </div>
-      <style jsx>
+      <style>
         {`
           .grid {
             display: grid;
