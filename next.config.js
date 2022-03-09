@@ -2,7 +2,7 @@ const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 module.exports = withMDX({
   experimental: { optimizeFonts: true },
   pageExtensions: ['js', 'jsx', 'mdx'],
-  trailingSlash: true,
+  trailingSlash: false,
   images: {
     imageSizes: [18, 36, 54, 24, 48, 72, 96, 144],
     domains: [
@@ -24,15 +24,15 @@ module.exports = withMDX({
         destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
       },
       {
-        source: '/customizer/',
+        source: '/customizer',
         destination: 'https://scrapbook-customizer.vercel.app/'
       },
       {
-        source: '/customizer/(.*)/',
+        source: '/customizer/(.*)',
         destination: 'https://scrapbook-customizer.vercel.app/$1'
       },
       {
-        source: '/avatar/(.*)/',
+        source: '/avatar/(.*)',
         destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
       },
       {
@@ -40,7 +40,7 @@ module.exports = withMDX({
         destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
       },
       {
-        source: '/api/emoji/',
+        source: '/api/emoji',
         destination: 'https://badger.hackclub.dev/api/emoji'
       },
       {
@@ -56,7 +56,7 @@ module.exports = withMDX({
         headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }]
       },
       {
-        source: '/api/emoji/',
+        source: '/api/emoji',
         headers: [
           {
             key: 'Cache-Control',
@@ -65,7 +65,7 @@ module.exports = withMDX({
         ]
       },
       {
-        source: '/attachments/(.+)/',
+        source: '/attachments/(.+)',
         headers: [
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET, OPTIONS' },
