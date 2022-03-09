@@ -129,7 +129,7 @@ const Post = ({
     {(text) && (<Cartridges text={text} />)}
     {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
-        {filter(attachments, a => a.startsWith('data:image')).map(img => (
+        {filter(attachments, a => a?.startsWith('data:image')).map(img => (
           <a
             key={img}
             href={img}
