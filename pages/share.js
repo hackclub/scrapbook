@@ -335,7 +335,7 @@ export default function Page({ link, clubs }) {
               </input>
           </div>
         </div>
-        <div style={{ width: "100%", display: "flex", "flex-direction": "row-reverse" }}>
+        <div style={{ width: "100%", display: "flex", flexDirection: "row-reverse" }}>
           <img 
             style={{
               "maxHeight": "200px", 
