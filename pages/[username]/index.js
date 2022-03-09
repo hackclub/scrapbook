@@ -211,7 +211,7 @@ const fetcher = url => fetch(url).then(r => r.json())
 
 const Page = ({ username = '', router = {}, initialData = {} }) => {
   const { data, error } = useSWR(`/api/users/${username}/`, fetcher, {
-    initialData,
+    fallbackData: initialData,
     refreshInterval: 5000
   })
   if (!data) {
