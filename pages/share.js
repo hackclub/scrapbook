@@ -10,20 +10,13 @@ TODO
 - [x] see preview of your own scrapbook post
 - [ ] clubs dropdown autofill
 - [ ] get pfp (figure out implementation)
-- [ ] page scrolls horizontally (fix padding)
-- [ ] page scrolls vertically
+- [x] page scrolls horizontally (fix padding)
+- [x] page scrolls vertically
 - [ ] autofill image from url
 
 */
 
 const styles = `
-  #root {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 0px;
-  }
-
   #notifcontent {
     padding-bottom: 20px;
     border-radius: 12px;
