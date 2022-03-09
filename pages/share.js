@@ -148,7 +148,7 @@ export default function Page({ link, clubs, initialData }) {
   const preview = () => ({
     id: 1,
     user: {
-      username: name || 'woof',
+      username: name || 'Fiona Hackwoof',
       avatar: 'https://placedog.net/500'
     },
     text: description || 'feed me (woof woof)',
