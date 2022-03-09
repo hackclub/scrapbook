@@ -77,7 +77,7 @@ export default function Page({ link, initialData }) {
     setDropping(false)
     const reader = new FileReader()
     reader.onloadend = function () {
-      updatePostState(image, reader.result)
+      setPostData({ ...postData, image: reader.result })
     }
     reader.readAsDataURL(files[0])
   }
@@ -127,8 +127,7 @@ export default function Page({ link, initialData }) {
             value={postData.link}
             onChange={e => setPostData({ ...postData, link: e.target.value })}
           />
-          <div className="form-item">
-            <span>Project Image</span>
+          <div className="dropbox">
             <div
               className="image-drop"
               style={{ background: dropping ? '#d4f7d3' : '' }}
@@ -137,7 +136,7 @@ export default function Page({ link, initialData }) {
               onDragOver={onDragOver}
               onDrop={onDrop}
             >
-              Drop image here.
+              {postData.image != '' && '☑️ Uploaded!'} Drop{postData.image != '' && ' new'} image here.
               <input
                 className="image-drop-input"
                 type="file"
@@ -152,10 +151,10 @@ export default function Page({ link, initialData }) {
             id="project-description"
             type="textarea"
             value={postData.description}
-            onChange={e => updatePostState('description', e.target.value)}
+            onChange={e => setPostData({ ...postData, description: e.target.value })}
             placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned."
           />
-          <div className="notif-button">
+          <div>
             <button
               disabled={
                 !valid() ||
@@ -189,6 +188,90 @@ export default function Page({ link, initialData }) {
 
           .image-drop-input {
             display: none;
+          }
+
+          h1 {
+            width: 75%;
+          }
+
+          input,
+          textarea,
+          select,
+          .dropbox {
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            background: var(--colors-elevated);
+            color: var(--text);
+            font-family: inherit;
+            border-radius: 4px;
+            border: 0;
+            font-size: inherit;
+            padding: 8px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 75%;
+          }
+
+          input::-webkit-input-placeholder,
+          input::-moz-placeholder,
+          input:-ms-input-placeholder,
+          textarea::-webkit-input-placeholder,
+          textarea::-moz-placeholder,
+          textarea:-ms-input-placeholder,
+          select::-webkit-input-placeholder,
+          select::-moz-placeholder,
+          select:-ms-input-placeholder {
+            color: var(--muted);
+          }
+
+          input[type="search"]::-webkit-search-decoration,
+          textarea[type="search"]::-webkit-search-decoration,
+          select[type="search"]::-webkit-search-decoration {
+            display: none;
+          }
+
+          input[type="checkbox"] {
+            -webkit-appearance: checkbox;
+            -moz-appearance: checkbox;
+            appearance: checkbox;
+          }
+
+          button {
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 800;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.125s ease-in-out, box-shadow 0.125s ease-in-out;
+            box-sizing: border-box;
+            margin: 0;
+            min-width: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            text-align: center;
+            line-height: inherit;
+            -webkit-text-decoration: none;
+            text-decoration: none;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            color: var(--theme-ui-colors-white, #ffffff);
+            background-color: var(--theme-ui-colors-primary, #ec3750);
+            border: 0;
+            font-size: var(--font-2);
+          }
+          
+          button:focus,
+          button:hover {
+            box-shadow: var(--shadow-elevated);
+            transform: scale(1.0625);
           }
         `}
       </style>
