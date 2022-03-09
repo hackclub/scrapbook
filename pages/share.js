@@ -96,76 +96,78 @@ export default function Page({ link, initialData }) {
   return (
     <div>
       <div className="grid">
-        <div style={{ textAlign: 'left' }}>
-          <h1>
-            Share your project with your club and the Hack Club community!
-          </h1>
-          <Input
-            label="Full Name"
-            id="name"
-            type="text"
-            value={postData.name}
-            onChange={e => setPostData({ ...postData, name: e.target.value })}
-          />
-          <Input
-            label="Email"
-            id="email"
-            type="email"
-            value={postData.email}
-            onChange={e => setPostData({ ...postData, email: e.target.value })}
-          />
-          <Input
-            label="Club"
-            id="club"
-            value={postData.club}
-            onChange={e => setPostData({ ...postData, club: e.target.value })}
-          />
-          <Input
-            label="Project Link"
-            id="project-link"
-            type="type"
-            value={postData.link}
-            onChange={e => setPostData({ ...postData, link: e.target.value })}
-          />
-          <div className="dropbox">
-            <div
-              className="image-drop"
-              style={{ background: dropping ? '#d4f7d3' : '' }}
-              onDragEnter={onDragEnter}
-              onDragLeave={onDragLeave}
-              onDragOver={onDragOver}
-              onDrop={onDrop}
-            >
-              {postData.image != '' && '☑️ Uploaded!'} Drop{postData.image != '' && ' new'} image here.
-              <input
-                className="image-drop-input"
-                type="file"
-                id="img"
-                name="img"
-                accept="image/*"
-              ></input>
+        <div>
+          <div style={{ textAlign: 'left', background: 'var(--colors-elevated)', width: 'fit-content', marginLeft: '32px', borderRadius: '8px', padding: '16px' }}>
+            <h1>
+              Share your project with your club and the Hack Club community!
+            </h1>
+            <Input
+              label="Full Name"
+              id="name"
+              type="text"
+              value={postData.name}
+              onChange={e => setPostData({ ...postData, name: e.target.value })}
+            />
+            <Input
+              label="Email"
+              id="email"
+              type="email"
+              value={postData.email}
+              onChange={e => setPostData({ ...postData, email: e.target.value })}
+            />
+            <Input
+              label="Club"
+              id="club"
+              value={postData.club}
+              onChange={e => setPostData({ ...postData, club: e.target.value })}
+            />
+            <Input
+              label="Project Link"
+              id="project-link"
+              type="type"
+              value={postData.link}
+              onChange={e => setPostData({ ...postData, link: e.target.value })}
+            />
+            <div className="dropbox">
+              <div
+                className="image-drop"
+                style={{ background: dropping ? '#d4f7d3' : '' }}
+                onDragEnter={onDragEnter}
+                onDragLeave={onDragLeave}
+                onDragOver={onDragOver}
+                onDrop={onDrop}
+              >
+                {postData.image != '' && '☑️ Uploaded!'} Drop{postData.image != '' && ' new'} image here.
+                <input
+                  className="image-drop-input"
+                  type="file"
+                  id="img"
+                  name="img"
+                  accept="image/*"
+                ></input>
+              </div>
             </div>
+            <Input
+              label="Description"
+              id="project-description"
+              type="textarea"
+              value={postData.description}
+              onChange={e => setPostData({ ...postData, description: e.target.value })}
+              placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned."
+            />
+            <div>
+              <button
+                disabled={
+                  !valid() ||
+                  ['awaiting', 'succeeded'].includes(submissionSuccess)
+                }
+                onClick={shipIt}
+              >
+                {valid() ? 'Ship It!' : 'Please fill out all fields.'}
+              </button>
+            </div>
+            {submissionSuccessOptions[submissionSuccess]}
           </div>
-          <Input
-            label="Description"
-            id="project-description"
-            type="textarea"
-            value={postData.description}
-            onChange={e => setPostData({ ...postData, description: e.target.value })}
-            placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned."
-          />
-          <div>
-            <button
-              disabled={
-                !valid() ||
-                ['awaiting', 'succeeded'].includes(submissionSuccess)
-              }
-              onClick={shipIt}
-            >
-              {valid() ? 'Ship It!' : 'Please fill out all fields.'}
-            </button>
-          </div>
-          {submissionSuccessOptions[submissionSuccess]}
         </div>
         <Posts
           posts={[preview(), ...initialData]}
@@ -184,6 +186,7 @@ export default function Page({ link, initialData }) {
           .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            margin-top: 16px;
           }
 
           .image-drop-input {
@@ -201,7 +204,7 @@ export default function Page({ link, initialData }) {
             display: block;
             margin-top: 8px;
             margin-bottom: 8px;
-            background: var(--colors-elevated);
+            background: var(--colors-sunken);
             color: var(--text);
             font-family: inherit;
             border-radius: 4px;
@@ -211,19 +214,7 @@ export default function Page({ link, initialData }) {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            width: 75%;
-          }
-
-          input::-webkit-input-placeholder,
-          input::-moz-placeholder,
-          input:-ms-input-placeholder,
-          textarea::-webkit-input-placeholder,
-          textarea::-moz-placeholder,
-          textarea:-ms-input-placeholder,
-          select::-webkit-input-placeholder,
-          select::-moz-placeholder,
-          select:-ms-input-placeholder {
-            color: var(--muted);
+            width: 100%;
           }
 
           input[type="search"]::-webkit-search-decoration,
@@ -232,23 +223,12 @@ export default function Page({ link, initialData }) {
             display: none;
           }
 
-          input[type="checkbox"] {
-            -webkit-appearance: checkbox;
-            -moz-appearance: checkbox;
-            appearance: checkbox;
-          }
-
           button {
             cursor: pointer;
             font-family: inherit;
             font-weight: 800;
             border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
             transition: transform 0.125s ease-in-out, box-shadow 0.125s ease-in-out;
-            box-sizing: border-box;
             margin: 0;
             min-width: 0;
             -webkit-appearance: none;
@@ -266,11 +246,12 @@ export default function Page({ link, initialData }) {
             background-color: var(--theme-ui-colors-primary, #ec3750);
             border: 0;
             font-size: var(--font-2);
+            margin-top: 8px;
           }
           
           button:focus,
           button:hover {
-            box-shadow: var(--shadow-elevated);
+            box-shadow: var(--shadow-sunken);
             transform: scale(1.0625);
           }
         `}
