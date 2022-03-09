@@ -356,8 +356,8 @@ export default function Page({ link, clubs, initialData }) {
 
 export async function getServerSideProps({ query }) {
   const { link } = query;
-  const { getPosts } = require('./api/posts')
-  const initialData = await getPosts(4)
+  const { getPosts } = require('./api/r/[emoji]')
+  const initialData = await getPosts('ship', 4)
 
   let clubs = await fetch(`https://api2.hackclub.com/v0.1/Club Applications/Clubs Dashboard`)
     .then(res => res.json());
