@@ -15,10 +15,10 @@ TODO
 */
 
 const submissionSuccessOptions = {
-  '': '',
-  succeeded: <div>Post Submitted!</div>,
-  failed: <div>Post Failed!</div>,
-  awaiting: <div>Shipping Post!</div>
+  '': 'Ship it!',
+  succeeded: 'Post submitted!',
+  failed: 'Post failed!',
+  awaiting: 'Shipping post!'
 }
 
 export default function Page({ link, initialData }) {
@@ -97,7 +97,16 @@ export default function Page({ link, initialData }) {
     <div>
       <div className="grid">
         <div>
-          <div style={{ textAlign: 'left', background: 'var(--colors-elevated)', width: 'fit-content', marginLeft: '32px', borderRadius: '8px', padding: '16px' }}>
+          <div
+            style={{
+              textAlign: 'left',
+              background: 'var(--colors-elevated)',
+              width: 'fit-content',
+              marginLeft: '32px',
+              borderRadius: '8px',
+              padding: '16px'
+            }}
+          >
             <h1>
               Share your project with your club and the Hack Club community!
             </h1>
@@ -113,7 +122,9 @@ export default function Page({ link, initialData }) {
               id="email"
               type="email"
               value={postData.email}
-              onChange={e => setPostData({ ...postData, email: e.target.value })}
+              onChange={e =>
+                setPostData({ ...postData, email: e.target.value })
+              }
             />
             <Input
               label="Club"
@@ -137,7 +148,8 @@ export default function Page({ link, initialData }) {
                 onDragOver={onDragOver}
                 onDrop={onDrop}
               >
-                {postData.image != '' && '☑️ Uploaded!'} Drop{postData.image != '' && ' new'} image here.
+                {postData.image != '' && '☑️ Uploaded!'} Drop
+                {postData.image != '' && ' new'} image here.
                 <input
                   className="image-drop-input"
                   type="file"
@@ -152,7 +164,9 @@ export default function Page({ link, initialData }) {
               id="project-description"
               type="textarea"
               value={postData.description}
-              onChange={e => setPostData({ ...postData, description: e.target.value })}
+              onChange={e =>
+                setPostData({ ...postData, description: e.target.value })
+              }
               placeholder="Write at least 2 sentences describing the steps you took to make your project and what you learned."
             />
             <div>
@@ -163,10 +177,11 @@ export default function Page({ link, initialData }) {
                 }
                 onClick={shipIt}
               >
-                {valid() ? 'Ship It!' : 'Please fill out all fields.'}
+                {valid()
+                  ? submissionSuccessOptions[submissionSuccess]
+                  : 'Please fill out all fields.'}
               </button>
             </div>
-            {submissionSuccessOptions[submissionSuccess]}
           </div>
         </div>
         <Posts
