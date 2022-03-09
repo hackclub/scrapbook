@@ -129,7 +129,7 @@ const Post = ({
     {(attachments.length > 0 || mux.length > 0) && (
       <div className="post-attachments">
         {filter(attachments, a =>
-          typeof a == 'string' ? a.startsWith('data:image') : false
+          typeof a === 'string' ? a.startsWith('data:image') : false
         ).map(img => (
           <a key={img} href={img} target="_blank" className="post-attachment">
             <img key={img} src={img} />
