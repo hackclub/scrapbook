@@ -32,7 +32,7 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 - `/scrappy-webring`: adds or removes someone to your webring
 - *Remove* a post: delete the Slack message and Scrappy will automatically update for you
 - *Edit* a post: edit the Slack message and it will automatically update for you
-- *Post* an existing Slack message to Scrapbook by reacting to it with the `:scrappy:` emoji (Note: If it isn't working, make sure Scrappy is added to the channel by mentioning `@scrappy`)
+- *Post* to the `#scrapbook` channel or add an existing Slack message to Scrapbook by reacting to it with the `:scrappy:` emoji (Note: If it isn't working, make sure Scrappy is added to the channel by mentioning `@scrappy`)
 
 ## Custom domains
 
@@ -167,4 +167,4 @@ Scrapbook was originally built in a week while preparing for the 2020 [Summer of
 
 ---
 
-By [@lachlanjc](https://lachlanjc.com) for Hack Club, 2020. MIT License.
+Hack Club, 2022. MIT License.
