@@ -12,15 +12,11 @@ import Mention from '../components/mention'
 
 <main className="container">
 
-# About
+# About Scrapbook
 
-Originally built for the [Summer of Making](https://summer.hackclub.com/), use Scrapbook to **share updates of your learning every day!** Every day, [Hack Clubbers](https://hackclub.com/) are learning & building projects, sharing short video & photo updates each day.
+Scrapbook helps you **share the things you're working on every day!** As a [Hack Clubber](https://hackclub.com/), you are always learning and building things. Scrapbook allows you to share updates on the things you're doing with the rest of the Hack Club community, and keeps you motivated by recording each day you contribute, tallying that up onto a streak shown on your profile.
 
-We at Hack Club HQ made this because the times of our lives when we’ve really improved our skills came from **showing up every day**. Even if we didn’t make something amazing every day, the consistency was key. Scrapbook is a tool to help us all do that with ease.
-
-## How does it work?
-
-Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [SWR](https://swr.now.sh) for data fetching. All pages are [static-rendered](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation), hosted on [Vercel](https://vercel.com). Videos are hosted by [Mux](https://mux.com). The custom domains use a [Vercel serverless function](https://github.com/hackclub/summer-domains). The [Slack integration](https://github.com/hackclub/scrappy) runs on [Express.js](https://expressjs.com), hosted on [Heroku](https://heroku.com). All the data is stored in a [PostgreSQL](https://www.postgresql.org) database, fetched using [Prisma](https://prisma.io). We built it in a week whilst preparing for the [2020 Summer of Making](https://summer.hackclub.com/).
+Scrapbook was made by the Hack Club community because many of us have found that **showing up every day** has been key to our success in learning. Even if we didn’t make something big or impressive, showing up consistently and making _something_ was key.
 
 ## How do I join?
 
@@ -35,21 +31,29 @@ learned Express generator today - now back to a ton of (organized) files
 
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
 
-## Scrappy, the Slack Bot
+Here's how it would look on Slack to create a post:
+<img src="https://cloud-nf0autycv-hack-club-bot.vercel.app/0scrapbook-example.gif" />
+
+## Scrappy (the Slack Bot)
 
 Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not only handles the automatic generation of things, but provides some helpful commands as well. These commands are also documented in our Slack if you send the message `/scrappy` in any channel.
 
-- `/scrappy-togglestreaks`: toggles your streak count on/off in your status
-- `/scrappy-togglestreaks all`: opts out of streaks completely
-- `/scrappy-open`: opens your scrapbook (or another user's if you specify a username)
-- `/scrappy-setcss`: adds a custom CSS file to your scrapbook profile. Check out this cool example!
-- `/scrappy-setdomain`: links a custom domain to your scrapbook profile, e.g. [https://zachlatta.com](https://zachlatta.com)
-- `/scrappy-setusername`: change your profile username
-- `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
-- `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
-- `/scrappy-webring`: adds or removes someone to your webring
-- *Remove* a post: delete the Slack message and Scrappy will automatically update for you
-- *Edit* a post: edit the Slack message and it will automatically update for you
+<details>
+  <summary>Available commands</summary>
+
+  - `/scrappy-togglestreaks`: toggles your streak count on/off in your status
+  - `/scrappy-togglestreaks all`: opts out of streaks completely
+  - `/scrappy-open`: opens your Scrapbook (or another user's if you specify a username)
+  - `/scrappy-setcss`: adds a custom CSS file to your Scrapbook profile. Check out this cool example!
+  - `/scrappy-setdomain`: links a custom domain to your Scrapbook profile, e.g. [https://zachlatta.com](https://zachlatta.com)
+  - `/scrappy-setusername`: change your profile username
+  - `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
+  - `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
+  - `/scrappy-webring`: adds or removes someone to your webring
+  - *Remove* a post: delete the Slack message and Scrappy will automatically update for you
+  - *Edit* a post: edit the Slack message and it will automatically update for you
+
+</details>
 
 ## Custom domains
 
@@ -110,16 +114,16 @@ Our dark mode is powered by [`prefers-color-scheme: dark`](https://developer.moz
 
 ## Website widget
 
-Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with 2 lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
+Want to showcase your streak on your personal website? We’ve created a small widget that you can put on your website with two lines of code. It shows up in the bottom right corner. Just replace `username` with your Scrappy username. Here’s the code snippet:
 
-```js
+```html
 <script src="https://scrapbook.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username')</script>
 ```
 
 If you have a custom domain, you can optionally link the scrapbook widget to it! Do it like this:
 
-```js
+```html
 <script src="https://scrapbook.hackclub.com/scrapbookwidget.js"></script>
 <script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
 ```
@@ -132,7 +136,7 @@ Want to get an RSS feed of your Scrapbook posts? Just append `.rss` to the end o
 
 Hack Clubbers using a Mac can post directly from their menu bar using Scrapple, an app built by <Mention username="linus" />! From the menu bar, type in the update, select the attachments for the post and send it off into the interweb…
 
-You can [download the app here](https://github.com/LinusS1/Scrapple/releases), and it’s [open source here](https://github.com/LinusS1/Scrapple).
+You can [download the app here](https://github.com/LinusS1/Scrapple/releases), and check out the [open source code here](https://github.com/LinusS1/Scrapple).
 
 To install using Homebrew Cask:
 
@@ -145,12 +149,29 @@ brew cask install scrapple
 
 This site exposes a public JSON API powered by [Next.js API routes](https://nextjs.org/docs/api-routes/introduction) that formats data in a useful way. The live site runs entirely on this API.
 
+<details>
+  <summary>End points</summary>
 - [`/api/posts`](https://scrapbook.hackclub.com/api/posts) – Get all posts (used on the homepage)
 - [`/api/users`](https://scrapbook.hackclub.com/api/users) – Get all users
 - [`/api/users/:username`](https://scrapbook.hackclub.com/api/users/zrl) – Get a specific user’s profile + posts
 - [`/api/users/:username/mentions`](https://scrapbook.hackclub.com/api/users/sampoder/mentions) – Get a specific user’s mentions
 - [`/api/r/:emoji`](https://scrapbook.hackclub.com/api/r/hardware) – Get all posts tagged with a specific emoji
 - [`/:username.png`](https://scrapbook.hackclub.com/sampoder.png) – Get a user's avatar as an image URL
+</details>
+
+## Contributing
+
+Contributions are encouraged and welcome! There are two GitHub repositories that contain code for Scrapbook: the [Scrapbook website](https://github.com/hackclub/scrapbook#contributing) and [Scrappy the Slack bot](https://github.com/hackclub/scrappy#contributing). Each repository has a section on contributing guidelines and how to run each project locally.
+
+Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client/T0266FRGM/C035D6S6TFW) channel in the [Hack Club Slack](https://hackclub.com/slack/).
+
+## How does it all work underneath?
+
+Behind the scenes, the site runs on [Next.js](https://nextjs.org), React.js, & [SWR](https://swr.now.sh) for data fetching. All pages are [static-rendered](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation), hosted on [Vercel](https://vercel.com). Videos are hosted by [Mux](https://mux.com). The custom domains use a [Vercel serverless function](https://github.com/hackclub/summer-domains). The [Slack integration](https://github.com/hackclub/scrappy) runs on [Express.js](https://expressjs.com), hosted on [Heroku](https://heroku.com). All the data is stored in a [PostgreSQL](https://www.postgresql.org) database, fetched using [Prisma](https://prisma.io).
+
+## The Origin of Scrapbook
+
+Scrapbook was originally built in a week while preparing for the 2020 [Summer of Making](https://summer.hackclub.com/). To support makers, Hack Club distributed $50,000 in free electronics to 28 different countries. Scrapbook was made to help Hack Clubbers showcase the things they were doing during this event, but grew into a tool that the community uses every single day.
 
 </main>
 
