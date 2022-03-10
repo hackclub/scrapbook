@@ -198,9 +198,12 @@ export default function Page({ link, initialData }) {
       </div>
       <style>
         {`
-          .grid {
-            display: grid;
+          @media (min-width: 48em) {
             grid-template-columns: 1fr 1fr;
+          }
+
+          .grid {
+            display: grid;           
             margin-top: 16px;
           }
 
