@@ -257,10 +257,9 @@ export default function Page({ link, initialData }) {
             padding-right: 16px;
             padding-top: 8px;
             padding-bottom: 8px;
-            color: var(--theme-ui-colors-white, #ffffff);
-            background-color: var(--theme-ui-colors-primary, #ec3750);
+            color: #ffffff;
+            background-color: #ec3750;
             border: 0;
-            font-size: var(--font-2);
             margin-top: 8px;
           }
           
