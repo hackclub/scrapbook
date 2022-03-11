@@ -83,7 +83,7 @@
     margin-top: 24px;
   }
   .post {
-    width: calc(100vw - 32px)!important;
+    width: calc(100vw - 32px) !important;
   }
 }
 
@@ -175,17 +175,18 @@
   align-items: baseline;
   text-decoration: none;
 }
-.mention div:first-child {
+.mention span:first-child {
   border-radius: 50%;
   overflow: hidden;
   margin-right: 4px;
 }
 
-.post-text-mention div:first-child {
+.post-text-mention span:first-child {
   width: 24px;
   height: 24px;
-  margin-right: 4px!important;
   align-self: flex-end;
+  margin-bottom: 2px !important;
+  margin-right: 2px !important;
 }
 
 .headline,
@@ -228,6 +229,7 @@
   margin: 0 0 6px;
   align-self: center;
 }
+
 .header-webring-mention svg {
   color: var(--colors-muted);
   position: absolute;
@@ -276,7 +278,7 @@
   height: 48px;
   border-radius: 24px;
 }
-div + .post-header-container {
+.post-header-container {
   padding-left: 8px;
 }
 .post-header-name {
