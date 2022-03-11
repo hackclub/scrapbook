@@ -120,6 +120,10 @@ const styles = `
     color: darkgrey;
   }
 
+  .image-drop:hover {
+    cursor: pointer;
+  }
+
   .image-drop-input {
     display: none;
   }
@@ -324,6 +328,7 @@ export default function Page({ link, clubs }) {
             onDragEnter={onDragEnter}
             onDragLeave={onDragLeave}
             onDragOver={onDragOver}
+            onClick={e => document.querySelector(".image-drop-input").click()}
             onDrop={onDrop}>
             Drop image here.
             <input 
