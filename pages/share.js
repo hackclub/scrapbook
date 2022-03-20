@@ -86,7 +86,7 @@ export default function Page({ link, initialData }) {
     setSubmissionSuccess('awaiting')
     const { ok } = await fetch(`/api/share`, {
       method: 'POST',
-      body: postData
+      body: JSON.stringify(postData)
     }).then(r => r.json())
     setSubmissionSuccess(ok ? 'succeeded' : 'failed')
   }
