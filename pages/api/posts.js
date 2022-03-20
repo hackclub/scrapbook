@@ -17,7 +17,8 @@ export const getRawPosts = async (max = null, params = {}) => {
       clubscrap: {
         select: {
           name: true,
-          email: true
+          email: true,
+          club: true
         }
       }
     },

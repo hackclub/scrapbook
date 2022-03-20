@@ -10,8 +10,7 @@ const share = async req => {
   const channel = req.headers.origin === official ? 'C01504DCLVD' : 'C0P5NE354'
 
   /* okay sweet, let's post the request body in slack */
-  const { email, name, link, image, description } = data
-  console.log(email, name, link, description, channel)
+  const { email, name, club, link, image, description } = data
 
   const receiver = new ExpressReceiver({
     signingSecret: process.env.CLUBSCRAPS_SIGNING_SECRET
@@ -42,6 +41,7 @@ const share = async req => {
       description,
       name,
       email,
+      club,
       timestamp
     }
   })

@@ -76,6 +76,7 @@ model Clubscraps {
   description String
   name        String
   email       String
+  club        String
   timestamp   Float    @unique
   update      Updates?
 }
