@@ -13,6 +13,12 @@ export const getRawPosts = async (max = null, params = {}) => {
         include: {
           EmojiType: true
         }
+      },
+      clubscrap: {
+        select: {
+          name: true,
+          email: true
+        }
       }
     },
     ...params
@@ -42,12 +48,15 @@ export const transformPost = p => ({
   id: p.id,
   user: p.user ? p.user : {},
   timestamp: p.messageTimestamp || null,
-  slackUrl: `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp.toString().replace('.', '').padEnd(16, '0')}`,
+  slackUrl: `https://hackclub.slack.com/archives/${
+    p.channel
+  }/p${p.messageTimestamp.toString().replace('.', '').padEnd(16, '0')}`,
   postedAt: formatTS(p.messageTimestamp),
   text: p.text != null ? p.text : '',
   attachments: p.attachments,
   mux: p.muxPlaybackIDs,
-  reactions: transformReactions(p.emojiReactions) || []
+  reactions: transformReactions(p.emojiReactions) || [],
+  clubscrap: p.clubscrap
 })
 
 export const getPosts = async (max = null) => {

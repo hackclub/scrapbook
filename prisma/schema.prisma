@@ -10,8 +10,8 @@ datasource db {
 }
 
 model Accounts {
-  slackID                 String     @unique
-  username                String     @unique
+  slackID                 String    @unique
+  username                String    @unique
   streakCount             Int?
   maxStreaks              Int?
   displayStreak           Boolean?
@@ -50,6 +50,8 @@ model Updates {
   isLargeVideo     Boolean?
   emojiReactions   EmojiReactions[]
   channel          String?
+  clubscrapID      String?          @unique
+  clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
 }
 
 model EmojiType {
@@ -66,4 +68,14 @@ model EmojiReactions {
   emojiTypeName String?
   usersReacted  String[]
   updatedAt     DateTime   @default(now()) @map("created_at")
+}
+
+model Clubscraps {
+  id          String   @id @default(cuid())
+  createdAt   DateTime
+  description String
+  name        String
+  email       String
+  timestamp   Float    @unique
+  update      Updates?
 }
