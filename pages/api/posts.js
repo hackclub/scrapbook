@@ -1,6 +1,7 @@
 import { find, compact, isEmpty } from 'lodash'
 import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
+import {emailToPfp} from '../../lib/email'
 import prisma from '../../lib/prisma'
 
 export const getRawPosts = async (max = null, params = {}) => {
@@ -57,7 +58,11 @@ export const transformPost = p => ({
   attachments: p.attachments,
   mux: p.muxPlaybackIDs,
   reactions: transformReactions(p.emojiReactions) || [],
-  clubscrap: p.clubscrap
+  clubscrap: p.clubscrap ? {
+    name: p?.clubscrap.name,
+    avatar: emailToPfp(p?.clubscrap.email),
+    club: p?.clubscrap.club,
+  } : {}
 })
 
 export const getPosts = async (max = null) => {
