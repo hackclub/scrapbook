@@ -7,7 +7,7 @@ const share = async req => {
     await fetch('https://hack.af/share').then(res => res.url)
   ).origin
 
-  const channel = req.headers.origin === official ? 'C01504DCLVD' : 'C0P5NE354'
+  const channel = req.headers.origin === official ? 'C01504DCLVD' : 'C01504DCLVD' // C0P5NE354
 
   /* okay sweet, let's post the request body in slack */
   const { email, name, club, link, image, description } = data
