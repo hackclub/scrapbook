@@ -10,8 +10,8 @@ datasource db {
 }
 
 model Accounts {
-  slackID                 String     @unique
-  username                String     @unique
+  slackID                 String    @unique(map: "Accounts.slackID_unique")
+  username                String    @unique(map: "Accounts.username_unique")
   streakCount             Int?
   maxStreaks              Int?
   displayStreak           Boolean?
@@ -23,7 +23,6 @@ model Accounts {
   fullSlackMember         Boolean?
   avatar                  String?
   webring                 String[]
-  updates                 Updates[]
   newMember               Boolean
   timezoneOffset          Int
   timezone                String
@@ -31,12 +30,11 @@ model Accounts {
   customAudioURL          String?
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
-
+  updates                 Updates[]
 }
 
 model Updates {
   id               String           @id @default(cuid())
-  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
   accountsSlackID  String?
   postTime         DateTime?
   text             String?
@@ -48,22 +46,36 @@ model Updates {
   backupAssetID    String?
   backupPlaybackID String?
   isLargeVideo     Boolean?
-  emojiReactions   EmojiReactions[]
   channel          String?
+  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
+  emojiReactions   EmojiReactions[]
+  clubscrapID      String?          @unique
+  clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
 }
 
 model EmojiType {
-  name           String           @unique
+  name           String           @unique(map: "EmojiType.name_unique")
   emojiSource    String?
   emojiReactions EmojiReactions[]
 }
 
 model EmojiReactions {
   id            String     @id @default(cuid())
-  update        Updates?   @relation(fields: [updateId], references: [id])
   updateId      String?
-  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
   emojiTypeName String?
   usersReacted  String[]
   updatedAt     DateTime   @default(now()) @map("created_at")
+  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
+  update        Updates?   @relation(fields: [updateId], references: [id])
+}
+
+model Clubscraps {
+  id          String   @id @default(cuid())
+  createdAt   DateTime
+  description String
+  name        String
+  email       String
+  club        String?
+  timestamp   Float    @unique
+  update      Updates?
 }
