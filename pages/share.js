@@ -303,8 +303,8 @@ export default function Page({ link, clubs }) {
           <span>Club</span>
           <select onInput={handleClubInput}>
             <option value=""></option>
+            <option value="other">Other</option>
             {clubs.map( (club, i) => <option key={"club:" + i} value={club}>{club}</option>)}
-            <option value="other">other</option>
           </select>
         </div>
 
