@@ -55,6 +55,7 @@ const StreaksPage = ({ users }) => {
         <div>
           <h2>Current</h2>
           {orderBy(users, 'streakCount', 'desc')
+            .filter(u => u.slackID !== 'U035D3VA7R7')
             .slice(0, 15)
             .map(u => (
               <div key={u.id} className="item">
