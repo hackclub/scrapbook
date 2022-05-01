@@ -8,8 +8,8 @@ const StreaksPage = ({ users }) => {
     <>
       <Meta
         as={Head}
-        name="Hack Club's Scrapbook"
-        title="About"
+        name="Hack Club Scrapbook"
+        title="Streaks"
         description="A daily streak system & portfolio for your projects. Join the Hack Club community & get yours started."
         image="https://cloud-53i932gta-hack-club-bot.vercel.app/0scrapbook.jpg"
       />
