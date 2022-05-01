@@ -9,6 +9,7 @@ export const getUserStreaks = () =>
     },
     select: {
       username: true,
+      slackID: true,
       avatar: true,
       streakCount: true,
       maxStreaks: true

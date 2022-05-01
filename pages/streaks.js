@@ -15,7 +15,12 @@ const StreaksPage = ({ users }) => {
       />
       <style jsx global>{`
         .container {
-          max-width: 500px !important;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          place-content: center;
+          place-items: center;
+          place-self: center;
+          max-width: 1000px !important;
           font-size: 20px !important;
           line-height: 1.625;
         }
@@ -35,19 +40,40 @@ const StreaksPage = ({ users }) => {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 0.5em;
+          width: 350px;
+        }
+
+        @media (max-width: 800px) {
+          .container {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
 
       <h1>Who's got the highest streak?</h1>
       <main className="container">
-        {orderBy(users, 'maxStreaks', 'desc')
-          .slice(0, 40)
-          .map(u => (
-            <div key={u.id} className="item">
-              <Mention username={u.username} />
-              <p>{u.maxStreaks} 🔥</p>
-            </div>
-          ))}
+        <div>
+          <h2>Current</h2>
+          {orderBy(users, 'streakCount', 'desc')
+            .slice(0, 15)
+            .map(u => (
+              <div key={u.id} className="item">
+                <Mention username={u.username} />
+                <p>{u.streakCount}&nbsp;🔥</p>
+              </div>
+            ))}
+        </div>
+        <div>
+          <h2>All time</h2>
+          {orderBy(users, 'maxStreaks', 'desc')
+            .slice(0, 15)
+            .map(u => (
+              <div key={u.id} className="item">
+                <Mention username={u.username} />
+                <p>{u.maxStreaks}&nbsp;🔥</p>
+              </div>
+            ))}
+        </div>
       </main>
     </>
   )
