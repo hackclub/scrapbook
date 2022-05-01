@@ -3,7 +3,6 @@ import prisma from '../../lib/prisma'
 export const getUserStreaks = () =>
   prisma.accounts.findMany({
     where: {
-      fullSlackMember: true,
       maxStreaks: {
         gt: 0
       }
