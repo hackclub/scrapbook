@@ -27,6 +27,7 @@ const pageNotFound = () => (
         font-size: 128px;
         margin: 0;
         line-height: 1.25;
+        letter-spacing: .05em;
       }
       @media (min-width: 32em) {
         h1 {
