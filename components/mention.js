@@ -15,6 +15,7 @@ export const StaticMention = memo(
           height={size}
           className="mention-avatar"
         />
+        {" "}
         @{user.username}
         {children}
       </a>
