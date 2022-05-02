@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma'
 
-export const getRawUsers = (onlyFull = false, where = null) =>
+export const getRawUsers = (onlyFull = false, where = undefined) =>
   prisma.accounts.findMany({
     where: null
   })
