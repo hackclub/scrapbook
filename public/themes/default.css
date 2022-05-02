@@ -427,3 +427,6 @@ a.post-attachment:first-child:last-child {
   font-size: 14px;
   font-family: var(--fonts-mono);
 }
+.mention-avatar {
+  margin-right: 4px;
+}
