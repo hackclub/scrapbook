@@ -44,6 +44,8 @@ To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack
 
 Want to preview your CSS before adding it to your profile? Check out [@jasonappah](https://github.com/jasonappah)’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
 
+If you are a beginner at coding and need a more in depth guide on how to work with CSS, check out [@sampoder](https://github.com/sampoder)’s workshop on the topic, this covers different useful areas like CSS variables, fonts and making custom animations. You can access it from [here](https://workshops.hackclub.com/scrapbook_css/).
+
 ### Colors & fonts
 
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
