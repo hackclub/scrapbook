@@ -32,6 +32,7 @@ model Accounts {
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
   updates                 Updates[]
+  tokens                  Token[]
 }
 
 model Updates {
@@ -79,4 +80,11 @@ model Clubscraps {
   club        String?
   timestamp   Float    @unique
   update      Updates?
+}
+
+model Token {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userEmail String
+  user      Accounts     @relation(fields: [userEmail], references: [email])
 }
