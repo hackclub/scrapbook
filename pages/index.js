@@ -19,7 +19,7 @@ const Header = ({ reactions, children }) => (
       <h1>Hack Club’s Scrapbook</h1>
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
-        are learning & making <Link href="/streaks">every day</Link>.
+        are learning & making <Link href="/streaks" passHref><a>every day</a></Link>.
       </p>
       <article className="post-reactions">
         <h2 className="headline">Explore</h2>
