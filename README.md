@@ -25,7 +25,7 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 - `/scrappy-togglestreaks all`: opts out of streaks completely
 - `/scrappy-open`: opens your scrapbook (or another user's if you specify a username)
 - `/scrappy-setcss`: adds a custom CSS file to your scrapbook profile. [Check out this cool example](https://scrapbook.hackclub.com/msw)!
-- `/scrappy-setdomain`: links a custom domain to your scrapbook profile, e.g. [https://zachlatta.com](https://zachlatta.com)
+- `/scrappy-setdomain`: links a custom domain to your scrapbook profile, e.g. [scrapbook.maggieliu.dev](https://scrapbook.maggieliu.dev/)
 - `/scrappy-setusername`: change your profile username
 - `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
 - `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
@@ -36,7 +36,7 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 
 ## Custom domains
 
-To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`zachlatta.com`](https://zachlatta.com)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
+To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 ## CSS customization
 
