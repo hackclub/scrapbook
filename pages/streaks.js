@@ -29,7 +29,7 @@ const StreaksPage = ({ users }) => {
           color: var(--colors-orange);
           font-family: var(--fonts-display);
           font-size: 36px;
-          text-align: center
+          text-align: center;
           margin: 0;
           line-height: 1;
           padding: 16px;
