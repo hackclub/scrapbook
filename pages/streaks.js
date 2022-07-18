@@ -26,12 +26,13 @@ const StreaksPage = ({ users }) => {
         }
 
         h1 {
-        color: var(--colors-orange);
-        font-family: var(--fonts-display);
-        margin: 0;
-        font-size: 36px;
-        line-height: 1;
-        padding: 16px;
+          color: var(--colors-orange);
+          font-family: var(--fonts-display);
+          font-size: 36px;
+          text-align: center
+          margin: 0;
+          line-height: 1;
+          padding: 16px;
         }
 
         .item {
