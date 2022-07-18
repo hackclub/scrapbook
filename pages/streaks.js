@@ -26,12 +26,12 @@ const StreaksPage = ({ users }) => {
         }
 
         h1 {
-          font-size: 3rem;
-          line-height: 1.25;
-          text-align: center;
-          margin-top: 0;
-          margin-bottom: 0.5em;
-          font-style: italic;
+        color: var(--colors-orange);
+        font-family: var(--fonts-display);
+        margin: 0;
+        font-size: 36px;
+        line-height: 1;
+        padding: 16px;
         }
 
         .item {
@@ -48,6 +48,18 @@ const StreaksPage = ({ users }) => {
             grid-template-columns: 1fr;
           }
         }
+        @supports (-webkit-background-clip: text) {
+        h1 {
+          background-image: radial-gradient(
+            ellipse farthest-corner at top left,
+            var(--colors-yellow),
+            var(--colors-orange)
+          );
+          background-repeat: no-repeat;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
       `}</style>
 
       <h1>Who's got the highest streak?</h1>
