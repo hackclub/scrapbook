@@ -6,7 +6,7 @@ Scrapbook was made by the Hack Club community because many of us have found that
 
 ## The Future of Scrapbook
 
-Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like: 
+Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like (after a general spring cleaning of the codebase): 
 
 1. Scrapbook is opened up to Clubs. This means building out a better UX for club members & then make the platform an important part of the Clubs program.
     1. The platform includes features that enable hackathon organisers to use Scrapbook at their events.
@@ -14,6 +14,8 @@ Scrapbook was originally developed in 2020 for the Summer of Making. Since then,
 3. Scrapbook's website becomes something that a Hack Clubber would be proud to share outside of Hack Club.
 4. Scrapbook features consistent high-quality posts from HQ-ers that encourage sharing ongoing projects and create a buzz around the channel.
 5. Scrapbook streaks work consistently & feel meaningful again.
+
+If you have thoughts about how we could make Scrapbook v2 special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [Slack](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
 
 ## How do I join?
 
