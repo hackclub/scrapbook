@@ -262,7 +262,11 @@ export const getStaticProps = async ({ params }) => {
   if (name.length < 2) return console.error('No emoji') || lost
 
   try {
-    const posts = await getPosts(name, 48)
+    const posts = await getPosts(name, 48, name == "summer-of-making" ? {
+      postTime: {
+        lte: new Date(2021, 1)
+      }
+    } : {})
     if (!posts || posts.length === 0) return lost
     const allReactions = flatten(map(posts, 'reactions'))
     const emoji = find(allReactions, { name })
