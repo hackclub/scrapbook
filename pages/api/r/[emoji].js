@@ -32,6 +32,6 @@ export default async (req, res) => {
     postTime: {
       lte: new Date(2021, 1)
     }
-  } : {}))) || []
+  } : {})) || []
   res.json(posts)
 }
