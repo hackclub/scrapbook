@@ -2,7 +2,7 @@ import { map, find, isEmpty, orderBy, filter } from 'lodash'
 import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
-export const getPosts = async (emoji, maxRecords = 256) => {
+export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
   const users = await getRawUsers(true)
   const allUpdates = await getRawPosts(maxRecords, {
     where: {
@@ -10,7 +10,8 @@ export const getPosts = async (emoji, maxRecords = 256) => {
         some: {
           emojiTypeName: emoji
         }
-      }
+      },
+      ...where
     }
   })
   if (!allUpdates) console.error('Could not fetch posts')
