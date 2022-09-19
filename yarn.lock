@@ -631,10 +631,10 @@ hastscript@^6.0.0:
     property-information "^5.0.0"
     space-separated-tokens "^1.0.0"
 
-hls.js@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.2.1.tgz#09b0207c60fcb3340a88e8d3d1523799fe5fbedf"
-  integrity sha512-+m/5+ikSpmQQvb6FmVWZUZfzvTJMn/QVfiCGP1Oq9WW4RKrAvxlExkhhbcVGgGqLNPFk1kdFkVQur//wKu3JVw==
+hls.js@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.2.3.tgz#9b9e5d5b05c4912dacec173962694b710eea33ac"
+  integrity sha512-CC/vHi82ldiiydIhliNI3whlcepRXxI2jdpd/KKb6lyEv+74e7lXs4cGk5PHfTLxZMKOj6+m5LX9VAbvV/r7AQ==
 
 hoist-non-react-statics@^3.3.2:
   version "3.3.2"
