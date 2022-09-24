@@ -1,0 +1,29 @@
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+model User {
+  id                  Int @id @default(autoincrement())
+  email               String  @unique
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  webAuthnChallenge   String? @unique
+  credentials         UserCredential[]
+}
+
+model UserCredential {
+  id         String  @id
+  userId     Int
+  user       User    @relation(fields: [userId], references: [id])
+  publicKey  Bytes
+  transports String?
+  counter    BigInt
+}
