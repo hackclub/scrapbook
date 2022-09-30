@@ -59,7 +59,7 @@ const ForgotPasswordPage = () => {
                       className="rw-label"
                       errorClassName="rw-label rw-label-error"
                     >
-                      Username
+                      Email
                     </Label>
                     <TextField
                       name="username"

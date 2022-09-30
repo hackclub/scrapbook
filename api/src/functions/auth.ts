@@ -108,15 +108,36 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: ({ username, hashedPassword, salt, userAttributes }) => {
-      return db.user.create({
+    handler: ({ username, hashedPassword, salt }) => {
+      return db.accounts.create({
         data: {
           email: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          // name: userAttributes.name
         },
+      }).then(r => {
+        try {
+          return db.accounts.update({
+            where: {
+              id: r.id
+            },
+            data: {
+              username: username.split("@")[0]
+            }
+          })
+        }
+        catch {
+          return db.accounts.update({
+            where: {
+              id: r.id
+            },
+            data: {
+              username: username.split("@")[0] + r.id
+            }
+          })
+        }
       })
+
     },
 
     errors: {
@@ -132,11 +153,11 @@ export const handler = async (
 
     // The name of the property you'd call on `db` to access your user table.
     // ie. if your Prisma model is named `User` this value would be `user`, as in `db.user`
-    authModelAccessor: 'user',
+    authModelAccessor: 'accounts',
 
     // The name of the property you'd call on `db` to access your user credentials table.
     // ie. if your Prisma model is named `UserCredential` this value would be `userCredential`, as in `db.userCredential`
-    credentialModelAccessor: 'userCredential',
+    credentialModelAccessor: 'accountCredentials',
 
     // A map of what dbAuth calls a field to what your database calls it.
     // `id` is whatever column you use to uniquely identify a user (probably

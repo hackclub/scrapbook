@@ -46,7 +46,7 @@ const LoginPage = ({ type }) => {
 
   // focus on the username field as soon as the page loads
   const usernameRef = useRef()
-  useEffect(() => {
+  useEffect(() => { // @ts-ignore
     usernameRef.current && usernameRef.current.focus()
   }, [])
 
@@ -146,7 +146,7 @@ const LoginPage = ({ type }) => {
         className="rw-label"
         errorClassName="rw-label rw-label-error"
       >
-        Username
+        Email
       </Label>
       <TextField
         name="username"

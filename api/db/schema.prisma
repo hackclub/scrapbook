@@ -8,22 +8,83 @@ generator client {
   binaryTargets = "native"
 }
 
-model User {
-  id                  Int @id @default(autoincrement())
-  email               String  @unique
-  hashedPassword      String
-  salt                String
-  resetToken          String?
-  resetTokenExpiresAt DateTime?
-  webAuthnChallenge   String? @unique
-  credentials         UserCredential[]
-}
-
-model UserCredential {
-  id         String  @id
+model AccountCredentials {
+  id         String   @id
   userId     Int
-  user       User    @relation(fields: [userId], references: [id])
+  user       Accounts @relation(fields: [userId], references: [id])
   publicKey  Bytes
   transports String?
   counter    BigInt
+}
+
+model Accounts {
+  id                      Int                  @id @default(autoincrement())
+  // Fields for web-based Scrapbook users
+  email                   String?              @unique
+  hashedPassword          String?
+  salt                    String?
+  resetToken              String?
+  resetTokenExpiresAt     DateTime?
+  webAuthnChallenge       String?              @unique
+  credentials             AccountCredentials[]
+  // Fields for Slack-based Scrapbook users
+  slackID                 String?              @unique
+  // Fields for all Scrapbook users
+  username                String               @unique @default(uuid())
+  timezone                String @default("Factory")
+  timezoneOffset          Int @default(0)
+  // Optional fields for all Scrapbook users
+  streakCount             Int?
+  maxStreaks              Int?
+  displayStreak           Boolean?
+  streaksToggledOff       Boolean?
+  customDomain            String?
+  cssURL                  String?
+  website                 String?
+  github                  String?
+  fullSlackMember         Boolean?
+  avatar                  String?
+  webring                 String[]
+  pronouns                String?
+  customAudioURL          String?
+  lastUsernameUpdatedTime DateTime?
+  webhookURL              String?
+  updates                 Updates[]
+  // Deprectated old fields for cross-compatibility.
+  newMember               Boolean?
+}
+
+model Updates {
+  id               String           @id @default(cuid())
+  accountsSlackID  String?
+  postTime         DateTime?
+  text             String?
+  attachments      String[]
+  muxAssetIDs      String[]
+  muxPlaybackIDs   String[]
+  muxAssetStatuses String?
+  messageTimestamp Float?
+  backupAssetID    String?
+  backupPlaybackID String?
+  isLargeVideo     Boolean?
+  channel          String?
+  clubscrapID      String?          @unique
+  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
+  emojiReactions   EmojiReactions[]
+}
+
+model EmojiType {
+  name           String           @unique(map: "EmojiType.name_unique")
+  emojiSource    String?
+  emojiReactions EmojiReactions[]
+}
+
+model EmojiReactions {
+  id            String     @id @default(cuid())
+  updateId      String?
+  emojiTypeName String?
+  usersReacted  String[]
+  updatedAt     DateTime   @default(now()) @map("created_at")
+  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
+  update        Updates?   @relation(fields: [updateId], references: [id])
 }
