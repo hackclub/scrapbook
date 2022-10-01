@@ -61,7 +61,7 @@ CREATE TABLE "Accounts" (
 -- CreateTable
 CREATE TABLE "Updates" (
     "id" TEXT NOT NULL,
-    "accountsSlackID" TEXT,
+    "accountsID" TEXT,
     "postTime" TIMESTAMP(3),
     "text" TEXT,
     "attachments" TEXT[],
@@ -117,7 +117,7 @@ CREATE UNIQUE INDEX "EmojiType.name_unique" ON "EmojiType"("name");
 ALTER TABLE "AccountCredentials" ADD CONSTRAINT "AccountCredentials_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Accounts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Updates" ADD CONSTRAINT "Updates_accountsSlackID_fkey" FOREIGN KEY ("accountsSlackID") REFERENCES "Accounts"("slackID") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Updates" ADD CONSTRAINT "Updates_accountsID_fkey" FOREIGN KEY ("accountsID") REFERENCES "Accounts"("slackID") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EmojiReactions" ADD CONSTRAINT "EmojiReactions_emojiTypeName_fkey" FOREIGN KEY ("emojiTypeName") REFERENCES "EmojiType"("name") ON DELETE SET NULL ON UPDATE CASCADE;

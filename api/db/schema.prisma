@@ -8,31 +8,31 @@ generator client {
   binaryTargets = "native"
 }
 
-model AccountCredentials {
-  id         String   @id
+model AccountCredential {
+  id         String  @id
   userId     Int
-  user       Accounts @relation(fields: [userId], references: [id])
+  user       Account @relation(fields: [userId], references: [id])
   publicKey  Bytes
   transports String?
   counter    BigInt
 }
 
-model Accounts {
-  id                      Int                  @id @default(autoincrement())
+model Account {
+  id                      Int                 @id @default(autoincrement())
   // Fields for web-based Scrapbook users
-  email                   String?              @unique
+  email                   String?             @unique
   hashedPassword          String?
   salt                    String?
   resetToken              String?
   resetTokenExpiresAt     DateTime?
-  webAuthnChallenge       String?              @unique
-  credentials             AccountCredentials[]
+  webAuthnChallenge       String?             @unique
+  credentials             AccountCredential[]
   // Fields for Slack-based Scrapbook users
-  slackID                 String?              @unique
+  slackID                 String?             @unique
   // Fields for all Scrapbook users
-  username                String               @unique @default(uuid())
-  timezone                String @default("Factory")
-  timezoneOffset          Int @default(0)
+  username                String              @unique @default(uuid())
+  timezone                String              @default("Factory")
+  timezoneOffset          Int                 @default(0)
   // Optional fields for all Scrapbook users
   streakCount             Int?
   maxStreaks              Int?
@@ -49,15 +49,15 @@ model Accounts {
   customAudioURL          String?
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
-  updates                 Updates[]
+  updates                 Update[]
   // Deprectated old fields for cross-compatibility.
   newMember               Boolean?
 }
 
-model Updates {
-  id               String           @id @default(cuid())
-  accountsSlackID  String?
-  postTime         DateTime?
+model Update {
+  id               String          @id @default(cuid())
+  accountsID       Int?
+  postTime         DateTime?       @default(now())
   text             String?
   attachments      String[]
   muxAssetIDs      String[]
@@ -68,23 +68,24 @@ model Updates {
   backupPlaybackID String?
   isLargeVideo     Boolean?
   channel          String?
-  clubscrapID      String?          @unique
-  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
-  emojiReactions   EmojiReactions[]
+  clubscrapID      String?         @unique
+  Accounts         Account?        @relation(fields: [accountsID], references: [id])
+  emojiReactions   EmojiReaction[]
 }
 
 model EmojiType {
-  name           String           @unique(map: "EmojiType.name_unique")
+  id             String          @id @default(cuid())
+  name           String          @unique(map: "EmojiType.name_unique")
   emojiSource    String?
-  emojiReactions EmojiReactions[]
+  emojiReactions EmojiReaction[]
 }
 
-model EmojiReactions {
+model EmojiReaction {
   id            String     @id @default(cuid())
   updateId      String?
   emojiTypeName String?
   usersReacted  String[]
   updatedAt     DateTime   @default(now()) @map("created_at")
   EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
-  update        Updates?   @relation(fields: [updateId], references: [id])
+  update        Update?    @relation(fields: [updateId], references: [id])
 }

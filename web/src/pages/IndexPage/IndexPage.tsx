@@ -10,7 +10,7 @@ const IndexPage = () => {
         <MetaTags title="Index" description="Index page" />
         <h1>The walls have fallen. Welcome.</h1>
         <p>
-          Nothing lies here, yet.
+          Nothing lies here, yet. {JSON.stringify(currentUser)}
         </p>
         <p>
           Want the walls back? Fair. <span style={{textDecoration: 'underline'}} onClick={logOut}>Rebuild the walls.</span>
