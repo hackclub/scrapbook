@@ -14,8 +14,8 @@ export const getProfile = async (value, field = 'username') => {
   return user && user?.username ? user : {}
 }
 
-export const getPosts = async user => {
-  const allUpdates = await getRawPosts(null, {
+export const getPosts = async (user, max = null) => {
+  const allUpdates = await getRawPosts(max, {
     where: {
       Accounts: { username: user.username}
     }
@@ -52,6 +52,6 @@ export default async (req, res) => {
       profile.webring.map(async id => await getProfile(id, 'slackID'))
     )
   }
-  const posts = (await getPosts(profile)) || []
+  const posts = (await getPosts(profile, req.query.max ? Number(req.query.max) : null)) || []
   res.json({ profile, webring, posts })
 }
