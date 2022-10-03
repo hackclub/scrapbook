@@ -106,9 +106,9 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               <td>{truncate(update.accountsID)}</td>
               <td>{timeTag(update.postTime)}</td>
               <td>{truncate(update.text)}</td>
-              <td>{truncate(update.attachments)}</td>
-              <td>{truncate(update.muxAssetIDs)}</td>
-              <td>{truncate(update.muxPlaybackIDs)}</td>
+              <td>{formatEnum(update.attachments)}</td>
+              <td>{formatEnum(update.muxAssetIDs)}</td>
+              <td>{formatEnum(update.muxPlaybackIDs)}</td>
               <td>{truncate(update.muxAssetStatuses)}</td>
               <td>{truncate(update.messageTimestamp)}</td>
               <td>{truncate(update.backupAssetID)}</td>

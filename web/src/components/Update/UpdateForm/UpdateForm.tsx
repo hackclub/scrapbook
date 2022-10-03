@@ -12,8 +12,6 @@ import {
 import type { EditUpdateById, UpdateUpdateInput } from 'types/graphql'
 import type { RWGqlError } from '@redwoodjs/forms'
 
-
-
 const formatDatetime = (value) => {
   if (value) {
     return value.replace(/:\d{2}\.\d{3}\w/, '')
@@ -32,46 +30,6 @@ interface UpdateFormProps {
 
 const UpdateForm = (props: UpdateFormProps) => {
   const onSubmit = (data: FormUpdate) => {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     props.onSave(data, props?.update?.id)
   }
 

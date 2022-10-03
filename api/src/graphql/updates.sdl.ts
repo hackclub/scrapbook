@@ -57,7 +57,7 @@ export const schema = gql`
 
   type Mutation {
     createUpdate(input: CreateUpdateInput!): Update! @requireAuth
-    updateUpdate(id: String!, input: UpdateUpdateInput!): Update! @requireAuth
-    deleteUpdate(id: String!): Update! @requireAuth
+    updateUpdate(id: String!, input: UpdateUpdateInput!): Update! @requireAuth @requireUpdateOwnership
+    deleteUpdate(id: String!): Update! @requireAuth @requireUpdateOwnership
   }
 `
