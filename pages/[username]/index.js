@@ -41,9 +41,7 @@ const Profile = ({
       title={`@${profile.username}`}
       description={`Follow @${profile.username}’s progress ${
         profile.displayStreak && 0 < profile.streakCount
-          ? `(currently a ${
-              profile.streakCount <= 7 ? profile.streakCount : '7+'
-            }-day streak!) `
+          ? `(currently a ${profile.streakCount}-day streak!) `
           : ''
       }making things in the Hack Club community.`}
       image={`https://workshop-cards.hackclub.com/@${
@@ -52,9 +50,7 @@ const Profile = ({
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${
         profile.displayStreak && 0 < profile.streakCount
-          ? profile.streakCount <= 7
-            ? profile.streakCount + '-day streak'
-            : '7%2b day streak'
+          ? profile.streakCount + '-day streak'
           : ''
       }`}
     />
@@ -91,11 +87,7 @@ const Profile = ({
               }`}
             >
               <Icon size={32} glyph="admin-badge" title="Streak icon" />
-              <span className="header-streak-count">{`${
-                profile.streakCount <= 7
-                  ? profile.streakCount + '-day streak'
-                  : '7+ day streak'
-              }`}</span>
+              <span className="header-streak-count">{`${profile.streakCount}-day streak`}</span>
             </span>
             <div className="header-links">
               <Link
