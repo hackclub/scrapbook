@@ -2,6 +2,8 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { useAuth } from '@redwoodjs/auth'
 
+import UpdatesCell from 'src/components/Update/UpdatesCell'
+
 const IndexPage = () => {
   const { isAuthenticated, currentUser, logOut } = useAuth()
   if(isAuthenticated){
@@ -10,11 +12,12 @@ const IndexPage = () => {
         <MetaTags title="Index" description="Index page" />
         <h1>The walls have fallen. Welcome.</h1>
         <p>
-          Nothing lies here, yet. {JSON.stringify(currentUser)}
-        </p>
-        <p>
           Want the walls back? Fair. <span style={{textDecoration: 'underline'}} onClick={logOut}>Rebuild the walls.</span>
         </p>
+        <p>
+          Below our some updates. <Link to={routes.newUpdate()}>You can create your own.</Link>
+        </p>
+        <UpdatesCell />
       </>
     )
   }

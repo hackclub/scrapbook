@@ -87,15 +87,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
             <th>Post time</th>
             <th>Text</th>
             <th>Attachments</th>
-            <th>Mux asset i ds</th>
-            <th>Mux playback i ds</th>
-            <th>Mux asset statuses</th>
-            <th>Message timestamp</th>
-            <th>Backup asset id</th>
-            <th>Backup playback id</th>
-            <th>Is large video</th>
-            <th>Channel</th>
-            <th>Clubscrap id</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -107,15 +98,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               <td>{timeTag(update.postTime)}</td>
               <td>{truncate(update.text)}</td>
               <td>{formatEnum(update.attachments)}</td>
-              <td>{formatEnum(update.muxAssetIDs)}</td>
-              <td>{formatEnum(update.muxPlaybackIDs)}</td>
-              <td>{truncate(update.muxAssetStatuses)}</td>
-              <td>{truncate(update.messageTimestamp)}</td>
-              <td>{truncate(update.backupAssetID)}</td>
-              <td>{truncate(update.backupPlaybackID)}</td>
-              <td>{checkboxInputTag(update.isLargeVideo)}</td>
-              <td>{truncate(update.channel)}</td>
-              <td>{truncate(update.clubscrapID)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link
