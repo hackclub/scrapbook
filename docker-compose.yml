@@ -4,7 +4,7 @@ services:
     image: postgres
     environment:
       POSTGRES_DB: Scrapbook
-      POSTGRES_USER: sam
+      POSTGRES_USER: orpheus
       POSTGRES_PASSWORD: hackclub
     ports:
       - 5432:5432
