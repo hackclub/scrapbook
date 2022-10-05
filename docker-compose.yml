@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: Scrapbook
+      POSTGRES_USER: sam
+      POSTGRES_PASSWORD: 2103
+    ports:
+      - 5432:5432
