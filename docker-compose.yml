@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: Scrapbook
+      POSTGRES_USER: orpheus
+      POSTGRES_PASSWORD: hackclub
+    ports:
+      - 5432:5432
