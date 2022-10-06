@@ -37,7 +37,6 @@ const truncate = (value: string | number) => {
   return output ?? ''
 }
 
-
 const jsonTruncate = (obj: unknown) => {
   return truncate(JSON.stringify(obj, null, 2))
 }
@@ -97,7 +96,9 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               <td>{truncate(update.accountsID)}</td>
               <td>{timeTag(update.postTime)}</td>
               <td>{truncate(update.text)}</td>
-              <td>{formatEnum(update.attachments)}</td>
+              <td>
+                <img src={update.attachments[0]} />
+              </td>
               <td>
                 <nav className="rw-table-actions">
                   <Link
