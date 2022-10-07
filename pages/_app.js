@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Analytics from "../components/analytics"
+
 import '../public/fonts.css'
 import '../public/app.css'
 import '../public/cartridge.css'
@@ -12,6 +14,7 @@ const App = ({ Component, pageProps }) => (
     <Nav />
     <NProgress color={'#ec3750'} />
     <Component {...pageProps} />
+    <Analytics />
   </>
 )
 
