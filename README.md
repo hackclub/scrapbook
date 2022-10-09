@@ -15,7 +15,7 @@ Scrapbook was originally developed in 2020 for the Summer of Making. Since then,
 4. Scrapbook features consistent high-quality posts from HQ-ers that encourage sharing ongoing projects and create a buzz around the channel.
 5. Scrapbook streaks work consistently & feel meaningful again.
 
-If you have thoughts about how we could make Scrapbook v2 special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [Slack](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
+If you have thoughts about how we could make Scrapbook v2 special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [#scrapbook-dev in Slack](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
 
 ## How do I join?
 
