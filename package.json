@@ -14,7 +14,11 @@
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
-    "root": true
+    "root": true,
+    "rules": {
+      "@typescript-eslint/ban-ts-comment": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
   },
   "engines": {
     "node": ">=14.19 <=16.x",

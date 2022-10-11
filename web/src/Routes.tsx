@@ -8,9 +8,8 @@
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
 import { Set, Router, Route } from '@redwoodjs/router'
-import UpdatesLayout from './layouts/UpdatesLayout'
-import MainLayout from './layouts/MainLayout'
 
+import MainLayout from './layouts/MainLayout'
 const Routes = () => {
   return (
     <Router>

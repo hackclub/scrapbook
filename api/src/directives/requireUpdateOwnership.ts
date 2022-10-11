@@ -23,7 +23,7 @@ type requireUpdateOwnershipValidate = ValidatorDirectiveFunc<{
 
 const validate: requireUpdateOwnershipValidate = async ({ args, context }) => {
   console.log('Look here!')
-  let item = await db.update.findUnique({
+  const item = await db.update.findUnique({
     where: {
       id: String(args.id),
     },

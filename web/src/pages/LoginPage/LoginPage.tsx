@@ -154,7 +154,6 @@ const LoginPage = ({ type }) => {
         className="rw-input"
         errorClassName="rw-input rw-input-error"
         ref={usernameRef}
-        autoFocus
         validation={{
           required: {
             value: true,

@@ -1,18 +1,13 @@
+import type { CreateUpdateInput } from 'types/graphql'
+import { v4 as uuidv4 } from 'uuid'
+
+import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useAuth } from '@redwoodjs/auth'
-import { v4 as uuidv4 } from 'uuid'
 
 import UpdateForm from 'src/components/Update/UpdateForm'
 import S3 from 'src/utils/s3'
-
-import type { CreateUpdateInput } from 'types/graphql'
-
-type UploadData = {
-  uploadUrl: string
-  fileUrl: string
-}
 
 const CREATE_UPDATE_MUTATION = gql`
   mutation CreateUpdateMutation($input: CreateUpdateInput!) {
@@ -23,7 +18,7 @@ const CREATE_UPDATE_MUTATION = gql`
 `
 
 const NewUpdate = () => {
-  const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { currentUser } = useAuth()
 
   const [createUpdate, { loading, error }] = useMutation(
     CREATE_UPDATE_MUTATION,
@@ -58,7 +53,7 @@ const NewUpdate = () => {
 
   const onSave = async (input: CreateUpdateInput) => {
     console.log('server side!')
-    let url = await uploadImage(input['img'][0])
+    const url = await uploadImage(input['img'][0])
     console.log(`New upload: ${url}`)
     input.attachments = [url as string]
     delete input['img']

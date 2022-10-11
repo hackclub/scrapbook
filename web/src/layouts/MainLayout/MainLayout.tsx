@@ -1,16 +1,20 @@
-import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
+import { Link, routes } from '@redwoodjs/router'
 
 type UpdateLayoutProps = {
   children: React.ReactNode
 }
 
 const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
-  const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { isAuthenticated, logOut } = useAuth()
   return (
     <div>
       <header className="mb-2 flex gap-3 p-4">
-        <img src="https://github.com/hackclub.png" className="h-8 rounded-md" />
+        <img
+          src="https://github.com/hackclub.png"
+          alt="Hack Club"
+          className="h-8 rounded-md"
+        />
         <h1 className="rw-heading rw-heading-primary flex-grow">
           <Link to={routes.home()} className="rw-link">
             Scrapbook
@@ -22,6 +26,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
               href="https://github.com/hackclub/scrapbook"
               className="rw-button bg-slate-900 text-gray-100 hover:bg-slate-700"
               target="_blank"
+              rel="noreferrer"
             >
               GitHub
             </a>
@@ -37,12 +42,12 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
             >
               Edit Account
             </Link>
-            <div
+            <button
               className="rw-button bg-red-900 text-gray-100 hover:bg-red-700"
               onClick={logOut}
             >
               Logout
-            </div>
+            </button>
           </>
         ) : (
           <>
@@ -50,6 +55,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
               href="https://github.com/hackclub/scrapbook"
               className="rw-button bg-slate-900 text-gray-100 hover:bg-slate-700"
               target="_blank"
+              rel="noreferrer"
             >
               GitHub
             </a>

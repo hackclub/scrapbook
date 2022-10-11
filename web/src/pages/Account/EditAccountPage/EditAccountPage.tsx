@@ -1,12 +1,8 @@
-import EditAccountCell from 'src/components/Account/EditAccountCell'
-
 import { useAuth } from '@redwoodjs/auth'
 
-type AccountPageProps = {
-  id: number
-}
+import EditAccountCell from 'src/components/Account/EditAccountCell'
 
-function EditAccountPage({ id }: AccountPageProps) {
+function EditAccountPage() {
   const { currentUser } = useAuth()
   if (!currentUser?.id) {
     return <>Loading...</>

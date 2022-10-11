@@ -1,12 +1,11 @@
-import humanize from 'humanize-string'
+import type { DeleteUpdateMutationVariables, FindUpdates } from 'types/graphql'
+
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Update/UpdatesCell'
-
-import type { DeleteUpdateMutationVariables, FindUpdates } from 'types/graphql'
 
 const DELETE_UPDATE_MUTATION = gql`
   mutation DeleteUpdateMutation($id: String!) {
@@ -18,27 +17,12 @@ const DELETE_UPDATE_MUTATION = gql`
 
 const MAX_STRING_LENGTH = 150
 
-const formatEnum = (values: string | string[] | null | undefined) => {
-  if (values) {
-    if (Array.isArray(values)) {
-      const humanizedValues = values.map((value) => humanize(value))
-      return humanizedValues.join(', ')
-    } else {
-      return humanize(values as string)
-    }
-  }
-}
-
 const truncate = (value: string | number) => {
   const output = value?.toString()
   if (output?.length > MAX_STRING_LENGTH) {
     return output.substring(0, MAX_STRING_LENGTH) + '...'
   }
   return output ?? ''
-}
-
-const jsonTruncate = (obj: unknown) => {
-  return truncate(JSON.stringify(obj, null, 2))
 }
 
 const timeTag = (datetime?: string) => {
@@ -49,10 +33,6 @@ const timeTag = (datetime?: string) => {
       </time>
     )
   )
-}
-
-const checkboxInputTag = (checked: boolean) => {
-  return <input type="checkbox" checked={checked} disabled />
 }
 
 const UpdatesList = ({ updates }: FindUpdates) => {
@@ -76,7 +56,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     }
   }
 
-  const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { currentUser } = useAuth()
 
   return (
     <div className="rw-segment rw-table-wrapper-responsive grid grid-cols-3 border-b-0">
@@ -87,10 +67,14 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-2">
-            <img
-              src={update.attachments[0]}
-              className="my-2 rounded-md border bg-gray-200"
-            />
+            {update.attachments.map((attachment, index) => (
+              <img
+                src={attachment}
+                key={`${update.id}-attachment-${index}`}
+                className="my-2 rounded-md border bg-gray-200"
+                alt={`Project by ${truncate(update.Accounts.username)}.`}
+              />
+            ))}
           </div>
           <div className="text-center text-gray-500">
             {timeTag(update.postTime)}

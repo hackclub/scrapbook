@@ -6,8 +6,6 @@ import {
   ValidatorDirectiveFunc,
 } from '@redwoodjs/graphql-server'
 
-import { db } from 'src/lib/db'
-
 export const schema = gql`
   """
   Use to check whether or not a user is the owner of this content
