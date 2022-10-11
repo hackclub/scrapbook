@@ -96,7 +96,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               <div className='text-center text-gray-500'>
                 {timeTag(update.postTime)}
               </div>
-              {update.accountsID == currentUser.id &&
+              {update.accountsID == currentUser?.id &&
               <nav className="rw-table-actions justify-center mt-2 mb-1">
                 <Link
                   to={routes.update({ id: update.id })}

@@ -27,7 +27,7 @@ export const schema = gql`
   }
 
   type Query {
-    updates(filter: UpdatesFilter): [Update!]! @requireAuth
+    updates(filter: UpdatesFilter): [Update!]! @skipAuth
     update(id: String!): Update @requireAuth
   }
 
