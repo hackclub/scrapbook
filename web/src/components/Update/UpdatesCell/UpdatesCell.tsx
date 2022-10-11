@@ -6,8 +6,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import Updates from 'src/components/Update/Updates'
 
 export const QUERY = gql`
-  query FindUpdates {
-    updates {
+  query FindUpdates($username: String) {
+    updates (filter: {Accounts: {username: $username}}) {
       id
       accountsID
       postTime
@@ -20,6 +20,7 @@ export const QUERY = gql`
       backupAssetID
       backupPlaybackID
       isLargeVideo
+      Accounts { username }
       channel
       clubscrapID
     }

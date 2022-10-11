@@ -6,8 +6,14 @@ import type {
 
 import { db } from 'src/lib/db'
 
-export const updates: QueryResolvers['updates'] = () => {
-  return db.update.findMany()
+export const updates: QueryResolvers['updates'] = ({filter}) => {
+  return db.update.findMany({
+    include: {Accounts: true}, 
+    orderBy: {
+      postTime: 'desc'
+    },
+    where: filter
+  })
 }
 
 export const update: QueryResolvers['update'] = ({ id }) => {

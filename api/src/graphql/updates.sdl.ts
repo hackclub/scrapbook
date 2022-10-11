@@ -18,8 +18,16 @@ export const schema = gql`
     emojiReactions: [EmojiReaction!]
   }
 
+  input AccountsFilter {
+    username: String
+  }
+
+  input UpdatesFilter {
+    Accounts: AccountsFilter
+  }
+
   type Query {
-    updates: [Update!]! @requireAuth
+    updates(filter: UpdatesFilter): [Update!]! @requireAuth
     update(id: String!): Update @requireAuth
   }
 
