@@ -16,16 +16,19 @@ export const schema = gql`
   directive @requireUpdateOwnership(roles: [String]) on FIELD_DEFINITION
 `
 
-type requireUpdateOwnershipValidate = ValidatorDirectiveFunc<{ table: string, roles?: string[] }>
+type requireUpdateOwnershipValidate = ValidatorDirectiveFunc<{
+  table: string
+  roles?: string[]
+}>
 
 const validate: requireUpdateOwnershipValidate = async ({ args, context }) => {
-  console.log("Look here!")
+  console.log('Look here!')
   let item = await db.update.findUnique({
     where: {
-      id: String(args.id)
-    }
+      id: String(args.id),
+    },
   })
-  if(item.accountsID != context.currentUser.id){
+  if (item.accountsID != context.currentUser.id) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }

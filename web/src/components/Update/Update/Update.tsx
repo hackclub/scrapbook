@@ -4,7 +4,10 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import type { DeleteUpdateMutationVariables, FindUpdateById } from 'types/graphql'
+import type {
+  DeleteUpdateMutationVariables,
+  FindUpdateById,
+} from 'types/graphql'
 
 const DELETE_UPDATE_MUTATION = gql`
   mutation DeleteUpdateMutation($id: String!) {
@@ -81,13 +84,16 @@ const Update = ({ update }: Props) => {
             <tr>
               <th>Id</th>
               <td>{update.id}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Accounts slack id</th>
               <td>{update.accountsID}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Text</th>
               <td>{update.text}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Attachments</th>
               <td>{update.attachments}</td>
             </tr>

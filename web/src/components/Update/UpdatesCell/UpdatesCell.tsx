@@ -7,7 +7,7 @@ import Updates from 'src/components/Update/Updates'
 
 export const QUERY = gql`
   query FindUpdates($username: String) {
-    updates (filter: {Accounts: {username: $username}}) {
+    updates(filter: { Accounts: { username: $username } }) {
       id
       accountsID
       postTime
@@ -20,7 +20,9 @@ export const QUERY = gql`
       backupAssetID
       backupPlaybackID
       isLargeVideo
-      Accounts { username }
+      Accounts {
+        username
+      }
       channel
       clubscrapID
     }
@@ -33,10 +35,7 @@ export const Empty = () => {
   return (
     <div className="rw-text-center">
       {'No updates yet. '}
-      <Link
-        to={routes.newUpdate()}
-        className="rw-link"
-      >
+      <Link to={routes.newUpdate()} className="rw-link">
         {'Create one?'}
       </Link>
     </div>

@@ -4,7 +4,7 @@ type UpdatePageProps = {
   username: string
 }
 
-const UpdatesPage = ({username}) => {
+const UpdatesPage = ({ username }) => {
   return <UpdatesCell username={username} />
 }
 

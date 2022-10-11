@@ -1,5 +1,5 @@
 import humanize from 'humanize-string'
-import {  useAuth } from '@redwoodjs/auth'
+import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -79,50 +79,50 @@ const UpdatesList = ({ updates }: FindUpdates) => {
   const { isAuthenticated, currentUser, logOut } = useAuth()
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive border-b-0 grid grid-cols-3">
-          {updates.map((update) => (
-            <div key={update.id} className="border-r border-b p-3">
-              <p className="mb-2">
-                <b>
-                  @{truncate(update.Accounts.username)}
-                </b>
-              </p>
-              <p>
-                {truncate(update.text)}
-              </p>
-              <div className="grid grid-cols-2">
-                <img src={update.attachments[0]} className="bg-gray-200 border my-2 rounded-md" />
-              </div>
-              <div className='text-center text-gray-500'>
-                {timeTag(update.postTime)}
-              </div>
-              {update.accountsID == currentUser?.id &&
-              <nav className="rw-table-actions justify-center mt-2 mb-1">
-                <Link
-                  to={routes.update({ id: update.id })}
-                  title={'Show update ' + update.id + ' detail'}
-                  className="rw-button rw-button-small"
-                >
-                  Show
-                </Link>
-                <Link
-                  to={routes.editUpdate({ id: update.id })}
-                  title={'Edit update ' + update.id}
-                  className="rw-button rw-button-small rw-button-blue"
-                >
-                  Edit
-                </Link>
-                <button
-                  type="button"
-                  title={'Delete update ' + update.id}
-                  className="rw-button rw-button-small rw-button-red"
-                  onClick={() => onDeleteClick(update.id)}
-                >
-                  Delete
-                </button>
-              </nav>}
-            </div>
-          ))}
+    <div className="rw-segment rw-table-wrapper-responsive grid grid-cols-3 border-b-0">
+      {updates.map((update) => (
+        <div key={update.id} className="border-r border-b p-3">
+          <p className="mb-2">
+            <b>@{truncate(update.Accounts.username)}</b>
+          </p>
+          <p>{truncate(update.text)}</p>
+          <div className="grid grid-cols-2">
+            <img
+              src={update.attachments[0]}
+              className="my-2 rounded-md border bg-gray-200"
+            />
+          </div>
+          <div className="text-center text-gray-500">
+            {timeTag(update.postTime)}
+          </div>
+          {update.accountsID == currentUser?.id && (
+            <nav className="rw-table-actions mt-2 mb-1 justify-center">
+              <Link
+                to={routes.update({ id: update.id })}
+                title={'Show update ' + update.id + ' detail'}
+                className="rw-button rw-button-small"
+              >
+                Show
+              </Link>
+              <Link
+                to={routes.editUpdate({ id: update.id })}
+                title={'Edit update ' + update.id}
+                className="rw-button rw-button-small rw-button-blue"
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                title={'Delete update ' + update.id}
+                className="rw-button rw-button-small rw-button-red"
+                onClick={() => onDeleteClick(update.id)}
+              >
+                Delete
+              </button>
+            </nav>
+          )}
+        </div>
+      ))}
     </div>
   )
 }

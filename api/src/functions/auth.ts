@@ -109,35 +109,35 @@ export const handler = async (
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
     handler: ({ username, hashedPassword, salt }) => {
-      return db.account.create({
-        data: {
-          email: username,
-          hashedPassword: hashedPassword,
-          salt: salt,
-        },
-      }).then(r => {
-        try {
-          return db.account.update({
-            where: {
-              id: r.id
-            },
-            data: {
-              username: username.split("@")[0]
-            }
-          })
-        }
-        catch {
-          return db.account.update({
-            where: {
-              id: r.id
-            },
-            data: {
-              username: username.split("@")[0] + r.id
-            }
-          })
-        }
-      })
-
+      return db.account
+        .create({
+          data: {
+            email: username,
+            hashedPassword: hashedPassword,
+            salt: salt,
+          },
+        })
+        .then((r) => {
+          try {
+            return db.account.update({
+              where: {
+                id: r.id,
+              },
+              data: {
+                username: username.split('@')[0],
+              },
+            })
+          } catch {
+            return db.account.update({
+              where: {
+                id: r.id,
+              },
+              data: {
+                username: username.split('@')[0] + r.id,
+              },
+            })
+          }
+        })
     },
 
     errors: {

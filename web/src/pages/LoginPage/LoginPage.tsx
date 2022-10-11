@@ -46,7 +46,8 @@ const LoginPage = ({ type }) => {
 
   // focus on the username field as soon as the page loads
   const usernameRef = useRef()
-  useEffect(() => { // @ts-ignore
+  useEffect(() => {
+    // @ts-ignore
     usernameRef.current && usernameRef.current.focus()
   }, [])
 

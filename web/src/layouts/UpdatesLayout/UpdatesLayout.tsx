@@ -11,17 +11,11 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
-          <Link
-            to={routes.updates()}
-            className="rw-link"
-          >
+          <Link to={routes.updates()} className="rw-link">
             Updates
           </Link>
         </h1>
-        <Link
-          to={routes.newUpdate()}
-          className="rw-button rw-button-green"
-        >
+        <Link to={routes.newUpdate()} className="rw-button rw-button-green">
           <div className="rw-button-icon">+</div> New Update
         </Link>
       </header>

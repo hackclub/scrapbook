@@ -107,7 +107,12 @@ export const Success = ({ account }: CellSuccessProps<EditAccountById>) => {
         <h2 className="rw-heading rw-heading-secondary">Edit Your Account</h2>
       </header>
       <div className="rw-segment-main">
-        <AccountForm account={account} onSave={onSave} error={error} loading={loading} />
+        <AccountForm
+          account={account}
+          onSave={onSave}
+          error={error}
+          loading={loading}
+        />
       </div>
     </div>
   )

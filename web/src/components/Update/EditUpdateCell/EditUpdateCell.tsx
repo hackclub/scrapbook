@@ -78,10 +78,17 @@ export const Success = ({ update }: CellSuccessProps<EditUpdateById>) => {
   return (
     <div className="rw-segment">
       <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">Edit Update {update?.id}</h2>
+        <h2 className="rw-heading rw-heading-secondary">
+          Edit Update {update?.id}
+        </h2>
       </header>
       <div className="rw-segment-main">
-        <UpdateForm update={update} onSave={onSave} error={error} loading={loading} />
+        <UpdateForm
+          update={update}
+          onSave={onSave}
+          error={error}
+          loading={loading}
+        />
       </div>
     </div>
   )

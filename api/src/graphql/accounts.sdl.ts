@@ -93,8 +93,12 @@ export const schema = gql`
   }
 
   type Mutation {
-    createAccount(input: CreateAccountInput!): Account! @requireAuth @requireAccountOwnership
-    updateAccount(id: Int!, input: UpdateAccountInput!): Account! @requireAuth @requireAccountOwnership
+    createAccount(input: CreateAccountInput!): Account!
+      @requireAuth
+      @requireAccountOwnership
+    updateAccount(id: Int!, input: UpdateAccountInput!): Account!
+      @requireAuth
+      @requireAccountOwnership
     deleteAccount(id: Int!): Account! @requireAuth @requireAccountOwnership
   }
 `

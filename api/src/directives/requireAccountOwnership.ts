@@ -16,10 +16,13 @@ export const schema = gql`
   directive @requireAccountOwnership(roles: [String]) on FIELD_DEFINITION
 `
 
-type requireAccountOwnershipValidate = ValidatorDirectiveFunc<{ table: string, roles?: string[] }>
+type requireAccountOwnershipValidate = ValidatorDirectiveFunc<{
+  table: string
+  roles?: string[]
+}>
 
 const validate: requireAccountOwnershipValidate = async ({ args, context }) => {
-  if(args.id != context.currentUser.id){
+  if (args.id != context.currentUser.id) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
