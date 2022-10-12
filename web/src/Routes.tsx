@@ -19,8 +19,6 @@ const Routes = () => {
           <Set>
             <Route path="/updates/new" page={UpdateNewUpdatePage} name="newUpdate" />
             <Route path="/updates/{id}/edit" page={UpdateEditUpdatePage} name="editUpdate" />
-            <Route path="/updates/{id}" page={UpdateUpdatePage} name="update" />
-            <Route path="/updates" page={UpdateUpdatesPage} name="updates" />
           </Set>
         </Private>
         <Route path="/" page={IndexPage} name="home" />
