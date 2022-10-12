@@ -6,7 +6,7 @@ type UpdateLayoutProps = {
 }
 
 const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
-  const { isAuthenticated, logOut } = useAuth()
+  const { isAuthenticated, currentUser, logOut } = useAuth()
   return (
     <div>
       <header className="mb-2 flex gap-3 p-4">
