@@ -4,14 +4,27 @@
 
 Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like (after a general spring cleaning of the codebase):
 
-1. Scrapbook is opened up to Clubs. This means building out a better UX for club members & then make the platform an important part of the Clubs program.
-   1. The platform includes features that enable hackathon organisers to use Scrapbook at their events.
-2. Scrapbook becomes place where things are happening on Hack Club through better intergration with community events.
-3. Scrapbook's website becomes something that a Hack Clubber would be proud to share outside of Hack Club.
-4. Scrapbook features consistent high-quality posts from HQ-ers that encourage sharing ongoing projects and create a buzz around the channel.
-5. Scrapbook streaks work consistently & feel meaningful again.
+_**1. Club leaders have a tool that they can use to post regularly about their club through and keep an archive of club projects.**_
 
-If you have thoughts about how we could make Scrapbook v2 special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [Slack](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
+**Why (for leaders)?** Club leaders feel like they’re creating something, gives them a method of sharing their club with HQ + wider community + internet & gives them a marketing tool within their school.
+
+**Why (for club members)?** Accountability system, gives them a sharable profile of work done in their Hack Club & to feel like they’re contributing to something bigger than their school club.
+
+Similar to [blair.hackclub.com/scrapbook](https://blair.hackclub.com/scrapbook) and [memphishack.com/projects.html](https://memphishack.com/projects.html).
+
+_**2. Hackathon organisers have a tool that their participants can ship on as the hackathon progresses.**_
+
+**Why (for hackathon organisers)?** Gives them a project sharing system, gives them a way of sharing their hackathon’s outcome and takes the work off them for infrastructure whilst making it still feel like their own.
+
+**Why (for attendees)?** A clear end to the hackathon (the ship!), a way to explore other’s projects easily and to feel like they’re contributing to something bigger than their local hackathon.
+
+Similar to [scrapbook.assemble.hackclub.com](https://scrapbook.assemble.hackclub.com) and [scrapbook.lelandhacks.com](https://scrapbook.lelandhacks.com/).
+
+_**3. Scrapbook continues to support Hack Clubbers on Slack in sharing everything they’re learning on a daily basis.**_
+
+Read on for more context on Scrapbook's current role in the Hack Club community.
+
+If you have thoughts about how we could make Scrapbook special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [Slack in `#scrapbook-dev`](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
 
 ## All About Scrapbook
 
