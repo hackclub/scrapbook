@@ -20,7 +20,11 @@ _**2. Hackathon organisers have a tool that their participants can ship on as th
 
 Similar to [scrapbook.assemble.hackclub.com](https://scrapbook.assemble.hackclub.com) and [scrapbook.lelandhacks.com](https://scrapbook.lelandhacks.com/).
 
-_**3. Scrapbook continues to support Hack Clubbers on Slack in sharing everything they’re learning on a daily basis.**_
+_**3. Scrapbook meets Clubs and Hackathons where they are.**_
+
+The existing Scrapbook requires Slack for content. We've learned that Hack Clubs and Hackathons use a variety of other communication tools - mostly commonly Discord and Web. So, we're building support for these.
+
+_**4. Scrapbook continues to support Hack Clubbers on Slack in sharing everything they’re learning on a daily basis.**_
 
 Read on for more context on Scrapbook's current role in the Hack Club community.
 
