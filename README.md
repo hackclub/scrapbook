@@ -24,7 +24,17 @@ _**3. Scrapbook continues to support Hack Clubbers on Slack in sharing everythin
 
 Read on for more context on Scrapbook's current role in the Hack Club community.
 
-If you have thoughts about how we could make Scrapbook special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [Slack in `#scrapbook-dev`](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
+### Contribute to Scrapbook's Rebuilding
+
+If you're interested in helping make Scrapbook special, we'd love to have your help! 
+
+Here's how to get involved:
+
+1. Join the [`#scrapbook-dev`](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) channel in the Hack Club Slack. Look around for any features needing implementing. Can't see anything? Drop a message in the channel, we'll find something!
+2. Clone this Github repository, spin up a local PostgreSQL database (check out [this guide](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database)!) and ask `@sampoder` (on Slack) for the project's `.env`.
+3. Run `yarn` and then `yarn rw dev` to start your developer server!
+
+Need help or want to share some thoughts? Get in touch through Slack in [`#scrapbook-dev`](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279), [GitHub Issues](https://github.com/hackclub/scrapbook/issues) or [email](mailto:sam@hackclub.com).
 
 ## All About Scrapbook
 
