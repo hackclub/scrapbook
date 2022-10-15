@@ -51,6 +51,8 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 
 To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
+Hack Clubbers can also use a `dino.icu` subdomain by submitting a PR to our [DNS repository](https://github.com/hackclub/dns).
+
 ## CSS customization
 
 To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
