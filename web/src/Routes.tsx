@@ -10,6 +10,7 @@
 import { Set, Router, Route, Private } from '@redwoodjs/router'
 
 import MainLayout from './layouts/MainLayout'
+import IndividualPage from './pages/IndividualPage/IndividualPage'
 const Routes = () => {
   return (
     <Router>
@@ -27,6 +28,7 @@ const Routes = () => {
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
         <Route notfound page={NotFoundPage} />
+        <Route path="/updates/{username}" page={IndividualPage} name="updates" />
       </Set>
     </Router>
   )
