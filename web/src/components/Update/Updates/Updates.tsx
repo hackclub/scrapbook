@@ -82,13 +82,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           {update.accountsID == currentUser?.id && (
             <nav className="rw-table-actions mt-2 mb-1 justify-center">
               <Link
-                to={routes.update({ id: update.id })}
-                title={'Show update ' + update.id + ' detail'}
-                className="rw-button rw-button-small"
-              >
-                Show
-              </Link>
-              <Link
                 to={routes.editUpdate({ id: update.id })}
                 title={'Edit update ' + update.id}
                 className="rw-button rw-button-small rw-button-blue"
