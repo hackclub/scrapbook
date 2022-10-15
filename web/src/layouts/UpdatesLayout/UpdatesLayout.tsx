@@ -11,7 +11,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
-          <Link to={routes.updates()} className="rw-link">
+          <Link to={routes.home()} className="rw-link">
             Updates
           </Link>
         </h1>

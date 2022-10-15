@@ -60,7 +60,7 @@ export const Success = ({ update }: CellSuccessProps<EditUpdateById>) => {
     {
       onCompleted: () => {
         toast.success('Update updated')
-        navigate(routes.updates())
+        navigate(routes.home())
       },
       onError: (error) => {
         toast.error(error.message)

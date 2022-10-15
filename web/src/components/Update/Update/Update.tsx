@@ -23,7 +23,7 @@ const Update = ({ update }: Props) => {
   const [deleteUpdate] = useMutation(DELETE_UPDATE_MUTATION, {
     onCompleted: () => {
       toast.success('Update deleted')
-      navigate(routes.updates())
+      navigate(routes.home())
     },
     onError: (error) => {
       toast.error(error.message)

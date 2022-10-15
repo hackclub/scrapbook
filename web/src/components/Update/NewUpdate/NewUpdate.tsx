@@ -25,7 +25,7 @@ const NewUpdate = () => {
     {
       onCompleted: () => {
         toast.success('Update created')
-        navigate(routes.updates())
+        navigate(routes.home())
       },
       onError: (error) => {
         toast.error(error.message)
