@@ -1,10 +1,10 @@
 import UpdatesCell from 'src/components/Update/UpdatesCell'
-interface UpdatePageProps {
+interface UserPageProps {
   username: string
 }
 
-const IndividualPage: React.FC<UpdatePageProps> = ({ username }) => {
+const UserPage: React.FC<UserPageProps> = ({ username }) => {
   return <UpdatesCell username={username} />
 }
 
-export default IndividualPage
+export default UserPage
