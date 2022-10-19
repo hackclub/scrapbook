@@ -1,10 +1,14 @@
 import UpdatesCell from 'src/components/Update/UpdatesCell'
 interface ReactionPageProps {
-  reaction: string
+  emoji: string
 }
 
 const ReactionPage: React.FC<ReactionPageProps> = ({ emoji }) => {
-  return <><UpdatesCell reaction={emoji} /></>
+  return (
+    <>
+      <UpdatesCell reaction={emoji} />
+    </>
+  )
 }
 
 export default ReactionPage

@@ -7,19 +7,14 @@ import Updates from 'src/components/Update/Updates'
 
 export const QUERY = gql`
   query FindUpdates($username: String, $reaction: String) {
-    updates(filter: 
-      { Accounts: 
-        { username: $username }, 
-        emojiReactions: { 
-          some: { 
-            emojiTypeName: $reaction, 
-            usersReacted: {
-              isEmpty: false
-            } 
-          }
-        } 
+    updates(
+      filter: {
+        Accounts: { username: $username }
+        emojiReactions: {
+          some: { emojiTypeName: $reaction, usersReacted: { isEmpty: false } }
+        }
       }
-    ){
+    ) {
       id
       accountsID
       postTime

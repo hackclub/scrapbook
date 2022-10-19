@@ -29,7 +29,10 @@ const CREATE_REACTION_MUTATION = gql`
 `
 
 const UPDATE_REACTION_MUTATION = gql`
-  mutation UpdateEmojiReactionMutation($id: String!, $input: UpdateEmojiReactionInput!) {
+  mutation UpdateEmojiReactionMutation(
+    $id: String!
+    $input: UpdateEmojiReactionInput!
+  ) {
     updateEmojiReaction(id: $id, input: $input) {
       id
     }
@@ -164,7 +167,15 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                       ? 800
                       : 400,
                   }}
-                  onClick={() => onEmojiClick(update.id, reaction.emojiTypeName, reaction.usersReacted, currentUser.id, reaction.id )}
+                  onClick={() =>
+                    onEmojiClick(
+                      update.id,
+                      reaction.emojiTypeName,
+                      reaction.usersReacted,
+                      currentUser.id,
+                      reaction.id
+                    )
+                  }
                 >
                   {reaction.emojiTypeName}
                 </span>

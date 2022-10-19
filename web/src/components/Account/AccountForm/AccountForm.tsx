@@ -102,6 +102,8 @@ const AccountForm = (props: AccountFormProps) => {
           errorClassName="rw-input rw-input-error"
         />
 
+        <small>Set your CNAME to: cname.vercel-dns.com.</small>
+
         <FieldError name="customDomain" className="rw-field-error" />
 
         <Label
