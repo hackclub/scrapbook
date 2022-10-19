@@ -7,12 +7,16 @@ import type {
 import { db } from 'src/lib/db'
 
 export const updates: QueryResolvers['updates'] = ({ filter }) => {
+  console.log(filter)
+  if(filter.emojiReactions.some?.emojiTypeName == undefined){
+    filter = {Accounts: filter.Accounts}
+  }
   return db.update.findMany({
     include: { Accounts: true, emojiReactions: true },
     orderBy: {
       postTime: 'desc',
     },
-    where: filter,
+    where: filter
   })
 }
 

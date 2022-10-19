@@ -30,6 +30,7 @@ const Routes = () => {
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
         <Route notfound page={NotFoundPage} />
         <Route path="/{username}" page={UserPage} name="user" />
+        <Route path="/r/{emoji}" page={ReactionPage} name="reaction" />
       </Set>
     </Router>
   )

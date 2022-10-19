@@ -22,8 +22,22 @@ export const schema = gql`
     username: String
   }
 
+  input UsersReactedFilter {
+    isEmpty: Boolean
+  }
+
+  input SomeEmojiTypeFilter {
+    emojiTypeName: String
+    usersReacted: UsersReactedFilter
+  }
+
+  input EmojiReactionsFilter {
+    some: SomeEmojiTypeFilter
+  }
+
   input UpdatesFilter {
     Accounts: AccountsFilter
+    emojiReactions: EmojiReactionsFilter
   }
 
   type Query {
