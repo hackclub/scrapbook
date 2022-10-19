@@ -23,6 +23,11 @@ export const QUERY = gql`
       Accounts {
         username
       }
+      emojiReactions {
+        id
+        emojiTypeName
+        usersReacted
+      }
       channel
       clubscrapID
     }

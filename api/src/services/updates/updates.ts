@@ -8,7 +8,7 @@ import { db } from 'src/lib/db'
 
 export const updates: QueryResolvers['updates'] = ({ filter }) => {
   return db.update.findMany({
-    include: { Accounts: true },
+    include: { Accounts: true, emojiReactions: true },
     orderBy: {
       postTime: 'desc',
     },

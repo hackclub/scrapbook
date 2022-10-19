@@ -1,4 +1,9 @@
-import type { DeleteUpdateMutationVariables, FindUpdates } from 'types/graphql'
+import type {
+  DeleteUpdateMutationVariables,
+  CreateEmojiReactionInput,
+  UpdateEmojiReactionInput,
+  FindUpdates,
+} from 'types/graphql'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
@@ -10,6 +15,22 @@ import { QUERY } from 'src/components/Update/UpdatesCell'
 const DELETE_UPDATE_MUTATION = gql`
   mutation DeleteUpdateMutation($id: String!) {
     deleteUpdate(id: $id) {
+      id
+    }
+  }
+`
+
+const CREATE_REACTION_MUTATION = gql`
+  mutation CreateEmojiReactionMutation($input: CreateEmojiReactionInput!) {
+    createEmojiReaction(input: $input) {
+      id
+    }
+  }
+`
+
+const UPDATE_REACTION_MUTATION = gql`
+  mutation UpdateEmojiReactionMutation($id: String!, $input: UpdateEmojiReactionInput!) {
+    updateEmojiReaction(id: $id, input: $input) {
       id
     }
   }
@@ -43,9 +64,28 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
+    refetchQueries: [{ query: QUERY }],
+    awaitRefetchQueries: true,
+  })
+
+  const [createEmojiReaction] = useMutation(CREATE_REACTION_MUTATION, {
+    onCompleted: () => {
+      toast.success('Emoji added')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    refetchQueries: [{ query: QUERY }],
+    awaitRefetchQueries: true,
+  })
+
+  const [updateEmojiReaction] = useMutation(UPDATE_REACTION_MUTATION, {
+    onCompleted: () => {
+      toast.success('Reaction updated')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
   })
@@ -54,6 +94,41 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     if (confirm('Are you sure you want to delete update ' + id + '?')) {
       deleteUpdate({ variables: { id } })
     }
+  }
+
+  const onAddEmojiClick = (
+    id: DeleteUpdateMutationVariables['id'],
+    userId: number
+  ) => {
+    let emoji = prompt('Which emoji?', 'grin')
+    createEmojiReaction({
+      variables: {
+        input: { updateId: id, emojiTypeName: emoji, usersReacted: [userId] },
+      },
+    })
+  }
+
+  const onEmojiClick = (
+    id: DeleteUpdateMutationVariables['id'],
+    emoji: string,
+    usersReacted: number[],
+    userId: number,
+    reactionId: string
+  ) => {
+    usersReacted = usersReacted.includes(userId)
+      ? [...usersReacted.filter((x) => x != userId)]
+      : [...usersReacted, userId]
+    console.log(reactionId)
+    updateEmojiReaction({
+      variables: {
+        id: reactionId,
+        input: {
+          updateId: id,
+          emojiTypeName: emoji,
+          usersReacted: usersReacted,
+        },
+      },
+    })
   }
 
   const { currentUser } = useAuth()
@@ -71,13 +146,29 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               <img
                 src={attachment}
                 key={`${update.id}-attachment-${index}`}
-                className="my-2 rounded-md border bg-gray-200"
+                className="bg-gray-200 my-2 rounded-md border"
                 alt={`Project by ${truncate(update.Accounts.username)}.`}
               />
             ))}
           </div>
-          <div className="text-center text-gray-500">
+          <div className="text-gray-500 text-center">
             {timeTag(update.postTime)}
+          </div>
+          <div>
+            {update.emojiReactions
+              .filter((reaction) => reaction.usersReacted.length != 0)
+              .map((reaction) => (
+                <span
+                  style={{
+                    fontWeight: reaction.usersReacted.includes(currentUser?.id)
+                      ? 800
+                      : 400,
+                  }}
+                  onClick={() => onEmojiClick(update.id, reaction.emojiTypeName, reaction.usersReacted, currentUser.id, reaction.id )}
+                >
+                  {reaction.emojiTypeName}
+                </span>
+              ))}
           </div>
           {update.accountsID == currentUser?.id && (
             <nav className="rw-table-actions mt-2 mb-1 justify-center">
@@ -95,6 +186,14 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 onClick={() => onDeleteClick(update.id)}
               >
                 Delete
+              </button>
+              <button
+                type="button"
+                title={'Add emoji to update ' + update.id}
+                className="rw-button rw-button-small text-purple"
+                onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
+              >
+                Add Emoji
               </button>
             </nav>
           )}
