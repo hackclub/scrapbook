@@ -27,6 +27,10 @@ module.exports = {
       red: '#ec3750',
       progress: '#ec3750',
     },
+    fontFamily: : {
+      'sans': 'Helvetica, Arial, sans-serif'
+  }
+    
   },
   plugins: [],
 }
