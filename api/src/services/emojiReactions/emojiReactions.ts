@@ -7,7 +7,7 @@ import type {
 import { db } from 'src/lib/db'
 
 export const emojiReactions: QueryResolvers['emojiReactions'] = () => {
-  return db.emojiReaction.findMany()
+  return db.emojiReaction.findMany({ include: { EmojiType: true } })
 }
 
 export const emojiReaction: QueryResolvers['emojiReaction'] = ({ id }) => {
