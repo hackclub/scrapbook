@@ -1088,10 +1088,10 @@ styled-jsx@5.0.7:
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-5.0.7.tgz#be44afc53771b983769ac654d355ca8d019dff48"
   integrity sha512-b3sUzamS086YLRuvnaDigdAewz1/EFYlHpYBP5mZovKEdQQOIIYq8lApylub3HHZ6xFjV051kkGU7cudJmrXEA==
 
-superjson@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/superjson/-/superjson-1.10.1.tgz#9c73e9393489dddab89d638694eadcbf4bda2f36"
-  integrity sha512-7fvPVDHmkTKg6641B9c6vr6Zz5CwPtF9j0XFExeLxJxrMaeLU2sqebY3/yrI3l0K5zJ+H9QA3H+lIYj5ooCOkg==
+superjson@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/superjson/-/superjson-1.11.0.tgz#f6e2ae0d8fbac61c3fca09ab6739ac9678414d1b"
+  integrity sha512-6PfAg1FKhqkwWvPb2uXhH4MkMttdc17eJ91+Aoz4s1XUEDZFmLfFx/xVA3wgkPxAGy5dpozgGdK6V/n20Wj9yg==
   dependencies:
     copy-anything "^3.0.2"
 
