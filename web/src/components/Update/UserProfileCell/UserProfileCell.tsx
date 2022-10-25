@@ -2,6 +2,8 @@ import type { FindUserByUsername } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+// hey there :D
+
 export const QUERY = gql`
   query FindUserByUsername($username: String!) {
     accountByUsername(username: $username) {
