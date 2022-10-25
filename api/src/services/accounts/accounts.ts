@@ -16,6 +16,14 @@ export const account: QueryResolvers['account'] = ({ id }) => {
   })
 }
 
+export const accountByUsername: QueryResolvers['accountByUsername'] = ({
+  username,
+}) => {
+  return db.account.findUnique({
+    where: { username },
+  })
+}
+
 export const createAccount: MutationResolvers['createAccount'] = ({
   input,
 }) => {
