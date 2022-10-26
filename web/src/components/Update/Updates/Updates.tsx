@@ -200,7 +200,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                   Delete
                 </button>
               </>
-
             )}
                 <button
                   type="button"
