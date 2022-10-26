@@ -181,33 +181,35 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 </span>
               ))}
           </div>
-          {update.accountsID == currentUser?.id && (
-            <nav className="rw-table-actions mt-2 mb-1 justify-center">
-              <Link
-                to={routes.editUpdate({ id: update.id })}
-                title={'Edit update ' + update.id}
-                className="rw-button rw-button-small rw-button-blue"
-              >
-                Edit
-              </Link>
-              <button
-                type="button"
-                title={'Delete update ' + update.id}
-                className="rw-button rw-button-small rw-button-red"
-                onClick={() => onDeleteClick(update.id)}
-              >
-                Delete
-              </button>
-              <button
-                type="button"
-                title={'Add emoji to update ' + update.id}
-                className="rw-button rw-button-small text-purple"
-                onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
-              >
-                Add Emoji
-              </button>
-            </nav>
-          )}
+          <nav className="rw-table-actions mt-2 mb-1 justify-center">
+            {update.accountsID == currentUser?.id && (
+              <>
+                <Link
+                  to={routes.editUpdate({ id: update.id })}
+                  title={'Edit update ' + update.id}
+                  className="rw-button rw-button-small rw-button-blue"
+                >
+                  Edit
+                </Link>
+                <button
+                  type="button"
+                  title={'Delete update ' + update.id}
+                  className="rw-button rw-button-small rw-button-red"
+                  onClick={() => onDeleteClick(update.id)}
+                >
+                  Delete
+                </button>
+              </>
+            )}
+            <button
+              type="button"
+              title={'Add emoji to update ' + update.id}
+              className="rw-button rw-button-small text-purple"
+              onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
+            >
+              Add Emoji
+            </button>
+          </nav>
         </div>
       ))}
     </div>

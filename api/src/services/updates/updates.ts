@@ -12,7 +12,10 @@ export const updates: QueryResolvers['updates'] = ({ filter }) => {
     filter = { Accounts: filter.Accounts }
   }
   return db.update.findMany({
-    include: { Accounts: true, emojiReactions: true },
+    include: {
+      Accounts: true,
+      emojiReactions: { include: { EmojiType: true } },
+    },
     orderBy: {
       postTime: 'desc',
     },
@@ -44,27 +47,28 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
       },
     }),
   ])
-  const getDayOfDate = (date) =>  Math.floor(
-    (
+  const getDayOfDate = (date) =>
+    Math.floor(
       new Date(
-        new Date(date).valueOf() + (result[1].timezoneOffset - 4) * 60 * 60 * 1000
-      )
-    ).valueOf()/ 8.64e7)
+        new Date(date).valueOf() +
+          (result[1].timezoneOffset - 4) * 60 * 60 * 1000
+      ).valueOf() / 8.64e7
+    )
   let streak = 0
   let currentDay = getDayOfDate(new Date())
-  let updatesArray = result[1].updates.sort(function(a,b){
-    return new Date(b.postTime).valueOf() - new Date(a.postTime).valueOf();
+  let updatesArray = result[1].updates.sort(function (a, b) {
+    return new Date(b.postTime).valueOf() - new Date(a.postTime).valueOf()
   })
-  if(getDayOfDate(updatesArray[0].postTime) == currentDay){
+  if (getDayOfDate(updatesArray[0].postTime) == currentDay) {
     streak = 1
   }
-  updatesArray.map((update) => {  
-    if (getDayOfDate(update.postTime) - currentDay == -1){
+  updatesArray.map((update) => {
+    if (getDayOfDate(update.postTime) - currentDay == -1) {
       streak += 1
       currentDay -= 1
     }
-  }) 
-  console.log(streak) 
+  })
+  console.log(streak)
   return result[0]
 }
 
