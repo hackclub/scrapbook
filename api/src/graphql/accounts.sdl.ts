@@ -32,6 +32,8 @@ export const schema = gql`
 
   type Query {
     account(id: Int!): Account @requireAuth @requireAccountOwnership
+    accounts: [Account!]! @skipAuth
+    accountByUsername(username: String!): Account @skipAuth
   }
 
   input CreateAccountInput {
