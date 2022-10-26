@@ -201,14 +201,14 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 </button>
               </>
             )}
-                <button
-                  type="button"
-                  title={'Add emoji to update ' + update.id}
-                  className="rw-button rw-button-small text-purple"
-                  onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
-                >
-                  Add Emoji
-                </button>
+            <button
+              type="button"
+              title={'Add emoji to update ' + update.id}
+              className="rw-button rw-button-small text-purple"
+              onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
+            >
+              Add Emoji
+            </button>
           </nav>
         </div>
       ))}
