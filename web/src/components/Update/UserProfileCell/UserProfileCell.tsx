@@ -10,6 +10,7 @@ export const QUERY = gql`
       username
       email
       avatar
+      cssURL
     }
   }
 `
@@ -26,14 +27,22 @@ export const Success = ({
   accountByUsername,
 }: CellSuccessProps<FindUserByUsername>) => {
   return (
-    <div className="rounded-lg border border-gray-200 px-4 py-2">
-      <img src={accountByUsername.avatar} />
-      <p className="text-xl font-black text-gray-800">
-        {accountByUsername.username}
-      </p>
-      <p className="text-xs font-bold lowercase text-gray-500">
-        {accountByUsername.email}
-      </p>
-    </div>
+    <>
+      <link
+        rel="stylesheet"
+        href={
+          'https://gist.githubusercontent.com/LuizWeitz/746f480244d80ac1f628cdf3e6233272/raw/b9b24066b67a5ab0ee76b0d0e866209ac1abbbea/style.css'
+        }
+      />
+      <div className="border-gray-200 rounded-lg border px-4 py-2">
+        <img src={accountByUsername.avatar} />
+        <p className="text-gray-800 text-xl font-black">
+          {accountByUsername.username}
+        </p>
+        <p className="text-gray-500 text-xs font-bold lowercase">
+          {accountByUsername.email}
+        </p>
+      </div>
+    </>
   )
 }
