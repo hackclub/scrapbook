@@ -1,6 +1,7 @@
 import type { FindUserByUsername } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import UpdatesCell from '../UpdatesCell'
 
 // hey there :D
 
@@ -28,12 +29,7 @@ export const Success = ({
 }: CellSuccessProps<FindUserByUsername>) => {
   return (
     <>
-      <link
-        rel="stylesheet"
-        href={
-          'https://gist.githubusercontent.com/LuizWeitz/746f480244d80ac1f628cdf3e6233272/raw/b9b24066b67a5ab0ee76b0d0e866209ac1abbbea/style.css'
-        }
-      />
+      <link rel="stylesheet" href={accountByUsername.cssURL || ''} />
       <div className="border-gray-200 rounded-lg border px-4 py-2">
         <img src={accountByUsername.avatar} />
         <p className="text-gray-800 text-xl font-black">
@@ -43,6 +39,8 @@ export const Success = ({
           {accountByUsername.email}
         </p>
       </div>
+
+      <UpdatesCell username={accountByUsername.username} />
     </>
   )
 }
