@@ -30,7 +30,7 @@ Read on for more context on Scrapbook's current role in the Hack Club community.
 
 ### Contribute to Scrapbook's Rebuilding
 
-If you're interested in helping make Scrapbook special, we'd love to have your help! 
+If you're interested in helping make Scrapbook special, we'd love to have your help!
 
 Here's how to get involved:
 
