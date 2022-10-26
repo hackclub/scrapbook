@@ -177,7 +177,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                     )
                   }
                 >
-                  {JSON.stringify(reaction)}
+                  {reaction.emojiTypeName}
                 </span>
               ))}
           </div>
