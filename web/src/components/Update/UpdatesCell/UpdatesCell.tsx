@@ -33,6 +33,10 @@ export const QUERY = gql`
       emojiReactions {
         id
         emojiTypeName
+        EmojiType {
+          emojiSource
+          name
+        }
         usersReacted
       }
       channel

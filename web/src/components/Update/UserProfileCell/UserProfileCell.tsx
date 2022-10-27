@@ -1,9 +1,7 @@
 import type { FindUserByUsername } from 'types/graphql'
-
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import UpdatesCell from '../UpdatesCell'
 
-// hey there :D
+import UpdatesCell from '../UpdatesCell'
 
 export const QUERY = gql`
   query FindUserByUsername($username: String!) {
@@ -39,7 +37,6 @@ export const Success = ({
           {accountByUsername.email}
         </p>
       </div>
-
       <UpdatesCell username={accountByUsername.username} />
     </>
   )
