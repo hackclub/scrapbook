@@ -8,7 +8,6 @@ const UserPage: React.FC<UserPageProps> = ({ username }) => {
   return (
     <>
       <UserProfileCell username={username} />
-      <UpdatesCell username={username} />
     </>
   )
 }
