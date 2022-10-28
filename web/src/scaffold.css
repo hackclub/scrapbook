@@ -47,9 +47,6 @@
 .rw-scaffold,
 .rw-toast {
   background-color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 .rw-header {
   display: flex;
