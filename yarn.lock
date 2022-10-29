@@ -1322,7 +1322,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime-corejs3@^7.10.2":
+"@babel/runtime-corejs3@7.19.1", "@babel/runtime-corejs3@^7.10.2":
   version "7.19.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.19.1.tgz#f0cbbe7edda7c4109cd253bb1dee99aba4594ad9"
   integrity sha512-j2vJGnkopRzH+ykJ8h68wrHnEUmtK//E723jjixiAl/PPf6FhqY/vYRcMVlNydRKQjQsTsYEjpx+DZMIvnGk/g==
@@ -2821,6 +2821,14 @@
     "@babel/runtime-corejs3" "7.19.0"
     core-js "3.25.1"
 
+"@redwoodjs/auth@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/auth/-/auth-3.2.1.tgz#f17faa2125e6cde3a3eff766b461a160eec1342e"
+  integrity sha512-7fMuL6JIK/G74bKBL0dqs5WHKCIKXEsWUWYEPN1jT+UfAOlDZM+vEgK5hg2dBvr4X/S3rQuqBbZBmMxkhHd5kQ==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.1"
+    core-js "3.25.5"
+
 "@redwoodjs/cli@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@redwoodjs/cli/-/cli-3.0.1.tgz#9717ccbb3bc3cfb735a22718768551d04b0d90cc"
@@ -3044,6 +3052,17 @@
     "@reach/skip-nav" "0.16.0"
     "@redwoodjs/auth" "3.0.1"
     core-js "3.25.1"
+    lodash.isequal "4.5.0"
+
+"@redwoodjs/router@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/router/-/router-3.2.1.tgz#2ca7cf8f850e125e7bf33fce71e7f8710a06fc1f"
+  integrity sha512-9UwYqAEmdmA4s5anXxiLCSWQUDAVvorLdpJBYPhJ+oQRXVfZN01Vv9NdaCsp9/VxeAW51+VMWGpOWqL08w+FXA==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.1"
+    "@reach/skip-nav" "0.16.0"
+    "@redwoodjs/auth" "3.2.1"
+    core-js "3.25.5"
     lodash.isequal "4.5.0"
 
 "@redwoodjs/structure@3.0.1":
@@ -7414,7 +7433,7 @@ core-js@3.25.1:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.1.tgz#5818e09de0db8956e16bf10e2a7141e931b7c69c"
   integrity sha512-sr0FY4lnO1hkQ4gLDr24K0DGnweGO1QwSj5BpfQjpSJPdqWalja4cTps29Y/PJVG/P7FYlPDkH3hO+Tr0CvDgQ==
 
-core-js@^3.0.4, core-js@^3.22.1, core-js@^3.6.5, core-js@^3.8.2:
+core-js@3.25.5, core-js@^3.0.4, core-js@^3.22.1, core-js@^3.6.5, core-js@^3.8.2:
   version "3.25.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.5.tgz#e86f651a2ca8a0237a5f064c2fe56cef89646e27"
   integrity sha512-nbm6eZSjm+ZuBQxCUPQKQCoUEfFOXjUZ8dTTyikyKaWrTYmAVbykQfwsKE5dBK88u3QCkCrzsx/PPlKfhsvgpw==
