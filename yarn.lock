@@ -3054,6 +3054,17 @@
     core-js "3.25.1"
     lodash.isequal "4.5.0"
 
+"@redwoodjs/router@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/router/-/router-3.2.1.tgz#2ca7cf8f850e125e7bf33fce71e7f8710a06fc1f"
+  integrity sha512-9UwYqAEmdmA4s5anXxiLCSWQUDAVvorLdpJBYPhJ+oQRXVfZN01Vv9NdaCsp9/VxeAW51+VMWGpOWqL08w+FXA==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.1"
+    "@reach/skip-nav" "0.16.0"
+    "@redwoodjs/auth" "3.2.1"
+    core-js "3.25.5"
+    lodash.isequal "4.5.0"
+
 "@redwoodjs/structure@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@redwoodjs/structure/-/structure-3.0.1.tgz#59f4528d0c3ee2be363d17030c7fe03fab75ca26"
