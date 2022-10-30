@@ -29,7 +29,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
-        "'Baloo 2'",
+        '"Baloo 2"',
         'system-ui',
         '-apple-system',
         'BlinkMacSystemFont',
