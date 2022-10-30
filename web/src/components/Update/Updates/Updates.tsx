@@ -177,7 +177,26 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                     )
                   }
                 >
-                  {reaction.EmojiType.emojiSource}
+                  {/* emojis whose source is a URL are rendered as images */}
+                  <>
+                    {reaction.EmojiType.emojiSource.includes('http') ? (
+                      <img
+                        src={reaction.EmojiType.emojiSource}
+                        alt={reaction.EmojiType.emojiSource}
+                        className="inline-block w-6 h-6"
+                      />
+                    ) : (
+                      <span
+                        className="inline-block w-6 h-6"
+                        role="img"
+                        aria-label={reaction.EmojiType.emojiSource}
+                      >
+                        {reaction.EmojiType.emojiSource}
+                      </span>
+                    )}
+
+                    {reaction.usersReacted.length}
+                  </>
                 </span>
               ))}
           </div>
