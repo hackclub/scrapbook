@@ -2813,6 +2813,26 @@
     title-case "3.0.3"
     uuid "9.0.0"
 
+"@redwoodjs/api@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/api/-/api-3.2.1.tgz#293b51dfcd6c18135d796e9523be650d5d150f98"
+  integrity sha512-kTiy7PqRXGn6cs1Rye9Yf/fsInQfiEQVQ3KHV603s8RGGL/gH7vY7XBHUmLV6CfyxkbcsJ/r3oZAfoe1ZoVixQ==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.1"
+    "@prisma/client" "4.3.1"
+    base64url "3.0.1"
+    core-js "3.25.5"
+    cross-undici-fetch "0.4.14"
+    crypto-js "4.1.1"
+    humanize-string "2.1.0"
+    jsonwebtoken "8.5.1"
+    jwks-rsa "2.0.5"
+    md5 "2.3.0"
+    pascalcase "1.0.0"
+    pino "8.6.1"
+    title-case "3.0.3"
+    uuid "9.0.0"
+
 "@redwoodjs/auth@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@redwoodjs/auth/-/auth-3.0.1.tgz#6a50794118f50d166e4af4b7d448dac49d04787e"
@@ -14129,7 +14149,7 @@ pino@8.5.0:
     sonic-boom "^3.1.0"
     thread-stream "^2.0.0"
 
-pino@^8.0.0:
+pino@8.6.1, pino@^8.0.0:
   version "8.6.1"
   resolved "https://registry.yarnpkg.com/pino/-/pino-8.6.1.tgz#3fc43acc79bcd3e871670347854f7359e2612f10"
   integrity sha512-fi+V2K98eMZjQ/uEHHSiMALNrz7HaFdKNYuyA3ZUrbH0f1e8sPFDmeRGzg7ZH2q4QDxGnJPOswmqlEaTAZeDPA==
