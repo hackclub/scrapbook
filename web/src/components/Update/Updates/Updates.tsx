@@ -141,7 +141,8 @@ const UpdatesList = ({ updates }: FindUpdates) => {
       {updates.map((update) => (
         <div key={update.id} className="border-r border-b p-3">
           <p className="mb-2">
-            <b>@{truncate(update.Accounts.username)}</b>
+          <Link to={routes.user({username: truncate(update.Accounts.username)})} className="text-purple">
+            <b>@{truncate(update.Accounts.username)}</b></Link>
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-2">

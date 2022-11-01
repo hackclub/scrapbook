@@ -6,6 +6,41 @@ import type {
 
 import { db } from 'src/lib/db'
 
+export const getDayFromISOString = (ISOString) => {
+  const date = new Date(ISOString)
+  try {
+    date.setHours(date.getHours() - 4)
+    ISOString = date.toISOString()
+  } catch {}
+  try {
+    const month = ISOString.split('-')[1]
+    const day = ISOString.split('-')[2].split('T')[0]
+    console.log(month)
+    console.log(day)
+    return `${month}-${day}`
+  } catch {
+    console.log(`This is the user's first post!`)
+  }
+}
+
+export const getNow = (tz) => {
+  const date = new Date().toLocaleString('en-US', { timeZone: tz })
+  return new Date(date).toISOString()
+}
+
+const shouldUpdateStreak = async (userId, timezone, increment, latestUpdates) => {
+  const now = getNow(timezone)
+  const createdTime = increment
+    ? latestUpdates[1]?.postTime
+    : latestUpdates[0]?.postTime
+  const nowDay = getDayFromISOString(now)
+  const createdTimeDay = getDayFromISOString(createdTime)
+  return (
+    nowDay != createdTimeDay ||
+    (increment ? !latestUpdates[1] : !latestUpdates[0])
+  )
+}
+
 export const updates: QueryResolvers['updates'] = ({ filter }) => {
   console.log(filter)
   if (filter.emojiReactions.some?.emojiTypeName == undefined) {
@@ -43,32 +78,25 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
           select: {
             postTime: true,
           },
+          orderBy: {
+              postTime: 'desc'
+          }
         },
       },
     }),
   ])
-  const getDayOfDate = (date) =>
-    Math.floor(
-      new Date(
-        new Date(date).valueOf() +
-          (result[1].timezoneOffset - 4) * 60 * 60 * 1000
-      ).valueOf() / 8.64e7
-    )
-  let streak = 0
-  let currentDay = getDayOfDate(new Date())
-  let updatesArray = result[1].updates.sort(function (a, b) {
-    return new Date(b.postTime).valueOf() - new Date(a.postTime).valueOf()
-  })
-  if (getDayOfDate(updatesArray[0].postTime) == currentDay) {
-    streak = 1
+  if(shouldUpdateStreak(result[1].id, result[1].timezone, true, result[1].updates)){
+    await db.account.update({
+      where: {
+        id: result[1].id
+      },
+      data: {
+        streakCount: {
+          increment: 1
+        }
+      }
+    })
   }
-  updatesArray.map((update) => {
-    if (getDayOfDate(update.postTime) - currentDay == -1) {
-      streak += 1
-      currentDay -= 1
-    }
-  })
-  console.log(streak)
   return result[0]
 }
 
