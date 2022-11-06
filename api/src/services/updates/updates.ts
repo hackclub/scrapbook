@@ -5,6 +5,13 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import S3 from 'src/utils/s3'
+
+const Mux = require('@mux/mux-node');
+
+const { Video, Data } = new Mux(process.env.MUX_TOKEN_ID, process.env.MUX_SECRET_ID);
+
+const muxClient = new Mux();
 
 export const getDayFromISOString = (ISOString) => {
   const date = new Date(ISOString)
@@ -67,9 +74,25 @@ export const update: QueryResolvers['update'] = ({ id }) => {
 export const createUpdate: MutationResolvers['createUpdate'] = async ({
   input,
 }) => {
+  let filename = input.attachments[0].split(".")
+  let asset
+  let playbackID
+  if(['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])){
+    asset = await Video.Assets.create({
+      input: input.attachments[0],
+      "playback_policy": [
+        "public"
+      ],
+    });
+    playbackID = await Video.Assets.createPlaybackId(asset.id, { policy: 'public' });
+    input.muxAssetIDs = [asset.id]
+    input.muxPlaybackIDs = [playbackID.id]
+  }
   let result = await db.$transaction([
     db.update.create({
-      data: input,
+      data: {
+        ...input
+      }
     }),
     db.account.findUnique({
       where: { id: input.accountsID },

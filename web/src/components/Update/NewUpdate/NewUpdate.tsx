@@ -36,11 +36,13 @@ const NewUpdate = () => {
   const uploadImage = async (file: File): Promise<string | void> => {
     let uploadedImage
     try {
+      let key = `${uuidv4()}-${file.name}`
       uploadedImage = await S3.upload({
         Bucket: process.env.REDWOOD_ENV_S3_BUCKET_NAME,
-        Key: `${uuidv4()}-${file.name}`,
+        Key: key,
         Body: file,
       }).promise()
+      // await S3.deleteObject({ Bucket: process.env.REDWOOD_ENV_S3_BUCKET_NAME, Key: key }).promise()
     } catch (e) {
       alert(
         `Failed to upload the file to the server! Please contact the maintainers to resolve this.`

@@ -60,7 +60,7 @@ const UpdateForm = (props: UpdateFormProps) => {
           Attachments
         </Label>
 
-        <FileField name="img" accept="image/*" />
+        <FileField name="img" accept="image/* video/*" />
         <FieldError name="attachments" className="rw-field-error" />
 
         <div className="rw-button-group">

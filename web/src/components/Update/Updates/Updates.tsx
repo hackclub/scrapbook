@@ -5,6 +5,8 @@ import type {
   FindUpdates,
 } from 'types/graphql'
 
+import MuxPlayer from '@mux/mux-player-react'
+
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -146,7 +148,13 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-2">
-            {update.attachments.map((attachment, index) => (
+            {update.muxPlaybackIDs.map((id, index) => (
+              <MuxPlayer
+                streamType="on-demand"
+                playbackId={id}
+              />
+            ))}
+            {update.muxPlaybackIDs.length == 0 && update.attachments.map((attachment, index) => (
               <img
                 src={attachment}
                 key={`${update.id}-attachment-${index}`}
