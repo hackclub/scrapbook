@@ -15,8 +15,8 @@
   "dependencies": {
     "@redwoodjs/auth": "3.0.1",
     "@redwoodjs/forms": "3.0.1",
-    "@redwoodjs/router": "3.2.1",
-    "@redwoodjs/web": "3.2.1",
+    "@redwoodjs/router": "3.0.1",
+    "@redwoodjs/web": "3.0.1",
     "@simplewebauthn/browser": "^6.0.0",
     "aws-sdk": "^2.1229.0",
     "prop-types": "15.8.1",
