@@ -1,7 +1,7 @@
 import type {
   DeleteUpdateMutationVariables,
-  CreateEmojiReactionInput,
-  UpdateEmojiReactionInput,
+  CreateReactionInput,
+  UpdateReactionInput,
   FindUpdates,
 } from 'types/graphql'
 
@@ -23,19 +23,19 @@ const DELETE_UPDATE_MUTATION = gql`
 `
 
 const CREATE_REACTION_MUTATION = gql`
-  mutation CreateEmojiReactionMutation($input: CreateEmojiReactionInput!) {
-    createEmojiReaction(input: $input) {
+  mutation CreateReactionMutation($input: CreateReactionInput!) {
+    createReaction(input: $input) {
       id
     }
   }
 `
 
 const UPDATE_REACTION_MUTATION = gql`
-  mutation UpdateEmojiReactionMutation(
+  mutation UpdateReactionMutation(
     $id: String!
-    $input: UpdateEmojiReactionInput!
+    $input: UpdateReactionInput!
   ) {
-    updateEmojiReaction(id: $id, input: $input) {
+    updateReaction(id: $id, input: $input) {
       id
     }
   }
@@ -73,7 +73,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     awaitRefetchQueries: true,
   })
 
-  const [createEmojiReaction] = useMutation(CREATE_REACTION_MUTATION, {
+  const [createReaction] = useMutation(CREATE_REACTION_MUTATION, {
     onCompleted: () => {
       toast.success('Emoji added')
     },
@@ -84,7 +84,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     awaitRefetchQueries: true,
   })
 
-  const [updateEmojiReaction] = useMutation(UPDATE_REACTION_MUTATION, {
+  const [updateReaction] = useMutation(UPDATE_REACTION_MUTATION, {
     onCompleted: () => {
       toast.success('Reaction updated')
     },
@@ -106,9 +106,9 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     userId: number
   ) => {
     let emoji = prompt('Which emoji?', 'grin')
-    createEmojiReaction({
+    createReaction({
       variables: {
-        input: { updateId: id, emojiTypeName: emoji, usersReacted: [userId] },
+        input: { updateId: id, emojiName: emoji, usersReacted: [userId] },
       },
     })
   }
@@ -124,12 +124,12 @@ const UpdatesList = ({ updates }: FindUpdates) => {
       ? [...usersReacted.filter((x) => x != userId)]
       : [...usersReacted, userId]
     console.log(reactionId)
-    updateEmojiReaction({
+    updateReaction({
       variables: {
         id: reactionId,
         input: {
           updateId: id,
-          emojiTypeName: emoji,
+          emojiName: emoji,
           usersReacted: usersReacted,
         },
       },
@@ -143,8 +143,8 @@ const UpdatesList = ({ updates }: FindUpdates) => {
       {updates.map((update) => (
         <div key={update.id} className="border-r border-b p-3">
           <p className="mb-2">
-          <Link to={routes.user({username: truncate(update.Accounts.username)})} className="text-purple">
-            <b>@{truncate(update.Accounts.username)}</b></Link>
+          <Link to={routes.user({username: truncate(update.account.username)})} className="text-purple">
+            <b>@{truncate(update.account.username)}</b></Link>
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-2">
@@ -159,7 +159,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 src={attachment}
                 key={`${update.id}-attachment-${index}`}
                 className="bg-gray-200 my-2 rounded-md border"
-                alt={`Project by ${truncate(update.Accounts.username)}.`}
+                alt={`Project by ${truncate(update.account.username)}.`}
               />
             ))}
           </div>
@@ -167,7 +167,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
             {timeTag(update.postTime)}
           </div>
           <div>
-            {update.emojiReactions
+            {update.reactions
               .filter((reaction) => reaction.usersReacted.length != 0)
               .map((reaction) => (
                 <span
@@ -179,7 +179,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                   onClick={() =>
                     onEmojiClick(
                       update.id,
-                      reaction.emojiTypeName,
+                      reaction.emojiName,
                       reaction.usersReacted,
                       currentUser.id,
                       reaction.id
@@ -188,19 +188,19 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 >
                   {/* emojis whose source is a URL are rendered as images */}
                   <>
-                    {reaction.EmojiType.emojiSource.includes('http') ? (
+                    {reaction.emoji.source.includes('http') ? (
                       <img
-                        src={reaction.EmojiType.emojiSource}
-                        alt={reaction.EmojiType.emojiSource}
+                        src={reaction.emoji.source}
+                        alt={reaction.emoji.source}
                         className="inline-block w-6 h-6"
                       />
                     ) : (
                       <span
                         className="inline-block w-6 h-6"
                         role="img"
-                        aria-label={reaction.EmojiType.emojiSource}
+                        aria-label={reaction.emoji.source}
                       >
-                        {reaction.EmojiType.emojiSource}
+                        {reaction.emoji.source}
                       </span>
                     )}
 
@@ -210,7 +210,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               ))}
           </div>
           <nav className="rw-table-actions mt-2 mb-1 justify-center">
-            {update.accountsID == currentUser?.id && (
+            {update.accountID == currentUser?.id && (
               <>
                 <Link
                   to={routes.editUpdate({ id: update.id })}

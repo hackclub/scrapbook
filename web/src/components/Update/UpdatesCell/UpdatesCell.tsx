@@ -9,14 +9,14 @@ export const QUERY = gql`
   query FindUpdates($username: String, $reaction: String) {
     updates(
       filter: {
-        Accounts: { username: $username }
-        emojiReactions: {
-          some: { emojiTypeName: $reaction, usersReacted: { isEmpty: false } }
+        account: { username: $username }
+        reactions: {
+          some: { emojiName: $reaction, usersReacted: { isEmpty: false } }
         }
       }
     ) {
       id
-      accountsID
+      accountID
       postTime
       text
       attachments
@@ -27,14 +27,14 @@ export const QUERY = gql`
       backupAssetID
       backupPlaybackID
       isLargeVideo
-      Accounts {
+      account {
         username
       }
-      emojiReactions {
+      reactions {
         id
-        emojiTypeName
-        EmojiType {
-          emojiSource
+        emojiName
+        emoji {
+          source
           name
         }
         usersReacted

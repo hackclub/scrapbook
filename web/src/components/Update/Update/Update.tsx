@@ -52,7 +52,7 @@ const Update = ({ update }: Props) => {
             </tr>
             <tr>
               <th>Accounts slack id</th>
-              <td>{update.accountsID}</td>
+              <td>{update.accountID}</td>
             </tr>
             <tr>
               <th>Text</th>

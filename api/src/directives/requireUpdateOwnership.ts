@@ -28,7 +28,7 @@ const validate: requireUpdateOwnershipValidate = async ({ args, context }) => {
       id: String(args.id),
     },
   })
-  if (item.accountsID != context.currentUser.id) {
+  if (item.accountID != context.currentUser.id) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }

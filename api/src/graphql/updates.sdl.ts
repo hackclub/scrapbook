@@ -1,7 +1,7 @@
 export const schema = gql`
   type Update {
     id: String!
-    accountsID: Int
+    accountID: Int
     postTime: DateTime
     text: String
     attachments: [String!]
@@ -14,11 +14,11 @@ export const schema = gql`
     isLargeVideo: Boolean
     channel: String
     clubscrapID: String
-    Accounts: Account
-    emojiReactions: [EmojiReaction!]
+    account: Account
+    reactions: [Reaction!]
   }
 
-  input AccountsFilter {
+  input AccountFilter {
     username: String
   }
 
@@ -26,18 +26,18 @@ export const schema = gql`
     isEmpty: Boolean
   }
 
-  input SomeEmojiTypeFilter {
-    emojiTypeName: String
+  input SomeEmojiFilter {
+    emojiName: String
     usersReacted: UsersReactedFilter
   }
 
-  input EmojiReactionsFilter {
-    some: SomeEmojiTypeFilter
+  input ReactionsFilter {
+    some: SomeEmojiFilter
   }
 
   input UpdatesFilter {
-    Accounts: AccountsFilter
-    emojiReactions: EmojiReactionsFilter
+    account: AccountFilter
+    reactions: ReactionsFilter
   }
 
   type Query {
@@ -46,7 +46,7 @@ export const schema = gql`
   }
 
   input CreateUpdateInput {
-    accountsID: Int
+    accountID: Int
     postTime: DateTime
     text: String
     attachments: [String!]
@@ -62,7 +62,7 @@ export const schema = gql`
   }
 
   input UpdateUpdateInput {
-    accountsID: Int
+    accountID: Int
     postTime: DateTime
     text: String
     attachments: [String!]

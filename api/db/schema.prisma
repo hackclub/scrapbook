@@ -27,6 +27,7 @@ model Account {
   resetTokenExpiresAt     DateTime?
   webAuthnChallenge       String?             @unique
   credentials             AccountCredential[]
+  clubs                   ClubMember[]
   // Fields for Slack-based Scrapbook users
   slackID                 String?             @unique
   // Fields for all Scrapbook users
@@ -55,9 +56,9 @@ model Account {
 }
 
 model Update {
-  id               String          @id @default(cuid())
-  accountsID       Int?
-  postTime         DateTime?       @default(now())
+  id               String      @id @default(cuid())
+  accountID       Int?
+  postTime         DateTime?   @default(now())
   text             String?
   attachments      String[]
   muxAssetIDs      String[]
@@ -68,24 +69,54 @@ model Update {
   backupPlaybackID String?
   isLargeVideo     Boolean?
   channel          String?
-  clubscrapID      String?         @unique
-  Accounts         Account?        @relation(fields: [accountsID], references: [id])
-  emojiReactions   EmojiReaction[]
+  clubscrapID      String?     @unique
+  account         Account?    @relation(fields: [accountID], references: [id])
+  reactions        Reaction[]
+  associatedClub   ClubUpdate?
 }
 
-model EmojiType {
-  id             String          @id @default(cuid())
-  name           String          @unique(map: "EmojiType.name_unique")
-  emojiSource    String?
-  emojiReactions EmojiReaction[]
+model Emoji {
+  id        String     @id @default(cuid())
+  name      String     @unique(map: "Emoji.name_unique")
+  source    String?
+  reactions Reaction[]
 }
 
-model EmojiReaction {
-  id            String     @id @default(cuid())
-  updateId      String?
-  emojiTypeName String?
-  usersReacted  Int[]
-  updatedAt     DateTime   @default(now()) @map("created_at")
-  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
-  update        Update?    @relation(fields: [updateId], references: [id])
+model Reaction {
+  id           String   @id @default(cuid())
+  updateId     String?
+  emojiName    String?
+  usersReacted Int[]
+  updatedAt    DateTime @default(now()) @map("created_at")
+  emoji        Emoji?   @relation(fields: [emojiName], references: [name])
+  update       Update?  @relation(fields: [updateId], references: [id])
+}
+
+model ClubMember {
+  id     String  @id @default(cuid())
+  userId Int
+  user   Account @relation(fields: [userId], references: [id])
+  clubId String
+  club   Club    @relation(fields: [clubId], references: [id])
+}
+
+model ClubUpdate {
+  id       String @id @default(cuid())
+  updateId String @unique
+  update   Update @relation(fields: [updateId], references: [id])
+  clubId   String
+  club     Club   @relation(fields: [clubId], references: [id])
+}
+
+model Club {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String
+  logo         String
+  customDomain String?
+  cssURL       String?
+  website      String?
+  github       String?
+  members      ClubMember[]
+  updates      ClubUpdate[]
 }

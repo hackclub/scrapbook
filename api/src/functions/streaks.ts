@@ -21,7 +21,7 @@ export default async (req, res) => {
 
     const latestUpdate = await db.update.findFirst({
       where: {
-        accountsID: userId
+        accountID: userId
       },
       orderBy: [
         {

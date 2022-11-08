@@ -1,30 +1,30 @@
 export const schema = gql`
-  type EmojiType {
+  type Emoji {
     id: String!
     name: String!
-    emojiSource: String
-    emojiReactions: [EmojiReaction!]
+    source: String
+    reactions: [Reaction!]
   }
 
   type Query {
-    emojiTypes: [EmojiType!]! @requireAuth
-    emojiType(id: String!): EmojiType @requireAuth
+    emojis: [Emoji!]! @requireAuth
+    emoji(id: String!): Emoji @requireAuth
   }
 
-  input CreateEmojiTypeInput {
+  input CreateEmojiInput {
     name: String!
-    emojiSource: String
+    source: String
   }
 
-  input UpdateEmojiTypeInput {
+  input UpdateEmojiInput {
     name: String
-    emojiSource: String
+    source: String
   }
 
   type Mutation {
-    createEmojiType(input: CreateEmojiTypeInput!): EmojiType! @requireAuth
-    updateEmojiType(id: String!, input: UpdateEmojiTypeInput!): EmojiType!
+    createEmoji(input: CreateEmojiInput!): Emoji! @requireAuth
+    updateEmoji(id: String!, input: UpdateEmojiInput!): Emoji!
       @requireAuth
-    deleteEmojiType(id: String!): EmojiType! @requireAuth
+    deleteEmoji(id: String!): Emoji! @requireAuth
   }
 `

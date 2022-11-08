@@ -50,13 +50,13 @@ const shouldUpdateStreak = async (userId, timezone, increment, latestUpdates) =>
 
 export const updates: QueryResolvers['updates'] = ({ filter }) => {
   console.log(filter)
-  if (filter.emojiReactions.some?.emojiTypeName == undefined) {
-    filter = { Accounts: filter.Accounts }
+  if (filter.reactions.some?.emojiName == undefined) {
+    filter = { account: filter.account }
   }
   return db.update.findMany({
     include: {
-      Accounts: true,
-      emojiReactions: { include: { EmojiType: true } },
+      account: true,
+      reactions: { include: { emoji: true } },
     },
     orderBy: {
       postTime: 'desc',
@@ -95,7 +95,7 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
       }
     }),
     db.account.findUnique({
-      where: { id: input.accountsID },
+      where: { id: input.accountID },
       include: {
         updates: {
           select: {
@@ -140,10 +140,10 @@ export const deleteUpdate: MutationResolvers['deleteUpdate'] = ({ id }) => {
 }
 
 export const Update: UpdateRelationResolvers = {
-  Accounts: (_obj, { root }) => {
-    return db.update.findUnique({ where: { id: root?.id } }).Accounts()
+  account: (_obj, { root }) => {
+    return db.update.findUnique({ where: { id: root?.id } }).account()
   },
-  emojiReactions: (_obj, { root }) => {
-    return db.update.findUnique({ where: { id: root?.id } }).emojiReactions()
+  reactions: (_obj, { root }) => {
+    return db.update.findUnique({ where: { id: root?.id } }).reactions()
   },
 }

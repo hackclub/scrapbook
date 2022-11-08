@@ -8,7 +8,7 @@ export const QUERY = gql`
   query FindUpdateById($id: String!) {
     update: update(id: $id) {
       id
-      accountsID
+      accountID
       postTime
       text
       attachments

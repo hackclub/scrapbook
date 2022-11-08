@@ -11,7 +11,7 @@ export const QUERY = gql`
   query EditUpdateById($id: String!) {
     update: update(id: $id) {
       id
-      accountsID
+      accountID
       postTime
       text
       attachments
@@ -31,7 +31,7 @@ const UPDATE_UPDATE_MUTATION = gql`
   mutation UpdateUpdateMutation($id: String!, $input: UpdateUpdateInput!) {
     updateUpdate(id: $id, input: $input) {
       id
-      accountsID
+      accountID
       postTime
       text
       attachments

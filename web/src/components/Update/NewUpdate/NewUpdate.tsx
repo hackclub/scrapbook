@@ -60,7 +60,7 @@ const NewUpdate = () => {
     input.attachments = [url as string]
     delete input['img']
     createUpdate({
-      variables: { input: { accountsID: currentUser.id, ...input } },
+      variables: { input: { accountID: currentUser.id, ...input } },
     })
   }
 
