@@ -211,7 +211,7 @@ export const handler = async (
       timeout: 60000,
       credentialFields: {
         id: 'id',
-        userId: 'userId',
+        userId: 'accountId',
         publicKey: 'publicKey',
         transports: 'transports',
         counter: 'counter',

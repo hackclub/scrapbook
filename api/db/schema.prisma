@@ -10,8 +10,8 @@ generator client {
 
 model AccountCredential {
   id         String  @id
-  userId     Int
-  user       Account @relation(fields: [userId], references: [id])
+  accountId     Int
+  account       Account @relation(fields: [accountId], references: [id])
   publicKey  Bytes
   transports String?
   counter    BigInt
@@ -86,7 +86,7 @@ model Reaction {
   id           String   @id @default(cuid())
   updateId     String?
   emojiName    String?
-  usersReacted Int[]
+  accountsReacted Int[]
   updatedAt    DateTime @default(now()) @map("created_at")
   emoji        Emoji?   @relation(fields: [emojiName], references: [name])
   update       Update?  @relation(fields: [updateId], references: [id])
@@ -94,8 +94,8 @@ model Reaction {
 
 model ClubMember {
   id     String  @id @default(cuid())
-  userId Int
-  user   Account @relation(fields: [userId], references: [id])
+  accountId Int
+  account   Account @relation(fields: [accountId], references: [id])
   clubId String
   club   Club    @relation(fields: [clubId], references: [id])
 }

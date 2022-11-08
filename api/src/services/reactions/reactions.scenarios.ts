@@ -4,8 +4,8 @@ import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.ReactionCreateArgs>({
   reaction: {
-    one: { data: { usersReacted: 'String' } },
-    two: { data: { usersReacted: 'String' } },
+    one: { data: { accountsReacted: 'String' } },
+    two: { data: { accountsReacted: 'String' } },
   },
 })
 

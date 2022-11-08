@@ -108,7 +108,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     let emoji = prompt('Which emoji?', 'grin')
     createReaction({
       variables: {
-        input: { updateId: id, emojiName: emoji, usersReacted: [userId] },
+        input: { updateId: id, emojiName: emoji, accountsReacted: [userId] },
       },
     })
   }
@@ -116,13 +116,13 @@ const UpdatesList = ({ updates }: FindUpdates) => {
   const onEmojiClick = (
     id: DeleteUpdateMutationVariables['id'],
     emoji: string,
-    usersReacted: number[],
+    accountsReacted: number[],
     userId: number,
     reactionId: string
   ) => {
-    usersReacted = usersReacted.includes(userId)
-      ? [...usersReacted.filter((x) => x != userId)]
-      : [...usersReacted, userId]
+    accountsReacted = accountsReacted.includes(userId)
+      ? [...accountsReacted.filter((x) => x != userId)]
+      : [...accountsReacted, userId]
     console.log(reactionId)
     updateReaction({
       variables: {
@@ -130,7 +130,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
         input: {
           updateId: id,
           emojiName: emoji,
-          usersReacted: usersReacted,
+          accountsReacted: accountsReacted,
         },
       },
     })
@@ -168,11 +168,11 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           </div>
           <div>
             {update.reactions
-              .filter((reaction) => reaction.usersReacted.length != 0)
+              .filter((reaction) => reaction.accountsReacted.length != 0)
               .map((reaction) => (
                 <span
                   style={{
-                    fontWeight: reaction.usersReacted.includes(currentUser?.id)
+                    fontWeight: reaction.accountsReacted.includes(currentUser?.id)
                       ? 800
                       : 400,
                   }}
@@ -180,7 +180,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                     onEmojiClick(
                       update.id,
                       reaction.emojiName,
-                      reaction.usersReacted,
+                      reaction.accountsReacted,
                       currentUser.id,
                       reaction.id
                     )
@@ -204,7 +204,7 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                       </span>
                     )}
 
-                    {reaction.usersReacted.length}
+                    {reaction.accountsReacted.length}
                   </>
                 </span>
               ))}

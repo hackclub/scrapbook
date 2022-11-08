@@ -28,7 +28,7 @@ export const schema = gql`
 
   input SomeEmojiFilter {
     emojiName: String
-    usersReacted: UsersReactedFilter
+    accountsReacted: UsersReactedFilter
   }
 
   input ReactionsFilter {

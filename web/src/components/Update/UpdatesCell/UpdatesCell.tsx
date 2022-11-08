@@ -11,7 +11,7 @@ export const QUERY = gql`
       filter: {
         account: { username: $username }
         reactions: {
-          some: { emojiName: $reaction, usersReacted: { isEmpty: false } }
+          some: { emojiName: $reaction, accountsReacted: { isEmpty: false } }
         }
       }
     ) {
@@ -37,7 +37,7 @@ export const QUERY = gql`
           source
           name
         }
-        usersReacted
+        accountsReacted
       }
       channel
       clubscrapID

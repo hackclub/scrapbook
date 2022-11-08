@@ -33,10 +33,10 @@ describe('reactions', () => {
 
   scenario('creates a reaction', async () => {
     const result = await createReaction({
-      input: { usersReacted: 'String' },
+      input: { accountsReacted: 'String' },
     })
 
-    expect(result.usersReacted).toEqual('String')
+    expect(result.accountsReacted).toEqual('String')
   })
 
   scenario('updates a reaction', async (scenario: StandardScenario) => {
@@ -45,10 +45,10 @@ describe('reactions', () => {
     })) as Reaction
     const result = await updateReaction({
       id: original.id,
-      input: { usersReacted: 'String2' },
+      input: { accountsReacted: 'String2' },
     })
 
-    expect(result.usersReacted).toEqual('String2')
+    expect(result.accountsReacted).toEqual('String2')
   })
 
   scenario('deletes a reaction', async (scenario: StandardScenario) => {

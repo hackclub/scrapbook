@@ -3,7 +3,7 @@ export const schema = gql`
     id: String!
     updateId: String
     emojiName: String
-    usersReacted: [Int!]
+    accountsReacted: [Int!]
     updatedAt: DateTime!
     emoji: Emoji
     update: Update
@@ -17,13 +17,13 @@ export const schema = gql`
   input CreateReactionInput {
     updateId: String
     emojiName: String
-    usersReacted: [Int!]
+    accountsReacted: [Int!]
   }
 
   input UpdateReactionInput {
     updateId: String
     emojiName: String
-    usersReacted: [Int!]
+    accountsReacted: [Int!]
   }
 
   type Mutation {
