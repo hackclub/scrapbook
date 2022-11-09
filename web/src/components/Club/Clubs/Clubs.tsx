@@ -1,12 +1,14 @@
-import humanize from 'humanize-string'
-
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useAuth } from '@redwoodjs/auth'
 
 import { QUERY } from 'src/components/Club/ClubsCell'
 
-import type { DeleteClubMutationVariables, FindClubs } from 'types/graphql'
+import type {
+  DeleteClubMutationVariables,
+  FindClubs,
+} from 'types/graphql'
 
 const DELETE_CLUB_MUTATION = gql`
   mutation DeleteClubMutation($id: String!) {
@@ -18,42 +20,12 @@ const DELETE_CLUB_MUTATION = gql`
 
 const MAX_STRING_LENGTH = 150
 
-const formatEnum = (values: string | string[] | null | undefined) => {
-  if (values) {
-    if (Array.isArray(values)) {
-      const humanizedValues = values.map((value) => humanize(value))
-      return humanizedValues.join(', ')
-    } else {
-      return humanize(values as string)
-    }
-  }
-}
-
 const truncate = (value: string | number) => {
   const output = value?.toString()
   if (output?.length > MAX_STRING_LENGTH) {
     return output.substring(0, MAX_STRING_LENGTH) + '...'
   }
   return output ?? ''
-}
-
-
-const jsonTruncate = (obj: unknown) => {
-  return truncate(JSON.stringify(obj, null, 2))
-}
-
-const timeTag = (datetime?: string) => {
-  return (
-    datetime && (
-      <time dateTime={datetime} title={datetime}>
-        {new Date(datetime).toUTCString()}
-      </time>
-    )
-  )
-}
-
-const checkboxInputTag = (checked: boolean) => {
-  return <input type="checkbox" checked={checked} disabled />
 }
 
 const ClubsList = ({ clubs }: FindClubs) => {
@@ -77,58 +49,69 @@ const ClubsList = ({ clubs }: FindClubs) => {
     }
   }
 
+  const { currentUser } = useAuth()
+
   return (
-   <> <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Logo</th>
-            <th>Name</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clubs.map((club) => (
-            <tr key={club.id}>
-              <td><img src={club.logo} className="h-32 rounded" /></td>
-              <td>{truncate(club.name)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.club({ id: club.id })}
-                    title={'Show club ' + club.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editClub({ id: club.id })}
-                    title={'Edit club ' + club.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete club ' + club.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(club.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
+    <>
+      {' '}
+      <div className="rw-segment rw-table-wrapper-responsive">
+        <table className="rw-table">
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Name</th>
+              <th>&nbsp;</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      
-    </div><Link
-          to={routes.newClub()}
-          className="rw-button rw-button-green mt-3"
-        >
-          <div className="rw-button-icon">+</div> New Club
-        </Link></>
+          </thead>
+          <tbody>
+            {clubs.map((club) => (
+              <tr key={club.id}>
+                <td>
+                  <img src={club.logo} className="h-32 rounded" />
+                </td>
+                <td>{truncate(club.name)}</td>
+                <td>
+                  <nav className="rw-table-actions">
+                    <Link
+                      to={routes.club({ id: club.id })}
+                      title={'Show club ' + club.id + ' detail'}
+                      className="rw-button rw-button-small"
+                    >
+                      Show
+                    </Link>
+                    {club.members
+                      .filter((x) => x.admin)
+                      .map((x) => x.accountId)
+                      .includes(currentUser.id) && (
+                      <>
+                        <Link
+                          to={routes.editClub({ id: club.id })}
+                          title={'Edit club ' + club.id}
+                          className="rw-button rw-button-small rw-button-blue"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          type="button"
+                          title={'Delete club ' + club.id}
+                          className="rw-button rw-button-small rw-button-red"
+                          onClick={() => onDeleteClick(club.id)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </nav>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Link to={routes.newClub()} className="rw-button rw-button-green mt-3">
+        <div className="rw-button-icon">+</div> New Club
+      </Link>
+    </>
   )
 }
 

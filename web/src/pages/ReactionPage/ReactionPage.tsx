@@ -6,7 +6,7 @@ interface ReactionPageProps {
 const ReactionPage: React.FC<ReactionPageProps> = ({ emoji }) => {
   return (
     <>
-      <h1 className='text-4xl font-semibold mb-3'>r/{emoji}</h1>
+      <h1 className="mb-3 text-4xl font-semibold">r/{emoji}</h1>
       <UpdatesCell reaction={emoji} />
     </>
   )

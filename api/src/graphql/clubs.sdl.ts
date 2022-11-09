@@ -21,6 +21,7 @@ export const schema = gql`
     slug: String!
     name: String!
     logo: String!
+    creator: Int
     customDomain: String
     cssURL: String
     website: String
@@ -39,7 +40,7 @@ export const schema = gql`
 
   type Mutation {
     createClub(input: CreateClubInput!): Club! @requireAuth
-    updateClub(id: String!, input: UpdateClubInput!): Club! @requireAuth
-    deleteClub(id: String!): Club! @requireAuth
+    updateClub(id: String!, input: UpdateClubInput!): Club! @requireClubAdmin
+    deleteClub(id: String!): Club! @requireClubAdmin
   }
 `

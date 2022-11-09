@@ -5,6 +5,7 @@ export const schema = gql`
     account: Account!
     clubId: String!
     club: Club!
+    admin: Boolean!
   }
 
   type Query {

@@ -15,7 +15,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
           alt="Hack Club"
           className="h-8 rounded-md"
         />
-        <h1 className="rw-heading rw-heading-primary flex-grow fonts-header">
+        <h1 className="rw-heading rw-heading-primary fonts-header flex-grow">
           <Link to={routes.home()} className="rw-link">
             Scrapbook
           </Link>

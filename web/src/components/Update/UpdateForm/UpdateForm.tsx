@@ -1,4 +1,7 @@
-import type { EditUpdateById, UpdateUpdateInput } from 'types/graphql'
+import type {
+  EditUpdateById,
+  UpdateUpdateInput,
+} from 'types/graphql'
 
 import {
   Form,

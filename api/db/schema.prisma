@@ -11,7 +11,7 @@ generator client {
 model AccountCredential {
   id         String  @id
   accountId     Int
-  account       Account @relation(fields: [accountId], references: [id])
+  account       Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
   publicKey  Bytes
   transports String?
   counter    BigInt
@@ -70,7 +70,7 @@ model Update {
   isLargeVideo     Boolean?
   channel          String?
   clubscrapID      String?     @unique
-  account         Account?    @relation(fields: [accountID], references: [id])
+  account         Account?    @relation(fields: [accountID], references: [id], onDelete: Cascade)
   reactions        Reaction[]
   associatedClub   ClubUpdate?
 }
@@ -88,24 +88,25 @@ model Reaction {
   emojiName    String?
   accountsReacted Int[]
   updatedAt    DateTime @default(now()) @map("created_at")
-  emoji        Emoji?   @relation(fields: [emojiName], references: [name])
-  update       Update?  @relation(fields: [updateId], references: [id])
+  emoji        Emoji?   @relation(fields: [emojiName], references: [name], onDelete: Cascade)
+  update       Update?  @relation(fields: [updateId], references: [id], onDelete: Cascade)
 }
 
 model ClubMember {
   id     String  @id @default(cuid())
   accountId Int
-  account   Account @relation(fields: [accountId], references: [id])
+  account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
   clubId String
-  club   Club    @relation(fields: [clubId], references: [id])
+  club   Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  admin  Boolean @default(false)
 }
 
 model ClubUpdate {
   id       String @id @default(cuid())
   updateId String @unique
-  update   Update @relation(fields: [updateId], references: [id])
+  update   Update @relation(fields: [updateId], references: [id], onDelete: Cascade)
   clubId   String
-  club     Club   @relation(fields: [clubId], references: [id])
+  club     Club   @relation(fields: [clubId], references: [id], onDelete: Cascade)
 }
 
 model Club {

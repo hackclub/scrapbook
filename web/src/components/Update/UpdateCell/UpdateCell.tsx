@@ -1,6 +1,9 @@
 import type { FindUpdateById } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 
 import Update from 'src/components/Update/Update'
 

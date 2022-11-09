@@ -31,10 +31,7 @@ const CREATE_REACTION_MUTATION = gql`
 `
 
 const UPDATE_REACTION_MUTATION = gql`
-  mutation UpdateReactionMutation(
-    $id: String!
-    $input: UpdateReactionInput!
-  ) {
+  mutation UpdateReactionMutation($id: String!, $input: UpdateReactionInput!) {
     updateReaction(id: $id, input: $input) {
       id
     }
@@ -143,25 +140,27 @@ const UpdatesList = ({ updates }: FindUpdates) => {
       {updates.map((update) => (
         <div key={update.id} className="border-r border-b p-3">
           <p className="mb-2">
-          <Link to={routes.user({username: truncate(update.account.username)})} className="text-purple">
-            <b>@{truncate(update.account.username)}</b></Link>
+            <Link
+              to={routes.user({ username: truncate(update.account.username) })}
+              className="text-purple"
+            >
+              <b>@{truncate(update.account.username)}</b>
+            </Link>
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-2">
             {update.muxPlaybackIDs.map((id, index) => (
-              <MuxPlayer
-                streamType="on-demand"
-                playbackId={id}
-              />
+              <MuxPlayer streamType="on-demand" playbackId={id} />
             ))}
-            {update.muxPlaybackIDs.length == 0 && update.attachments.map((attachment, index) => (
-              <img
-                src={attachment}
-                key={`${update.id}-attachment-${index}`}
-                className="bg-gray-200 my-2 rounded-md border"
-                alt={`Project by ${truncate(update.account.username)}.`}
-              />
-            ))}
+            {update.muxPlaybackIDs.length == 0 &&
+              update.attachments.map((attachment, index) => (
+                <img
+                  src={attachment}
+                  key={`${update.id}-attachment-${index}`}
+                  className="bg-gray-200 my-2 rounded-md border"
+                  alt={`Project by ${truncate(update.account.username)}.`}
+                />
+              ))}
           </div>
           <div className="text-gray-500 text-center">
             {timeTag(update.postTime)}
@@ -172,7 +171,9 @@ const UpdatesList = ({ updates }: FindUpdates) => {
               .map((reaction) => (
                 <span
                   style={{
-                    fontWeight: reaction.accountsReacted.includes(currentUser?.id)
+                    fontWeight: reaction.accountsReacted.includes(
+                      currentUser?.id
+                    )
                       ? 800
                       : 400,
                   }}
@@ -192,11 +193,11 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                       <img
                         src={reaction.emoji.source}
                         alt={reaction.emoji.source}
-                        className="inline-block w-6 h-6"
+                        className="inline-block h-6 w-6"
                       />
                     ) : (
                       <span
-                        className="inline-block w-6 h-6"
+                        className="inline-block h-6 w-6"
                         role="img"
                         aria-label={reaction.emoji.source}
                       >

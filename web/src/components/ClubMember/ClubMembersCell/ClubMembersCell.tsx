@@ -1,7 +1,10 @@
 import type { FindClubMembers } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 
 import ClubMembers from 'src/components/ClubMember/ClubMembers'
 
@@ -21,10 +24,7 @@ export const Empty = () => {
   return (
     <div className="rw-text-center">
       {'No clubMembers yet. '}
-      <Link
-        to={routes.newClubMember()}
-        className="rw-link"
-      >
+      <Link to={routes.newClubMember()} className="rw-link">
         {'Create one?'}
       </Link>
     </div>

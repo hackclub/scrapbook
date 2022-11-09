@@ -1,6 +1,4 @@
-import {
-  getNow
-} from 'src/services/updates/updates'
+import { getNow } from 'src/services/updates/updates'
 import { db } from 'src/lib/db'
 
 export default async (req, res) => {
@@ -8,9 +6,9 @@ export default async (req, res) => {
   const users = await db.account.findMany({
     where: {
       streakCount: {
-        gt: 0
-      }
-    }
+        gt: 0,
+      },
+    },
   })
   users.forEach(async (user) => {
     const userId = user.id
@@ -21,13 +19,13 @@ export default async (req, res) => {
 
     const latestUpdate = await db.update.findFirst({
       where: {
-        accountID: userId
+        accountID: userId,
       },
       orderBy: [
         {
-          postTime: 'desc'
-        }
-      ]
+          postTime: 'desc',
+        },
+      ],
     })
     const createdTime = latestUpdate?.postTime
     if (!createdTime) {
@@ -41,7 +39,7 @@ export default async (req, res) => {
       )
       await db.account.update({
         where: { id: user.id },
-        data: { streakCount: 0 }
+        data: { streakCount: 0 },
       })
     }
   })

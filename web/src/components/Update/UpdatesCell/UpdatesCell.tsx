@@ -1,7 +1,10 @@
 import type { FindUpdates } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 
 import Updates from 'src/components/Update/Updates'
 

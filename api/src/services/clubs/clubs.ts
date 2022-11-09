@@ -7,7 +7,11 @@ import type {
 import { db } from 'src/lib/db'
 
 export const clubs: QueryResolvers['clubs'] = () => {
-  return db.club.findMany()
+  return db.club.findMany({
+    include: {
+      members: true,
+    },
+  })
 }
 
 export const club: QueryResolvers['club'] = ({ id }) => {
@@ -17,8 +21,18 @@ export const club: QueryResolvers['club'] = ({ id }) => {
 }
 
 export const createClub: MutationResolvers['createClub'] = ({ input }) => {
+  let creator = input.creator
+  delete input.creator
   return db.club.create({
-    data: input,
+    data: {
+      ...input,
+      members: {
+        create: {
+          accountId: creator,
+          admin: true,
+        },
+      },
+    },
   })
 }
 

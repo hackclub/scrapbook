@@ -16,9 +16,7 @@ export const emoji: QueryResolvers['emoji'] = ({ id }) => {
   })
 }
 
-export const createEmoji: MutationResolvers['createEmoji'] = ({
-  input,
-}) => {
+export const createEmoji: MutationResolvers['createEmoji'] = ({ input }) => {
   return db.emoji.create({
     data: input,
   })
@@ -34,9 +32,7 @@ export const updateEmoji: MutationResolvers['updateEmoji'] = ({
   })
 }
 
-export const deleteEmoji: MutationResolvers['deleteEmoji'] = ({
-  id,
-}) => {
+export const deleteEmoji: MutationResolvers['deleteEmoji'] = ({ id }) => {
   return db.emoji.delete({
     where: { id },
   })

@@ -27,12 +27,9 @@ export const schema = gql`
   }
 
   type Mutation {
-    createReaction(input: CreateReactionInput!): Reaction!
+    createReaction(input: CreateReactionInput!): Reaction! @requireAuth
+    updateReaction(id: String!, input: UpdateReactionInput!): Reaction!
       @requireAuth
-    updateReaction(
-      id: String!
-      input: UpdateReactionInput!
-    ): Reaction! @requireAuth
     deleteReaction(id: String!): Reaction! @requireAuth
   }
 `

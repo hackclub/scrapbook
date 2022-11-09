@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useAuth } from '@redwoodjs/auth'
 
 import ClubForm from 'src/components/Club/ClubForm'
 
@@ -15,21 +16,19 @@ const CREATE_CLUB_MUTATION = gql`
 `
 
 const NewClub = () => {
-  const [createClub, { loading, error }] = useMutation(
-    CREATE_CLUB_MUTATION,
-    {
-      onCompleted: () => {
-        toast.success('Club created')
-        navigate(routes.clubs())
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const { currentUser } = useAuth()
+  const [createClub, { loading, error }] = useMutation(CREATE_CLUB_MUTATION, {
+    onCompleted: () => {
+      toast.success('Club created')
+      navigate(routes.clubs())
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   const onSave = (input: CreateClubInput) => {
-    createClub({ variables: { input } })
+    createClub({ variables: { input: { ...input, creator: currentUser.id } } })
   }
 
   return (

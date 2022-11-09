@@ -22,14 +22,11 @@ describe('reactions', () => {
     expect(result.length).toEqual(Object.keys(scenario.reaction).length)
   })
 
-  scenario(
-    'returns a single reaction',
-    async (scenario: StandardScenario) => {
-      const result = await reaction({ id: scenario.reaction.one.id })
+  scenario('returns a single reaction', async (scenario: StandardScenario) => {
+    const result = await reaction({ id: scenario.reaction.one.id })
 
-      expect(result).toEqual(scenario.reaction.one)
-    }
-  )
+    expect(result).toEqual(scenario.reaction.one)
+  })
 
   scenario('creates a reaction', async () => {
     const result = await createReaction({

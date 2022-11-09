@@ -7,11 +7,14 @@ import type {
 import { db } from 'src/lib/db'
 import S3 from 'src/utils/s3'
 
-const Mux = require('@mux/mux-node');
+const Mux = require('@mux/mux-node')
 
-const { Video, Data } = new Mux(process.env.MUX_TOKEN_ID, process.env.MUX_SECRET_ID);
+const { Video, Data } = new Mux(
+  process.env.MUX_TOKEN_ID,
+  process.env.MUX_SECRET_ID
+)
 
-const muxClient = new Mux();
+const muxClient = new Mux()
 
 export const getDayFromISOString = (ISOString) => {
   const date = new Date(ISOString)
@@ -35,7 +38,12 @@ export const getNow = (tz) => {
   return new Date(date).toISOString()
 }
 
-const shouldUpdateStreak = async (userId, timezone, increment, latestUpdates) => {
+const shouldUpdateStreak = async (
+  userId,
+  timezone,
+  increment,
+  latestUpdates
+) => {
   const now = getNow(timezone)
   const createdTime = increment
     ? latestUpdates[1]?.postTime
@@ -74,25 +82,25 @@ export const update: QueryResolvers['update'] = ({ id }) => {
 export const createUpdate: MutationResolvers['createUpdate'] = async ({
   input,
 }) => {
-  let filename = input.attachments[0].split(".")
+  let filename = input.attachments[0].split('.')
   let asset
   let playbackID
-  if(['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])){
+  if (['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])) {
     asset = await Video.Assets.create({
       input: input.attachments[0],
-      "playback_policy": [
-        "public"
-      ],
-    });
-    playbackID = await Video.Assets.createPlaybackId(asset.id, { policy: 'public' });
+      playback_policy: ['public'],
+    })
+    playbackID = await Video.Assets.createPlaybackId(asset.id, {
+      policy: 'public',
+    })
     input.muxAssetIDs = [asset.id]
     input.muxPlaybackIDs = [playbackID.id]
   }
   let result = await db.$transaction([
     db.update.create({
       data: {
-        ...input
-      }
+        ...input,
+      },
     }),
     db.account.findUnique({
       where: { id: input.accountID },
@@ -102,22 +110,29 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
             postTime: true,
           },
           orderBy: {
-              postTime: 'desc'
-          }
+            postTime: 'desc',
+          },
         },
       },
     }),
   ])
-  if(shouldUpdateStreak(result[1].id, result[1].timezone, true, result[1].updates)){
+  if (
+    shouldUpdateStreak(
+      result[1].id,
+      result[1].timezone,
+      true,
+      result[1].updates
+    )
+  ) {
     await db.account.update({
       where: {
-        id: result[1].id
+        id: result[1].id,
       },
       data: {
         streakCount: {
-          increment: 1
-        }
-      }
+          increment: 1,
+        },
+      },
     })
   }
   return result[0]

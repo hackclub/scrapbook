@@ -23,8 +23,7 @@ export const schema = gql`
 
   type Mutation {
     createEmoji(input: CreateEmojiInput!): Emoji! @requireAuth
-    updateEmoji(id: String!, input: UpdateEmojiInput!): Emoji!
-      @requireAuth
+    updateEmoji(id: String!, input: UpdateEmojiInput!): Emoji! @requireAuth
     deleteEmoji(id: String!): Emoji! @requireAuth
   }
 `

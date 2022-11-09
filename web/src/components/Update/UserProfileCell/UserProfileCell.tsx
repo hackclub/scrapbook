@@ -1,5 +1,8 @@
 import type { FindUserByUsername } from 'types/graphql'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 import { Head } from '@redwoodjs/web'
 import ReactAudioPlayer from 'react-audio-player'
 
@@ -31,9 +34,10 @@ export const Success = ({
 }: CellSuccessProps<FindUserByUsername>) => {
   return (
     <>
-    <Head>
-      <link rel="stylesheet" href={accountByUsername.cssURL || ''} /></Head>
-      <div className="border-gray-200 rounded-lg border px-4 py-2 mb-3">
+      <Head>
+        <link rel="stylesheet" href={accountByUsername.cssURL || ''} />
+      </Head>
+      <div className="border-gray-200 mb-3 rounded-lg border px-4 py-2">
         <img src={accountByUsername.avatar} />
         <p className="text-gray-800 text-xl font-black">
           {accountByUsername.username}
@@ -45,8 +49,14 @@ export const Success = ({
           Streak: {accountByUsername?.streakCount}
         </p>
         {accountByUsername.customAudioURL && (
-          <ReactAudioPlayer src={accountByUsername.customAudioURL} autoPlay loop controls preload="metadata" />
-            )}
+          <ReactAudioPlayer
+            src={accountByUsername.customAudioURL}
+            autoPlay
+            loop
+            controls
+            preload="metadata"
+          />
+        )}
       </div>
       <UpdatesCell username={accountByUsername.username} />
     </>

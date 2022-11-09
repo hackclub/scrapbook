@@ -8,11 +8,11 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-import type { EditClubMemberById, UpdateClubMemberInput } from 'types/graphql'
+import type {
+  EditClubMemberById,
+  UpdateClubMemberInput,
+} from 'types/graphql'
 import type { RWGqlError } from '@redwoodjs/forms'
-
-
-
 
 type FormClubMember = NonNullable<EditClubMemberById['clubMember']>
 
@@ -25,13 +25,6 @@ interface ClubMemberFormProps {
 
 const ClubMemberForm = (props: ClubMemberFormProps) => {
   const onSubmit = (data: FormClubMember) => {
-  
-    
-    
-  
-    
-    
-  
     props.onSave(data, props?.clubMember?.id)
   }
 
@@ -44,7 +37,7 @@ const ClubMemberForm = (props: ClubMemberFormProps) => {
           titleClassName="rw-form-error-title"
           listClassName="rw-form-error-list"
         />
-      
+
         <Label
           name="accountId"
           className="rw-label"
@@ -52,15 +45,14 @@ const ClubMemberForm = (props: ClubMemberFormProps) => {
         >
           Account id
         </Label>
-        
-          <NumberField
-            name="accountId"
-            defaultValue={props.clubMember?.accountId}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-            validation={{ required: true }}
-          />
-        
+
+        <NumberField
+          name="accountId"
+          defaultValue={props.clubMember?.accountId}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
 
         <FieldError name="accountId" className="rw-field-error" />
 
@@ -71,23 +63,19 @@ const ClubMemberForm = (props: ClubMemberFormProps) => {
         >
           Club id
         </Label>
-        
-          <TextField
-            name="clubId"
-            defaultValue={props.clubMember?.clubId}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-            validation={{ required: true }}
-          />
-        
+
+        <TextField
+          name="clubId"
+          defaultValue={props.clubMember?.clubId}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
 
         <FieldError name="clubId" className="rw-field-error" />
 
         <div className="rw-button-group">
-          <Submit
-            disabled={props.loading}
-            className="rw-button rw-button-blue"
-          >
+          <Submit disabled={props.loading} className="rw-button rw-button-blue">
             Save
           </Submit>
         </div>

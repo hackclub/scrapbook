@@ -4,7 +4,10 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import type { DeleteClubMutationVariables, FindClubById } from 'types/graphql'
+import type {
+  DeleteClubMutationVariables,
+  FindClubById,
+} from 'types/graphql'
 
 const DELETE_CLUB_MUTATION = gql`
   mutation DeleteClubMutation($id: String!) {
@@ -81,25 +84,32 @@ const Club = ({ club }: Props) => {
             <tr>
               <th>Id</th>
               <td>{club.id}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Slug</th>
               <td>{club.slug}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Name</th>
               <td>{club.name}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Logo</th>
               <td>{club.logo}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Custom domain</th>
               <td>{club.customDomain}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Css url</th>
               <td>{club.cssURL}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Website</th>
               <td>{club.website}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Github</th>
               <td>{club.github}</td>
             </tr>

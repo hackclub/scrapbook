@@ -1,7 +1,10 @@
 import type { EditClubById, UpdateClubInput } from 'types/graphql'
 
 import { navigate, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -43,30 +46,26 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ club }: CellSuccessProps<EditClubById>) => {
-  const [updateClub, { loading, error }] = useMutation(
-    UPDATE_CLUB_MUTATION,
-    {
-      onCompleted: () => {
-        toast.success('Club updated')
-        navigate(routes.clubs())
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const [updateClub, { loading, error }] = useMutation(UPDATE_CLUB_MUTATION, {
+    onCompleted: () => {
+      toast.success('Club updated')
+      navigate(routes.clubs())
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
-  const onSave = (
-    input: UpdateClubInput,
-    id: EditClubById['club']['id']
-  ) => {
+  const onSave = (input: UpdateClubInput, id: EditClubById['club']['id']) => {
     updateClub({ variables: { id, input } })
   }
 
   return (
     <div className="rw-segment">
       <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">Edit Club {club?.id}</h2>
+        <h2 className="rw-heading rw-heading-secondary">
+          Edit Club {club?.id}
+        </h2>
       </header>
       <div className="rw-segment-main">
         <ClubForm club={club} onSave={onSave} error={error} loading={loading} />

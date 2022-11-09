@@ -25,7 +25,7 @@ const Routes = () => {
         <Route path="/club-members/{id}" page={ClubMemberClubMemberPage} name="clubMember" />
         <Route path="/club-members" page={ClubMemberClubMembersPage} name="clubMembers" />
       </Set>
-      
+
       <Set wrap={MainLayout}>
         <Private unauthenticated="login">
           <Route path="/account" page={AccountEditAccountPage} name="editAccount" />

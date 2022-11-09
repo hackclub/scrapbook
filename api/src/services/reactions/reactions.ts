@@ -34,9 +34,7 @@ export const updateReaction: MutationResolvers['updateReaction'] = ({
   })
 }
 
-export const deleteReaction: MutationResolvers['deleteReaction'] = ({
-  id,
-}) => {
+export const deleteReaction: MutationResolvers['deleteReaction'] = ({ id }) => {
   return db.reaction.delete({
     where: { id },
   })

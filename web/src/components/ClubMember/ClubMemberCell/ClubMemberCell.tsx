@@ -1,6 +1,9 @@
 import type { FindClubMemberById } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+} from '@redwoodjs/web'
 
 import ClubMember from 'src/components/ClubMember/ClubMember'
 
@@ -22,6 +25,8 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ clubMember }: CellSuccessProps<FindClubMemberById>) => {
+export const Success = ({
+  clubMember,
+}: CellSuccessProps<FindClubMemberById>) => {
   return <ClubMember clubMember={clubMember} />
 }
