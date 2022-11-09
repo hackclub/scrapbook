@@ -37,6 +37,12 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
               Create
             </Link>
             <Link
+              to={routes.clubs()}
+              className="rw-button bg-blue-800 text-gray-100 hover:bg-blue-600"
+            >
+              Clubs
+            </Link>
+            <Link
               to={routes.editAccount()}
               className="rw-button bg-blue-800 text-gray-100 hover:bg-blue-600"
             >

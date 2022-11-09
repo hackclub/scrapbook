@@ -4,13 +4,13 @@ import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { QUERY } from 'src/components/Club/ClubsCell'
+import { QUERY } from 'src/components/ClubMember/ClubMembersCell'
 
-import type { DeleteClubMutationVariables, FindClubs } from 'types/graphql'
+import type { DeleteClubMemberMutationVariables, FindClubMembers } from 'types/graphql'
 
-const DELETE_CLUB_MUTATION = gql`
-  mutation DeleteClubMutation($id: String!) {
-    deleteClub(id: $id) {
+const DELETE_CLUB_MEMBER_MUTATION = gql`
+  mutation DeleteClubMemberMutation($id: String!) {
+    deleteClubMember(id: $id) {
       id
     }
   }
@@ -56,10 +56,10 @@ const checkboxInputTag = (checked: boolean) => {
   return <input type="checkbox" checked={checked} disabled />
 }
 
-const ClubsList = ({ clubs }: FindClubs) => {
-  const [deleteClub] = useMutation(DELETE_CLUB_MUTATION, {
+const ClubMembersList = ({ clubMembers }: FindClubMembers) => {
+  const [deleteClubMember] = useMutation(DELETE_CLUB_MEMBER_MUTATION, {
     onCompleted: () => {
-      toast.success('Club deleted')
+      toast.success('ClubMember deleted')
     },
     onError: (error) => {
       toast.error(error.message)
@@ -71,48 +71,50 @@ const ClubsList = ({ clubs }: FindClubs) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteClubMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete club ' + id + '?')) {
-      deleteClub({ variables: { id } })
+  const onDeleteClick = (id: DeleteClubMemberMutationVariables['id']) => {
+    if (confirm('Are you sure you want to delete clubMember ' + id + '?')) {
+      deleteClubMember({ variables: { id } })
     }
   }
 
   return (
-   <> <div className="rw-segment rw-table-wrapper-responsive">
+    <div className="rw-segment rw-table-wrapper-responsive">
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Logo</th>
-            <th>Name</th>
+            <th>Id</th>
+            <th>Account id</th>
+            <th>Club id</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
-          {clubs.map((club) => (
-            <tr key={club.id}>
-              <td><img src={club.logo} className="h-32 rounded" /></td>
-              <td>{truncate(club.name)}</td>
+          {clubMembers.map((clubMember) => (
+            <tr key={clubMember.id}>
+              <td>{truncate(clubMember.id)}</td>
+              <td>{truncate(clubMember.accountId)}</td>
+              <td>{truncate(clubMember.clubId)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link
-                    to={routes.club({ id: club.id })}
-                    title={'Show club ' + club.id + ' detail'}
+                    to={routes.clubMember({ id: clubMember.id })}
+                    title={'Show clubMember ' + clubMember.id + ' detail'}
                     className="rw-button rw-button-small"
                   >
                     Show
                   </Link>
                   <Link
-                    to={routes.editClub({ id: club.id })}
-                    title={'Edit club ' + club.id}
+                    to={routes.editClubMember({ id: clubMember.id })}
+                    title={'Edit clubMember ' + clubMember.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
                   </Link>
                   <button
                     type="button"
-                    title={'Delete club ' + club.id}
+                    title={'Delete clubMember ' + clubMember.id}
                     className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(club.id)}
+                    onClick={() => onDeleteClick(clubMember.id)}
                   >
                     Delete
                   </button>
@@ -122,14 +124,8 @@ const ClubsList = ({ clubs }: FindClubs) => {
           ))}
         </tbody>
       </table>
-      
-    </div><Link
-          to={routes.newClub()}
-          className="rw-button rw-button-green mt-3"
-        >
-          <div className="rw-button-icon">+</div> New Club
-        </Link></>
+    </div>
   )
 }
 
-export default ClubsList
+export default ClubMembersList
