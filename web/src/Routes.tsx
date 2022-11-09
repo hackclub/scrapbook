@@ -9,12 +9,20 @@
 
 import { Set, Router, Route, Private } from '@redwoodjs/router'
 
+import ClubsLayout from 'src/layouts/ClubsLayout'
+
 import MainLayout from './layouts/MainLayout'
 import UserPage from './pages/UserPage/UserPage'
 
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ClubsLayout}>
+        <Route path="/clubs/new" page={ClubNewClubPage} name="newClub" />
+        <Route path="/clubs/{id}/edit" page={ClubEditClubPage} name="editClub" />
+        <Route path="/clubs/{id}" page={ClubClubPage} name="club" />
+        <Route path="/clubs" page={ClubClubsPage} name="clubs" />
+      </Set>
       <Set wrap={MainLayout}>
         <Private unauthenticated="login">
           <Route path="/account" page={AccountEditAccountPage} name="editAccount" />
