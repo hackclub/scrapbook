@@ -15,6 +15,7 @@ export const schema = gql`
   type Query {
     clubs: [Club!]! @requireAuth
     club(id: String!): Club @requireAuth
+    clubBySlug(slug: String!): Club @skipAuth
   }
 
   input CreateClubInput {

@@ -31,13 +31,19 @@ export const schema = gql`
     accountsReacted: UsersReactedFilter
   }
 
+  input ClubFilter {
+    clubId: String
+  }
+
   input ReactionsFilter {
     some: SomeEmojiFilter
   }
 
+
   input UpdatesFilter {
     account: AccountFilter
     reactions: ReactionsFilter
+    associatedClub: ClubFilter
   }
 
   type Query {
@@ -58,7 +64,7 @@ export const schema = gql`
     backupPlaybackID: String
     isLargeVideo: Boolean
     channel: String
-    clubscrapID: String
+    clubSlug: String
   }
 
   input UpdateUpdateInput {

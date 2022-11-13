@@ -54,7 +54,26 @@ const UpdateForm = (props: UpdateFormProps) => {
         />
 
         <FieldError name="text" className="rw-field-error" />
+        {!props.update && 
+          <>
+            <Label
+              name="clubSlug"
+              className="rw-label"
+              errorClassName="rw-label rw-label-error"
+            >
+              Club Slug (ex: scrapbook.hackclub.com/club/slug)
+            </Label>
 
+            <TextField
+              name="clubSlug"
+              defaultValue={props.update?.text}
+              className="rw-input"
+              errorClassName="rw-input rw-input-error"
+            />
+
+            <FieldError name="clubSlug" className="rw-field-error" />
+          </>
+        }
         <Label
           name="attachments"
           className="rw-label"

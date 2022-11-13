@@ -59,12 +59,13 @@ const shouldUpdateStreak = async (
 export const updates: QueryResolvers['updates'] = ({ filter }) => {
   console.log(filter)
   if (filter.reactions.some?.emojiName == undefined) {
-    filter = { account: filter.account }
+    delete filter.reactions
   }
   return db.update.findMany({
     include: {
       account: true,
       reactions: { include: { emoji: true } },
+      associatedClub: { include: { club: true }}
     },
     orderBy: {
       postTime: 'desc',
@@ -85,6 +86,8 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
   let filename = input.attachments[0].split('.')
   let asset
   let playbackID
+  let clubSlug = input.clubSlug
+  delete input.clubSlug
   if (['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])) {
     asset = await Video.Assets.create({
       input: input.attachments[0],
@@ -100,6 +103,15 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
     db.update.create({
       data: {
         ...input,
+        associatedClub: clubSlug != undefined ? {
+          create: {
+            club: {
+              connect: {
+                slug: clubSlug
+              }
+            }
+          }
+        } : null
       },
     }),
     db.account.findUnique({

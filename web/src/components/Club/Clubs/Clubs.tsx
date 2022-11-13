@@ -73,8 +73,8 @@ const ClubsList = ({ clubs }: FindClubs) => {
                 <td>
                   <nav className="rw-table-actions">
                     <Link
-                      to={routes.club({ id: club.id })}
-                      title={'Show club ' + club.id + ' detail'}
+                      to={routes.club({ slug: club.slug })}
+                      title={'Show club ' + club.slug + ' detail'}
                       className="rw-button rw-button-small"
                     >
                       Show

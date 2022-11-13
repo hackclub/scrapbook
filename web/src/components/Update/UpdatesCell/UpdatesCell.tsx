@@ -9,13 +9,14 @@ import type {
 import Updates from 'src/components/Update/Updates'
 
 export const QUERY = gql`
-  query FindUpdates($username: String, $reaction: String) {
+  query FindUpdates($username: String, $reaction: String, $club: String) {
     updates(
       filter: {
         account: { username: $username }
         reactions: {
           some: { emojiName: $reaction, accountsReacted: { isEmpty: false } }
         }
+        associatedClub: { clubId: $club }
       }
     ) {
       id
