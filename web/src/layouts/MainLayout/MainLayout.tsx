@@ -1,5 +1,5 @@
 import { useAuth } from '@redwoodjs/auth'
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, useLocation } from '@redwoodjs/router'
 
 type UpdateLayoutProps = {
   children: React.ReactNode
@@ -7,6 +7,7 @@ type UpdateLayoutProps = {
 
 const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
   const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { pathname, search, hash } = useLocation()
   return (
     <div>
       <header className="mb-2 flex gap-3 p-4">
@@ -17,7 +18,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
         />
         <h1 className="rw-heading rw-heading-primary fonts-header flex-grow">
           <Link to={routes.home()} className="rw-link">
-            Hack Club
+            { pathname == "/" ? "Hack Club" : "Hack Club's Scrapbook"}
           </Link>
         </h1>
         {isAuthenticated ? (
