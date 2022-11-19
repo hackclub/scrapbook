@@ -99,11 +99,14 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
     input.muxAssetIDs = [asset.id]
     input.muxPlaybackIDs = [playbackID.id]
   }
+  console.log({
+    slug: clubSlug
+  })
   let result = await db.$transaction([
     db.update.create({
       data: {
         ...input,
-        associatedClub: clubSlug != undefined ? {
+        associatedClub: clubSlug != '' ? {
           create: {
             club: {
               connect: {
@@ -111,7 +114,7 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
               }
             }
           }
-        } : null
+        } : undefined
       },
     }),
     db.account.findUnique({

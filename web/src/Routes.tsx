@@ -40,7 +40,7 @@ const Routes = () => {
             <Route path="/clubs" page={ClubClubsPage} name="clubs" />
           </Set>
         </Private>
-        <Route path="/" page={IndexPage} name="home" />
+        <Route path="/" page={IndexPage} name="home" prerender />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />

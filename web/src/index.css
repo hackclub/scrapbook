@@ -17,3 +17,65 @@
 body {
   padding: 32px;
 }
+
+mux-player::part(bottom time range) {
+  --media-range-bar-color: theme('colors.progress')!important;
+}
+
+mux-player {
+  width: 100%;
+
+}
+
+.masonary-test {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+/* Re-order items into rows */
+.masonary-item:nth-child(3n+1) { order: 1; }
+.masonary-item:nth-child(3n+2) { order: 2; }
+.masonary-item:nth-child(3n)   { order: 3; }
+
+/* Force new columns */
+.masonary-test::before,
+.masonary-test::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}
+
+.masonary-test {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-between;
+  /* Your container needs a fixed height, and it 
+   * needs to be taller than your tallest column. */
+  height: 1000px;
+  counter-reset: items;
+}
+
+.masonary-item {
+  width: 32%;
+  /* Optional */
+  position: relative;
+  margin-bottom: 2%;
+  border-radius: 3px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Re-order items into 3 rows */
+.masonary-item:nth-child(3n+1) { order: 1; }
+.masonary-item:nth-child(3n+2) { order: 2; }
+.masonary-item:nth-child(3n)   { order: 3; }
+
+/* Force new columns */
+.masonary-test::before,
+.masonary-test::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}

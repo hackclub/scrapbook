@@ -17,14 +17,14 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
         />
         <h1 className="rw-heading rw-heading-primary fonts-header flex-grow">
           <Link to={routes.home()} className="rw-link">
-            Scrapbook
+            Hack Club
           </Link>
         </h1>
         {isAuthenticated ? (
           <>
             <a
               href="https://github.com/hackclub/scrapbook"
-              className="rw-button bg-slate-900 text-gray-100 hover:bg-slate-700"
+              className="rw-button bg-slate-900 text-gray-100 hover:bg-slate"
               target="_blank"
               rel="noreferrer"
             >
@@ -32,24 +32,24 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
             </a>
             <Link
               to={routes.newUpdate()}
-              className="rw-button bg-green-800 text-gray-100 hover:bg-green-600"
+              className="rw-button bg-green-800 text-gray-100 hover:bg-green"
             >
               Create
             </Link>
             <Link
               to={routes.clubs()}
-              className="rw-button bg-blue-800 text-gray-100 hover:bg-blue-600"
+              className="rw-button bg-blue-800 text-gray-100 hover:bg-blue"
             >
               Clubs
             </Link>
             <Link
               to={routes.editAccount()}
-              className="rw-button bg-blue-800 text-gray-100 hover:bg-blue-600"
+              className="rw-button bg-blue-800 text-gray-100 hover:bg-purple"
             >
               Edit Account
             </Link>
             <button
-              className="rw-button bg-red-900 text-gray-100 hover:bg-red-700"
+              className="rw-button bg-red-900 text-gray-100 hover:bg-red"
               onClick={logOut}
             >
               Logout
@@ -59,7 +59,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
           <>
             <a
               href="https://github.com/hackclub/scrapbook"
-              className="rw-button bg-slate-900 text-gray-100 hover:bg-slate-700"
+              className="rw-button bg-slate-900 text-gray-100 hover:bg-slate"
               target="_blank"
               rel="noreferrer"
             >
@@ -67,7 +67,7 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
             </a>
             <Link
               to={routes.login()}
-              className="rw-button bg-green-800 text-gray-100 hover:bg-green-600"
+              className="rw-button bg-green-800 text-gray-100 hover:bg-green"
             >
               Login
             </Link>
