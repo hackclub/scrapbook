@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -16,6 +15,7 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,15 +30,24 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
-    const response = await signUp({ ...data })
+    if (buttonDisabled) return
 
-    if (response.message) {
-      toast(response.message)
-    } else if (response.error) {
-      toast.error(response.error)
-    } else {
-      // user is signed in automatically
-      toast.success('Welcome!')
+    try {
+      setButtonDisabled(true)
+      const response = await signUp({ ...data })
+      setButtonDisabled(false)
+
+      if (response.message) {
+        toast(response.message)
+      } else if (response.error) {
+        toast.error(response.error)
+      } else {
+        // user is signed in automatically
+        toast.success('Welcome!')
+      }
+
+    } catch (err) {
+      setButtonDisabled(false)
     }
   }
 
@@ -99,7 +108,7 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">
+                    <Submit className="rw-button rw-button-blue" disabled={buttonDisabled}>
                       Sign Up
                     </Submit>
                   </div>
