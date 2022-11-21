@@ -3102,6 +3102,14 @@
     "@babel/runtime-corejs3" "7.19.4"
     core-js "3.25.5"
 
+"@redwoodjs/cli@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/cli/-/cli-3.0.1.tgz#9717ccbb3bc3cfb735a22718768551d04b0d90cc"
+  integrity sha512-NtjgcnSCA55hpbcEs+QF6DlekVCFiXPAap9kRlwyfvQyhSPQjNlmINukXdgMMZs4uiVcBCJpymbFgIyYe6ab6A==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.4"
+    core-js "3.25.5"
+
 "@redwoodjs/cli@3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@redwoodjs/cli/-/cli-3.4.0.tgz#f3d085d5c000cacf59c07509a6a3f2c80eb76ede"
