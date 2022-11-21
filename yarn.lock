@@ -1322,10 +1322,10 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime-corejs3@^7.10.2":
-  version "7.19.1"
-  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.19.1.tgz#f0cbbe7edda7c4109cd253bb1dee99aba4594ad9"
-  integrity sha512-j2vJGnkopRzH+ykJ8h68wrHnEUmtK//E723jjixiAl/PPf6FhqY/vYRcMVlNydRKQjQsTsYEjpx+DZMIvnGk/g==
+"@babel/runtime-corejs3@7.19.4", "@babel/runtime-corejs3@^7.10.2":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.19.4.tgz#870dbfd9685b3dad5aeb2d00841bb8b6192e3095"
+  integrity sha512-HzjQ8+dzdx7dmZy4DQ8KV8aHi/74AjEbBGTFutBmg/pd3dY5/q1sfuOGPTFGEytlQhWoeVXqcK5BwMgIkRkNDQ==
   dependencies:
     core-js-pure "^3.25.1"
     regenerator-runtime "^0.13.4"
@@ -2858,6 +2858,26 @@
     md5 "2.3.0"
     pascalcase "1.0.0"
     pino "8.5.0"
+    title-case "3.0.3"
+    uuid "9.0.0"
+
+"@redwoodjs/api@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/api/-/api-3.3.1.tgz#9d96e84eb6c03f6f10461adb6055080332444e81"
+  integrity sha512-/IztergNuThvnAC1AsmYYKaWf0FVm1XJna2kjeC0vGccMeHKULb1KUUWOs3zSkqmNqmkUq/+PDauYpI7H00JgQ==
+  dependencies:
+    "@babel/runtime-corejs3" "7.19.4"
+    "@prisma/client" "4.3.1"
+    base64url "3.0.1"
+    core-js "3.25.5"
+    cross-undici-fetch "0.4.14"
+    crypto-js "4.1.1"
+    humanize-string "2.1.0"
+    jsonwebtoken "8.5.1"
+    jwks-rsa "2.0.5"
+    md5 "2.3.0"
+    pascalcase "1.0.0"
+    pino "8.6.1"
     title-case "3.0.3"
     uuid "9.0.0"
 
@@ -7469,7 +7489,7 @@ core-js@3.25.1:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.1.tgz#5818e09de0db8956e16bf10e2a7141e931b7c69c"
   integrity sha512-sr0FY4lnO1hkQ4gLDr24K0DGnweGO1QwSj5BpfQjpSJPdqWalja4cTps29Y/PJVG/P7FYlPDkH3hO+Tr0CvDgQ==
 
-core-js@^3.0.4, core-js@^3.22.1, core-js@^3.6.5, core-js@^3.8.2:
+core-js@3.25.5, core-js@^3.0.4, core-js@^3.22.1, core-js@^3.6.5, core-js@^3.8.2:
   version "3.25.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.5.tgz#e86f651a2ca8a0237a5f064c2fe56cef89646e27"
   integrity sha512-nbm6eZSjm+ZuBQxCUPQKQCoUEfFOXjUZ8dTTyikyKaWrTYmAVbykQfwsKE5dBK88u3QCkCrzsx/PPlKfhsvgpw==
@@ -14169,7 +14189,7 @@ pino@8.5.0:
     sonic-boom "^3.1.0"
     thread-stream "^2.0.0"
 
-pino@^8.0.0:
+pino@8.6.1, pino@^8.0.0:
   version "8.6.1"
   resolved "https://registry.yarnpkg.com/pino/-/pino-8.6.1.tgz#3fc43acc79bcd3e871670347854f7359e2612f10"
   integrity sha512-fi+V2K98eMZjQ/uEHHSiMALNrz7HaFdKNYuyA3ZUrbH0f1e8sPFDmeRGzg7ZH2q4QDxGnJPOswmqlEaTAZeDPA==
