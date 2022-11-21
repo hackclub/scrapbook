@@ -5,11 +5,13 @@ import type {
   FindUpdates,
 } from 'types/graphql'
 
-import MuxPlayer from '@mux/mux-player-react'
+import tailwind from 'web/config/tailwind.config'
+
+import MuxPlayer from '@mux/mux-player-react/lazy'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
+import { useMutation, Head } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Update/UpdatesCell'
@@ -136,9 +138,12 @@ const UpdatesList = ({ updates }: FindUpdates) => {
   const { currentUser } = useAuth()
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive grid grid-cols-3 border-b-0">
+    <div className="masonary-test">
+      <Head>
+        <script defer src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+      </Head>
       {updates.map((update) => (
-        <div key={update.id} className="border-r border-b p-3">
+        <div key={update.id} className=" masonary-item p-3  bg-background border border-sunken flex flex-col height-100">
           <p className="mb-2">
             <Link
               to={routes.user({ username: truncate(update.account.username) })}
@@ -148,16 +153,19 @@ const UpdatesList = ({ updates }: FindUpdates) => {
             </Link>
           </p>
           <p>{truncate(update.text)}</p>
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-1">
             {update.muxPlaybackIDs.map((id, index) => (
-              <MuxPlayer streamType="on-demand" playbackId={id} />
+              <MuxPlayer
+                streamType="on-demand"
+                playbackId={id}
+                />
             ))}
             {update.muxPlaybackIDs.length == 0 &&
               update.attachments.map((attachment, index) => (
                 <img
                   src={attachment}
                   key={`${update.id}-attachment-${index}`}
-                  className="bg-gray-200 my-2 rounded-md border"
+                  className="bg-gray-200 my-2 rounded-md border flex-grow"
                   alt={`Project by ${truncate(update.account.username)}.`}
                 />
               ))}

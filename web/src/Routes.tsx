@@ -11,8 +11,6 @@ import { Set, Router, Route, Private } from '@redwoodjs/router'
 
 import ClubMembersLayout from 'src/layouts/ClubMembersLayout'
 
-import ClubsLayout from 'src/layouts/ClubsLayout'
-
 import MainLayout from './layouts/MainLayout'
 import UserPage from './pages/UserPage/UserPage'
 
