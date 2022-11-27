@@ -7,9 +7,7 @@ import type {
 
 import tailwind from 'web/config/tailwind.config'
 
-import { useIsBrowser, isBrowser } from '@redwoodjs/prerender/browserUtils'
-
-import { BrowserOnly } from '@redwoodjs/prerender/browserUtils'
+import MuxPlayer from '@mux/mux-player-react/lazy'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
@@ -17,7 +15,6 @@ import { useMutation, Head } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Update/UpdatesCell'
-import { useEffect } from 'react'
 
 const DELETE_UPDATE_MUTATION = gql`
   mutation DeleteUpdateMutation($id: String!) {
@@ -140,15 +137,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
 
   const { currentUser } = useAuth()
 
-  let MuxPlayer = null
-
-  useEffect(() => {
-    const importMuxPlayer = async () => {
-      MuxPlayer = await import('@redwoodjs/auth/webAuthn');
-    }
-    importMuxPlayer()
-  }, [])
-
   return (
     <div className="masonary-test">
       <Head>
@@ -167,12 +155,10 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-1">
             {update.muxPlaybackIDs.map((id, index) => (
-              <BrowserOnly>
-                {MuxPlayer != null && <MuxPlayer
+              <MuxPlayer
                 streamType="on-demand"
                 playbackId={id}
-                />}
-              </BrowserOnly>
+                />
             ))}
             {update.muxPlaybackIDs.length == 0 &&
               update.attachments.map((attachment, index) => (
