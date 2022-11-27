@@ -5,10 +5,7 @@ import { useAuth } from '@redwoodjs/auth'
 
 import { QUERY } from 'src/components/Club/ClubsCell'
 
-import type {
-  DeleteClubMutationVariables,
-  FindClubs,
-} from 'types/graphql'
+import type { DeleteClubMutationVariables, FindClubs } from 'types/graphql'
 
 const DELETE_CLUB_MUTATION = gql`
   mutation DeleteClubMutation($id: String!) {

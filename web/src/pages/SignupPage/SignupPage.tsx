@@ -45,7 +45,6 @@ const SignupPage = () => {
         // user is signed in automatically
         toast.success('Welcome!')
       }
-
     } catch (err) {
       setButtonDisabled(false)
     }
@@ -108,7 +107,10 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue" disabled={buttonDisabled}>
+                    <Submit
+                      className="rw-button rw-button-blue"
+                      disabled={buttonDisabled}
+                    >
                       Sign Up
                     </Submit>
                   </div>

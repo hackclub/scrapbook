@@ -1,7 +1,4 @@
-import type {
-  EditAccountById,
-  UpdateAccountInput,
-} from 'types/graphql'
+import type { EditAccountById, UpdateAccountInput } from 'types/graphql'
 
 import {
   Form,

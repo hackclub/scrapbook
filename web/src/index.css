@@ -19,12 +19,11 @@ body {
 }
 
 mux-player::part(bottom time range) {
-  --media-range-bar-color: theme('colors.progress')!important;
+  --media-range-bar-color: theme('colors.progress') !important;
 }
 
 mux-player {
   width: 100%;
-
 }
 
 .masonary-test {
@@ -33,14 +32,20 @@ mux-player {
 }
 
 /* Re-order items into rows */
-.masonary-item:nth-child(3n+1) { order: 1; }
-.masonary-item:nth-child(3n+2) { order: 2; }
-.masonary-item:nth-child(3n)   { order: 3; }
+.masonary-item:nth-child(3n + 1) {
+  order: 1;
+}
+.masonary-item:nth-child(3n + 2) {
+  order: 2;
+}
+.masonary-item:nth-child(3n) {
+  order: 3;
+}
 
 /* Force new columns */
 .masonary-test::before,
 .masonary-test::after {
-  content: "";
+  content: '';
   flex-basis: 100%;
   width: 0;
   order: 2;
@@ -52,7 +57,6 @@ mux-player {
   align-content: space-between;
   /* Your container needs a fixed height, and it 
    * needs to be taller than your tallest column. */
-  height: 1000px;
   counter-reset: items;
 }
 
@@ -67,15 +71,27 @@ mux-player {
 }
 
 /* Re-order items into 3 rows */
-.masonary-item:nth-child(3n+1) { order: 1; }
-.masonary-item:nth-child(3n+2) { order: 2; }
-.masonary-item:nth-child(3n)   { order: 3; }
+.masonary-item:nth-child(3n + 1) {
+  order: 1;
+}
+.masonary-item:nth-child(3n + 2) {
+  order: 2;
+}
+.masonary-item:nth-child(3n) {
+  order: 3;
+}
 
 /* Force new columns */
 .masonary-test::before,
 .masonary-test::after {
-  content: "";
+  content: '';
   flex-basis: 100%;
   width: 0;
   order: 2;
+}
+
+.text-shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  text-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }

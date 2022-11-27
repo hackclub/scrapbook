@@ -1,13 +1,7 @@
-import type {
-  EditUpdateById,
-  UpdateUpdateInput,
-} from 'types/graphql'
+import type { EditUpdateById, UpdateUpdateInput } from 'types/graphql'
 
 import { navigate, routes } from '@redwoodjs/router'
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-} from '@redwoodjs/web'
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 

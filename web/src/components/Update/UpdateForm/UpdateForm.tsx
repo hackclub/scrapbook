@@ -1,7 +1,4 @@
-import type {
-  EditUpdateById,
-  UpdateUpdateInput,
-} from 'types/graphql'
+import type { EditUpdateById, UpdateUpdateInput } from 'types/graphql'
 
 import {
   Form,
@@ -54,7 +51,7 @@ const UpdateForm = (props: UpdateFormProps) => {
         />
 
         <FieldError name="text" className="rw-field-error" />
-        {!props.update && 
+        {!props.update && (
           <>
             <Label
               name="clubSlug"
@@ -72,18 +69,21 @@ const UpdateForm = (props: UpdateFormProps) => {
             />
 
             <FieldError name="clubSlug" className="rw-field-error" />
-          </>
-        }
-        <Label
-          name="attachments"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Attachments
-        </Label>
 
-        <FileField name="img" accept="image/* video/*" />
-        <FieldError name="attachments" className="rw-field-error" />
+            <Label
+              name="attachments"
+              className="rw-label"
+              errorClassName="rw-label rw-label-error"
+            >
+              Attachments
+            </Label>
+
+            <FileField name="img" accept="image/* video/*" />
+            <FieldError name="attachments" className="rw-field-error" />
+
+          </>
+        )}
+        
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

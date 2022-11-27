@@ -1,12 +1,6 @@
 import type { Club } from '@prisma/client'
 
-import {
-  clubs,
-  club,
-  createClub,
-  updateClub,
-  deleteClub,
-} from './clubs'
+import { clubs, club, createClub, updateClub, deleteClub } from './clubs'
 import type { StandardScenario } from './clubs.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances

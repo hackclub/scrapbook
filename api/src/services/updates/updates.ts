@@ -65,7 +65,7 @@ export const updates: QueryResolvers['updates'] = ({ filter }) => {
     include: {
       account: true,
       reactions: { include: { emoji: true } },
-      associatedClub: { include: { club: true }}
+      associatedClub: { include: { club: true } },
     },
     orderBy: {
       postTime: 'desc',
@@ -100,21 +100,30 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
     input.muxPlaybackIDs = [playbackID.id]
   }
   console.log({
-    slug: clubSlug
+    slug: clubSlug,
   })
   let result = await db.$transaction([
     db.update.create({
       data: {
         ...input,
-        associatedClub: clubSlug != '' ? {
-          create: {
-            club: {
-              connect: {
-                slug: clubSlug
+        associatedClub:
+          clubSlug != ''
+            ? {
+                create: {
+                  club: {
+                    connect: {
+                      slug: clubSlug,
+                    },
+                  },
+                },
               }
-            }
+            : undefined,
+        reactions: {
+          create: {
+            emojiName: 'clap',
+            accountsReacted: []
           }
-        } : undefined
+        }
       },
     }),
     db.account.findUnique({

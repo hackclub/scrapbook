@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useAuth } from '@redwoodjs/auth'
 
 import ClubMemberForm from 'src/components/ClubMember/ClubMemberForm'
 
@@ -14,13 +15,13 @@ const CREATE_CLUB_MEMBER_MUTATION = gql`
   }
 `
 
-const NewClubMember = () => {
+const NewClubMember = ({ id }) => {
   const [createClubMember, { loading, error }] = useMutation(
     CREATE_CLUB_MEMBER_MUTATION,
     {
       onCompleted: () => {
         toast.success('ClubMember created')
-        navigate(routes.clubMembers())
+        navigate(routes.clubs())
       },
       onError: (error) => {
         toast.error(error.message)
@@ -28,14 +29,23 @@ const NewClubMember = () => {
     }
   )
 
-  const onSave = (input: CreateClubMemberInput) => {
-    createClubMember({ variables: { input } })
+  const { currentUser } = useAuth()
+
+  const onSave = () => {
+    createClubMember({
+      variables: {
+        input: {
+          accountId: currentUser.id,
+          clubId: id,
+        },
+      },
+    })
   }
 
   return (
     <div className="rw-segment">
       <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New ClubMember</h2>
+        <h2 className="rw-heading rw-heading-secondary">New ClubMember {id}</h2>
       </header>
       <div className="rw-segment-main">
         <ClubMemberForm onSave={onSave} loading={loading} error={error} />

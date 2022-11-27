@@ -1,12 +1,6 @@
 import type { Emoji } from '@prisma/client'
 
-import {
-  emojis,
-  emoji,
-  createEmoji,
-  updateEmoji,
-  deleteEmoji,
-} from './emojis'
+import { emojis, emoji, createEmoji, updateEmoji, deleteEmoji } from './emojis'
 import type { StandardScenario } from './emojis.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances

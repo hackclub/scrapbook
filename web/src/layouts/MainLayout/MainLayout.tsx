@@ -1,5 +1,6 @@
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes, useLocation } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/dist/toast'
 
 type UpdateLayoutProps = {
   children: React.ReactNode
@@ -10,19 +11,44 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
   const { pathname, search, hash } = useLocation()
   return (
     <div>
+      <Toaster />
       <header className="mb-2 flex gap-3 p-4">
         <img
-          src="https://github.com/hackclub.png"
+          src="https://cloud-8166dq0ub-hack-club-bot.vercel.app/02022-github-complex__3_.png"
           alt="Hack Club"
           className="h-8 rounded-md"
         />
         <h1 className="rw-heading rw-heading-primary fonts-header flex-grow">
-          <Link to={routes.home()} className="rw-link">
-            { pathname == "/" ? "Hack Club" : "Hack Club's Scrapbook"}
-          </Link>
+          {pathname == '/' ? (
+            <>
+              <a
+                href="https://hackclub.com"
+                target="_blank"
+                className="text-slate hover:underline"
+              >
+                Hack Club
+              </a>{' '}
+              <i className="uppercase text-blue">(Beta-0.0.1)</i>
+            </>
+          ) : (
+            <>
+              <Link to={routes.home()} className="text-slate hover:underline">
+                Hack Club's Scrapbook
+              </Link>{' '}
+              <i className="uppercase text-blue">(Beta-0.0.1)</i>
+            </>
+          )}
         </h1>
         {isAuthenticated ? (
           <>
+            <a
+              href="https://gist.github.com/sampoder/dad40f317af155ff0127150da252c4d6"
+              className="rw-button bg-slate-900 text-gray-100 hover:bg-orange"
+              target="_blank"
+              rel="noreferrer"
+            >
+              About
+            </a>
             <a
               href="https://github.com/hackclub/scrapbook"
               className="rw-button bg-slate-900 text-gray-100 hover:bg-slate"
@@ -58,6 +84,14 @@ const UpdatesLayout = ({ children }: UpdateLayoutProps) => {
           </>
         ) : (
           <>
+            <a
+              href="https://gist.github.com/sampoder/dad40f317af155ff0127150da252c4d6"
+              className="rw-button bg-slate-900 text-gray-100 hover:bg-orange"
+              target="_blank"
+              rel="noreferrer"
+            >
+              About
+            </a>
             <a
               href="https://github.com/hackclub/scrapbook"
               className="rw-button bg-slate-900 text-gray-100 hover:bg-slate"

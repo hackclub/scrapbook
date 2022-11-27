@@ -39,7 +39,6 @@ export const schema = gql`
     some: SomeEmojiFilter
   }
 
-
   input UpdatesFilter {
     account: AccountFilter
     reactions: ReactionsFilter

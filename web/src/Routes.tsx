@@ -17,13 +17,6 @@ import UserPage from './pages/UserPage/UserPage'
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={ClubMembersLayout}>
-        <Route path="/club-members/new" page={ClubMemberNewClubMemberPage} name="newClubMember" />
-        <Route path="/club-members/{id}/edit" page={ClubMemberEditClubMemberPage} name="editClubMember" />
-        <Route path="/club-members/{id}" page={ClubMemberClubMemberPage} name="clubMember" />
-        <Route path="/club-members" page={ClubMemberClubMembersPage} name="clubMembers" />
-      </Set>
-
       <Set wrap={MainLayout}>
         <Private unauthenticated="login">
           <Route path="/account" page={AccountEditAccountPage} name="editAccount" />
@@ -34,6 +27,7 @@ const Routes = () => {
           <Set>
             <Route path="/clubs/new" page={ClubNewClubPage} name="newClub" />
             <Route path="/clubs/{id}/edit" page={ClubEditClubPage} name="editClub" />
+            <Route path="/clubs/{id}/join" page={ClubMemberNewClubMemberPage} name="joinClub" />
             <Route path="/clubs/{slug}" page={ClubPage} name="club" />
             <Route path="/clubs" page={ClubClubsPage} name="clubs" />
           </Set>

@@ -2,19 +2,19 @@ import { MetaTags } from '@redwoodjs/web'
 
 import UpdatesCell from 'src/components/Update/UpdatesCell'
 
+import FlavourText from 'config/flavour.text.config'
+
 const IndexPage = () => {
   return (
     <>
       <MetaTags title="Index" description="Index page" />
-      <div className="py-4">
-        <h2 className='text-5xl font-header text-center mb-2'>
-          Welcome to
-        </h2>
-        <h1 className='text-6xl font-header text-center mb-2'>
+      <div className="py-4 text-black">
+        <h2 className="mb-2 text-center font-header text-5xl">Welcome to <span className='text-muted'>(the beta of)</span></h2>
+        <h1 className="mb-2 text-center font-header text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue to-green text-shadow-2xl">
           Hack Club's Scrapbook
         </h1>
-        <div className='text-2xl text-center mb-3'>
-          A diary of everything being made and learnt in clubs, hackathons & the Slack.
+        <div className="mb-3 text-center text-2xl">
+          {FlavourText[Math.floor(Math.random() * FlavourText.length)]}
         </div>
       </div>
       <UpdatesCell />

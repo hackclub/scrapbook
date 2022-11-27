@@ -20,9 +20,7 @@ export const club: QueryResolvers['club'] = ({ id }) => {
   })
 }
 
-export const clubBySlug: QueryResolvers['clubBySlug'] = ({
-  slug,
-}) => {
+export const clubBySlug: QueryResolvers['clubBySlug'] = ({ slug }) => {
   return db.club.findUnique({
     where: { slug },
   })
@@ -46,7 +44,7 @@ export const createClub: MutationResolvers['createClub'] = ({ input }) => {
 
 export const updateClub: MutationResolvers['updateClub'] = ({ id, input }) => {
   return db.club.update({
-    data: {...input},
+    data: { ...input },
     where: { id },
   })
 }

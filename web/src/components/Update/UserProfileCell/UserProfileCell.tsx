@@ -1,8 +1,5 @@
 import type { FindUserByUsername } from 'types/graphql'
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-} from '@redwoodjs/web'
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { Head } from '@redwoodjs/web'
 import ReactAudioPlayer from 'react-audio-player'
 

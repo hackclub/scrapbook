@@ -4,10 +4,7 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import type {
-  DeleteClubMutationVariables,
-  FindClubById,
-} from 'types/graphql'
+import type { DeleteClubMutationVariables, FindClubById } from 'types/graphql'
 
 const DELETE_CLUB_MUTATION = gql`
   mutation DeleteClubMutation($id: String!) {

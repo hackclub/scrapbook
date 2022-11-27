@@ -1,10 +1,7 @@
 import type { FindClubs } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-} from '@redwoodjs/web'
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import Clubs from 'src/components/Club/Clubs'
 

@@ -1,9 +1,6 @@
 import type { FindClubMemberById } from 'types/graphql'
 
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-} from '@redwoodjs/web'
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import ClubMember from 'src/components/ClubMember/ClubMember'
 
