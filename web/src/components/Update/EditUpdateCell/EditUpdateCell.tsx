@@ -59,10 +59,12 @@ export const Success = ({ update }: CellSuccessProps<EditUpdateById>) => {
     UPDATE_UPDATE_MUTATION,
     {
       onCompleted: () => {
+        toast.remove()
         toast.success('Update updated')
         navigate(routes.home())
       },
       onError: (error) => {
+        toast.remove()
         toast.error(error.message)
       },
     }

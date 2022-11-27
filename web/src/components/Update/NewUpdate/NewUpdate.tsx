@@ -24,10 +24,12 @@ const NewUpdate = () => {
     CREATE_UPDATE_MUTATION,
     {
       onCompleted: () => {
+        toast.remove()
         toast.success('Update created')
         navigate(routes.home())
       },
       onError: (error) => {
+        toast.remove()
         toast.error(error.message)
       },
     }

@@ -11,6 +11,8 @@ import {
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
+import { toast } from '@redwoodjs/web/toast'
+
 type FormUpdate = NonNullable<EditUpdateById['update']>
 
 interface UpdateFormProps {
@@ -22,6 +24,7 @@ interface UpdateFormProps {
 
 const UpdateForm = (props: UpdateFormProps) => {
   const onSubmit = (data: FormUpdate) => {
+    toast.loading("Submitting & uploading your update...")
     props.onSave(data, props?.update?.id)
   }
 
