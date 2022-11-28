@@ -14,8 +14,6 @@ const { Video, Data } = new Mux(
   process.env.MUX_SECRET_ID
 )
 
-const muxClient = new Mux()
-
 export const getDayFromISOString = (ISOString) => {
   const date = new Date(ISOString)
   try {
@@ -86,7 +84,8 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
   let filename = input.attachments[0].split('.')
   let asset
   let playbackID
-  let clubSlug = input.clubSlug
+  let clubSlug =
+    input.clubSlug == 'Click to select a club.' ? '' : input.clubSlug
   delete input.clubSlug
   if (['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])) {
     asset = await Video.Assets.create({
@@ -121,9 +120,9 @@ export const createUpdate: MutationResolvers['createUpdate'] = async ({
         reactions: {
           create: {
             emojiName: 'clap',
-            accountsReacted: []
-          }
-        }
+            accountsReacted: [],
+          },
+        },
       },
     }),
     db.account.findUnique({

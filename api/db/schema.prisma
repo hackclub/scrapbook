@@ -28,6 +28,7 @@ model Account {
   webAuthnChallenge       String?             @unique
   credentials             AccountCredential[]
   clubs                   ClubMember[]
+  avatar                  String              @default("https://github.com/hackclub/dinosaurs/blob/main/cooll-dino.png?raw=true")
   // Fields for Slack-based Scrapbook users
   slackID                 String?             @unique
   // Fields for all Scrapbook users
@@ -44,7 +45,6 @@ model Account {
   website                 String?
   github                  String?
   fullSlackMember         Boolean?
-  avatar                  String?
   webring                 String[]
   pronouns                String?
   customAudioURL          String?
@@ -70,7 +70,7 @@ model Update {
   isLargeVideo     Boolean?
   channel          String?
   clubscrapID      String?     @unique
-  account         Account?    @relation(fields: [accountID], references: [id], onDelete: Cascade)
+  account          Account?    @relation(fields: [accountID], references: [id], onDelete: Cascade)
   reactions        Reaction[]
   associatedClub   ClubUpdate?
 }

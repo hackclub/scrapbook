@@ -70,6 +70,23 @@ const AccountForm = (props: AccountFormProps) => {
         <FieldError name="username" className="rw-field-error" />
 
         <Label
+          name="avatar"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Avatar
+        </Label>
+
+        <TextField
+          name="avatar"
+          defaultValue={props.account?.avatar}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+        />
+
+        <FieldError name="avatar" className="rw-field-error" />
+
+        <Label
           name="timezone"
           className="rw-label"
           errorClassName="rw-label rw-label-error"

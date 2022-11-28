@@ -5,7 +5,6 @@ import type {
   FindUpdates,
 } from 'types/graphql'
 
-
 import MuxPlayer from '@mux/mux-player-react/lazy'
 
 import { useAuth } from '@redwoodjs/auth'
@@ -14,6 +13,7 @@ import { useMutation, Head } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Update/UpdatesCell'
+import React from 'react'
 
 const DELETE_UPDATE_MUTATION = gql`
   mutation DeleteUpdateMutation($id: String!) {
@@ -59,7 +59,24 @@ const timeTag = (datetime?: string) => {
   )
 }
 
-const UpdatesList = ({ updates }: FindUpdates) => {
+export type contextDataType = {
+  name?: string
+  logo?: string
+  slug?: string
+  pronouns?: string
+  username?: string
+  customAudioURL?: string
+  avatar?: string
+}
+
+const UpdatesList = ({
+  updates,
+  Context,
+  contextData,
+}: FindUpdates & {
+  Context?: React.FC<{ contextData: contextDataType }>
+  contextData?: contextDataType
+}) => {
   const [deleteUpdate] = useMutation(DELETE_UPDATE_MUTATION, {
     onCompleted: () => {
       toast.success('Update deleted')
@@ -123,7 +140,11 @@ const UpdatesList = ({ updates }: FindUpdates) => {
     accountsReacted = accountsReacted.includes(userId)
       ? [...accountsReacted.filter((x) => x != userId)]
       : [...accountsReacted, userId]
-    toast.loading(accountsReacted.includes(userId) ? "Reacting..." : "Removing your reaction...")
+    toast.loading(
+      accountsReacted.includes(userId)
+        ? 'Reacting...'
+        : 'Removing your reaction...'
+    )
     updateReaction({
       variables: {
         id: reactionId,
@@ -139,58 +160,55 @@ const UpdatesList = ({ updates }: FindUpdates) => {
   const { currentUser } = useAuth()
 
   return (
-    <div className="masonary-test" style={{height: `${(1000*Math.floor(updates.length/3)+1)}px`}}>
-      <Head>
-        <script
-          defer
-          src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"
-        ></script>
-      </Head>
+    <div
+      className="masonary"
+      style={{ height: `${1000 * Math.floor(updates.length / 3) + 1}px` }}
+    >
+      {Context && <Context contextData={contextData} />}
       {updates.map((update) => (
         <div
           key={update.id}
-          className=" masonary-item height-100  flex flex-col border border-sunken bg-background p-3"
+          className="masonary-item height-100 flex flex-col rounded-md border border-sunken bg-background p-3"
         >
-          <p className="mb-2 flex">
+          <p className="mb-2 flex items-center">
             <Link
               to={routes.user({ username: truncate(update.account.username) })}
               className="text-purple"
             >
               <b>@{truncate(update.account.username)}</b>
             </Link>
-            <div className='flex-grow'>
-
-            </div>
-            <nav className="rw-table-actions mt-2 mb-1 justify-center">
-            {update.accountID == currentUser?.id && (
-              <>
-                <Link
-                  to={routes.editUpdate({ id: update.id })}
-                  title={'Edit update ' + update.id}
-                  className="rw-button rw-button-small rw-button-blue"
-                >
-                  Edit
-                </Link>
+            <div className="flex-grow"></div>
+            <nav className="rw-table-actions mt-2 mb-1 flex items-center">
+              {update.accountID == currentUser?.id && (
+                <>
+                  <Link
+                    to={routes.editUpdate({ id: update.id })}
+                    title={'Edit update ' + update.id}
+                    className="rw-button rw-button-small rw-button-blue"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    type="button"
+                    title={'Delete update ' + update.id}
+                    className="rw-button rw-button-small rw-button-red"
+                    onClick={() => onDeleteClick(update.id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+              {false && (
                 <button
                   type="button"
-                  title={'Delete update ' + update.id}
-                  className="rw-button rw-button-small rw-button-red"
-                  onClick={() => onDeleteClick(update.id)}
+                  title={'Add emoji to update ' + update.id}
+                  className="rw-button rw-button-small text-purple"
+                  onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
                 >
-                  Delete
+                  Add Emoji
                 </button>
-              </>
-            )}
-            {false &&
-            <button
-              type="button"
-              title={'Add emoji to update ' + update.id}
-              className="rw-button rw-button-small text-purple"
-              onClick={() => onAddEmojiClick(update.id, currentUser?.id)}
-            >
-              Add Emoji
-            </button>}
-          </nav>
+              )}
+            </nav>
           </p>
           <p>{truncate(update.text)}</p>
           <div className="grid grid-cols-1">
@@ -210,12 +228,12 @@ const UpdatesList = ({ updates }: FindUpdates) => {
           <div className="text-gray-500 text-center">
             {timeTag(update.postTime)}
           </div>
-          <div className='flex justify-center'>
+          <div className="flex justify-center">
             {update.reactions
               // .filter((reaction) => reaction.accountsReacted.length != 0)
               .map((reaction) => (
                 <span
-                  className='bg-white rounded-md px-3 py-1 my-2 cursor-pointer'
+                  className="my-2 cursor-pointer rounded-md bg-white px-3 py-1"
                   style={{
                     fontWeight: reaction.accountsReacted.includes(
                       currentUser?.id
@@ -256,7 +274,6 @@ const UpdatesList = ({ updates }: FindUpdates) => {
                 </span>
               ))}
           </div>
-          
         </div>
       ))}
     </div>

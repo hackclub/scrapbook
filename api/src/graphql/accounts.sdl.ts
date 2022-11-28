@@ -20,7 +20,7 @@ export const schema = gql`
     website: String
     github: String
     fullSlackMember: Boolean
-    avatar: String
+    avatar: String!
     webring: [String!]
     pronouns: String
     customAudioURL: String
@@ -56,7 +56,7 @@ export const schema = gql`
     website: String
     github: String
     fullSlackMember: Boolean
-    avatar: String
+    avatar: String!
     webring: [String!]
     pronouns: String
     customAudioURL: String
@@ -85,7 +85,7 @@ export const schema = gql`
     website: String
     github: String
     fullSlackMember: Boolean
-    avatar: String
+    avatar: String!
     webring: [String!]
     pronouns: String
     customAudioURL: String

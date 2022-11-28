@@ -4,6 +4,7 @@ import { Head } from '@redwoodjs/web'
 import ReactAudioPlayer from 'react-audio-player'
 
 import UpdatesCell from '../UpdatesCell'
+import { contextDataType } from '../Updates'
 
 export const QUERY = gql`
   query FindUserByUsername($username: String!) {
@@ -26,6 +27,35 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
+const Context: React.FC<{ contextData: contextDataType }> = ({
+  contextData,
+}) => {
+  return (
+    <>
+      <div className="masonary-item height-100 flex rounded-md border border-sunken bg-background p-3">
+        <img src={contextData.avatar} className="mr-4 h-16 rounded-md" />
+        <div className="flex flex-col justify-center">
+          <p className="text-gray-800 text-2xl font-black">
+            @{contextData.username}
+          </p>
+          <p className="text-gray-800 text-md">{contextData.pronouns}</p>
+        </div>
+      </div>
+      {contextData.customAudioURL && (
+        <div className="masonary-item height-100 flex rounded-md border border-sunken bg-background p-3">
+          <ReactAudioPlayer
+            src={contextData.customAudioURL}
+            autoPlay
+            loop
+            controls
+            preload="metadata"
+          />
+        </div>
+      )}
+    </>
+  )
+}
+
 export const Success = ({
   accountByUsername,
 }: CellSuccessProps<FindUserByUsername>) => {
@@ -34,28 +64,11 @@ export const Success = ({
       <Head>
         <link rel="stylesheet" href={accountByUsername.cssURL || ''} />
       </Head>
-      <div className="border-gray-200 mb-3 rounded-lg border px-4 py-2">
-        <img src={accountByUsername.avatar} />
-        <p className="text-gray-800 text-xl font-black">
-          {accountByUsername.username}
-        </p>
-        <p className="text-gray-500 text-xs font-bold lowercase">
-          {accountByUsername.pronouns}
-        </p>
-        <p className="text-gray-500 text-xs font-bold lowercase">
-          Streak: {accountByUsername?.streakCount}
-        </p>
-        {accountByUsername.customAudioURL && (
-          <ReactAudioPlayer
-            src={accountByUsername.customAudioURL}
-            autoPlay
-            loop
-            controls
-            preload="metadata"
-          />
-        )}
-      </div>
-      <UpdatesCell username={accountByUsername.username} />
+      <UpdatesCell
+        username={accountByUsername.username}
+        Context={Context}
+        contextData={accountByUsername}
+      />
     </>
   )
 }

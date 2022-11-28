@@ -6,12 +6,16 @@ import {
   FieldError,
   Label,
   TextField,
+  TextAreaField,
+  SelectField,
   Submit,
   FileField,
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
 import { toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from '@redwoodjs/auth'
 
 type FormUpdate = NonNullable<EditUpdateById['update']>
 
@@ -24,9 +28,11 @@ interface UpdateFormProps {
 
 const UpdateForm = (props: UpdateFormProps) => {
   const onSubmit = (data: FormUpdate) => {
-    toast.loading("Submitting & uploading your update...")
+    toast.loading('Submitting & uploading your update...')
     props.onSave(data, props?.update?.id)
   }
+
+  const { currentUser } = useAuth()
 
   return (
     <div className="rw-form-wrapper">
@@ -46,13 +52,12 @@ const UpdateForm = (props: UpdateFormProps) => {
           Text
         </Label>
 
-        <TextField
+        <TextAreaField
           name="text"
           defaultValue={props.update?.text}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
         />
-
         <FieldError name="text" className="rw-field-error" />
         {!props.update && (
           <>
@@ -61,15 +66,26 @@ const UpdateForm = (props: UpdateFormProps) => {
               className="rw-label"
               errorClassName="rw-label rw-label-error"
             >
-              Club Slug (ex: scrapbook.hackclub.com/club/slug)
+              Did you make this in your club? If so, awesome! Select it here.
             </Label>
 
-            <TextField
+            <SelectField
               name="clubSlug"
               defaultValue={props.update?.text}
               className="rw-input"
               errorClassName="rw-input rw-input-error"
-            />
+            >
+              <option disabled selected>
+                Click to select a club.
+              </option>
+              {[
+                ...new Map(
+                  currentUser.clubs.map((c) => [c.club.slug, c])
+                ).values(),
+              ].map((club) => (
+                <option value={club.club.slug}>{club.club.name}</option>
+              ))}
+            </SelectField>
 
             <FieldError name="clubSlug" className="rw-field-error" />
 
@@ -83,10 +99,8 @@ const UpdateForm = (props: UpdateFormProps) => {
 
             <FileField name="img" accept="image/* video/*" />
             <FieldError name="attachments" className="rw-field-error" />
-
           </>
         )}
-        
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

@@ -26,7 +26,7 @@ module.exports = {
       purple: '#c210ff',
       red: '#ec3750',
       progress: '#ec3750',
-      transparent: 'transparent'
+      transparent: 'transparent',
     },
     fontFamily: {
       sans: [

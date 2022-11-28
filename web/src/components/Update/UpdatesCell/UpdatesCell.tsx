@@ -2,8 +2,9 @@ import type { FindUpdates } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-
+import { contextDataType } from '../Updates'
 import Updates from 'src/components/Update/Updates'
+import React from 'react'
 
 export const QUERY = gql`
   query FindUpdates($username: String, $reaction: String, $club: String) {
@@ -63,6 +64,15 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ updates }: CellSuccessProps<FindUpdates>) => {
-  return <Updates updates={updates} />
+export const Success = ({
+  updates,
+  Context,
+  contextData,
+}: CellSuccessProps<FindUpdates> & {
+  Context?: React.FC<{ contextData: contextDataType }>
+  contextData?: contextDataType
+}) => {
+  return (
+    <Updates updates={updates} Context={Context} contextData={contextData} />
+  )
 }
