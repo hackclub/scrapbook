@@ -5,13 +5,17 @@ import type {
 } from 'types/graphql'
 
 import { fetch } from 'cross-undici-fetch'
-import md5 from "md5"
+import md5 from 'md5'
 import { db } from 'src/lib/db'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
-export const emailToPfp = email => {
-  if (email == "") return "";
-  return "https://www.gravatar.com/avatar/" + md5(email.toLowerCase().trim()) + '?d=identicon&r=pg';
+export const emailToPfp = (email) => {
+  if (email == '') return ''
+  return (
+    'https://www.gravatar.com/avatar/' +
+    md5(email.toLowerCase().trim()) +
+    '?d=identicon&r=pg'
+  )
 }
 
 export const accounts: QueryResolvers['accounts'] = () => {
@@ -38,7 +42,7 @@ export const createAccount: MutationResolvers['createAccount'] = ({
   return db.account.create({
     data: {
       ...input,
-      avatar: emailToPfp(input.email)
+      avatar: emailToPfp(input.email),
     },
   })
 }

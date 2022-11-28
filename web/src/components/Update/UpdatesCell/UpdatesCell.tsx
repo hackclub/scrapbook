@@ -51,9 +51,17 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => {
   return (
-    <div className="rw-text-center">
-      {'No updates yet. '}
-      <Link to={routes.newUpdate()} className="rw-link">
+    <div
+      className="flex items-center justify-center rounded-lg text-center text-4xl font-bold text-white"
+      style={{
+        backgroundImage:
+          'linear-gradient(90deg, rgba(5, 11, 20, 0.8) 0%, rgba(5, 11, 20, 0.8) 100% ), url(https://cloud-252jvz0gp-hack-club-bot.vercel.app/0download__7_.png)',
+        height: '300px',
+        backgroundSize: 'cover',
+      }}
+    >
+      {'No updates yet. '}{' '}
+      <Link to={routes.newUpdate()} className="text-blue ml-2 no-underline hover:underline">
         {'Create one?'}
       </Link>
     </div>

@@ -1,14 +1,18 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
-import md5 from "md5"
+import md5 from 'md5'
 
 import { DbAuthHandler } from '@redwoodjs/api'
 import type { DbAuthHandlerOptions } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
-export const emailToPfp = email => {
-  if (email == "") return "";
-  return "https://www.gravatar.com/avatar/" + md5(email.toLowerCase().trim()) + '?d=identicon&r=pg';
+export const emailToPfp = (email) => {
+  if (email == '') return ''
+  return (
+    'https://www.gravatar.com/avatar/' +
+    md5(email.toLowerCase().trim()) +
+    '?d=identicon&r=pg'
+  )
 }
 
 export const handler = async (
@@ -121,7 +125,7 @@ export const handler = async (
             email: username,
             hashedPassword: hashedPassword,
             salt: salt,
-            avatar: emailToPfp(username)
+            avatar: emailToPfp(username),
           },
         })
         .then((r) => {
