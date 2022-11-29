@@ -2,14 +2,14 @@ import type { FindClubs } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 
-const MAX_STRING_LENGTH = 150
+const MAX_STRING_LENGTH = 70
 
-const _truncate = (value: string | number) => {
+const truncate = (value: string | number) => {
   const output = value?.toString()
   if (output?.length > MAX_STRING_LENGTH) {
     return output.substring(0, MAX_STRING_LENGTH) + '...'
   }
-  return output ?? ''
+  return output ?? 'mpty'
 }
 
 const ClubsList = ({ clubs }: FindClubs) => {
@@ -60,7 +60,7 @@ const ClubsList = ({ clubs }: FindClubs) => {
                   @{club.slug}
                 </span>
                 <h3 className="text-2xl font-bold">{club.name}</h3>
-                <p>{club.description}</p>
+                <p>{truncate(club.description)}</p>
               </div>
             </div>
             <Link
