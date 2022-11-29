@@ -60,11 +60,7 @@ const ClubsList = ({ clubs }: FindClubs) => {
                   @{club.slug}
                 </span>
                 <h3 className="text-2xl font-bold">{club.name}</h3>
-                <p>
-                  Nulla vel metus dui. Proin eu eleifend elit. Praesent a enim
-                  nec est varius interdum at ac eros. Sed id sollicitudin augue,
-                  eu placerat nibh.
-                </p>
+                <p>{club.description}</p>
               </div>
             </div>
             <Link

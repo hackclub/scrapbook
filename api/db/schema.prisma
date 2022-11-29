@@ -10,8 +10,8 @@ generator client {
 
 model AccountCredential {
   id         String  @id
-  accountId     Int
-  account       Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId  Int
+  account    Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
   publicKey  Bytes
   transports String?
   counter    BigInt
@@ -57,7 +57,7 @@ model Account {
 
 model Update {
   id               String      @id @default(cuid())
-  accountID       Int?
+  accountID        Int?
   postTime         DateTime?   @default(now())
   text             String?
   attachments      String[]
@@ -83,22 +83,22 @@ model Emoji {
 }
 
 model Reaction {
-  id           String   @id @default(cuid())
-  updateId     String?
-  emojiName    String?
+  id              String   @id @default(cuid())
+  updateId        String?
+  emojiName       String?
   accountsReacted Int[]
-  updatedAt    DateTime @default(now()) @map("created_at")
-  emoji        Emoji?   @relation(fields: [emojiName], references: [name], onDelete: Cascade)
-  update       Update?  @relation(fields: [updateId], references: [id], onDelete: Cascade)
+  updatedAt       DateTime @default(now()) @map("created_at")
+  emoji           Emoji?   @relation(fields: [emojiName], references: [name], onDelete: Cascade)
+  update          Update?  @relation(fields: [updateId], references: [id], onDelete: Cascade)
 }
 
 model ClubMember {
-  id     String  @id @default(cuid())
+  id        String  @id @default(cuid())
   accountId Int
   account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  clubId String
-  club   Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
-  admin  Boolean @default(false)
+  clubId    String
+  club      Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  admin     Boolean @default(false)
 }
 
 model ClubUpdate {
@@ -118,6 +118,7 @@ model Club {
   cssURL       String?
   website      String?
   github       String?
+  description  String?
   members      ClubMember[]
   updates      ClubUpdate[]
 }

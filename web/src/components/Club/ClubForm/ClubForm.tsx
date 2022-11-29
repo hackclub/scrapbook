@@ -1,14 +1,14 @@
+import type { EditClubById, UpdateClubInput } from 'types/graphql'
+
+import type { RWGqlError } from '@redwoodjs/forms'
 import {
+  FieldError,
   Form,
   FormError,
-  FieldError,
   Label,
-  TextField,
   Submit,
+  TextField,
 } from '@redwoodjs/forms'
-
-import type { EditClubById, UpdateClubInput } from 'types/graphql'
-import type { RWGqlError } from '@redwoodjs/forms'
 
 type FormClub = NonNullable<EditClubById['club']>
 
@@ -87,6 +87,22 @@ const ClubForm = (props: ClubFormProps) => {
         />
 
         <FieldError name="logo" className="rw-field-error" />
+
+        <Label
+          name="description"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Description (around 150 characters)
+        </Label>
+
+        <TextField
+          name="description"
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+        />
+
+        <FieldError name="description" className="rw-field-error" />
 
         <Label
           name="customDomain"
