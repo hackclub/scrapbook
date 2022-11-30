@@ -40,7 +40,7 @@ export const Empty = () => {
           </span>
           <h3 className="text-2xl font-bold">Your club name here</h3>
           <p>
-            Scrapook&apos;s better with friends. Be the first one to make a
+            Scrapook is better with friends. Be the first one to make a
             club!
           </p>
         </div>
