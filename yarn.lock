@@ -21911,9 +21911,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "tailwindcss@npm:3.2.2"
+"tailwindcss@npm:^3.2.4":
+  version: 3.2.4
+  resolution: "tailwindcss@npm:3.2.4"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -21943,7 +21943,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 6f1d2d4a5a69d153e220ce33fb29bf540b3001225cd62536e7d0e3283480287b114207d29669a4ee2b91bca96f5c08833eb498a130c6d1d1ce29b5e7fcdcf8f9
+  checksum: c5d02bb594f3d0a1ff8e26ba312a86c7cec8a8a741dc00696375971c303116640acaeef8f35617297eaf79214524b5c88a27f2bdc1e1cfac47fcc6446b6260f7
   languageName: node
   linkType: hard
 
@@ -23497,7 +23497,7 @@ __metadata:
     react: 18.2.0
     react-audio-player: ^0.17.0
     react-dom: 18.2.0
-    tailwindcss: ^3.2.2
+    tailwindcss: ^3.2.4
   languageName: unknown
   linkType: soft
 
