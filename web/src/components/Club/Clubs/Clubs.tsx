@@ -9,7 +9,7 @@ const truncate = (value: string | number) => {
   if (output?.length > MAX_STRING_LENGTH) {
     return output.substring(0, MAX_STRING_LENGTH) + '...'
   }
-  return output ?? 'mpty'
+  return output ?? ''
 }
 
 const ClubsList = ({ clubs }: FindClubs) => {
