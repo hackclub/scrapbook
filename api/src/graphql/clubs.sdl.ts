@@ -4,6 +4,7 @@ export const schema = gql`
     slug: String!
     name: String!
     logo: String!
+    description: String
     customDomain: String
     cssURL: String
     website: String
@@ -22,6 +23,7 @@ export const schema = gql`
     slug: String!
     name: String!
     logo: String!
+    description: String
     creator: Int
     customDomain: String
     cssURL: String
@@ -33,6 +35,7 @@ export const schema = gql`
     slug: String
     name: String
     logo: String
+    description: String
     customDomain: String
     cssURL: String
     website: String
