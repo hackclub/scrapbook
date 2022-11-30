@@ -3107,14 +3107,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mux/mux-node@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@mux/mux-node@npm:6.3.1"
+"@mux/mux-node@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@mux/mux-node@npm:7.0.0"
   dependencies:
     axios: ^0.26.1
     esdoc-ecmascript-proposal-plugin: ^1.0.0
     jsonwebtoken: ^8.5.1
-  checksum: f7cb688e755e770760bcfd6c64a42b3ec46a641bf84932c81596e9f0cf73f6949b5fc9f6bd59832211ae88caf423187d4cece0dbcf562f24fa7aa3aa81ee52e0
+  checksum: d22c3037e0810fc7c5b63402c0aa87b5e9ad901d4b0653d123e0a4900ba7ba33788e146cc1d205c22b902f8887827b3d682fd4bc39299be5c13d362c40f70223
   languageName: node
   linkType: hard
 
@@ -23482,7 +23482,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
-    "@mux/mux-node": ^6.3.1
+    "@mux/mux-node": ^7.0.0
     "@mux/mux-player-react": ^1.3.0
     "@redwoodjs/auth": ^3.4.0
     "@redwoodjs/forms": ^3.4.0
