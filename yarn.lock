@@ -19066,6 +19066,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.19":
+  version: 8.4.19
+  resolution: "postcss@npm:8.4.19"
+  dependencies:
+    nanoid: ^3.3.4
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: f33594fa0a2b629043deada34171744891054255baa49150d77f08f68edec1fa7eb9740e64c3a32e6f476c16e9e592af942fcf55f93051673dd208c0aee1d60b
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -23491,7 +23502,7 @@ __metadata:
     "@simplewebauthn/browser": ^6.0.0
     autoprefixer: ^10.4.13
     aws-sdk: ^2.1229.0
-    postcss: ^8.4.17
+    postcss: ^8.4.19
     postcss-loader: ^7.0.1
     prop-types: 15.8.1
     react: 18.2.0
