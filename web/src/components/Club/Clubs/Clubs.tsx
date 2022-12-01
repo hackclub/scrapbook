@@ -82,7 +82,7 @@ const ClubsList = ({ clubs }: FindClubs) => {
                 <div>
                   <Link
             to={routes.newClub()} className="font-xs font-semibold italic text-purple">
-                    @{club.slug}
+                    /{club.slug}
                   </Link>
                   <h3 className="text-2xl font-bold">{club.name}</h3>
                   <p>{truncate(club.description)}</p>
