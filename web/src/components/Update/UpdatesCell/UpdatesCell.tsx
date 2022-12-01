@@ -61,7 +61,10 @@ export const Empty = () => {
       }}
     >
       {'No updates yet. '}{' '}
-      <Link to={routes.newUpdate()} className="text-blue ml-2 no-underline hover:underline">
+      <Link
+        to={routes.newUpdate()}
+        className="ml-2 text-blue no-underline hover:underline"
+      >
         {'Create one?'}
       </Link>
     </div>

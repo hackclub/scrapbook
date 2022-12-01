@@ -49,7 +49,7 @@ const UpdateForm = (props: UpdateFormProps) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Text
+          How would you describe what you've made? Include technical details!
         </Label>
 
         <TextAreaField
@@ -61,34 +61,37 @@ const UpdateForm = (props: UpdateFormProps) => {
         <FieldError name="text" className="rw-field-error" />
         {!props.update && (
           <>
-            <Label
-              name="clubSlug"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Did you make this in your club? If so, awesome! Select it here.
-            </Label>
+            {currentUser.clubs.length > 0 && (
+              <>
+                <Label
+                  name="clubSlug"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Did you make this in your club? If so, awesome! Select it
+                  here.
+                </Label>
 
-            <SelectField
-              name="clubSlug"
-              defaultValue={props.update?.text}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            >
-              <option disabled selected>
-                Click to select a club.
-              </option>
-              {[
-                ...new Map(
-                  currentUser.clubs.map((c) => [c.club.slug, c])
-                ).values(),
-              ].map((club) => (
-                <option value={club.club.slug}>{club.club.name}</option>
-              ))}
-            </SelectField>
-
-            <FieldError name="clubSlug" className="rw-field-error" />
-
+                <SelectField
+                  name="clubSlug"
+                  defaultValue={props.update?.text}
+                  className="rw-input"
+                  errorClassName="rw-input rw-input-error"
+                >
+                  <option disabled selected>
+                    Click to select a club.
+                  </option>
+                  {[
+                    ...new Map(
+                      currentUser.clubs.map((c) => [c.club.slug, c])
+                    ).values(),
+                  ].map((club) => (
+                    <option value={club.club.slug}>{club.club.name}</option>
+                  ))}
+                </SelectField>
+                <FieldError name="clubSlug" className="rw-field-error" />
+              </>
+            )}
             <Label
               name="attachments"
               className="rw-label"
