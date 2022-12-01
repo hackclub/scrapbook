@@ -20,7 +20,18 @@ export const createClubMember: MutationResolvers['createClubMember'] = ({
   input,
 }) => {
   return db.clubMember.create({
-    data: input,
+    data: {
+      account: {
+        connect: {
+          id: input.accountId
+        }
+      },
+      club: {
+        connect: {
+          slug: input.clubSlug
+        }
+      }
+    },
   })
 }
 

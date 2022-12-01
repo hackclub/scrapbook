@@ -13,13 +13,13 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
-const SignupPage = () => {
+const SignupPage = ({redirectTo = null}) => {
   const { isAuthenticated, signUp } = useAuth()
   const [buttonDisabled, setButtonDisabled] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      navigate(redirectTo || routes.home())
     }
   }, [isAuthenticated])
 

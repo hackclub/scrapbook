@@ -15,7 +15,7 @@ export const schema = gql`
 
   input CreateClubMemberInput {
     accountId: Int!
-    clubId: String!
+    clubSlug: String!
   }
 
   input UpdateClubMemberInput {

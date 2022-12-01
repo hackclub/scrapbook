@@ -1,7 +1,7 @@
 import NewClubMember from 'src/components/ClubMember/NewClubMember'
 
-const NewClubMemberPage = ({ id }) => {
-  return <NewClubMember id={id} />
+const NewClubMemberPage = ({ slug }) => {
+  return <NewClubMember slug={slug} />
 }
 
 export default NewClubMemberPage

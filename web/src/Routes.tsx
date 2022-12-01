@@ -27,7 +27,7 @@ const Routes = () => {
           <Set>
             <Route path="/clubs/new" page={ClubNewClubPage} name="newClub" />
             <Route path="/clubs/{id}/edit" page={ClubEditClubPage} name="editClub" />
-            <Route path="/clubs/{id}/join" page={ClubMemberNewClubMemberPage} name="joinClub" />
+            <Route path="/join/{slug}" page={ClubMemberNewClubMemberPage} name="joinClub" />
             <Route path="/clubs/{slug}" page={ClubPage} name="club" />
             <Route path="/clubs" page={ClubClubsPage} name="clubs" />
           </Set>

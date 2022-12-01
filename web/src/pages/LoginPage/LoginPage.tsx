@@ -15,9 +15,9 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const WELCOME_MESSAGE = 'Welcome back!'
-const REDIRECT = routes.home()
+let REDIRECT = routes.home()
 
-const LoginPage = ({ type }) => {
+const LoginPage = ({ type, redirectTo = null }) => {
   const {
     isAuthenticated,
     client: webAuthn,
@@ -33,7 +33,7 @@ const LoginPage = ({ type }) => {
   // should redirect right after login or wait to show the webAuthn prompts?
   useEffect(() => {
     if (isAuthenticated && (!shouldShowWebAuthn || webAuthn.isEnabled())) {
-      navigate(REDIRECT)
+      navigate(redirectTo || REDIRECT)
     }
   }, [isAuthenticated, shouldShowWebAuthn])
 
@@ -80,7 +80,7 @@ const LoginPage = ({ type }) => {
       await webAuthn.authenticate()
       await reauthenticate()
       toast.success(WELCOME_MESSAGE)
-      navigate(REDIRECT)
+      navigate(redirectTo || REDIRECT)
     } catch (e) {
       if (e.name === 'WebAuthnDeviceNotFoundError') {
         toast.error(
@@ -97,7 +97,7 @@ const LoginPage = ({ type }) => {
     try {
       await webAuthn.register()
       toast.success(WELCOME_MESSAGE)
-      navigate(REDIRECT)
+      navigate(redirectTo || REDIRECT)
     } catch (e) {
       toast.error(e.message)
     }
@@ -226,7 +226,7 @@ const LoginPage = ({ type }) => {
       return (
         <div className="rw-login-link">
           <span>Don&apos;t have an account?</span>{' '}
-          <Link to={routes.signup()} className="rw-link">
+          <Link to={routes.signup({redirectTo})} className="rw-link">
             Sign up!
           </Link>
         </div>

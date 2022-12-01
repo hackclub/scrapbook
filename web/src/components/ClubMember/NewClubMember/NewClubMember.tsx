@@ -15,13 +15,14 @@ const CREATE_CLUB_MEMBER_MUTATION = gql`
   }
 `
 
-const NewClubMember = ({ id }) => {
+const NewClubMember = ( { slug } ) => {
   const [createClubMember, { loading, error }] = useMutation(
     CREATE_CLUB_MEMBER_MUTATION,
     {
       onCompleted: () => {
-        toast.success('ClubMember created')
-        navigate(routes.clubs())
+        toast.remove()
+        toast.success('Club joined!')
+        navigate(routes.club({slug: slug}))
       },
       onError: (error) => {
         toast.error(error.message)
@@ -32,25 +33,25 @@ const NewClubMember = ({ id }) => {
   const { currentUser } = useAuth()
 
   const onSave = () => {
+    toast.loading("Joining...")
     createClubMember({
       variables: {
         input: {
           accountId: currentUser.id,
-          clubId: id,
+          clubSlug: slug,
         },
       },
     })
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New ClubMember {id}</h2>
-      </header>
-      <div className="rw-segment-main">
+      <div style={{backgroundImage: 'url(https://cloud-cuw1vqjkd-hack-club-bot.vercel.app/0into-the-redwoods2.png)'}} className="h-96 w-96 bg-cover text-center p-3 mx-auto mt-3 rounded-md flex flex-col justify-center">
+        <h1 className='text-white font-bold text-3xl'>
+          An hacker's adventure awaits, it's time to join your club on Scrapbook.
+        </h1>
         <ClubMemberForm onSave={onSave} loading={loading} error={error} />
       </div>
-    </div>
+        
   )
 }
 

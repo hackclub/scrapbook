@@ -30,7 +30,7 @@ const ClubMemberForm = (props: ClubMemberFormProps) => {
       <Form<FormClubMember> onSubmit={onSubmit} error={props.error}>
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
+            Join Your Club
           </Submit>
         </div>
       </Form>
