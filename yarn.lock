@@ -7729,9 +7729,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:^2.1229.0":
-  version: 2.1230.0
-  resolution: "aws-sdk@npm:2.1230.0"
+"aws-sdk@npm:^2.1267.0":
+  version: 2.1267.0
+  resolution: "aws-sdk@npm:2.1267.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -7743,7 +7743,7 @@ __metadata:
     util: ^0.12.4
     uuid: 8.0.0
     xml2js: 0.4.19
-  checksum: 8e43ddb5f54864fe0a00a8b5ce7869e838dfbe6d73cee5aea5f361e703f30606246d38ad3d1d30774a4c3e6d58dd8ddc8877e6452ed922115285987d875c760b
+  checksum: 170003851d0f8f4663ce41570eb19ca855cdaf89110eaa6dbadaedda39d740b13ba6efd7e0ef8c2404efe4a32f1ec4337c1fff1112558d74a97b91067dba172c
   languageName: node
   linkType: hard
 
@@ -23490,7 +23490,7 @@ __metadata:
     "@redwoodjs/web": ^3.4.0
     "@simplewebauthn/browser": ^6.0.0
     autoprefixer: ^10.4.13
-    aws-sdk: ^2.1229.0
+    aws-sdk: ^2.1267.0
     postcss: ^8.4.17
     postcss-loader: ^7.0.1
     prop-types: 15.8.1
