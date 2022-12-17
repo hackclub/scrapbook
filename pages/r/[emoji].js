@@ -65,18 +65,23 @@ const Header = ({ name, url, char }) => (
       </p>
     )}
     {name === 'epoch' && (
-      <p className="post-text">
-        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/1epoch-header.png" width="400px" />
-        <style>{`
-        .nav {
-          color: #fff;
-          background: #FF4794;
-        }
-        .nav-link {
-          color: #fff;
-        }
-      `}</style>
-      </p>
+      <div className="epoch-banner">
+        <p className="post-text">
+          <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/1epoch-header.png" width="400px" />
+          <style>{`
+          .epoch-banner {
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 2.96%, rgba(0, 0, 0,0.5) 100%), url("https://cloud-jk5wc8hg0-hack-club-bot.vercel.app/0aditya-prakash-v0gyal0lgie-unsplash.jpg");
+          }
+          .nav {
+            color: #fff;
+            background: #FF4794;
+          }
+          .nav-link {
+            color: #fff;
+          }
+        `}</style>
+        </p>
+      </div>
     )}
     {name === 'epoch-ba' && (
       <p className="post-text">
