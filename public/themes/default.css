@@ -82,9 +82,6 @@
     align-items: center;
     margin-top: 24px;
   }
-  .post {
-    width: calc(100vw - 32px) !important;
-  }
 }
 
 .header-title-avatar {
@@ -369,7 +366,7 @@ video.post-attachment {
   object-fit: contain;
 }
 .post-attachment img {
-  height: 384px;
+  max-height: 384px;
 }
 video.post-attachment,
 audio.post-attachment,
