@@ -31,16 +31,18 @@ const Header = ({ name, url, char }) => (
       }
       &caption=${'Posts%20tagged%20with%20:' + name + ':'}`}
     />
-    <header>
-      {url ? (
-        <EmojiImg src={url} key={url} name={name} width={48} height={48} />
-      ) : (
-        <h1>{char}</h1>
-      )}
-      <p>
-        Posts tagged with <code>:{name}:</code>
-      </p>
-    </header>
+    {!name.includes('epoch') && (
+      <header>
+        {url ? (
+          <EmojiImg src={url} key={url} name={name} width={48} height={48} />
+        ) : (
+          <h1>{char}</h1>
+        )}
+        <p>
+          Posts tagged with <code>:{name}:</code>
+        </p>
+      </header>
+    )}
     {name === 'summer-of-making' && (
       <p className="post-text">
         This page contains everything Hack Clubbers got up to over the{' '}
@@ -55,6 +57,62 @@ const Header = ({ name, url, char }) => (
           color: #fff;
           background: #f46b45;
           background: linear-gradient(to right, #eea849, #f46b45);
+        }
+        .nav-link {
+          color: #fff;
+        }
+      `}</style>
+      </p>
+    )}
+    {name === 'epoch' && (
+      <p className="post-text">
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/1epoch-header.png" width="600px" />
+        <style>{`
+        .nav {
+          color: #fff;
+          background: #FF4794;
+        }
+        .nav-link {
+          color: #fff;
+        }
+      `}</style>
+      </p>
+    )}
+    {name === 'epoch-ba' && (
+      <p className="post-text">
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/0epoch-ba-header.png" width="600px" />
+        <style>{`
+        .nav {
+          color: #fff;
+          background: #FF4794;
+        }
+        .nav-link {
+          color: #fff;
+        }
+      `}</style>
+      </p>
+    )}
+    {name === 'epoch-vt' && (
+      <p className="post-text">
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/3epoch-vt-header.png" width="600px" />
+        <style>{`
+        .nav {
+          color: #fff;
+          background: #FF4794;
+        }
+        .nav-link {
+          color: #fff;
+        }
+      `}</style>
+      </p>
+    )}
+    {name === 'epoch-tx' && (
+      <p className="post-text">
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/2epoch-tx-header.png" width="600px" />
+        <style>{`
+        .nav {
+          color: #fff;
+          background: #FF4794;
         }
         .nav-link {
           color: #fff;
