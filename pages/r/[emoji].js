@@ -11,7 +11,7 @@ import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const formatName = name => startCase(name).replace(/js/i, 'JS')
+const formatName = name => startCase(name).replace(/js/i, 'JS').replace(/vt/i, 'VT').replace(/tx/i, 'TX').replace(/ba/i, 'BA')
 
 const Header = ({ name, url, char }) => (
   <>
