@@ -66,7 +66,7 @@ const Header = ({ name, url, char }) => (
     )}
     {name === 'epoch' && (
       <p className="post-text">
-        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/1epoch-header.png" width="600px" />
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/1epoch-header.png" width="400px" />
         <style>{`
         .nav {
           color: #fff;
@@ -80,7 +80,7 @@ const Header = ({ name, url, char }) => (
     )}
     {name === 'epoch-ba' && (
       <p className="post-text">
-        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/0epoch-ba-header.png" width="600px" />
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/0epoch-ba-header.png" width="400px" />
         <style>{`
         .nav {
           color: #fff;
@@ -94,7 +94,7 @@ const Header = ({ name, url, char }) => (
     )}
     {name === 'epoch-vt' && (
       <p className="post-text">
-        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/3epoch-vt-header.png" width="600px" />
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/3epoch-vt-header.png" width="400px" />
         <style>{`
         .nav {
           color: #fff;
@@ -108,7 +108,7 @@ const Header = ({ name, url, char }) => (
     )}
     {name === 'epoch-tx' && (
       <p className="post-text">
-        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/2epoch-tx-header.png" width="600px" />
+        <img src="https://cloud-mx87swj8o-hack-club-bot.vercel.app/2epoch-tx-header.png" width="400px" />
         <style>{`
         .nav {
           color: #fff;
