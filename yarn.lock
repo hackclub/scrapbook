@@ -4101,10 +4101,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@simplewebauthn/browser@npm:^6.0.0":
-  version: 6.2.1
-  resolution: "@simplewebauthn/browser@npm:6.2.1"
-  checksum: fc7857b1b85ea156e49bbe23290f5ffe40cd46abee11f5c4a6d663fd2d70178e792042e4558bc9607312c290d493812a678a1bf33bfdca7af3bdc0f369e23abf
+"@simplewebauthn/browser@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@simplewebauthn/browser@npm:7.0.0"
+  checksum: 4c78e1c42912219dc655dda63e9ad810bd2e45239ceffc3403ffc3b4ed9b10f6752f82644f9e771af9913caa4115b26f0172e258eb4ff64bc0fcb9042893b558
   languageName: node
   linkType: hard
 
@@ -23488,7 +23488,7 @@ __metadata:
     "@redwoodjs/forms": ^3.4.0
     "@redwoodjs/router": ^3.4.0
     "@redwoodjs/web": ^3.4.0
-    "@simplewebauthn/browser": ^6.0.0
+    "@simplewebauthn/browser": ^7.0.0
     autoprefixer: ^10.4.13
     aws-sdk: ^2.1229.0
     postcss: ^8.4.17
