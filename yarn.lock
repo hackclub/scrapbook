@@ -3107,14 +3107,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mux/mux-node@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@mux/mux-node@npm:6.3.1"
+"@mux/mux-node@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "@mux/mux-node@npm:7.3.0"
   dependencies:
     axios: ^0.26.1
     esdoc-ecmascript-proposal-plugin: ^1.0.0
-    jsonwebtoken: ^8.5.1
-  checksum: f7cb688e755e770760bcfd6c64a42b3ec46a641bf84932c81596e9f0cf73f6949b5fc9f6bd59832211ae88caf423187d4cece0dbcf562f24fa7aa3aa81ee52e0
+    jsonwebtoken: ^9.0.0
+  checksum: cfb4aa37b49cb7470e289d556acebf95c36cfd11cc981b3d2661558d9a3f90a01352f404446b387500da7a3561ebf222d6c0cf18e3ff3362f9380dd9da5341c3
   languageName: node
   linkType: hard
 
@@ -15759,6 +15759,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonwebtoken@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "jsonwebtoken@npm:9.0.0"
+  dependencies:
+    jws: ^3.2.2
+    lodash: ^4.17.21
+    ms: ^2.1.1
+    semver: ^7.3.8
+  checksum: 60c30d90d8a69b8e7148306e0c299ac120dbde9c032add48d26df928fe349e952cf4b09f12d7942257681a936e3374e4d49280ab20f8a4578688c7f08d87f9bc
+  languageName: node
+  linkType: hard
+
 "jsrsasign@npm:^10.4.0":
   version: 10.5.27
   resolution: "jsrsasign@npm:10.5.27"
@@ -20751,7 +20763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
+"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
   version: 7.3.8
   resolution: "semver@npm:7.3.8"
   dependencies:
@@ -23482,7 +23494,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
-    "@mux/mux-node": ^6.3.1
+    "@mux/mux-node": ^7.3.0
     "@mux/mux-player-react": ^1.3.0
     "@redwoodjs/auth": ^3.4.0
     "@redwoodjs/forms": ^3.4.0
