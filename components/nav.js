@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
 import { getProviders, signIn, signOut, useSession } from "next-auth/react"
@@ -60,7 +60,7 @@ const SignOut = ({session}) => (
 )
 
 const Nav = () => {
-  const { pathname } = useRouter()
+  const { pathname, query } = useRouter()
   const { data: session, status } = useSession()
   const home = pathname === '/'
   // This is a hack for using the right link on custom domains
@@ -75,34 +75,42 @@ const Nav = () => {
   }, [])
 
   return (
-    <nav className="nav">
-      <Flag />
-      {!home &&
-        (ext ? (
-          <a
-            href="https://scrapbook.hackclub.com/"
-            className="nav-link nav-link-home"
-          >
-            Scrapbook
-          </a>
-        ) : (
-          <Link href="/">
-            <a className="nav-link nav-link-home">Scrapbook</a>
-          </Link>
-        ))}
-      <Link href="/about/" passHref>
-        <a className="nav-link nav-link-about">About</a>
-      </Link>
-      <a
-        href="https://github.com/hackclub/scrapbook"
-        className="nav-link nav-link-github"
-        title="GitHub"
-      >
-        <Icon glyph="github" size={32} />
-      </a>
-      {home && <Join />}
-      {status === "authenticated" ? <SignOut session={session} /> : <SignIn />}
-    </nav>
+    <>
+      {
+        query.checkYourEmail !== undefined &&
+        <div style={{background: 'var(--purple)', textAlign: 'center', padding: '8px'}}>
+          <b>Where now? Head to your email for a unique URL to login.</b>
+        </div>
+      }
+      <nav className="nav">
+        <Flag />
+        {!home &&
+          (ext ? (
+            <a
+              href="https://scrapbook.hackclub.com/"
+              className="nav-link nav-link-home"
+            >
+              Scrapbook
+            </a>
+          ) : (
+            <Link href="/">
+              <a className="nav-link nav-link-home">Scrapbook</a>
+            </Link>
+          ))}
+        <Link href="/about/" passHref>
+          <a className="nav-link nav-link-about">About</a>
+        </Link>
+        <a
+          href="https://github.com/hackclub/scrapbook"
+          className="nav-link nav-link-github"
+          title="GitHub"
+        >
+          <Icon glyph="github" size={32} />
+        </a>
+        {home && <Join />}
+        {status === "authenticated" ? <SignOut session={session} /> : <SignIn />}
+      </nav>
+    </>
   )
 }
 
