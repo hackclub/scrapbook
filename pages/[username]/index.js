@@ -90,21 +90,25 @@ const Profile = ({
               <span className="header-streak-count">{`${profile.streakCount}-day streak`}</span>
             </span>
             <div className="header-links">
-              <Link
-                href="/[username]/mentions"
-                as={`/${profile.username}/mentions`}
-              >
-                <a className="header-link header-link-mentions">
-                  <Icon size={32} glyph="mention" />
+              {profile.slackID && (
+                <Link
+                  href="/[username]/mentions"
+                  as={`/${profile.username}/mentions`}
+                >
+                  <a className="header-link header-link-mentions">
+                    <Icon size={32} glyph="mention" />
+                  </a>
+                </Link>
+              )}
+              {profile.slackID && (
+                <a
+                  href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
+                  target="_blank"
+                  className="header-link header-link-slack"
+                >
+                  <Icon size={32} glyph="slack-fill" />
                 </a>
-              </Link>
-              <a
-                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
-                target="_blank"
-                className="header-link header-link-slack"
-              >
-                <Icon size={32} glyph="slack-fill" />
-              </a>
+              )}
               {profile.github && (
                 <a
                   href={profile.github}
@@ -304,6 +308,7 @@ export const getStaticProps = async ({ params }) => {
         })
       )
     }
+    console.log({ profile, webring, heatmap, posts })
     return {
       props: { profile, webring, heatmap, posts },
       revalidate: 1

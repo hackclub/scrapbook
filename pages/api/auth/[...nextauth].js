@@ -81,11 +81,20 @@ function PrismaAdapter(p) {
 }
 exports.PrismaAdapter = PrismaAdapter
 
-export default NextAuth({
+export const authOptions = {
+  secret: process.env.TOKEN_SECRET,
   adapter: PrismaAdapter(prisma),
   pages: {
     verifyRequest: '/?checkYourEmail'
   },
+  callbacks: {
+    async session({ session, user, token }) {
+      return {...session, user: {...session.user, username: user.username, id: user.id, ...user}}
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return token
+    }
+},
   providers: [
     Email({
       server: {
@@ -100,7 +109,9 @@ export default NextAuth({
       sendVerificationRequest
     })
   ]
-})
+}
+
+export default NextAuth(authOptions)
 
 function html(params) {
   const { url } = params

@@ -57,7 +57,7 @@ model Accounts {
   maxStreaks              Int?
   displayStreak           Boolean?
   streaksToggledOff       Boolean?
-  customDomain            String?
+  customDomain            String? 
   cssURL                  String?
   website                 String?
   github                  String?

@@ -4,6 +4,8 @@ import { Router, useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
 import { getProviders, signIn, signOut, useSession } from "next-auth/react"
+import Profile from './profile'
+import { emailToPfp } from '../lib/email'
 
 const Join = () => (
   <a href="https://hackclub.com/slack/" className="badge">
@@ -49,13 +51,23 @@ const SignIn = () => (
   </span>
 )
 
-const SignOut = ({session}) => (
+const SignOut = ({session, setMenuOpen}) => (
   <>
     <span className="badge" onClick={() => signOut()}>
       Sign-out
       <style>{badgeStyles}</style>
     </span>
-    <img src={`https://unavatar.io/${session.user.email}`} style={{height: '28px', borderRadius: '999px', marginLeft: '16px'}} />
+    <img 
+      src={emailToPfp(session.user.email)} 
+      onClick={()=> setMenuOpen(true)}
+      style={{
+        height: '28px', 
+        borderRadius: '999px', 
+        marginLeft: '16px', 
+        cursor: 'pointer',
+        border: '1px solid var(--muted)'
+      }} 
+    />
   </>
 )
 
@@ -63,6 +75,7 @@ const Nav = () => {
   const { pathname, query } = useRouter()
   const { data: session, status } = useSession()
   const home = pathname === '/'
+  const [menuOpen, setMenuOpen] = useState(false)
   // This is a hack for using the right link on custom domains
   const [ext, setExt] = useState(false)
   useEffect(() => {
@@ -80,6 +93,18 @@ const Nav = () => {
         query.checkYourEmail !== undefined &&
         <div style={{background: 'var(--purple)', textAlign: 'center', padding: '8px'}}>
           <b>Where now? Head to your email for a unique URL to login.</b>
+        </div>
+      }
+      {
+        query.successfullySaved !== undefined &&
+        <div style={{background: 'var(--green)', textAlign: 'center', padding: '8px'}}>
+          <b>Profile saved successfully; nice update!</b>
+        </div>
+      }
+      {
+        query.errorTryAgain !== undefined &&
+        <div style={{background: 'var(--red)', textAlign: 'center', padding: '8px'}}>
+          <b>Oh-no! Something errored on our end, please try again.</b>
         </div>
       }
       <nav className="nav">
@@ -107,8 +132,10 @@ const Nav = () => {
         >
           <Icon glyph="github" size={32} />
         </a>
-        {home && <Join />}
-        {status === "authenticated" ? <SignOut session={session} /> : <SignIn />}
+        {status === "authenticated" ? <>
+          <SignOut session={session} setMenuOpen={setMenuOpen} />
+          <Profile closed={!menuOpen} setMenuOpen={setMenuOpen} session={session} />
+        </> : <SignIn />}
       </nav>
     </>
   )

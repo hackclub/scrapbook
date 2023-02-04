@@ -2,6 +2,20 @@ import { map, find, isEmpty, orderBy } from 'lodash'
 import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
+import { emailToPfp } from '../../../../lib/email'
+
+export const transformProfile = (profile) => {
+  if(profile){
+  return {
+    ...profile,
+    email: null,
+    avatar: !profile?.avatar ? emailToPfp(profile?.email) : profile?.avatar
+  }
+}
+else {
+  return profile
+}
+}
 
 export const getProfile = async (value, field = 'username') => {
   let where = {}
@@ -9,7 +23,8 @@ export const getProfile = async (value, field = 'username') => {
   const opts = {
     where
   }
-  const user = await prisma.accounts.findFirst(opts)
+  console.log(opts)
+  const user = transformProfile(await prisma.accounts.findFirst(opts))
   if (!user) console.error('Could not fetch account', value)
   return user && user?.username ? user : {}
 }
@@ -44,7 +59,7 @@ export const getMentions = async user => {
 
 export default async (req, res) => {
   const profile = await getProfile(req.query.username)
-  if (!profile?.slackID)
+  if (!profile?.slackID && !profile?.username)
     return res.status(404).json({ status: 404, error: 'Cannot locate user' })
   let webring = []
   if (profile.webring) {

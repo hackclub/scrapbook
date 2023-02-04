@@ -38,6 +38,63 @@
   --colors-elevated: var(--colors-white);
   --colors-sunken: var(--colors-smoke);
   --colors-progress: var(--colors-red);
+
+  --breakpoint-xs: 32em;
+  --breakpoint-s: 48em;
+  --breakpoint-m: 64em;
+  --breakpoint-l: 96em;
+  --breakpoint-xl: 128em;
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 16px;
+  --spacing-4: 32px;
+  --spacing-5: 64px;
+  --spacing-6: 128px;
+  --spacing-7: 256px;
+  --spacing-8: 512px;
+  --font-1: 12px;
+  --font-2: 16px;
+  --font-3: 20px;
+  --font-4: 24px;
+  --font-5: 32px;
+  --font-6: 48px;
+  --font-6: 64px;
+  --font-7: 96px;
+  --font-8: 128px;
+  --font-9: 160px;
+  --font-10: 192px;
+  --line-height-limit: 0.875;
+  --line-height-title: 1;
+  --line-height-heading: 1.125;
+  --line-height-subheading: 1.25;
+  --line-height-caption: 1.375;
+  --line-height-body: 1.5;
+  --font-weight-body: 400;
+  --font-weight-bold: 700;
+  --font-weight-heading: var(--font-weight-bold);
+  --letter-spacing-title: -0.009em;
+  --letter-spacing-headline: 0.009em;
+  --size-wide-plus: 2048px;
+  --size-wide: 1536px;
+  --size-layout-plus: 1200px;
+  --size-layout: 1024px;
+  --size-copy-ultra: 980px;
+  --size-copy-plus: 768px;
+  --size-copy: 680px;
+  --size-narrow-plus: 600px;
+  --size-narrow: 512px;
+  --radii-small: 4px;
+  --radii-default: 8px;
+  --radii-extra: 12px;
+  --radii-ultra: 16px;
+  --radii-circle: 99999px;
+  --shadow-text: 0 1px 2px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.125);
+  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.0625),
+    0 2px 4px rgba(0, 0, 0, 0.0625);
+  --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.125);
+  --shadow-elevated: 0 1px 2px rgba(0, 0, 0, 0.0625),
+    0 8px 12px rgba(0, 0, 0, 0.125);
 }
 
 html {
@@ -70,3 +127,71 @@ img {
 }
 
 .__react_component_tooltip { pointer-events: auto !important; }
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radii-circle);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  letter-spacing: var(--letter-spacing-headline);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.125s ease-in-out, box-shadow 0.125s ease-in-out;
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align: center;
+  line-height: inherit;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: var(--theme-ui-colors-white, #ffffff);
+  background-color: var(--theme-ui-colors-primary, #ec3750);
+  border: 0;
+  font-size: var(--font-2);
+}
+
+button:focus,
+button:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: scale(1.0625);
+}
+
+button.lg {
+  font-size: var(--font-3)!important;
+  line-height: var(--line-height-title);
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  padding-top: var(--spacing-3);
+  padding-bottom: var(--spacing-3);
+}
+
+button.outline {
+  background: none;
+  color: var(--primary);
+  border: 2px solid currentcolor;
+}
+
+button.cta {
+  font-size: var(--font-2);
+  background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-yellow), var(--colors-orange) );
+}
