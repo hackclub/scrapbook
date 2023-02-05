@@ -57,6 +57,23 @@ const SignOut = ({session, setMenuOpen}) => (
       Sign-out
       <style>{badgeStyles}</style>
     </span>
+    <span className="badge" onClick={() => signOut()} style={{
+      width: '28px',
+      position: 'relative',
+      height: '28px'
+    }}>
+      <span style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '28px',
+        height: '28px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transform: 'scale(1.4) translateY(0.8px)'
+      }}>+</span>
+    </span>
     <img 
       src={emailToPfp(session.user.email)} 
       onClick={()=> setMenuOpen(true)}
