@@ -41,20 +41,19 @@ const StreaksPage = ({ users }) => {
           margin-bottom: 0.5em;
           width: 350px;
         }
-        @media (min-width: 32em) {
-          h1 {
-            font-size: 48px;
-          }
+        @media (max-width: 800px) {
           .container {
             grid-template-columns: 1fr;
           }
         }
+        @media (min-width: 32em) {
+          h1 {
+            font-size: 36px;
+          }
+        }
         @media (min-width: 48em) {
           h1 {
-            font-size: 64px;
-          }
-          .container {
-            grid-template-columns: 1fr;
+            font-size: 48px;
           }
         }
         a {
