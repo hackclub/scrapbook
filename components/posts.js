@@ -1,24 +1,24 @@
-import Masonry from 'react-masonry-css'
-import Post from '../components/post'
+import Masonry from 'react-masonry-css';
+import Post from '../components/post';
 
 const Posts = ({ posts = [] }) => [
-  <Masonry
-    key="masonry"
-    breakpointCols={{
-      10000: 4,
-      1024: 3,
-      640: 2,
-      480: 1,
-      default: 1
-    }}
-    className="masonry-posts"
-    columnClassName="masonry-posts-column"
-  >
-    {posts.map(post => (
-      <Post key={post.id} {...post} />
-    ))}
-  </Masonry>,
-  <style jsx global key="masonry-style">{`
+	<Masonry
+		key="masonry"
+		breakpointCols={{
+			10000: 4,
+			1024: 3,
+			640: 2,
+			480: 1,
+			default: 1,
+		}}
+		className="masonry-posts"
+		columnClassName="masonry-posts-column"
+	>
+		{posts.map(post => (
+			<Post key={post.id} {...post} />
+		))}
+	</Masonry>,
+	<style jsx global key="masonry-style">{`
     .masonry-posts {
       display: flex;
       width: 100%;
@@ -61,7 +61,7 @@ const Posts = ({ posts = [] }) => [
         margin-bottom: 24px;
       }
     }
-  `}</style>
-]
+  `}</style>,
+];
 
-export default Posts
+export default Posts;

@@ -78,7 +78,8 @@ model Accounts {
 model Updates {
   id               String           @id @default(cuid())
   accountsSlackID  String?
-  postTime         DateTime?
+  accountsID       String?
+  postTime         DateTime?        @default(now())
   text             String?
   attachments      String[]
   muxAssetIDs      String[]
@@ -90,7 +91,7 @@ model Updates {
   isLargeVideo     Boolean?
   channel          String?
   clubscrapID      String?          @unique
-  Accounts         Accounts?        @relation(fields: [accountsSlackID], references: [slackID])
+  Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
   clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
   emojiReactions   EmojiReactions[]
 }

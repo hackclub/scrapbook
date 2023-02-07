@@ -195,3 +195,8 @@ button.cta {
   font-size: var(--font-2);
   background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-yellow), var(--colors-orange) );
 }
+
+button.cta-blue {
+  font-size: var(--font-2);
+  background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-blue), var(--colors-cyan) );
+}
