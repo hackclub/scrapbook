@@ -4,7 +4,7 @@ import { stripColons } from '../../lib/emoji';
 import prisma from '../../lib/prisma';
 import { emailToPfp } from '../../lib/email';
 
-export const getRawPosts = async (max = null, params = {}) => {
+export const getRawPosts = async (max = null, params = {}, api = false) => {
 	const opts = {
 		orderBy: {
 			postTime: 'desc',
@@ -19,7 +19,11 @@ export const getRawPosts = async (max = null, params = {}) => {
 		...params,
 	};
 	if (max) opts.take = max;
-	return await prisma.updates.findMany(opts);
+	const updates = await prisma.updates.findMany(opts);
+	if (api) {
+		let updatesWith;
+	}
+	return updates;
 };
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null);
@@ -61,9 +65,9 @@ export const transformPost = p => ({
 	reactions: transformReactions(p.emojiReactions) || [],
 });
 
-export const getPosts = async (max = null) => {
+export const getPosts = async (max = null, api = false) => {
 	const users = await getRawUsers(true);
-	return await getRawPosts(max).then(posts =>
+	return await getRawPosts(max, {}, api).then(posts =>
 		posts
 			.map(p => {
 				p.user = find(users, { id: p.accountsID }) || {};
@@ -75,6 +79,6 @@ export const getPosts = async (max = null) => {
 };
 
 export default async (req, res) => {
-	const posts = await getPosts(req.query.max ? Number(req.query.max) : 200);
+	const posts = await getPosts(req.query.max ? Number(req.query.max) : 200, true);
 	return res.json(posts);
 };

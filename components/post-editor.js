@@ -10,9 +10,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
 		console.log(files);
 		await Promise.all(
 			Array.from(files).map(async file => {
-				console.log('hi!');
 				let uploadedImage;
-				console.log(file);
 				try {
 					uploadedImage = await S3.upload({
 						Bucket: 'scrapbook-into-the-redwoods',
@@ -87,6 +85,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
 								class="file-upload__input"
 								multiple="true"
 								type="file"
+								accept="image/png, image/jpeg, .mp4, .mov, .webm"
 								disabled={uploading}
 								onChange={event => {
 									setUploading(true);
