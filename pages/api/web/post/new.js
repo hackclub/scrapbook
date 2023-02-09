@@ -17,14 +17,16 @@ export default async (req, res) => {
 	await Promise.all(
 		JSON.parse(req.query.attachments).map(async attachment => {
 			let filename = attachment.split('.');
-			if (['mp4', 'mov', 'webm'].includes(filename[filename.length - 1])) {
+			if (['mp4', 'mov', 'webm'].includes(filename[filename.length - 1].toLowerCase())) {
 				let asset = await Video.Assets.create({
 					input: attachment,
 					playback_policy: ['public'],
 				});
+				console.log(asset);
 				let playbackID = await Video.Assets.createPlaybackId(asset.id, {
 					policy: 'public',
 				});
+				console.log(playbackID);
 				muxAssetIDs.push(asset.id);
 				muxPlaybackIDs.push(playbackID.id);
 			}
