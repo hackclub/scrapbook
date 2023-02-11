@@ -381,7 +381,9 @@ a.post-attachment:first-child:last-child {
   margin-bottom: -12px;
 }
 .post-reaction {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   font-size: 20px;
   margin-right: 12px;
@@ -395,10 +397,14 @@ a.post-attachment:first-child:last-child {
   border-radius: 24px;
   transition: 0.125s background-color ease-in-out;
 }
+.post-reaction-active {
+  background-color: var(--colors-red);
+  border: 1px dashed var(--colors-sunken);
+}
 .post-reaction:hover,
 .post-reaction:focus {
-  background-color: var(--colors-cyan);
-  border-color: var(--colors-blue);
+  background-color: var(--colors-orange);
+  border-color: var(--colors-yellow);
 }
 .post-reaction > div {
   margin: 5px !important;

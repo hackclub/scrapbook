@@ -2,7 +2,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialActions"]
+  previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
@@ -103,7 +103,7 @@ model EmojiType {
 }
 
 model EmojiReactions {
-  id            String     @id @default(cuid())
+  id            String     @id
   updateId      String?
   emojiTypeName String?
   usersReacted  String[]

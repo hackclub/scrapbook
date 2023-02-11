@@ -95,6 +95,8 @@
   --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.125);
   --shadow-elevated: 0 1px 2px rgba(0, 0, 0, 0.0625),
     0 8px 12px rgba(0, 0, 0, 0.125);
+    
+  --epr-header-padding: 10px var(--epr-horizontal-padding)!important;
 }
 
 html {
@@ -138,7 +140,7 @@ img {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-button {
+button:not(.epr-btn) {
   cursor: pointer;
   font-family: inherit;
   font-weight: var(--font-weight-bold);
@@ -170,8 +172,8 @@ button {
   font-size: var(--font-2);
 }
 
-button:focus,
-button:hover {
+button:not(.epr-btn):focus,
+button:not(.epr-btn):hover {
   box-shadow: var(--shadow-elevated);
   transform: scale(1.0625);
 }
@@ -199,4 +201,34 @@ button.cta {
 button.cta-blue {
   font-size: var(--font-2);
   background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-blue), var(--colors-cyan) );
+}
+
+.EmojiPickerReact * {
+  font-family: var(--fonts-body)!important
+}
+
+.epr-preview {
+  display: none!important;
+}
+
+.epr-skin-tones {
+  display: none!important;
+}
+
+input.epr-search {
+  font-size: 16px;
+}
+
+input.epr-search::placeholder {
+  font-size: 0px!important
+}
+
+.EmojiPickerReact .epr-category-nav {
+    padding: 0px 10px!important;
+}
+
+
+.EmojiPickerReact .epr-category-nav > button.epr-cat-btn:focus:before {
+  border: 0px solid var(--epr-category-icon-active-color)!important;
+  border-radius: 50%;
 }

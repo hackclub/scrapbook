@@ -34,7 +34,7 @@ export const transformReactions = (raw = []) =>
 			try {
 				const { name, emojiSource } = emoji.EmojiType;
 				if (name === 'aom') return null;
-				const obj = { name };
+				const obj = { name, usersReacted: emoji.usersReacted };
 				obj[emojiSource.startsWith('http') ? 'url' : 'char'] = emojiSource;
 				return obj;
 			} catch (e) {
