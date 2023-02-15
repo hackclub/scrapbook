@@ -123,7 +123,8 @@ export const getStaticProps = async () => {
     'car',
     'musical_note',
     'robot_face',
-    'birthday'
+    'birthday',
+    'winter-hardware-wonderland'
   ]
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
