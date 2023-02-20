@@ -1,40 +1,10 @@
-import Post from './post'
+import Post from './post';
 
-const att = (name, url, width, height) => [
-  {
-    filename: `${name}.jpg`,
-    type: 'image/jpg',
-    thumbnails: { large: { url, width, height } }
-  }
-]
+let posts = [<Post key="cambrian" text="The Cambrian explosion of life on Earth." postedAt="530M yrs ago" attachments={['https://cloud-lp0r5yk68.vercel.app/proteinlikes.png']} profile muted={0.625} />, <Post key="bang" text="The Big Bang begins the universe." postedAt="13.8B yrs ago" attachments={['https://cloud-lp0r5yk68.vercel.app/vlq9pc5vdgqgcfxxsuucaq-1024-80.jpg']} profile muted={0.375} />];
 
-const ExamplePosts = () => [
-  <Post
-    key="cambrian"
-    text="The Cambrian explosion of life on Earth."
-    postedAt="530M yrs ago"
-    attachments={att(
-      'cambrian',
-      'https://cloud-lp0r5yk68.vercel.app/proteinlikes.png',
-      465,
-      234
-    )}
-    profile
-    muted={0.625}
-  />,
-  <Post
-    key="bang"
-    text="The Big Bang begins the universe."
-    postedAt="13.8B yrs ago"
-    attachments={att(
-      'bigbang',
-      'https://cloud-lp0r5yk68.vercel.app/vlq9pc5vdgqgcfxxsuucaq-1024-80.jpg',
-      600,
-      359
-    )}
-    profile
-    muted={0.375}
-  />
-]
+const ExamplePosts = (club = false) => {
+	console.log(club);
+	return club.club == true ? [<Post key="club" text="Your club's adventure beings." postedAt="Today" attachments={['https://cloud-frsxs88gv-hack-club-bot.vercel.app/0frame_1__3_.png']} profile muted={0.8} />, ...posts] : posts;
+};
 
-export default ExamplePosts
+export default ExamplePosts;

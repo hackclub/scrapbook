@@ -104,9 +104,10 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           .overlay {
             padding: 16px 32px;
             color: var(--white);
-            position: absolute;
+            position: fixed;
             min-height: 100vh;
             height: 100vh;
+			overflow-y: scroll;
             top: 0;
             width: 100vw;
             max-width: 400px;

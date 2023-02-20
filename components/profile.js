@@ -49,7 +49,8 @@ const Profile = ({ closed, setMenuOpen, session }) => (
         .overlay {
           padding: 16px 32px;
           color: var(--white);
-          position: absolute;
+          overflow-y: scroll;
+          position: fixed;
           min-height: 100vh;
           height: 100vh;
           top: 0;

@@ -44,6 +44,7 @@
 }
 .nav-link-github {
   line-height: 0;
+  cursor: pointer;
 }
 
 .container {
@@ -435,4 +436,18 @@ a.post-attachment:first-child:last-child {
 }
 .mention-avatar {
   margin-right: 4px;
+}
+
+.club-posts {
+  margin-top: 12px
+}
+
+.club-name {
+  margin-top: 8px;
+}
+
+.club-header-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }

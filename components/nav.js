@@ -7,6 +7,8 @@ import { getProviders, signIn, signOut, useSession } from 'next-auth/react';
 import Profile from './profile';
 import { emailToPfp } from '../lib/email';
 import { PostEditor } from './post-editor';
+import { ClubsPopup } from './clubs-popup';
+import { ClubsIcon } from './club-icon';
 
 const Join = () => (
 	<a href="https://hackclub.com/slack/" className="badge">
@@ -53,36 +55,13 @@ const SignIn = () => (
 	</span>
 );
 
-const SignOut = ({ session, setMenuOpen, setPostOpen }) => (
+const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
 	<>
-		<span className="badge" onClick={() => signOut()}>
-			Sign-out
-			<style>{badgeStyles}</style>
+		<span onClick={() => setPostOpen(true)} className="nav-link nav-link-github">
+			<Icon glyph="post-fill" size={38.2} />
 		</span>
-		<span
-			className="badge"
-			onClick={() => setPostOpen(true)}
-			style={{
-				width: '28px',
-				position: 'relative',
-				height: '28px',
-			}}
-		>
-			<span
-				style={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					width: '28px',
-					height: '28px',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					transform: 'scale(1.4) translateY(0px)',
-				}}
-			>
-				+
-			</span>
+		<span onClick={() => setClubsOpen(true)} className="nav-link nav-link-github">
+			<ClubsIcon size={24} />
 		</span>
 		<img
 			src={emailToPfp(session.user.email)}
@@ -95,6 +74,10 @@ const SignOut = ({ session, setMenuOpen, setPostOpen }) => (
 				border: '1px solid var(--muted)',
 			}}
 		/>
+		<span className="badge" onClick={() => signOut()}>
+			Sign-out
+			<style>{badgeStyles}</style>
+		</span>
 	</>
 );
 
@@ -104,6 +87,7 @@ const Nav = () => {
 	const home = pathname === '/';
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [postOpen, setPostOpen] = useState(false);
+	const [clubsOpen, setClubsOpen] = useState(false);
 	// This is a hack for using the right link on custom domains
 	const [ext, setExt] = useState(false);
 	useEffect(() => {
@@ -157,9 +141,10 @@ const Nav = () => {
 				</a>
 				{status === 'authenticated' ? (
 					<>
-						<SignOut session={session} setMenuOpen={setMenuOpen} setPostOpen={setPostOpen} />
+						<SignOut session={session} setMenuOpen={setMenuOpen} setPostOpen={setPostOpen} setClubsOpen={setClubsOpen} />
 						<Profile closed={!menuOpen} setMenuOpen={setMenuOpen} session={session} />
 						<PostEditor closed={!postOpen} setPostOpen={setPostOpen} session={session} />
+						<ClubsPopup closed={!clubsOpen} setClubsOpen={setClubsOpen} session={session} />
 					</>
 				) : (
 					<SignIn />

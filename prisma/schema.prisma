@@ -46,8 +46,8 @@ model VerificationToken {
 }
 
 model Accounts {
-  id String @default(cuid()) @unique
-  slackID                 String?        @unique(map: "Accounts.slackID_unique") 
+  id                      String        @unique @default(cuid())
+  slackID                 String?       @unique(map: "Accounts.slackID_unique")
   email                   String?       @unique(map: "Accounts.email_unique")
   emailVerified           DateTime?
   username                String        @unique(map: "Accounts.username_unique")
@@ -57,7 +57,7 @@ model Accounts {
   maxStreaks              Int?
   displayStreak           Boolean?
   streaksToggledOff       Boolean?
-  customDomain            String? 
+  customDomain            String?
   cssURL                  String?
   website                 String?
   github                  String?
@@ -65,7 +65,7 @@ model Accounts {
   fullSlackMember         Boolean?
   avatar                  String?
   webring                 String[]
-  newMember               Boolean @default(false)
+  newMember               Boolean       @default(false)
   timezoneOffset          Int?
   timezone                String?
   pronouns                String?
@@ -73,6 +73,7 @@ model Accounts {
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
   updates                 Updates[]
+  ClubMember              ClubMember[]
 }
 
 model Updates {
@@ -94,6 +95,7 @@ model Updates {
   Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
   clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
   emojiReactions   EmojiReactions[]
+  ClubUpdate       ClubUpdate?
 }
 
 model EmojiType {
@@ -121,4 +123,37 @@ model Clubscraps {
   club        String?
   timestamp   Float    @unique
   update      Updates?
+}
+
+model ClubMember {
+  id        String   @id @default(cuid())
+  accountId String
+  account   Accounts @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  clubId    String
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  admin     Boolean  @default(false)
+}
+
+model ClubUpdate {
+  id       String  @id @default(cuid())
+  updateId String  @unique
+  update   Updates @relation(fields: [updateId], references: [id], onDelete: Cascade)
+  clubId   String
+  club     Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+}
+
+model Club {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String
+  logo         String
+  banner       String       @default("https://wallpapercave.com/wp/wp10026724.jpg")
+  customDomain String?
+  cssURL       String?
+  website      String?
+  location     String?
+  github       String?
+  description  String?
+  members      ClubMember[]
+  updates      ClubUpdate[]
 }
