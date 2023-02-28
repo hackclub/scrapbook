@@ -95,8 +95,8 @@
   --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.125);
   --shadow-elevated: 0 1px 2px rgba(0, 0, 0, 0.0625),
     0 8px 12px rgba(0, 0, 0, 0.125);
-    
-  --epr-header-padding: 10px var(--epr-horizontal-padding)!important;
+
+  --epr-header-padding: 10px var(--epr-horizontal-padding) !important;
 }
 
 html {
@@ -128,15 +128,17 @@ img {
   font-size: 8px;
 }
 
-.__react_component_tooltip { pointer-events: auto !important; }
+.__react_component_tooltip {
+  pointer-events: auto !important;
+}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
@@ -179,7 +181,7 @@ button:not(.epr-btn):hover {
 }
 
 button.lg {
-  font-size: var(--font-3)!important;
+  font-size: var(--font-3) !important;
   line-height: var(--line-height-title);
   padding-left: var(--spacing-4);
   padding-right: var(--spacing-4);
@@ -195,24 +197,32 @@ button.outline {
 
 button.cta {
   font-size: var(--font-2);
-  background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-yellow), var(--colors-orange) );
+  background-image: radial-gradient(
+    ellipse farthest-corner at top left,
+    var(--colors-yellow),
+    var(--colors-orange)
+  );
 }
 
 button.cta-blue {
   font-size: var(--font-2);
-  background-image: radial-gradient( ellipse farthest-corner at top left, var(--colors-blue), var(--colors-cyan) );
+  background-image: radial-gradient(
+    ellipse farthest-corner at top left,
+    var(--colors-blue),
+    var(--colors-cyan)
+  );
 }
 
 .EmojiPickerReact * {
-  font-family: var(--fonts-body)!important
+  font-family: var(--fonts-body) !important;
 }
 
 .epr-preview {
-  display: none!important;
+  display: none !important;
 }
 
 .epr-skin-tones {
-  display: none!important;
+  display: none !important;
 }
 
 input.epr-search {
@@ -220,15 +230,14 @@ input.epr-search {
 }
 
 input.epr-search::placeholder {
-  font-size: 0px!important
+  font-size: 0px !important;
 }
 
 .EmojiPickerReact .epr-category-nav {
-    padding: 0px 10px!important;
+  padding: 0px 10px !important;
 }
 
-
 .EmojiPickerReact .epr-category-nav > button.epr-cat-btn:focus:before {
-  border: 0px solid var(--epr-category-icon-active-color)!important;
+  border: 0px solid var(--epr-category-icon-active-color) !important;
   border-radius: 50%;
 }

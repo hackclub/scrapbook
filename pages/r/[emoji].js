@@ -11,7 +11,12 @@ import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const formatName = name => startCase(name).replace(/js/i, 'JS').replace(/vt/i, 'VT').replace(/tx/i, 'TX').replace(/ba/i, 'BA')
+const formatName = name =>
+  startCase(name)
+    .replace(/js/i, 'JS')
+    .replace(/vt/i, 'VT')
+    .replace(/tx/i, 'TX')
+    .replace(/ba/i, 'BA')
 
 const Header = ({ name, url, char }) => (
   <>
@@ -67,7 +72,10 @@ const Header = ({ name, url, char }) => (
     {name === 'epoch' && (
       <div className="epoch-banner">
         <p className="post-text">
-          <img src="https://cloud-itm512hmq-hack-club-bot.vercel.app/3epoch-header.png" width="400px" />
+          <img
+            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/3epoch-header.png"
+            width="400px"
+          />
           <style>{`
           .epoch-banner {
             margin-bottom: 16px;
@@ -94,7 +102,10 @@ const Header = ({ name, url, char }) => (
     {name === 'epoch-ba' && (
       <div className="epoch-banner">
         <p className="post-text">
-          <img src="https://cloud-itm512hmq-hack-club-bot.vercel.app/2epoch-ba-header.png" width="400px" />
+          <img
+            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/2epoch-ba-header.png"
+            width="400px"
+          />
           <style>{`
           .epoch-banner {
             margin-bottom: 16px;
@@ -121,7 +132,10 @@ const Header = ({ name, url, char }) => (
     {name === 'epoch-vt' && (
       <div className="epoch-banner">
         <p className="post-text">
-          <img src="https://cloud-itm512hmq-hack-club-bot.vercel.app/1epoch-vt-header.png" width="400px" />
+          <img
+            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/1epoch-vt-header.png"
+            width="400px"
+          />
           <style>{`
           .epoch-banner {
             margin-bottom: 16px;
@@ -148,7 +162,10 @@ const Header = ({ name, url, char }) => (
     {name === 'epoch-tx' && (
       <div className="epoch-banner">
         <p className="post-text">
-          <img src="https://cloud-itm512hmq-hack-club-bot.vercel.app/0epoch-tx-header.png" width="400px" />
+          <img
+            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/0epoch-tx-header.png"
+            width="400px"
+          />
           <style>{`
           .epoch-banner {
             margin-bottom: 16px;
@@ -174,26 +191,26 @@ const Header = ({ name, url, char }) => (
     )}
     {name === 'gamelab' && (
       <>
-      <h2 style={{textAlign: 'center', fontSize: '3em'}}>Game&nbsp;Lab Arcade</h2>
-      <h3 style={{textAlign: 'center'}}>
-        Welcome to the arcade. What would you like to play?
-      </h3>
-      <p className="header-text">
-
-        This page contains all the projects Hack Clubbers have built using{' '}
-
-        <a href="https://github.com/hackclub/gamelab" target="_blank">
-          gamelab
-        </a>
-        , an open-source game engine for beginners.
-        <br />
-        <br />
-        You can get your own projects on this page by posting a Game&nbsp;Lab share
-        link in the #scrapbook channel of the Hack&nbsp;Club&nbsp;Slack.
-        <br />
-        <br />
-        Click on a cartridge to try the game!
-        <style>{`
+        <h2 style={{ textAlign: 'center', fontSize: '3em' }}>
+          Game&nbsp;Lab Arcade
+        </h2>
+        <h3 style={{ textAlign: 'center' }}>
+          Welcome to the arcade. What would you like to play?
+        </h3>
+        <p className="header-text">
+          This page contains all the projects Hack Clubbers have built using{' '}
+          <a href="https://github.com/hackclub/gamelab" target="_blank">
+            gamelab
+          </a>
+          , an open-source game engine for beginners.
+          <br />
+          <br />
+          You can get your own projects on this page by posting a Game&nbsp;Lab
+          share link in the #scrapbook channel of the Hack&nbsp;Club&nbsp;Slack.
+          <br />
+          <br />
+          Click on a cartridge to try the game!
+          <style>{`
         .nav {
           color: #fff;
           background: #f46b45;
@@ -215,7 +232,7 @@ const Header = ({ name, url, char }) => (
           }
         }
       `}</style>
-      </p>
+        </p>
       </>
     )}
     <style jsx>{`
@@ -376,11 +393,17 @@ export const getStaticProps = async ({ params }) => {
   if (name.length < 2) return console.error('No emoji') || lost
 
   try {
-    const posts = await getPosts(name, 48, name == "summer-of-making" ? {
-      postTime: {
-        lte: new Date(2021, 1)
-      }
-    } : {})
+    const posts = await getPosts(
+      name,
+      48,
+      name == 'summer-of-making'
+        ? {
+            postTime: {
+              lte: new Date(2021, 1)
+            }
+          }
+        : {}
+    )
     if (!posts || posts.length === 0) return lost
     const allReactions = flatten(map(posts, 'reactions'))
     const emoji = find(allReactions, { name })

@@ -1,6 +1,4 @@
 {
   "presets": ["next/babel"],
-  "plugins": [
-    "superjson-next"
-  ]
+  "plugins": ["superjson-next"]
 }

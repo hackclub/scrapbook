@@ -27,11 +27,13 @@ A post requires just two things: a description and an image. Your image can be d
 ```
 learned Express generator today - now back to a ton of (organized) files
 ```
+
 <img src="https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png" />
 
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
 
 Here's how it would look on Slack to create a post:
+
 <img src="https://cloud-nf0autycv-hack-club-bot.vercel.app/0scrapbook-example.gif" />
 
 ## Scrappy (the Slack Bot)
@@ -41,17 +43,17 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 <details>
   <summary>Available commands</summary>
 
-  - `/scrappy-togglestreaks`: toggles your streak count on/off in your status
-  - `/scrappy-togglestreaks all`: opts out of streaks completely
-  - `/scrappy-open`: opens your Scrapbook (or another user's if you specify a username)
-  - `/scrappy-setcss`: adds a custom CSS file to your Scrapbook profile. [Check out this cool example](https://scrapbook.hackclub.com/msw)!
-  - `/scrappy-setdomain`: links a custom domain to your Scrapbook profile, e.g. [scrapbook.maggieliu.dev](https://scrapbook.maggieliu.dev/)
-  - `/scrappy-setusername`: change your profile username
-  - `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
-  - `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
-  - `/scrappy-webring`: adds or removes someone to your webring
-  - *Remove* a post: delete the Slack message and Scrappy will automatically update for you
-  - *Edit* a post: edit the Slack message and it will automatically update for you
+- `/scrappy-togglestreaks`: toggles your streak count on/off in your status
+- `/scrappy-togglestreaks all`: opts out of streaks completely
+- `/scrappy-open`: opens your Scrapbook (or another user's if you specify a username)
+- `/scrappy-setcss`: adds a custom CSS file to your Scrapbook profile. [Check out this cool example](https://scrapbook.hackclub.com/msw)!
+- `/scrappy-setdomain`: links a custom domain to your Scrapbook profile, e.g. [scrapbook.maggieliu.dev](https://scrapbook.maggieliu.dev/)
+- `/scrappy-setusername`: change your profile username
+- `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
+- `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
+- `/scrappy-webring`: adds or removes someone to your webring
+- _Remove_ a post: delete the Slack message and Scrappy will automatically update for you
+- _Edit_ a post: edit the Slack message and it will automatically update for you
 
 </details>
 
@@ -60,7 +62,7 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev/)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 Hack Clubbers can also use a `dino.icu` subdomain by submitting a PR to our [DNS repository](https://github.com/hackclub/dns).
-  
+
 ## CSS customization
 
 To customize the CSS on your profile page, run `/scrappy-setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
@@ -68,14 +70,16 @@ To customize the CSS on your profile page, run `/scrappy-setcss <link>` in Slack
 Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
 
 If you are a beginner at coding and need a more in depth guide on how to work with CSS, check out [@sampoder](https://github.com/sampoder)’s workshop on the topic, this covers different useful areas like CSS variables, fonts and making custom animations. You can access it from [here](https://workshops.hackclub.com/scrapbook_css/).
-  
+
 ### Colors & fonts
 
 If you’d like to change the page-wide fonts or colors, you can change yours with [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables). Here’s the values the site uses by default:
 
 <details>
 
-  <summary>Default values</summary>
+{' '}
+
+<summary>Default values</summary>
 
 ```css
 :root {
@@ -122,14 +126,18 @@ Want to showcase your streak on your personal website? We’ve created a small w
 
 ```html
 <script src="https://scrapbook.hackclub.com/scrapbookwidget.js"></script>
-<script>displayScrapbookUsername('username')</script>
+<script>
+  displayScrapbookUsername('username')
+</script>
 ```
 
 If you have a custom domain, you can optionally link the scrapbook widget to it! Do it like this:
 
 ```html
 <script src="https://scrapbook.hackclub.com/scrapbookwidget.js"></script>
-<script>displayScrapbookUsername('username', 'https://scrapbook.example.com')</script>
+<script>
+  displayScrapbookUsername('username', 'https://scrapbook.example.com')
+</script>
 ```
 
 ## RSS feed

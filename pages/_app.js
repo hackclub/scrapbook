@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Analytics from "../components/analytics"
+import Analytics from '../components/analytics'
 
 import '../public/fonts.css'
 import '../public/app.css'

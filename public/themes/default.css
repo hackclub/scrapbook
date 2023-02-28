@@ -439,11 +439,11 @@ a.post-attachment:first-child:last-child {
 }
 
 .club-posts {
-  margin-top: 12px
+  margin-top: 12px;
 }
 
 .club-name {
-  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .club-header-link {

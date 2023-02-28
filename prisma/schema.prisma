@@ -95,7 +95,7 @@ model Updates {
   Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
   clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
   emojiReactions   EmojiReactions[]
-  ClubUpdate       ClubUpdate?
+  ClubUpdate       ClubUpdate[]
 }
 
 model EmojiType {

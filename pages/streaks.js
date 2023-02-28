@@ -50,17 +50,17 @@ const StreaksPage = ({ users }) => {
           }
         }
         @supports (-webkit-background-clip: text) {
-        h1 {
-          background-image: radial-gradient(
-            ellipse farthest-corner at top left,
-            var(--colors-yellow),
-            var(--colors-orange)
-          );
-          background-repeat: no-repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          h1 {
+            background-image: radial-gradient(
+              ellipse farthest-corner at top left,
+              var(--colors-yellow),
+              var(--colors-orange)
+            );
+            background-repeat: no-repeat;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
         }
-      }
       `}</style>
 
       <h1>Who's got the highest streak?</h1>

@@ -24,13 +24,19 @@ function PrismaAdapter(p) {
   return {
     createUser: data =>
       p.accounts.create({ data: { username: data.email, ...data } }),
-    getUser: id => p.accounts.findUnique({ where: { id } }),
-    getUserByEmail: email => p.accounts.findUnique({ where: { email } }),
+    getUser: id =>
+      p.accounts.findUnique({ where: { id }, include: { ClubMember: true } }),
+    getUserByEmail: email =>
+      p.accounts.findUnique({
+        where: { email },
+        include: { ClubMember: true }
+      }),
     async getUserByAccount(provider_providerAccountId) {
       var _a
       const account = await p.webAccounts.findUnique({
         where: { provider_providerAccountId },
-        select: { user: true }
+        select: { user: true },
+        include: { ClubMember: true }
       })
       return (_a =
         account === null || account === void 0 ? void 0 : account.user) !==
@@ -49,7 +55,17 @@ function PrismaAdapter(p) {
     async getSessionAndUser(sessionToken) {
       const userAndSession = await p.session.findUnique({
         where: { sessionToken },
-        include: { user: true }
+        include: {
+          user: {
+            include: {
+              ClubMember: {
+                include: {
+                  club: true
+                }
+              }
+            }
+          }
+        }
       })
       if (!userAndSession) return null
       const { user, ...session } = userAndSession
@@ -89,12 +105,15 @@ export const authOptions = {
   },
   callbacks: {
     async session({ session, user, token }) {
-      return {...session, user: {...session.user, username: user.username, id: user.id, ...user}}
+      return {
+        ...session,
+        user: { ...session.user, username: user.username, id: user.id, ...user }
+      }
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       return token
     }
-},
+  },
   providers: [
     Email({
       server: {
