@@ -249,7 +249,6 @@ export const getStaticProps = async ({ params }) => {
 
   try {
     const posts = await getPosts(club)
-    console.log({ club, posts })
     return {
       props: { club, posts },
       revalidate: 1

@@ -102,7 +102,6 @@ const Nav = () => {
     try {
       const l = document.createElement('a')
       l.href = window.location.href
-      console.log(l.hostname)
       if (!l.hostname.includes('.hackclub.')) setExt(true)
     } catch (e) {}
   }, [])

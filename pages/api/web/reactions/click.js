@@ -13,7 +13,6 @@ export default async (req, res) => {
       emojiTypeName: req.query.emojiName
     }
   })
-  console.log(emoji)
   const updateEmoji = await prisma.emojiReactions.update({
     where: {
       id: emoji.id
@@ -28,14 +27,12 @@ export default async (req, res) => {
           }
     }
   })
-  console.log(updateEmoji)
   if (updateEmoji.usersReacted.length == 0) {
     const deleteEmoji = await prisma.emojiReactions.delete({
       where: {
         id: emoji.id
       }
     })
-    console.log('deleted!')
   }
   res.json(updateEmoji)
 }

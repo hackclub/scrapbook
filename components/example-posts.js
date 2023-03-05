@@ -22,7 +22,6 @@ let posts = [
 ]
 
 const ExamplePosts = (club = false) => {
-  console.log(club)
   return club.club == true
     ? [
         <Post

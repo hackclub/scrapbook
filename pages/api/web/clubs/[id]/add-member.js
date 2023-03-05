@@ -9,7 +9,6 @@ export default async (req, res) => {
   if (session?.user === undefined) {
     res.json({ clubs: [] })
   }
-  console.log(session?.user)
   let clubs = session?.user.ClubMember.filter(x => x.admin).map(x => x.clubId)
   if (clubs.includes(req.query.id)) {
     let newMember = await prisma.ClubMember.create({

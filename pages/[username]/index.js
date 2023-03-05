@@ -308,7 +308,6 @@ export const getStaticProps = async ({ params }) => {
         })
       )
     }
-    console.log({ profile, webring, heatmap, posts })
     return {
       props: { profile, webring, heatmap, posts },
       revalidate: 1

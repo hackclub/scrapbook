@@ -22,7 +22,6 @@ export const getProfile = async (value, field = 'username') => {
   const opts = {
     where
   }
-  console.log(opts)
   const user = transformProfile(await prisma.accounts.findFirst(opts))
   if (!user) console.error('Could not fetch account', value)
   return user && user?.username ? user : {}

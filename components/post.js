@@ -4,7 +4,6 @@ import { filter } from 'lodash'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
-import Cartridges from './cartridges'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
@@ -131,7 +130,6 @@ const Post = ({
           </Link>
         )}
         <Content>{text}</Content>
-        {text && <Cartridges text={text} />}
         {(attachments.length > 0 || mux.length > 0) && (
           <div className="post-attachments">
             {filter(attachments, a => endsWithAny(imageFileTypes, a)).map(

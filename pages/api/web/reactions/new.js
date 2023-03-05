@@ -5,7 +5,7 @@ import { authOptions } from '../../auth/[...nextauth]'
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.json({ error: true, message: 'User undefined.' })
+    return res.json({ error: true, message: 'User undefined.' })
   }
   const upsertEmoji = await prisma.emojiType.upsert({
     where: {
@@ -44,6 +44,5 @@ export default async (req, res) => {
       }
     }
   })
-  console.log(upsertEmoji)
   res.json(upsertEmoji)
 }

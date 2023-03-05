@@ -10,7 +10,6 @@ const { Video, Data } = new Mux(
 )
 
 export default async (req, res) => {
-  console.log(authOptions)
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
     res.redirect(`/?errorTryAgain`)
@@ -29,11 +28,9 @@ export default async (req, res) => {
           input: attachment,
           playback_policy: ['public']
         })
-        console.log(asset)
         let playbackID = await Video.Assets.createPlaybackId(asset.id, {
           policy: 'public'
         })
-        console.log(playbackID)
         muxAssetIDs.push(asset.id)
         muxPlaybackIDs.push(playbackID.id)
       }
@@ -63,6 +60,5 @@ export default async (req, res) => {
       Accounts: true
     }
   })
-  console.log(update)
   res.redirect(`/?successfullyPosted`)
 }

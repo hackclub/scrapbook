@@ -7,7 +7,6 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
   const [images, setImages] = useState([])
   async function uploadFilesToS3(files) {
     let uploadedImages = []
-    console.log(files)
     await Promise.all(
       Array.from(files).map(async file => {
         let uploadedImage
@@ -27,7 +26,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
         uploadedImages.push(uploadedImage.Location)
         return uploadedImage.Location
       })
-    ).then(r => console.log(r))
+    )
     setUploading(false)
     setImages(uploadedImages)
   }

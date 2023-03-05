@@ -3,10 +3,9 @@ import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 
 export default async (req, res) => {
-  console.log(authOptions)
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.redirect(`/?errorTryAgain`)
+    return res.redirect(`/?errorTryAgain`)
   }
   await prisma.accounts.update({
     where: {

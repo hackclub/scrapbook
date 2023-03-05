@@ -189,52 +189,6 @@ const Header = ({ name, url, char }) => (
         </p>
       </div>
     )}
-    {name === 'gamelab' && (
-      <>
-        <h2 style={{ textAlign: 'center', fontSize: '3em' }}>
-          Game&nbsp;Lab Arcade
-        </h2>
-        <h3 style={{ textAlign: 'center' }}>
-          Welcome to the arcade. What would you like to play?
-        </h3>
-        <p className="header-text">
-          This page contains all the projects Hack Clubbers have built using{' '}
-          <a href="https://github.com/hackclub/gamelab" target="_blank">
-            gamelab
-          </a>
-          , an open-source game engine for beginners.
-          <br />
-          <br />
-          You can get your own projects on this page by posting a Game&nbsp;Lab
-          share link in the #scrapbook channel of the Hack&nbsp;Club&nbsp;Slack.
-          <br />
-          <br />
-          Click on a cartridge to try the game!
-          <style>{`
-        .nav {
-          color: #fff;
-          background: #f46b45;
-          background: linear-gradient(to right, #eea849, #f46b45);
-        }
-        .nav-link {
-          color: #fff;
-        }
-
-        .post-text {
-          display: none;
-        }
-        .post {
-          background: var(--lighter);
-        }
-        @media (prefers-color-scheme: dark) {
-          .post {
-            background: var(--dark);
-          }
-        }
-      `}</style>
-        </p>
-      </>
-    )}
     <style jsx>{`
       header {
         text-align: center;
@@ -333,7 +287,6 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
       <Feed
         initialData={posts}
         src={`/api/r/${emoji.name}`}
-        cartridgeOnly={emoji.name === 'gamelab'}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
         <link

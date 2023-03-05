@@ -12,7 +12,6 @@ export default async (req, res) => {
     res.redirect(`/?errorTryAgain`)
   }
   let id = req.query.id
-  console.log(req.query.website)
   delete req.query.id
   let club = await prisma.club.update({
     where: {
