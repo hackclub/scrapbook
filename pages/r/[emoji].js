@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import { useRouter } from 'next/router'
 import { EmojiImg } from '../../components/emoji'
+import { Epoch, EpochBA, EpochTX, EpochVT } from '../../components/epoch'
+import { SummerOfMaking } from '../../components/summer-of-making'
 import Feed from '../../components/feed'
 import Message from '../../components/message'
 import Reaction from '../../components/reaction'
@@ -48,147 +50,11 @@ const Header = ({ name, url, char }) => (
         </p>
       </header>
     )}
-    {name === 'summer-of-making' && (
-      <p className="post-text">
-        This page contains everything Hack Clubbers got up to over the{' '}
-        <a href="https://summer.hackclub.com/">
-          2020&nbsp;Summer&nbsp;of&nbsp;Making
-        </a>
-        . Scrapbook was originally built for the summer and whilst it’s now a
-        permanent feature of the community, we’ve kept this page up as an
-        archive.
-        <style>{`
-        .nav {
-          color: #fff;
-          background: #f46b45;
-          background: linear-gradient(to right, #eea849, #f46b45);
-        }
-        .nav-link {
-          color: #fff;
-        }
-      `}</style>
-      </p>
-    )}
-    {name === 'epoch' && (
-      <div className="epoch-banner">
-        <p className="post-text">
-          <img
-            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/3epoch-header.png"
-            width="400px"
-          />
-          <style>{`
-          .epoch-banner {
-            margin-bottom: 16px;
-            padding: 16px;
-            padding-top: 24px;
-            background-size: cover;
-            background-position: center;
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 2.96%, rgba(0, 0, 0,0.5) 100%), url("https://cloud-jk5wc8hg0-hack-club-bot.vercel.app/0aditya-prakash-v0gyal0lgie-unsplash.jpg");
-          }
-          .nav {
-            color: #fff;
-            background: #FF4794;
-          }
-          .nav-link {
-            color: #fff;
-          }
-          .post-text {
-            margin-top: 0px; 
-          }
-        `}</style>
-        </p>
-      </div>
-    )}
-    {name === 'epoch-ba' && (
-      <div className="epoch-banner">
-        <p className="post-text">
-          <img
-            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/2epoch-ba-header.png"
-            width="400px"
-          />
-          <style>{`
-          .epoch-banner {
-            margin-bottom: 16px;
-            padding: 16px;
-            padding-top: 24px;
-            background-size: cover;
-            background-position: center;
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 2.96%, rgba(0, 0, 0,0.7) 100%), url("https://cloud-4q664pvib-hack-club-bot.vercel.app/0tyler-casey-e9a8-hhpezo-unsplash.jpg");
-          }
-          .nav {
-            color: #fff;
-            background: #FF4794;
-          }
-          .nav-link {
-            color: #fff;
-          }
-          .post-text {
-            margin-top: 0px; 
-          }
-        `}</style>
-        </p>
-      </div>
-    )}
-    {name === 'epoch-vt' && (
-      <div className="epoch-banner">
-        <p className="post-text">
-          <img
-            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/1epoch-vt-header.png"
-            width="400px"
-          />
-          <style>{`
-          .epoch-banner {
-            margin-bottom: 16px;
-            padding: 16px;
-            padding-top: 24px;
-            background-size: cover;
-            background-position: center;
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 2.96%, rgba(0, 0, 0,0.7) 100%), url("https://cloud-nmiyxhmmn-hack-club-bot.vercel.app/0kevin-davison-iy_p_o1xfii-unsplash.jpg");
-          }
-          .nav {
-            color: #fff;
-            background: #FF4794;
-          }
-          .nav-link {
-            color: #fff;
-          }
-          .post-text {
-            margin-top: 0px; 
-          }
-        `}</style>
-        </p>
-      </div>
-    )}
-    {name === 'epoch-tx' && (
-      <div className="epoch-banner">
-        <p className="post-text">
-          <img
-            src="https://cloud-itm512hmq-hack-club-bot.vercel.app/0epoch-tx-header.png"
-            width="400px"
-          />
-          <style>{`
-          .epoch-banner {
-            margin-bottom: 16px;
-            padding: 16px;
-            padding-top: 24px;
-            background-size: cover;
-            background-position: center;
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 2.96%, rgba(0, 0, 0,0.7) 100%), url("https://cloud-cdrga84h7-hack-club-bot.vercel.app/0cosmic-timetraveler-c7jn_0ewvwq-unsplash.jpg");
-          }
-          .nav {
-            color: #fff;
-            background: #FF4794;
-          }
-          .nav-link {
-            color: #fff;
-          }
-          .post-text {
-            margin-top: 0px; 
-          }
-        `}</style>
-        </p>
-      </div>
-    )}
+    {name === 'summer-of-making' && <SummerOfMaking />}
+    {name === 'epoch' && <Epoch />}
+    {name === 'epoch-ba' && <EpochBA />}
+    {name === 'epoch-tx' && <EpochTX />}
+    {name === 'epoch-vt' && <EpochVT />}
     <style jsx>{`
       header {
         text-align: center;
