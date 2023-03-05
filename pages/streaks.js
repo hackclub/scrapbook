@@ -50,7 +50,7 @@ const StreaksPage = ({ users }) => {
           font-size: 20px !important;
           line-height: 1.625;
         }
-      
+
         h1 {
           color: var(--colors-orange);
           font-family: var(--fonts-display);
@@ -60,7 +60,7 @@ const StreaksPage = ({ users }) => {
           line-height: 1;
           padding: 16px;
         }
-      
+
         .item {
           display: flex;
           flex-direction: row;
@@ -69,7 +69,7 @@ const StreaksPage = ({ users }) => {
           margin-bottom: 0.5em;
           width: 350px;
         }
-      
+
         @media (max-width: 800px) {
           .container {
             grid-template-columns: 1fr;

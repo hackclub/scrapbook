@@ -109,7 +109,7 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
           .username:hover {
             text-decoration: line-through;
           }
-          
+
           .username {
             text-decoration: none;
             color: white;
