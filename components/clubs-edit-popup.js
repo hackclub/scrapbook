@@ -153,26 +153,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
           <button className="lg cta-blue">Save</button>
         </form>
       </div>
-      <style jsx>
-        {`
-          .overlay {
-            padding: 16px 32px;
-            color: var(--white);
-            position: fixed;
-            overflow-y: scroll;
-            min-height: 100vh;
-            height: 100vh;
-            top: 0;
-            width: 100vw;
-            max-width: 400px;
-            right: 0;
-            z-index: 999;
-            background: var(--colors-background);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.0625),
-              0 8px 12px rgba(0, 0, 0, 0.125);
-          }
-        `}
-      </style>
       <div
         style={{
           display: closed ? 'none' : 'block',
