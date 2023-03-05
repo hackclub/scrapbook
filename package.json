@@ -21,6 +21,7 @@
     "@prisma/client": "4.5.0",
     "aws-sdk": "^2.1309.0",
     "emoji-picker-react": "^4.4.7",
+    "eslint": "^8.35.0",
     "github-slugger": "^2.0.0",
     "hls.js": "^1.2.4",
     "lodash": "^4.17.21",

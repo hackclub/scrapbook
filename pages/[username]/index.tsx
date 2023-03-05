@@ -28,7 +28,7 @@ const heatmapEnd = dateString(today)
 const heatmapStart = dateString(new Date(today.setDate(today.getDate() - 62)))
 
 const Profile = ({
-  profile = {},
+  profile,
   heatmap = [],
   webring = [],
   posts = [],
@@ -86,7 +86,7 @@ const Profile = ({
                   : 'zero'
               }`}
             >
-              <Icon size={32} glyph="admin-badge" title="Streak icon" />
+              <Icon size={32} glyph="admin-badge" />
               <span className="header-streak-count">{`${profile.streakCount}-day streak`}</span>
             </span>
             <div className="header-links">
@@ -143,11 +143,10 @@ const Profile = ({
                 user={u}
                 className="header-webring-mention"
                 title={u.mutual ? 'in each others’ webrings' : null}
+                mutual={u.mutual}
                 size={96}
                 key={u.id}
-              >
-                {u.mutual && <Icon glyph="everything" size={24} />}
-              </StaticMention>
+              />
             ))}
           </div>
         </aside>
