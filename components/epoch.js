@@ -58,7 +58,7 @@ export const EpochBA = () => (
 	`}</style>
 	</p>
   </div>
-)}
+)
 
 export const EpochVT = () => (
   <div className="epoch-banner">
