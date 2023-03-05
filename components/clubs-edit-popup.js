@@ -6,9 +6,6 @@ import Link from 'next/link'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
-  const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
-    refreshInterval: 5000
-  })
   return (
     <>
       <div

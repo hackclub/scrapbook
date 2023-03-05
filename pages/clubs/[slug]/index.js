@@ -19,6 +19,7 @@ import { clamp } from 'lodash'
 import normalizeUrl from 'normalize-url'
 import { useSession } from 'next-auth/react'
 import { ClubsEditPopup } from '../../../components/clubs-edit-popup'
+import { ClubsMemberPopup } from '../../../components/clubs-member-popup'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -27,11 +28,18 @@ const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 const Club = ({ club = {}, posts = [], children, session }) => {
   const [clubsEditOpen, setClubsEditOpen] = useState(false)
+  const [clubsMemberOpen, setClubsMemberOpen] = useState(false)
   return (
     <>
       <ClubsEditPopup
         closed={!clubsEditOpen}
         setClubsOpen={setClubsEditOpen}
+        session={session}
+        club={club}
+      />
+      <ClubsMemberPopup
+        closed={!clubsMemberOpen}
+        setClubsOpen={setClubsMemberOpen}
         session={session}
         club={club}
       />
@@ -108,7 +116,6 @@ const Club = ({ club = {}, posts = [], children, session }) => {
       </main>
       <main className="container">
         <article className="posts club-posts">
-        
           {posts.map(post => (
             <Post key={post.id} user={post.Accounts} {...post} />
           ))}
@@ -178,8 +185,10 @@ const Club = ({ club = {}, posts = [], children, session }) => {
               alignItems: 'center',
               justifyContent: 'center',
               display: 'flex',
-              background: 'var(--colors-red)'
+              background: 'var(--colors-red)',
+              cursor: 'pointer'
             }}
+            onClick={() => setClubsMemberOpen(true)}
           >
             <Icon glyph="friend" />
           </div>
