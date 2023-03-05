@@ -1,0 +1,80 @@
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+								  supported by Chrome, Edge, Opera and Firefox */
+}
+
+button:not(.epr-btn) {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radii-circle);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  letter-spacing: var(--letter-spacing-headline);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.125s ease-in-out, box-shadow 0.125s ease-in-out;
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align: center;
+  line-height: inherit;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: var(--theme-ui-colors-white, #ffffff);
+  background-color: var(--theme-ui-colors-primary, #ec3750);
+  border: 0;
+  font-size: var(--font-2);
+}
+
+button:not(.epr-btn):focus,
+button:not(.epr-btn):hover {
+  box-shadow: var(--shadow-elevated);
+  transform: scale(1.0625);
+}
+
+button.lg {
+  font-size: var(--font-3) !important;
+  line-height: var(--line-height-title);
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  padding-top: var(--spacing-3);
+  padding-bottom: var(--spacing-3);
+}
+
+button.outline {
+  background: none;
+  color: var(--primary);
+  border: 2px solid currentcolor;
+}
+
+button.cta {
+  font-size: var(--font-2);
+  background-image: radial-gradient(
+	ellipse farthest-corner at top left,
+	var(--colors-yellow),
+	var(--colors-orange)
+  );
+}
+
+button.cta-blue {
+  font-size: var(--font-2);
+  background-image: radial-gradient(
+	ellipse farthest-corner at top left,
+	var(--colors-blue),
+	var(--colors-cyan)
+  );
+}

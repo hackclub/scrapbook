@@ -1,0 +1,40 @@
+:root {
+  --colors-one: #9be9a8;
+  --colors-two: #40c463;
+  --colors-three: #30a14e;
+  --colors-four: #216e39;
+}
+
+.header-chart svg {
+  max-width: 100%;
+  max-height: 266px;
+  overflow-y: hidden;
+}
+
+.react-calendar-heatmap {
+  max-width: 320px;
+}
+.react-calendar-heatmap-month-label,
+.react-calendar-heatmap-weekday-label {
+  font-size: 8px;
+}
+
+.react-calendar-heatmap text {
+  fill: var(--colors-muted);
+  font-size: 6px;
+}
+.react-calendar-heatmap .color-empty {
+  fill: var(--colors-sheet);
+}
+.react-calendar-heatmap .color-1 {
+  fill: var(--colors-one);
+}
+.react-calendar-heatmap .color-2 {
+  fill: var(--colors-two);
+}
+.react-calendar-heatmap .color-3 {
+  fill: var(--colors-three);
+}
+.react-calendar-heatmap .color-4 {
+  fill: var(--colors-four);
+}

@@ -1,0 +1,23 @@
+.mention {
+  display: inline-flex;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.mention span:first-child {
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 4px;
+}
+
+.post-text-mention span:first-child {
+  width: 24px;
+  height: 24px;
+  align-self: flex-end;
+  margin-bottom: 2px !important;
+  margin-right: 2px !important;
+}
+
+.mention-avatar {
+  margin-right: 4px;
+}
