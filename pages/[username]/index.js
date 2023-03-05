@@ -246,7 +246,6 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
 
 const UserPage = props => {
   const router = useRouter()
-
   if (router.isFallback) {
     return <Message text="Loading…" />
   } else if (props.profile?.username) {
@@ -280,11 +279,9 @@ export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
-
   const profile = await getProfile(params.username)
   if (!profile || !profile?.username)
     return console.error('No profile') || { props: {} }
-
   try {
     const posts = await getPosts(profile)
     const { groupBy } = require('lodash')
@@ -303,7 +300,6 @@ export const getStaticProps = async ({ params }) => {
           } catch {
             u.mutual = false
           }
-
           return u
         })
       )
