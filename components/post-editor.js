@@ -158,46 +158,6 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.0625),
               0 8px 12px rgba(0, 0, 0, 0.125);
           }
-
-          input,
-          textarea,
-          select {
-            background: var(--dark);
-            color: var(--text);
-            font-family: inherit;
-            border-radius: var(--radii-default);
-            border: 0;
-            font-size: inherit;
-            padding: var(--spacing-2);
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            width: 100%;
-          }
-
-          input::-webkit-input-placeholder,
-          input::-moz-placeholder,
-          input:-ms-input-placeholder,
-          textarea::-webkit-input-placeholder,
-          textarea::-moz-placeholder,
-          textarea:-ms-input-placeholder,
-          select::-webkit-input-placeholder,
-          select::-moz-placeholder,
-          select:-ms-input-placeholder {
-            color: var(--muted);
-          }
-
-          input[type='search']::-webkit-search-decoration,
-          textarea[type='search']::-webkit-search-decoration,
-          select[type='search']::-webkit-search-decoration {
-            display: none;
-          }
-
-          input[type='checkbox'] {
-            -webkit-appearance: checkbox;
-            -moz-appearance: checkbox;
-            appearance: checkbox;
-          }
         `}
       </style>
       <div
