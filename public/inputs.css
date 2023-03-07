@@ -90,11 +90,16 @@ button.cta-blue {
 
 button.cta-green {
   font-size: var(--font-2);
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.15) 2.96%, rgba(0, 0, 0,0.1) 100%), radial-gradient(
-    ellipse farthest-corner at top left,
-    var(--colors-green),
-    var(--colors-yellow)
-  );
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15) 2.96%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at top left,
+      var(--colors-green),
+      var(--colors-yellow)
+    );
 }
 
 input,

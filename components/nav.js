@@ -35,7 +35,7 @@ const badgeStyles = `
   background-color: var(--colors-purple);
 }`
 
-const SignIn = ({setLoginOpen}) => (
+const SignIn = ({ setLoginOpen }) => (
   <span
     className="badge"
     onClick={() => {
@@ -91,20 +91,17 @@ const Nav = () => {
   // This is a hack for using the right link on custom domains
   const [ext, setExt] = useState(false)
   useEffect(() => {
-    if(query.checkYourEmail !== undefined){
-      toast("Where now? Head to your email for a unique URL to login.")
-    }
-    else if (query.successfullySaved !== undefined){
-      toast("Profile saved successfully; nice update!")
-    }
-    else if (query.successfullyPosted !== undefined){
+    if (query.checkYourEmail !== undefined) {
+      toast('Where now? Head to your email for a unique URL to login.')
+    } else if (query.successfullySaved !== undefined) {
+      toast('Profile saved successfully; nice update!')
+    } else if (query.successfullyPosted !== undefined) {
       toast("Post published successfully; it'll show up here soon!")
+    } else if (query.errorTryAgain !== undefined) {
+      toast('Oh-no! Something errored on our end, please try again.')
     }
-    else if (query.errorTryAgain !== undefined){
-      toast("Oh-no! Something errored on our end, please try again.")
-    }
-  }, query);
-  
+  }, query)
+
   return (
     <>
       <nav className="nav">
@@ -156,7 +153,6 @@ const Nav = () => {
               setClubsOpen={setClubsOpen}
               session={session}
             />
-            
           </>
         ) : (
           <>

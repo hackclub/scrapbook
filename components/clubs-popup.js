@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
 import S3 from '../lib/s3'
+import useForm from '../lib/use-form'
+
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
@@ -13,13 +15,26 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
   let router = useRouter()
   const [starting, setStarting] = useState(data?.clubs.length == 0)
   return (
-    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
+    <div
+      className="overlay-wrapper"
+      style={{ display: closed ? 'none' : 'flex' }}
+    >
       <div
         className="overlay"
-        style={{ display: closed ? 'none' : 'flex', overflowY: 'scroll', flexDirection: 'column', gap: '16px' }}
+        style={{
+          display: closed ? 'none' : 'flex',
+          overflowY: 'scroll',
+          flexDirection: 'column',
+          gap: '16px'
+        }}
       >
-        <h1 style={{ fontSize: '2.3em', marginBottom: starting ? '-16px' : '-12px' }}>
-          {starting ? "Create a Club" : "Your Clubs"}
+        <h1
+          style={{
+            fontSize: '2.3em',
+            marginBottom: starting ? '-16px' : '-12px'
+          }}
+        >
+          {starting ? 'Create a Club' : 'Your Clubs'}
         </h1>
         {(starting ? [] : data?.clubs)?.map(club => (
           <div
@@ -39,14 +54,14 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               style={{
                 height: '72px',
                 width: '72px',
-                borderRadius: '8px',
+                borderRadius: '8px'
               }}
             />
             <div>
               <h3>{club.name}</h3>
               <div>
-                {club.members.length} Member{club.members.length != 1 && 's'}{' '}
-                • {club.updates.length} Post{club.updates.length != 1 && 's'}
+                {club.members.length} Member{club.members.length != 1 && 's'} •{' '}
+                {club.updates.length} Post{club.updates.length != 1 && 's'}
               </div>
             </div>
           </div>
@@ -65,11 +80,11 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
             style={{
               cursor: 'pointer',
               fontSize: '1.2em',
-              display: starting ? 'none': 'flex',
+              display: starting ? 'none' : 'flex',
               alignItems: 'center',
               paddingTop: '2px'
             }}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault()
               setStarting(true)
             }}
@@ -126,10 +141,13 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               <label
                 style={{
                   marginBottom: '8px',
-                  fontSize: '1.1em',
+                  fontSize: '1.1em'
                 }}
               >
-                Club Website <small style={{paddingTop: '2.4px', opacity: 0.6}}>Optional</small>
+                Club Website{' '}
+                <small style={{ paddingTop: '2.4px', opacity: 0.6 }}>
+                  Optional
+                </small>
               </label>
               <input
                 placeholder="happy.hackclub.com"
@@ -139,16 +157,18 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               />
             </div>
             <button className="lg cta-blue">Create Club</button>
-            {starting  && <button
-              className="lg cta-red"
-              onClick={((e) => {
-                e.preventDefault();
-                setStarting(false);
-                setClubsOpen(false);
-              })}
-            >
-              Cancel
-            </button>}
+            {starting && (
+              <button
+                className="lg cta-red"
+                onClick={e => {
+                  e.preventDefault()
+                  setStarting(false)
+                  setClubsOpen(false)
+                }}
+              >
+                Cancel
+              </button>
+            )}
           </form>
         </details>
       </div>
@@ -170,13 +190,16 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
           }
         `}
       </style>
-      {!closed && <style>{`
+      {!closed && (
+        <style>
+          {`
         body {
           height: 100%;
           overflow-y: hidden; 
         }  
       `}
-      </style>}
+        </style>
+      )}
       <div
         style={{
           display: closed ? 'none' : 'block',

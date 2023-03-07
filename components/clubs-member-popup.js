@@ -7,7 +7,10 @@ const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
   return (
-    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
+    <div
+      className="overlay-wrapper"
+      style={{ display: closed ? 'none' : 'flex' }}
+    >
       <div
         className="overlay"
         style={{ display: closed ? 'none' : 'block', overflowY: 'scroll' }}
@@ -66,7 +69,13 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
                 style={{ background: 'var(--colors-darker)' }}
               />
             </div>
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '10px'
+              }}
+            >
               <button className="lg cta-blue">Add Member</button>
               <button className="lg cta-green">Add Admin</button>
             </div>

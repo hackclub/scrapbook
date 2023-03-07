@@ -1,5 +1,5 @@
 import React from 'react'
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'
 import { SessionProvider } from 'next-auth/react'
 import Nav from '../components/nav'
 import NProgress from '../components/nprogress'

@@ -20,60 +20,70 @@ export const LoginPopup = ({ closed, setLoginOpen, session }) => {
     refreshInterval: 5000
   })
   const { status, formProps, useField, setData } = useForm()
-  
+
   let router = useRouter()
   return (
-    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
+    <div
+      className="overlay-wrapper"
+      style={{ display: closed ? 'none' : 'flex' }}
+    >
       <div
         className="overlay"
-        style={{ display: closed ? 'none' : 'flex', overflowY: 'scroll', flexDirection: 'column', gap: '16px' }}
+        style={{
+          display: closed ? 'none' : 'flex',
+          overflowY: 'scroll',
+          flexDirection: 'column',
+          gap: '16px'
+        }}
       >
-        <h1 style={{fontSize: '2.3em'}}>Sign-in to Scrapbook</h1>
-
-            <div>
-              <input
-                placeholder="orpheus@hackclub.com"
-                type="email"
-                name="email"
-                style={{fontSize: '1.1em', textAlign: 'left'}}
-                {...useField('email')}
-              />
-            </div>
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
-              <button 
-                className="lg cta-blue"
-                onClick={() => {
-                  let email = useField('email').value
-                  if (validateEmail(email)) {
-                    toast.promise(
-                      signIn('email', { email, redirect: false }),
-                       {
-                         loading: `Sending login email...`,
-                         success: `Head to your email to login!`,
-                         error: <>Error! Could not send login email.</>,
-                       }
-                     );
-                    setLoginOpen(false)
-                    setData({})
-                  } else {
-                    toast(`Please enter a valid email.`, {
-                      icon: '🚨 ',
-                    });
-                  }
-                }}
-              >
-                Email My Login Code
-              </button>
-              <button
-                className="lg cta-red"
-                onClick={((e) => {
-                  e.preventDefault();
-                  setLoginOpen(false);
-                })}
-              >
-                Cancel
-              </button>
-            </div>
+        <h1 style={{ fontSize: '2.3em' }}>Sign-in to Scrapbook</h1>
+        <div>
+          <input
+            placeholder="orpheus@hackclub.com"
+            type="email"
+            name="email"
+            style={{ fontSize: '1.1em', textAlign: 'left' }}
+            {...useField('email')}
+          />
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '10px'
+          }}
+        >
+          <button
+            className="lg cta-blue"
+            onClick={() => {
+              let email = useField('email').value
+              if (validateEmail(email)) {
+                toast.promise(signIn('email', { email, redirect: false }), {
+                  loading: `Sending login email...`,
+                  success: `Head to your email to login!`,
+                  error: <>Error! Could not send login email.</>
+                })
+                setLoginOpen(false)
+                setData({})
+              } else {
+                toast(`Please enter a valid email.`, {
+                  icon: '🚨 '
+                })
+              }
+            }}
+          >
+            Email My Login Code
+          </button>
+          <button
+            className="lg cta-red"
+            onClick={e => {
+              e.preventDefault()
+              setLoginOpen(false)
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
       <style jsx>
         {`
@@ -93,13 +103,16 @@ export const LoginPopup = ({ closed, setLoginOpen, session }) => {
           }
         `}
       </style>
-      {!closed && <style>{`
+      {!closed && (
+        <style>
+          {`
         body {
           height: 100%;
           overflow-y: hidden; 
         }  
       `}
-      </style>}
+        </style>
+      )}
       <div
         style={{
           display: closed ? 'none' : 'block',
