@@ -7,39 +7,28 @@ const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
   return (
-    <>
+    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
       <div
         className="overlay"
         style={{ display: closed ? 'none' : 'block', overflowY: 'scroll' }}
       >
-        <h1 style={{ display: 'flex' }}>
-          <span style={{ flexGrow: 1, paddingTop: '36px' }}>
-            Edit Club Page
-          </span>
-          <span
-            class="noselect"
-            style={{
-              display: 'inline-block',
-              transform:
-                'rotate(45deg) scale(1.4) translateX(-11px) translateY(11px)',
-              cursor: 'pointer',
-              color: 'var(--muted)'
-            }}
-            onClick={() => setClubsOpen(false)}
-          >
-            +
-          </span>
+        <h1 style={{ fontSize: '2.3em'  }}>
+          Edit Club Page
         </h1>
-
-        <form
-          action={`/api/web/clubs/${club.id}/edit`}
+        <div
           style={{
             display: 'flex',
             gap: '16px',
+            flexDirection: 'column'
+          }}
+        >
+        <form
+          action={`/api/web/clubs/${club.id}/edit`}
+          style={{
+            display: 'grid',
+            gap: '16px',
             marginTop: '8px',
-            flexDirection: 'column',
-            width: '100%',
-            position: 'relative'
+            gridTemplateColumns: '1fr 1fr'
           }}
         >
           <div style={{ paddingRight: '16px' }}>
@@ -50,14 +39,14 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 fontSize: '1.1em'
               }}
             >
-              Name*
+              Name
             </label>
             <input
               placeholder="Happy Hack Club"
               required
               name="name"
               defaultValue={club.name}
-              style={{ background: 'var(--darker)' }}
+              
             />
           </div>
           <div style={{ paddingRight: '16px' }}>
@@ -68,13 +57,12 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 fontSize: '1.1em'
               }}
             >
-              Location*
+              Location
             </label>
             <input
               placeholder="Shelburne, Vermont, USA"
               required
-              name="location"
-              style={{ background: 'var(--darker)' }}
+              name="location"              
               defaultValue={club.location}
             />
           </div>
@@ -86,13 +74,12 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 fontSize: '1.1em'
               }}
             >
-              Banner*
+              Banner
             </label>
             <input
               placeholder="https://hackclub.com/banner.png"
               required
-              name="banner"
-              style={{ background: 'var(--darker)' }}
+              name="banner"              
               defaultValue={club.banner}
             />
           </div>
@@ -104,13 +91,13 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 fontSize: '1.1em'
               }}
             >
-              Logo*
+              Logo
             </label>
             <input
               placeholder="https://hackclub.com/logo.png"
               required
               name="logo"
-              style={{ background: 'var(--darker)' }}
+              
               defaultValue={club.logo}
             />
           </div>
@@ -128,7 +115,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               placeholder="happy.hackclub.com"
               type="url"
               name="website"
-              style={{ background: 'var(--darker)' }}
               defaultValue={club.website}
             />
           </div>
@@ -140,18 +126,27 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 fontSize: '1.1em'
               }}
             >
-              Github
+              GitHub
             </label>
             <input
               placeholder="github.com/hackclub"
               type="url"
               name="github"
-              style={{ background: 'var(--darker)' }}
               defaultValue={club.github}
             />
           </div>
-          <button className="lg cta-blue">Save</button>
         </form>
+        <button className="lg cta-blue">Save</button>
+        <button
+          className="lg cta-red"
+          onClick={((e) => {
+            e.preventDefault();
+            setClubsOpen(false);
+          })}
+        >
+          Cancel
+        </button>
+        </div>
       </div>
       <div
         style={{
@@ -166,6 +161,13 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
         }}
         onClick={() => setClubsOpen(false)}
       />
-    </>
+      {!closed && <style>{`
+        body {
+          height: 100%;
+          overflow-y: hidden; 
+        }  
+      `}
+      </style>}
+    </div>
   )
 }

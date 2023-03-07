@@ -7,6 +7,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
+import { clamp } from 'lodash'
 import Banner from '../../components/banner'
 import Message from '../../components/message'
 import { StaticMention } from '../../components/mention'
@@ -14,14 +15,13 @@ import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
-// Calculate heatmap date range
+// Calculate heat map date range
 const today = new Date()
 const dateString = dt => dt.toISOString().substring(0, 10)
 const heatmapEnd = dateString(today)

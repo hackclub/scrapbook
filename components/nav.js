@@ -8,7 +8,9 @@ import Profile from './profile'
 import { emailToPfp } from '../lib/email'
 import { PostEditor } from './post-editor'
 import { ClubsPopup } from './clubs-popup'
+import { LoginPopup } from './login-popup'
 import { ClubsIcon } from './club-icon'
+import toast from 'react-hot-toast'
 
 const Join = () => (
   <a href="https://hackclub.com/slack/" className="badge">
@@ -16,12 +18,6 @@ const Join = () => (
     <style>{badgeStyles}</style>
   </a>
 )
-
-function validateEmail(email) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(String(email).toLowerCase())
-}
 
 const badgeStyles = `
 .badge {
@@ -39,16 +35,11 @@ const badgeStyles = `
   background-color: var(--colors-purple);
 }`
 
-const SignIn = () => (
+const SignIn = ({setLoginOpen}) => (
   <span
     className="badge"
     onClick={() => {
-      let email = prompt("👋 Wahoo! Welcome to Scrapbook, what's your email?")
-      if (validateEmail(email)) {
-        signIn('email', { email })
-      } else {
-        alert("🚨 Oh-no! You've entered an invalid email.")
-      }
+      setLoginOpen(true)
     }}
   >
     Sign-in
@@ -96,62 +87,26 @@ const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [postOpen, setPostOpen] = useState(false)
   const [clubsOpen, setClubsOpen] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
   // This is a hack for using the right link on custom domains
   const [ext, setExt] = useState(false)
   useEffect(() => {
-    try {
-      const l = document.createElement('a')
-      l.href = window.location.href
-      if (!l.hostname.includes('.hackclub.')) setExt(true)
-    } catch (e) {}
-  }, [])
-
+    if(query.checkYourEmail !== undefined){
+      toast("Where now? Head to your email for a unique URL to login.")
+    }
+    else if (query.successfullySaved !== undefined){
+      toast("Profile saved successfully; nice update!")
+    }
+    else if (query.successfullyPosted !== undefined){
+      toast("Post published successfully; it'll show up here soon!")
+    }
+    else if (query.errorTryAgain !== undefined){
+      toast("Oh-no! Something errored on our end, please try again.")
+    }
+  }, query);
+  
   return (
     <>
-      {query.checkYourEmail !== undefined && (
-        <div
-          style={{
-            background: 'var(--purple)',
-            textAlign: 'center',
-            padding: '8px'
-          }}
-        >
-          <b>Where now? Head to your email for a unique URL to login.</b>
-        </div>
-      )}
-      {query.successfullySaved !== undefined && (
-        <div
-          style={{
-            background: 'var(--green)',
-            textAlign: 'center',
-            padding: '8px'
-          }}
-        >
-          <b>Profile saved successfully; nice update!</b>
-        </div>
-      )}
-      {query.successfullyPosted !== undefined && (
-        <div
-          style={{
-            background: 'var(--green)',
-            textAlign: 'center',
-            padding: '8px'
-          }}
-        >
-          <b>Post published successfully; it'll show up here soon!</b>
-        </div>
-      )}
-      {query.errorTryAgain !== undefined && (
-        <div
-          style={{
-            background: 'var(--red)',
-            textAlign: 'center',
-            padding: '8px'
-          }}
-        >
-          <b>Oh-no! Something errored on our end, please try again.</b>
-        </div>
-      )}
       <nav className="nav">
         <Flag />
         {!home &&
@@ -174,6 +129,7 @@ const Nav = () => {
           href="https://github.com/hackclub/scrapbook"
           className="nav-link nav-link-github"
           title="GitHub"
+          target="_blank"
         >
           <Icon glyph="github" size={32} />
         </a>
@@ -200,9 +156,17 @@ const Nav = () => {
               setClubsOpen={setClubsOpen}
               session={session}
             />
+            
           </>
         ) : (
-          <SignIn />
+          <>
+            <SignIn setLoginOpen={setLoginOpen} />
+            <LoginPopup
+              closed={!loginOpen}
+              setLoginOpen={setLoginOpen}
+              session={session}
+            />
+          </>
         )}
       </nav>
     </>

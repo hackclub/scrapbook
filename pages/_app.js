@@ -1,4 +1,8 @@
 import React from 'react'
+import { Toaster } from 'react-hot-toast';
+import { SessionProvider } from 'next-auth/react'
+import Nav from '../components/nav'
+import NProgress from '../components/nprogress'
 import Analytics from '../components/analytics'
 import '../public/app.css'
 import '../public/clubs.css'
@@ -11,12 +15,10 @@ import '../public/nav.css'
 import '../public/overlay.css'
 import '../public/posts.css'
 import '../public/profiles.css'
-import Nav from '../components/nav'
-import NProgress from '../components/nprogress'
-import { SessionProvider } from 'next-auth/react'
 
 const App = ({ Component, pageProps }) => (
   <SessionProvider>
+    <Toaster />
     <Nav />
     <NProgress color={'#ec3750'} />
     <Component {...pageProps} />

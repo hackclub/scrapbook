@@ -1,85 +1,81 @@
 import { v4 as uuidv4 } from 'uuid'
-import S3 from '../lib/s3'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
+import S3 from '../lib/s3'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
   const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
     refreshInterval: 5000
   })
+  let router = useRouter()
+  const [starting, setStarting] = useState(data?.clubs.length == 0)
   return (
-    <>
+    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
       <div
         className="overlay"
-        style={{ display: closed ? 'none' : 'block', overflowY: 'scroll' }}
+        style={{ display: closed ? 'none' : 'flex', overflowY: 'scroll', flexDirection: 'column', gap: '16px' }}
       >
-        <h1 style={{ display: 'flex' }}>
-          <span style={{ flexGrow: 1, paddingTop: '36px' }}>Your Clubs</span>
-          <span
-            class="noselect"
-            style={{
-              display: 'inline-block',
-              transform:
-                'rotate(45deg) scale(1.4) translateX(-11px) translateY(11px)',
-              cursor: 'pointer',
-              color: 'var(--muted)'
-            }}
-            onClick={() => setClubsOpen(false)}
-          >
-            +
-          </span>
+        <h1 style={{ fontSize: '2.3em', marginBottom: starting ? '-16px' : '-12px' }}>
+          {starting ? "Create a Club" : "Your Clubs"}
         </h1>
-        {data?.clubs.map(club => (
-          <Link href={`/clubs/${club.slug}`}>
-            <div
+        {(starting ? [] : data?.clubs)?.map(club => (
+          <div
+            style={{
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => {
+              setClubsOpen(false)
+              router.push(`/clubs/${club.slug}`)
+            }}
+          >
+            <img
+              src={club.logo}
               style={{
-                display: 'flex',
-                gap: '12px',
-                alignItems: 'center',
-                cursor: 'pointer'
+                height: '72px',
+                width: '72px',
+                borderRadius: '8px',
               }}
-            >
-              <img
-                src={club.logo}
-                style={{
-                  height: '72px',
-                  width: '72px',
-                  borderRadius: '8px',
-                  marginTop: '16px'
-                }}
-              />
+            />
+            <div>
+              <h3>{club.name}</h3>
               <div>
-                <h3>{club.name}</h3>
-                <div>
-                  {club.members.length} Member{club.members.length != 1 && 's'}{' '}
-                  • {club.updates.length} Post{club.updates.length != 1 && 's'}
-                </div>
+                {club.members.length} Member{club.members.length != 1 && 's'}{' '}
+                • {club.updates.length} Post{club.updates.length != 1 && 's'}
               </div>
             </div>
-          </Link>
+          </div>
         ))}
 
         <details
           style={{
-            background: 'var(--dark)',
-            padding: '12px',
+            background: starting ? 'none' : 'var(--colors-dark)',
+            padding: starting ? '0px' : '12px',
             borderRadius: '8px',
-            marginTop: '24px'
+            marginTop: starting ? '0px' : '0px'
           }}
+          open={starting}
         >
           <summary
             style={{
               cursor: 'pointer',
               fontSize: '1.2em',
-              display: 'flex',
+              display: starting ? 'none': 'flex',
               alignItems: 'center',
               paddingTop: '2px'
             }}
+            onClick={(e) => {
+              e.preventDefault()
+              setStarting(true)
+            }}
           >
             <b style={{ flexGrow: 1 }}>Start A Club</b>
-            <b style={{ paddingRight: '8px' }}>▼</b>
+            <b style={{ paddingRight: '8px' }}>▶︎</b>
           </summary>
           <form
             action="/api/web/clubs/new"
@@ -100,13 +96,13 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                   fontSize: '1.1em'
                 }}
               >
-                Club Name*
+                Club Name
               </label>
               <input
                 placeholder="Happy Hack Club"
                 required
                 name="text"
-                style={{ background: 'var(--darker)' }}
+                style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -117,33 +113,42 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                   fontSize: '1.1em'
                 }}
               >
-                Club Location*
+                Club Location
               </label>
               <input
                 placeholder="Shelburne, Vermont, USA"
                 required
                 name="location"
-                style={{ background: 'var(--darker)' }}
+                style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
                   marginBottom: '8px',
-                  display: 'inline-block',
-                  fontSize: '1.1em'
+                  fontSize: '1.1em',
                 }}
               >
-                Club Website
+                Club Website <small style={{paddingTop: '2.4px', opacity: 0.6}}>Optional</small>
               </label>
               <input
                 placeholder="happy.hackclub.com"
                 type="url"
                 name="website"
-                style={{ background: 'var(--darker)' }}
+                style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
-            <button className="lg cta-blue">Create</button>
+            <button className="lg cta-blue">Create Club</button>
+            {starting  && <button
+              className="lg cta-red"
+              onClick={((e) => {
+                e.preventDefault();
+                setStarting(false);
+                setClubsOpen(false);
+              })}
+            >
+              Cancel
+            </button>}
           </form>
         </details>
       </div>
@@ -165,6 +170,13 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
           }
         `}
       </style>
+      {!closed && <style>{`
+        body {
+          height: 100%;
+          overflow-y: hidden; 
+        }  
+      `}
+      </style>}
       <div
         style={{
           display: closed ? 'none' : 'block',
@@ -178,6 +190,6 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
         }}
         onClick={() => setClubsOpen(false)}
       />
-    </>
+    </div>
   )
 }

@@ -31,30 +31,16 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
     setImages(uploadedImages)
   }
   return (
-    <>
+    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
       <div className="overlay" style={{ display: closed ? 'none' : 'block' }}>
-        <h1 style={{ display: 'flex' }}>
-          <span style={{ flexGrow: 1, paddingTop: '36px' }}>Make A Post</span>
-          <span
-            class="noselect"
-            style={{
-              display: 'inline-block',
-              transform:
-                'rotate(45deg) scale(1.4) translateX(-11px) translateY(11px)',
-              cursor: 'pointer',
-              color: 'var(--muted)'
-            }}
-            onClick={() => setPostOpen(false)}
-          >
-            +
-          </span>
+        <h1 style={{ fontSize: '2.3em' }}>
+          Post to Scrapbook
         </h1>
         <form
           action="/api/web/post/new"
           style={{
             display: 'flex',
             gap: '16px',
-            marginTop: '8px',
             flexDirection: 'column'
           }}
         >
@@ -66,7 +52,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                 fontSize: '1.1em'
               }}
             >
-              What did you make?
+              What did you make? Tell us all about it!
             </label>
             <textarea placeholder="" required name="text" />
           </div>
@@ -86,7 +72,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
             >
               {uploading
                 ? 'Hold tight, uploading your fine photos!'
-                : 'Upload Images & Videos of Your Creation:'}
+                : `We'd love to see some photos or videos of that!`}
             </label>
             <div class="file-upload">
               <input
@@ -102,41 +88,53 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
               />
             </div>
           </div>
+          {session.user.ClubMember.length != 0 &&
           <div>
             <label
               style={{
                 display: 'inline-block',
-                fontSize: '1.1em'
+                fontSize: '1.1em',
+                marginBottom: '8px'
               }}
             >
-              Select The Clubs You'd Like To Post To:
+              Did you make this in a club? Post it to your club's page!
             </label>
-            {session.user.ClubMember.map(club => club.club).map(club => (
-              <div
-                style={{ display: 'flex', gap: '4px', alignItems: 'center' }}
-              >
-                <input
-                  type="checkbox"
-                  id={`club-${club.id}`}
-                  name={`club-${club.id}`}
-                  style={{
-                    width: 'fit-content',
-                    marginRight: '4px'
-                  }}
-                />
-                <img src={club.logo} height="16px" />
-                <label for="scales" style={{ display: 'flex' }}>
-                  {club.name}
-                </label>
-              </div>
-            ))}
-          </div>
+            <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
+              {session.user.ClubMember.map(club => club.club).map(club => (
+                <div
+                  style={{ display: 'flex', gap: '4px', alignItems: 'center' }}
+                >
+                  <input
+                    type="checkbox"
+                    id={`club-${club.id}`}
+                    name={`club-${club.id}`}
+                    style={{
+                      width: 'fit-content',
+                      marginRight: '2px'
+                    }}
+                  />
+                  <img src={club.logo} height="14px" style={{ borderRadius: '4px' }} />
+                  <label for="scales" style={{ display: 'flex', fontSize: '1.1em' }}>
+                    {club.name}
+                  </label>
+                </div>
+              ))}
+          </div></div>}
           <button
             className="lg cta-blue"
             disabled={uploading}
             style={uploading ? { filter: 'grayscale(1)' } : {}}
           >
             {uploading ? 'Uploading files...' : 'Publish'}
+          </button>
+          <button
+            className="lg cta-red"
+            onClick={((e) => {
+              e.preventDefault();
+              setPostOpen(false);
+            })}
+          >
+            Cancel
           </button>
         </form>
       </div>
@@ -153,6 +151,13 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
         }}
         onClick={() => setPostOpen(false)}
       />
-    </>
+      {!closed && <style>{`
+        body {
+          height: 100%;
+          overflow-y: hidden; 
+        }  
+      `}
+      </style>}
+    </div>
   )
 }

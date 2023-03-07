@@ -7,7 +7,7 @@ import normalizeUrl from 'normalize-url'
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.json({ clubs: [] })
+    return res.json({ clubs: [] })
   }
   let clubs = await prisma.club.findMany({
     where: {
@@ -24,5 +24,5 @@ export default async (req, res) => {
       members: true
     }
   })
-  res.json({ clubs: clubs })
+  return res.json({ clubs: clubs })
 }

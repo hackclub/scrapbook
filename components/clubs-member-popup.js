@@ -7,30 +7,13 @@ const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
   return (
-    <>
+    <div className="overlay-wrapper" style={{ display: closed ? 'none' : 'flex' }}>
       <div
         className="overlay"
         style={{ display: closed ? 'none' : 'block', overflowY: 'scroll' }}
       >
-        <h1 style={{ display: 'flex' }}>
-          <span
-            style={{ flexGrow: 1, paddingTop: '36px', paddingBottom: '12px' }}
-          >
-            Manage Members
-          </span>
-          <span
-            class="noselect"
-            style={{
-              display: 'inline-block',
-              transform:
-                'rotate(45deg) scale(1.4) translateX(-11px) translateY(11px)',
-              cursor: 'pointer',
-              color: 'var(--muted)'
-            }}
-            onClick={() => setClubsOpen(false)}
-          >
-            +
-          </span>
+        <h1 style={{ fontSize: '2.3em', marginBottom: '8px' }}>
+          Manage Members
         </h1>
         {club.members.map(member => (
           <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
@@ -57,18 +40,19 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
         ))}
         <div
           style={{
-            background: 'var(--dark)',
+            background: 'var(--colors-dark)',
             padding: '12px',
             borderRadius: '8px',
-            marginTop: '12px'
+            marginTop: '18px'
           }}
         >
+          <h2>Add People</h2>
           <form
             action={`/api/web/clubs/${club.id}/add-member`}
             style={{
               display: 'flex',
-              gap: '8px',
-              marginTop: '8px',
+              gap: '12px',
+              marginTop: '4px',
               flexDirection: 'column',
               width: '100%',
               position: 'relative'
@@ -79,28 +63,13 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
                 placeholder="harold@hackclub.com"
                 required
                 name="email"
-                style={{ background: 'var(--darker)' }}
+                style={{ background: 'var(--colors-darker)' }}
               />
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '4px',
-                  alignItems: 'center',
-                  marginTop: '8px'
-                }}
-              >
-                <input
-                  type="checkbox"
-                  name={`admin`}
-                  style={{
-                    width: 'fit-content',
-                    marginRight: '4px'
-                  }}
-                />
-                <label style={{ display: 'flex' }}>Admin Access</label>
-              </div>
             </div>
-            <button className="lg cta-blue">Add Member</button>
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+              <button className="lg cta-blue">Add Member</button>
+              <button className="lg cta-green">Add Admin</button>
+            </div>
           </form>
         </div>
       </div>
@@ -129,6 +98,6 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
         }}
         onClick={() => setClubsOpen(false)}
       />
-    </>
+    </div>
   )
 }
