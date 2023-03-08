@@ -17,8 +17,11 @@ export default async (req, res) => {
     clubs.map(club => {
       let slug = club.slug
       let toOccur = slug
-      if(slug.split("-").length != 1 && parseInt(slug.split("-")[slug.split("-").length - 1])){
-        toOccur = slug.split("-")[slug.split("-").length - 1]
+      if (
+        slug.split('-').length != 1 &&
+        parseInt(slug.split('-')[slug.split('-').length - 1])
+      ) {
+        toOccur = slug.split('-')[slug.split('-').length - 1]
       }
       occurrences[toOccur] = occurrences[toOccur] ? occurrences[toOccur] + 1 : 0
     })
@@ -40,7 +43,7 @@ export default async (req, res) => {
         }
       }
     })
-    return res.json({...club, callback: `/clubs/${club.slug}`})
+    return res.json({ ...club, callback: `/clubs/${club.slug}` })
   } catch (e) {
     console.error(e)
     return res.json({ error: true })

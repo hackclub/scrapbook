@@ -7,33 +7,40 @@ import normalizeUrl from 'normalize-url'
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.json({ clubs: [] })
+    console.error('No user.')
+    return res.json({ error: true })
   }
   let clubs = session?.user.ClubMember.filter(x => x.admin).map(x => x.clubId)
   if (clubs.includes(req.query.id)) {
-    let newMember = await prisma.ClubMember.create({
-      data: {
-        club: {
-          connect: {
-            id: req.query.id
-          }
+    try {
+      let newMember = await prisma.ClubMember.create({
+        data: {
+          club: {
+            connect: {
+              id: req.query.id
+            }
+          },
+          account: {
+            connect: {
+              email: req.body.email
+            }
+          },
+          admin: req.body.admin || false
         },
-        account: {
-          connect: {
-            email: req.query.email
-          }
-        },
-        admin: req.query.admin ? true : false
-      },
-      include: {
-        club: {
-          select: {
-            slug: true
+        include: {
+          club: {
+            select: {
+              slug: true
+            }
           }
         }
-      }
-    })
-    return res.redirect(`/clubs/${newMember.club.slug}`)
+      })
+      return res.json({ newMember })
+    } catch (e) {
+      console.error(e)
+      return res.json({ error: true })
+    }
   }
-  return res.json({ error: 'No permissions.' })
+  console.error('Not in club.')
+  return res.json({ error: true })
 }

@@ -9,21 +9,27 @@ const slugger = new GithubSlugger()
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.redirect(`/?errorTryAgain`)
+    res.json({ error: true })
   }
-  let id = req.query.id
-  delete req.query.id
-  let club = await prisma.club.update({
-    where: {
-      id
-    },
-    data: {
-      ...req.query,
-      website:
-        req.query.website != ''
-          ? normalizeUrl(req.query.website, { forceHttps: true })
-          : null
-    }
-  })
-  res.redirect(`/clubs/${club.slug}`)
+  try {
+    let id = req.body.id
+    delete req.body.id
+    let club = await prisma.club.update({
+      where: {
+        id
+      },
+      data: {
+        ...req.body,
+        members: undefined,
+        website:
+          req.body?.website != '' && req.body?.website
+            ? normalizeUrl(req.body.website, { forceHttps: true })
+            : null
+      }
+    })
+    res.json({ club })
+  } catch (e) {
+    console.error(e)
+    res.json({ error: true })
+  }
 }

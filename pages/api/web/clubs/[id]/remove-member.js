@@ -7,16 +7,16 @@ import normalizeUrl from 'normalize-url'
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
-    res.json({ clubs: [] })
+    return res.json({ error: true })
   }
   let clubs = session?.user.ClubMember.filter(x => x.admin).map(x => x.clubId)
   if (clubs.includes(req.query.id)) {
-    let newMember = await prisma.ClubMember.delete({
+    await prisma.ClubMember.delete({
       where: {
-        id: req.query.member
+        id: req.body.member
       }
     })
-    return res.redirect(`/clubs/${req.query.slug}`)
+    return res.json({ deleted: true })
   }
-  return res.json({ error: 'No permissions.' })
+  return res.json({ error: true })
 }

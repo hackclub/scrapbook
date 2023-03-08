@@ -139,15 +139,38 @@ const Profile = ({
           <h2>Webring</h2>
           <div className="header-webring-mentions">
             {webring.map(u => (
-              <StaticMention
-                user={u}
-                className="header-webring-mention"
-                title={u.mutual ? 'in each others’ webrings' : null}
-                size={96}
-                key={u.id}
-              >
-                {u.mutual && <Icon glyph="everything" size={24} />}
-              </StaticMention>
+              <>
+                <StaticMention
+                  user={u}
+                  className="header-webring-mention"
+                  title={u.mutual ? 'in each others’ webrings' : null}
+                  size={96}
+                  key={u.id}
+                  id={u.id}
+                  style={{ fontSize: `0px` }}
+                >
+                  {u.mutual && (
+                    <span
+                      style={{
+                        backgroundColor: `var(--color-muted)`,
+                        borderRadius: '999px'
+                      }}
+                    >
+                      <Icon glyph="everything" size={24} />
+                    </span>
+                  )}
+                </StaticMention>
+                <style>
+                  {`
+                #${u.id}:hover > span,
+                #${u.id}:focus > span {
+                  transform: scale(1.05) rotate(${Math.floor(
+                    Math.random() * 20 - 10
+                  )}deg);
+                }
+              `}
+                </style>
+              </>
             ))}
           </div>
         </aside>
@@ -294,7 +317,7 @@ export const getStaticProps = async ({ params }) => {
     if (profile.webring) {
       webring = await Promise.all(
         profile.webring.map(async id => {
-          const u = await getProfile(id, 'slackID')
+          const u = await getProfile(id, 'id')
           try {
             u.mutual = u.webring.includes(profile.slackID)
           } catch {

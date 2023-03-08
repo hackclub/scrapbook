@@ -1,11 +1,27 @@
 import { v4 as uuidv4 } from 'uuid'
+import { mutate } from 'swr'
 import S3 from '../lib/s3'
 import { useState } from 'react'
 import useSWR from 'swr'
+import toast from 'react-hot-toast'
 import Link from 'next/link'
+import useForm from '../lib/use-form'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
+  const { status, submit, useField, setData, setDataValue } = useForm(
+    `/api/web/clubs/${club.id}/add-member`,
+    {
+      method: 'POST',
+      success: 'Member added!',
+      closingAction: () => mutate(false)
+    }
+  )
+  const deleteSubmit = useForm(`/api/web/clubs/${club.id}/remove-member`, {
+    method: 'POST',
+    success: 'Member removed!',
+    closingAction: () => mutate(`/api/clubs/${club.slug}/`)
+  }).submit
   return (
     <div
       className="overlay-wrapper"
@@ -26,16 +42,20 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
               style={{ borderRadius: '4px' }}
             />
             <div>
-              {club.members.length != 0 ? (
-                <a
-                  href={`/api/web/clubs/${club.id}/remove-member?member=${member.id}&slug=${club.slug}`}
-                  className="username"
-                >
-                  {member.account.username}
-                </a>
-              ) : (
-                <b>{member.account.username}</b>
-              )}
+              <b
+                onClick={
+                  club.members.length != 1
+                    ? e => {
+                        deleteSubmit('member', member.id)
+                      }
+                    : e => {
+                        toast("Sorry! You can't delete your only member.")
+                      }
+                }
+                className="username"
+              >
+                {member.account.username}
+              </b>
               <br />
               {member.account.updates} Posts {member.admin && <>(Admin)</>}
             </div>
@@ -50,8 +70,7 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
           }}
         >
           <h2>Add People</h2>
-          <form
-            action={`/api/web/clubs/${club.id}/add-member`}
+          <div
             style={{
               display: 'flex',
               gap: '12px',
@@ -65,8 +84,8 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="harold@hackclub.com"
                 required
-                name="email"
                 style={{ background: 'var(--colors-darker)' }}
+                {...useField('email')}
               />
             </div>
             <div
@@ -76,10 +95,26 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
                 gap: '10px'
               }}
             >
-              <button className="lg cta-blue">Add Member</button>
-              <button className="lg cta-green">Add Admin</button>
+              <button
+                className="lg cta-blue"
+                onClick={e => {
+                  e.preventDefault()
+                  submit('admin', false)
+                }}
+              >
+                Add Member
+              </button>
+              <button
+                className="lg cta-green"
+                onClick={e => {
+                  e.preventDefault()
+                  submit('admin', true)
+                }}
+              >
+                Add Admin
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <style jsx>

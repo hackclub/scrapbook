@@ -17,7 +17,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
     method: 'POST',
     success: 'Club created!',
     closingAction: () => {
-      setClubsOpen(false);
+      setClubsOpen(false)
       setStarting(false)
     },
     router: router,

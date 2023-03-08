@@ -29,7 +29,10 @@ const Feed = ({
           }
         `}</style>
         {children}
-        <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
+        <Posts
+          posts={orderBy([initialData, data], a => a.length)[0]}
+          swrKey={src}
+        />
       </main>
     )
   }
@@ -51,7 +54,7 @@ const Feed = ({
         }
       `}</style>
       {children}
-      <Posts posts={data} />
+      <Posts posts={data} swrKey={src} />
       {footer}
     </main>
   )

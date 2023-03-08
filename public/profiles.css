@@ -99,7 +99,7 @@
 
 .header-webring-mentions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: start;
   margin: 0 -6px 12px;
 }
@@ -120,12 +120,8 @@
   transition: 0.125s all ease-in-out;
 }
 
-.header-webring-mention:hover,
-.header-webring-mention:focus {
-  background-color: var(--colors-purple);
-  color: var(--colors-white);
-  box-shadow: 0 0 9px var(--colors-pink);
-  outline: none;
+.header-webring-mention > span {
+  transition: transform 0.35s ease-in-out;
 }
 
 .header-webring-mention .mention-avatar {
@@ -140,6 +136,8 @@
   position: absolute;
   right: 8px;
   top: -2px;
+  background-color: var(--colors-elevated);
+  border-radius: 999px;
 }
 
 .header-webring-mention:hover svg,

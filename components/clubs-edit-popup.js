@@ -3,9 +3,22 @@ import S3 from '../lib/s3'
 import { useState } from 'react'
 import useSWR from 'swr'
 import Link from 'next/link'
+import useForm from '../lib/use-form'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
+  const { status, submit, useField, setData } = useForm(
+    `/api/web/clubs/${club.id}/edit`,
+    {
+      method: 'POST',
+      initData: club,
+      success: 'Club updated!',
+      closingAction: () => setClubsOpen(false),
+      initData: {
+        admin: false
+      }
+    }
+  )
   return (
     <div
       className="overlay-wrapper"
@@ -45,8 +58,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="Happy Hack Club"
                 required
-                name="name"
-                defaultValue={club.name}
+                {...useField('name')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -62,8 +74,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="Shelburne, Vermont, USA"
                 required
-                name="location"
-                defaultValue={club.location}
+                {...useField('location')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -79,8 +90,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="https://hackclub.com/banner.png"
                 required
-                name="banner"
-                defaultValue={club.banner}
+                {...useField('banner')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -96,8 +106,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="https://hackclub.com/logo.png"
                 required
-                name="logo"
-                defaultValue={club.logo}
+                {...useField('logo')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -113,8 +122,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="happy.hackclub.com"
                 type="url"
-                name="website"
-                defaultValue={club.website}
+                {...useField('website')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -130,12 +138,19 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="github.com/hackclub"
                 type="url"
-                name="github"
-                defaultValue={club.github}
+                {...useField('github')}
               />
             </div>
           </form>
-          <button className="lg cta-blue">Save</button>
+          <button
+            className="lg cta-blue"
+            onClick={e => {
+              e.preventDefault()
+              submit()
+            }}
+          >
+            Save
+          </button>
           <button
             className="lg cta-red"
             onClick={e => {

@@ -1,10 +1,27 @@
 import { v4 as uuidv4 } from 'uuid'
+import { useRouter } from 'next/router'
 import S3 from '../lib/s3'
 import { useState } from 'react'
+import useForm from '../lib/use-form'
 
 export const PostEditor = ({ closed, setPostOpen, session }) => {
   const [uploading, setUploading] = useState(false)
-  const [images, setImages] = useState([])
+  let router = useRouter()
+  const { status, submit, useField, setData, setDataValue } = useForm(
+    '/api/web/post/new',
+    {
+      method: 'POST',
+      success: 'Post created!',
+      closingAction: () => {
+        setPostOpen(false)
+      },
+      router: router,
+      clearOnSubmit: 3500,
+      initData: {
+        attachments: []
+      }
+    }
+  )
   async function uploadFilesToS3(files) {
     let uploadedImages = []
     await Promise.all(
@@ -28,7 +45,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
       })
     )
     setUploading(false)
-    setImages(uploadedImages)
+    setDataValue('attachments', uploadedImages)
   }
   return (
     <div
@@ -55,14 +72,13 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
             >
               What did you make? Tell us all about it!
             </label>
-            <textarea placeholder="" required name="text" />
+            <textarea
+              placeholder=""
+              required
+              name="text"
+              {...useField('text')}
+            />
           </div>
-          <input
-            required
-            name="attachments"
-            value={JSON.stringify(images)}
-            style={{ display: 'none' }}
-          />
           <div>
             <label
               style={{
@@ -117,6 +133,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                         width: 'fit-content',
                         marginRight: '2px'
                       }}
+                      {...useField(`club-${club.id}`, `checkbox`)}
                     />
                     <img
                       src={club.logo}
@@ -138,6 +155,10 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
             className="lg cta-blue"
             disabled={uploading}
             style={uploading ? { filter: 'grayscale(1)' } : {}}
+            onClick={e => {
+              e.preventDefault()
+              submit()
+            }}
           >
             {uploading ? 'Uploading files...' : 'Publish'}
           </button>

@@ -43,6 +43,7 @@ const Post = ({
   muted = false,
   openEmojiPicker = () => {},
   authStatus,
+  swrKey,
   authSession
 }) => {
   return (
@@ -175,6 +176,7 @@ const Post = ({
               postID={id}
               authStatus={authStatus}
               authSession={authSession}
+              swrKey={swrKey}
             />
           ))}
           {authStatus == 'authenticated' && (

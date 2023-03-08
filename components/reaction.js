@@ -1,12 +1,24 @@
 import Link from 'next/link'
 import { EmojiImg } from './emoji'
 import { startCase } from 'lodash'
+import toast from 'react-hot-toast'
+import { mutate } from 'swr'
 
-async function clickEmoji(name, postID) {
-  let response = await fetch(
-    `/api/web/reactions/click?emojiName=${name}&post=${postID}`
-  )
-  alert(response)
+async function clickEmoji(name, postID, swrKey) {
+  toast
+    .promise(
+      fetch(`/api/web/reactions/click?emojiName=${name}&post=${postID}`),
+      {
+        loading: 'Clicking...',
+        success: 'Success!',
+        error: 'An unexpected error occured - please try again.'
+      }
+    )
+    .then(() => {
+      if (swrKey) {
+        mutate(swrKey)
+      }
+    })
 }
 
 const Reaction = ({
@@ -16,7 +28,8 @@ const Reaction = ({
   postID,
   authStatus,
   usersReacted,
-  authSession
+  authSession,
+  swrKey
 }) => {
   let children = (
     <>
@@ -29,7 +42,7 @@ const Reaction = ({
           layout="responsive"
         />
       )}
-      {char}
+      <span style={{ transform: 'translateY(2px)' }}>{char}</span>
     </>
   )
   return authStatus == 'authenticated' ? (
@@ -38,7 +51,7 @@ const Reaction = ({
         usersReacted.includes(authSession.user.id) ? 'post-reaction-active' : ''
       }`}
       title={startCase(name)}
-      onClick={() => clickEmoji(name, postID)}
+      onClick={() => clickEmoji(name, postID, swrKey)}
     >
       {children}
     </span>

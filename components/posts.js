@@ -1,10 +1,12 @@
 import Masonry from 'react-masonry-css'
 import Post from '../components/post'
 import EmojiPicker from 'emoji-picker-react'
+import toast from 'react-hot-toast'
+import { mutate } from 'swr'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 
-const Posts = ({ posts = [] }) => {
+const Posts = ({ posts = [], swrKey = null }) => {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false)
   const [emojiPickerPostiD, setEmojiPickerPostID] = useState('')
   function openEmojiPicker(postID) {
@@ -13,9 +15,22 @@ const Posts = ({ posts = [] }) => {
   }
   async function react(emoji) {
     setEmojiPickerOpen(false)
-    let response = await fetch(
-      `/api/web/reactions/new?emoji=${emoji.emoji}&emojiName=${emoji.names[0]}&post=${emojiPickerPostiD}`
-    )
+    toast
+      .promise(
+        fetch(
+          `/api/web/reactions/new?emoji=${emoji.emoji}&emojiName=${emoji.names[0]}&post=${emojiPickerPostiD}`
+        ),
+        {
+          loading: 'Reacting...',
+          success: 'Success!',
+          error: 'An unexpected error occured - please try again.'
+        }
+      )
+      .then(() => {
+        if (swrKey) {
+          mutate(swrKey)
+        }
+      })
   }
   const { data: session, status } = useSession()
   return [
@@ -55,6 +70,7 @@ const Posts = ({ posts = [] }) => {
           openEmojiPicker={openEmojiPicker}
           authStatus={status}
           authSession={session}
+          swrKey={swrKey}
           {...post}
         />
       ))}
