@@ -8,7 +8,7 @@
 								  supported by Chrome, Edge, Opera and Firefox */
 }
 
-button:not(.epr-btn) {
+button:not(.epr-btn):not(#___reactour *) {
   cursor: pointer;
   font-family: inherit;
   font-weight: var(--font-weight-bold);
@@ -40,8 +40,8 @@ button:not(.epr-btn) {
   font-size: var(--font-2);
 }
 
-button:not(.epr-btn):focus,
-button:not(.epr-btn):hover {
+button:not(.epr-btn):not(#___reactour *):focus,
+button:not(.epr-btn):not(#___reactour *):hover {
   box-shadow: var(--shadow-elevated);
   transform: scale(1.0625);
 }

@@ -1,0 +1,15 @@
+.reactour__helper {
+  background: var(--colors-elevated) !important;
+  border-radius: var(--radii-default) !important;
+}
+
+.reactour__close {
+  display: none !important;
+}
+
+[data-tour-elem='badge'] {
+  width: 1.875em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
