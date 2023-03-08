@@ -241,7 +241,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { getClub, getPosts } = require('../../api/clubs/[slug]/index')
+  const { getClub, getPosts } = require('../api/clubs/[slug]/index')
   if (params.slug?.length < 2) return console.error('No slug!') || { props: {} }
 
   const club = await getClub(params.slug)
