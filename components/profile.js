@@ -6,7 +6,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
     {
       method: 'POST',
       initData: session.user,
-      success: "Profile updated!",
+      success: 'Profile updated!',
       closingAction: setMenuOpen
     }
   )
@@ -25,7 +25,6 @@ const Profile = ({ closed, setMenuOpen, session }) => {
           }}
         >
           <form
-            action="/api/web/profile/edit"
             style={{
               display: 'grid',
               gap: '16px',

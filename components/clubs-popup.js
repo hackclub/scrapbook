@@ -5,7 +5,6 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import S3 from '../lib/s3'
 import useForm from '../lib/use-form'
-
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
@@ -14,6 +13,16 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
   })
   let router = useRouter()
   const [starting, setStarting] = useState(data?.clubs.length == 0)
+  const { status, submit, useField, setData } = useForm('/api/web/clubs/new', {
+    method: 'POST',
+    success: 'Club created!',
+    closingAction: () => {
+      setClubsOpen(false);
+      setStarting(false)
+    },
+    router: router,
+    clearOnSubmit: 3500
+  })
   return (
     <div
       className="overlay-wrapper"
@@ -92,8 +101,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
             <b style={{ flexGrow: 1 }}>Start A Club</b>
             <b style={{ paddingRight: '8px' }}>▶︎</b>
           </summary>
-          <form
-            action="/api/web/clubs/new"
+          <div
             style={{
               display: 'flex',
               gap: '16px',
@@ -116,8 +124,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               <input
                 placeholder="Happy Hack Club"
                 required
-                name="text"
                 style={{ background: starting ? '' : 'var(--colors-darker)' }}
+                {...useField('name')}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -133,7 +141,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               <input
                 placeholder="Shelburne, Vermont, USA"
                 required
-                name="location"
+                {...useField('location')}
                 style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
@@ -151,12 +159,14 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               </label>
               <input
                 placeholder="happy.hackclub.com"
+                {...useField('website')}
                 type="url"
-                name="website"
                 style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
-            <button className="lg cta-blue">Create Club</button>
+            <button className="lg cta-blue" onClick={() => submit()}>
+              Create Club
+            </button>
             {starting && (
               <button
                 className="lg cta-red"
@@ -164,12 +174,13 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                   e.preventDefault()
                   setStarting(false)
                   setClubsOpen(false)
+                  setData({})
                 }}
               >
                 Cancel
               </button>
             )}
-          </form>
+          </div>
         </details>
       </div>
       <style jsx>

@@ -17,24 +17,27 @@ export default async (req, res) => {
         email: req.body.email,
         website: req.body.website,
         pronouns: req.body.pronouns,
-        cssURL: req.body.cssURL ?
-          req.body.cssURL?.includes('http://') ||
-          req.body.cssURL?.includes('https://') ||
-          req.body.cssURL == ''
+        cssURL: req.body.cssURL
+          ? req.body.cssURL?.includes('http://') ||
+            req.body.cssURL?.includes('https://') ||
+            req.body.cssURL == ''
             ? req.body.cssURL
-            : 'http://'.concat(req.body.cssURL) : null,
-        website: req.body.website ?
-          req.body.website?.includes('http://') ||
-          req.body.website?.includes('https://') ||
-          req.body.website == ''
+            : 'http://'.concat(req.body.cssURL)
+          : null,
+        website: req.body.website
+          ? req.body.website?.includes('http://') ||
+            req.body.website?.includes('https://') ||
+            req.body.website == ''
             ? req.body.website
-            : 'http://'.concat(req.body.website) : null,
-        github: req.body.github ?
-          req.body.github?.includes('https://') ||
-          req.body.github?.includes('http://') ||
-          req.body.github == ''
+            : 'http://'.concat(req.body.website)
+          : null,
+        github: req.body.github
+          ? req.body.github?.includes('https://') ||
+            req.body.github?.includes('http://') ||
+            req.body.github == ''
             ? req.body.github
-            : 'https://'.concat(req.body.github) : null
+            : 'https://'.concat(req.body.github)
+          : null
       }
     })
     return res.json(account)
