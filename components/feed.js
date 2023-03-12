@@ -2,7 +2,6 @@ import useSWR from 'swr'
 import Message from '../components/message'
 import Posts from '../components/posts'
 import { orderBy } from 'lodash'
-
 const fetcher = url => fetch(url).then(r => r.json())
 
 const Feed = ({
@@ -16,7 +15,6 @@ const Feed = ({
     fallbackData: initialData,
     refreshInterval: 5000
   })
-
   if (error) {
     return (
       <main className="container">
@@ -31,7 +29,10 @@ const Feed = ({
           }
         `}</style>
         {children}
-        <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
+        <Posts
+          posts={orderBy([initialData, data], a => a.length)[0]}
+          swrKey={src}
+        />
       </main>
     )
   }
@@ -53,7 +54,7 @@ const Feed = ({
         }
       `}</style>
       {children}
-      <Posts posts={data} />
+      <Posts posts={data} swrKey={src} />
       {footer}
     </main>
   )

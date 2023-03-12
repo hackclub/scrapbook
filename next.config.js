@@ -1,6 +1,5 @@
 const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 module.exports = withMDX({
-  experimental: { optimizeFonts: true },
   pageExtensions: ['js', 'jsx', 'mdx'],
   trailingSlash: false,
   images: {
@@ -11,7 +10,8 @@ module.exports = withMDX({
       'cloud-lp0r5yk68.vercel.app',
       'avatars.slack-edge.com',
       'secure.gravatar.com',
-      'i.imgur.com'
+      'i.imgur.com',
+      'www.gravatar.com'
     ]
   },
   async rewrites() {
@@ -44,6 +44,10 @@ module.exports = withMDX({
       {
         source: '/:username.rss',
         destination: '/api/rss/:username'
+      },
+      {
+        source: '/auth/error:path*{/}',
+        destination: '/404'
       }
     ]
   },

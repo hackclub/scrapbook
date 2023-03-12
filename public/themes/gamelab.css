@@ -1,9 +1,9 @@
 :root {
-  --lighter: #DDDAC7;
-  --light: #CECBB8;
-  --lightless: #CAC4B0;
+  --lighter: #dddac7;
+  --light: #cecbb8;
+  --lightless: #cac4b0;
 
   --darkless: #535352;
-  --dark: #3E4040;
+  --dark: #3e4040;
   --darker: #121217;
 }

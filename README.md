@@ -6,10 +6,10 @@ Scrapbook was made by the Hack Club community because many of us have found that
 
 ## The Future of Scrapbook
 
-Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like (after a general spring cleaning of the codebase): 
+Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like (after a general spring cleaning of the codebase):
 
 1. Scrapbook is opened up to Clubs. This means building out a better UX for club members & then make the platform an important part of the Clubs program.
-    1. The platform includes features that enable hackathon organisers to use Scrapbook at their events.
+   1. The platform includes features that enable hackathon organisers to use Scrapbook at their events.
 2. Scrapbook becomes place where things are happening on Hack Club through better intergration with community events.
 3. Scrapbook's website becomes something that a Hack Clubber would be proud to share outside of Hack Club.
 4. Scrapbook features consistent high-quality posts from HQ-ers that encourage sharing ongoing projects and create a buzz around the channel.
@@ -26,6 +26,7 @@ A post requires just two things: a description and an image. Your image can be d
 ```
 learned Express generator today - now back to a ton of (organized) files
 ```
+
 ![Example Scrapbook post image](https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png)
 
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
@@ -43,9 +44,9 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 - `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
 - `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
 - `/scrappy-webring`: adds or removes someone to your webring
-- *Remove* a post: delete the Slack message and Scrappy will automatically update for you
-- *Edit* a post: edit the Slack message and it will automatically update for you
-- *Post* to the `#scrapbook` channel or add an existing Slack message to Scrapbook by reacting to it with the `:scrappy:` emoji (Note: If it isn't working, make sure Scrappy is added to the channel by mentioning `@scrappy`)
+- _Remove_ a post: delete the Slack message and Scrappy will automatically update for you
+- _Edit_ a post: edit the Slack message and it will automatically update for you
+- _Post_ to the `#scrapbook` channel or add an existing Slack message to Scrapbook by reacting to it with the `:scrappy:` emoji (Note: If it isn't working, make sure Scrappy is added to the channel by mentioning `@scrappy`)
 
 ## Custom domains
 

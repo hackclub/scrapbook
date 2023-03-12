@@ -4,7 +4,7 @@ export default async (req, res) => {
     return res
       .status(400)
       .json({ status: 400, error: 'url query param required' })
-  const css = await fetch(url).then((r) => r.text())
+  const css = await fetch(url).then(r => r.text())
   if (!css)
     return res
       .status(500)

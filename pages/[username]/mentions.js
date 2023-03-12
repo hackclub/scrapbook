@@ -55,7 +55,7 @@ const Profile = ({ profile = {}, posts = [] }) => (
       </div>
     </header>
     {posts.length === 0 && (
-      <h2 className="headline blankslate">No mentions yet :(</h2>
+      <h2 className="headline blank-slate">No mentions yet :(</h2>
     )}
     <Posts posts={posts} />
     <style jsx>{`
@@ -107,7 +107,7 @@ const Profile = ({ profile = {}, posts = [] }) => (
           font-size: 64px;
         }
       }
-      .blankslate {
+      .blank-slate {
         text-align: center;
       }
     `}</style>

@@ -7,6 +7,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
+import { clamp } from 'lodash'
 import Banner from '../../components/banner'
 import Message from '../../components/message'
 import { StaticMention } from '../../components/mention'
@@ -14,14 +15,13 @@ import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { clamp } from 'lodash'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
-// Calculate heatmap date range
+// Calculate heat map date range
 const today = new Date()
 const dateString = dt => dt.toISOString().substring(0, 10)
 const heatmapEnd = dateString(today)
@@ -90,21 +90,25 @@ const Profile = ({
               <span className="header-streak-count">{`${profile.streakCount}-day streak`}</span>
             </span>
             <div className="header-links">
-              <Link
-                href="/[username]/mentions"
-                as={`/${profile.username}/mentions`}
-              >
-                <a className="header-link header-link-mentions">
-                  <Icon size={32} glyph="mention" />
+              {profile.slackID && (
+                <Link
+                  href="/[username]/mentions"
+                  as={`/${profile.username}/mentions`}
+                >
+                  <a className="header-link header-link-mentions">
+                    <Icon size={32} glyph="mention" />
+                  </a>
+                </Link>
+              )}
+              {profile.slackID && (
+                <a
+                  href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
+                  target="_blank"
+                  className="header-link header-link-slack"
+                >
+                  <Icon size={32} glyph="slack-fill" />
                 </a>
-              </Link>
-              <a
-                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
-                target="_blank"
-                className="header-link header-link-slack"
-              >
-                <Icon size={32} glyph="slack-fill" />
-              </a>
+              )}
               {profile.github && (
                 <a
                   href={profile.github}
@@ -135,15 +139,38 @@ const Profile = ({
           <h2>Webring</h2>
           <div className="header-webring-mentions">
             {webring.map(u => (
-              <StaticMention
-                user={u}
-                className="header-webring-mention"
-                title={u.mutual ? 'in each others’ webrings' : null}
-                size={96}
-                key={u.id}
-              >
-                {u.mutual && <Icon glyph="everything" size={24} />}
-              </StaticMention>
+              <>
+                <StaticMention
+                  user={u}
+                  className="header-webring-mention"
+                  title={u.mutual ? 'in each others’ webrings' : null}
+                  size={96}
+                  key={u.id}
+                  id={u.id}
+                  style={{ fontSize: `0px` }}
+                >
+                  {u.mutual && (
+                    <span
+                      style={{
+                        backgroundColor: `var(--color-muted)`,
+                        borderRadius: '999px'
+                      }}
+                    >
+                      <Icon glyph="everything" size={24} />
+                    </span>
+                  )}
+                </StaticMention>
+                <style key={`style-${u.id}`}>
+                  {`
+                #${u.id}:hover > span,
+                #${u.id}:focus > span {
+                  transform: scale(1.05) rotate(${Math.floor(
+                    Math.random() * 20 - 10
+                  )}deg);
+                }
+              `}
+                </style>
+              </>
             ))}
           </div>
         </aside>
@@ -242,7 +269,6 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
 
 const UserPage = props => {
   const router = useRouter()
-
   if (router.isFallback) {
     return <Message text="Loading…" />
   } else if (props.profile?.username) {
@@ -276,11 +302,9 @@ export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
-
   const profile = await getProfile(params.username)
   if (!profile || !profile?.username)
     return console.error('No profile') || { props: {} }
-
   try {
     const posts = await getPosts(profile)
     const { groupBy } = require('lodash')
@@ -293,13 +317,12 @@ export const getStaticProps = async ({ params }) => {
     if (profile.webring) {
       webring = await Promise.all(
         profile.webring.map(async id => {
-          const u = await getProfile(id, 'slackID')
+          const u = await getProfile(id, 'id')
           try {
             u.mutual = u.webring.includes(profile.slackID)
           } catch {
             u.mutual = false
           }
-
           return u
         })
       )

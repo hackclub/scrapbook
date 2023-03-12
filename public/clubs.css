@@ -1,0 +1,13 @@
+.club-posts {
+  margin-top: 12px;
+}
+
+.club-name {
+  margin-bottom: 8px;
+}
+
+.club-header-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

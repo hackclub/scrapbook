@@ -13,6 +13,32 @@ const StreaksPage = ({ users }) => {
         description="A daily streak system & portfolio for your projects. Join the Hack Club community & get yours started."
         image="https://cloud-53i932gta-hack-club-bot.vercel.app/0scrapbook.jpg"
       />
+      <h1>Who's got the highest streak?</h1>
+      <main className="container">
+        <div>
+          <h2>Current</h2>
+          {orderBy(users, 'streakCount', 'desc')
+            .filter(u => u.slackID !== 'U035D3VA7R7')
+            .slice(0, 15)
+            .map(u => (
+              <div key={u.id} className="item">
+                <Mention username={u.username} />
+                <p>{u.streakCount}&nbsp;🔥</p>
+              </div>
+            ))}
+        </div>
+        <div>
+          <h2>All time</h2>
+          {orderBy(users, 'maxStreaks', 'desc')
+            .slice(0, 15)
+            .map(u => (
+              <div key={u.id} className="item">
+                <Mention username={u.username} />
+                <p>{u.maxStreaks}&nbsp;🔥</p>
+              </div>
+            ))}
+        </div>
+      </main>
       <style jsx global>{`
         .container {
           display: grid;
@@ -67,45 +93,18 @@ const StreaksPage = ({ users }) => {
           text-underline-position: under;
         }
         @supports (-webkit-background-clip: text) {
-        h1 {
-          background-image: radial-gradient(
-            ellipse farthest-corner at top left,
-            var(--colors-yellow),
-            var(--colors-orange)
-          );
-          background-repeat: no-repeat;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          h1 {
+            background-image: radial-gradient(
+              ellipse farthest-corner at top left,
+              var(--colors-yellow),
+              var(--colors-orange)
+            );
+            background-repeat: no-repeat;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
         }
-      }
       `}</style>
-
-      <h1>Who's got the highest streak?</h1>
-      <main className="container">
-        <div>
-          <h2>Current</h2>
-          {orderBy(users, 'streakCount', 'desc')
-            .filter(u => u.slackID !== 'U035D3VA7R7')
-            .slice(0, 15)
-            .map(u => (
-              <div key={u.id} className="item">
-                <Mention username={u.username} />
-                <p>{u.streakCount}&nbsp;🔥</p>
-              </div>
-            ))}
-        </div>
-        <div>
-          <h2>All time</h2>
-          {orderBy(users, 'maxStreaks', 'desc')
-            .slice(0, 15)
-            .map(u => (
-              <div key={u.id} className="item">
-                <Mention username={u.username} />
-                <p>{u.maxStreaks}&nbsp;🔥</p>
-              </div>
-            ))}
-        </div>
-      </main>
     </>
   )
 }
