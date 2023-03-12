@@ -7,6 +7,7 @@ import Link from 'next/link'
 import S3 from '../lib/s3'
 import useForm from '../lib/use-form'
 import { Optional } from '../components/optional'
+import Icon from '@hackclub/icons'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
@@ -14,7 +15,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
     refreshInterval: 5000
   })
   let router = useRouter()
-  const [starting, setStarting] = useState(data?.clubs.length == 0)
+  const [starting, setStarting] = useState(false)
+  const search = useForm()
   const { status, submit, useField, setData } = useForm('/api/web/clubs/new', {
     method: 'POST',
     success: 'Club created!',
@@ -42,16 +44,54 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
         <h1
           style={{
             fontSize: '2.3em',
-            marginBottom: starting ? '-16px' : '-12px'
+            marginBottom: starting ? '-16px' : '-12px',
+            display: 'flex',
+            alignItems: 'center'
           }}
         >
-          {starting ? 'Create a Club' : 'Your Clubs'}
+          <span style={{ flexGrow: 1, paddingTop: '1px' }}>
+            {starting ? 'Create a Club' : 'Clubs on Scrapbook'}
+          </span>
+          {!starting && (
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer'
+              }}
+              className="nav-link"
+              onClick={() => setStarting(true)}
+            >
+              <Icon glyph="plus" size={36} />
+            </span>
+          )}
         </h1>
-        {(starting ? [] : data?.clubs)?.map(club => (
+        <input
+          placeholder="Search for a club..."
+          {...search.useField('search')}
+        />
+        {(starting
+          ? []
+          : data
+          ? [
+              ...data?.clubs,
+              ...data?.others.map(other => ({ ...other, other: true }))
+            ]
+          : []
+        )?.map(club => (
           <div
             key={club.id}
             style={{
-              display: 'flex',
+              display: !search.data.search
+                ? 'flex'
+                : club.name
+                    .toLowerCase()
+                    .includes(search.data.search.toLowerCase()) ||
+                  club.location
+                    ?.toLowerCase()
+                    .includes(search.data.search.toLowerCase())
+                ? 'flex'
+                : 'none',
               gap: '12px',
               alignItems: 'center',
               cursor: 'pointer'
@@ -70,8 +110,12 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               }}
             />
             <div>
-              <h3>{club.name}</h3>
+              <h3>
+                {club.name} {club.other === undefined && '👤'}
+              </h3>
               <div>
+                {club.location}
+                {club.location && ' • '}
                 {club.members.length} Member{club.members.length != 1 && 's'} •{' '}
                 {club.updates.length} Post{club.updates.length != 1 && 's'}
               </div>
@@ -84,7 +128,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
             background: starting ? 'none' : 'var(--colors-elevated)',
             padding: starting ? '0px' : '12px',
             borderRadius: '8px',
-            marginTop: starting ? '0px' : '0px'
+            marginTop: starting ? '0px' : '0px',
+            display: !starting && search.data.search ? 'none' : 'default'
           }}
           open={starting}
         >

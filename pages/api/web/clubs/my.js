@@ -9,20 +9,39 @@ export default async (req, res) => {
   if (session?.user === undefined) {
     return res.json({ clubs: [] })
   }
-  let clubs = await prisma.club.findMany({
-    where: {
-      members: {
-        some: {
-          accountId: {
-            equals: session.user.id
+  let [clubs, others] = await prisma.$transaction([
+    prisma.club.findMany({
+      where: {
+        members: {
+          some: {
+            accountId: {
+              equals: session.user.id
+            }
           }
         }
+      },
+      include: {
+        updates: true,
+        members: true
       }
-    },
-    include: {
-      updates: true,
-      members: true
-    }
-  })
-  return res.json({ clubs: clubs })
+    }),
+    prisma.club.findMany({
+      where: {
+        NOT: {
+          members: {
+            some: {
+              accountId: {
+                equals: session.user.id
+              }
+            }
+          }
+        }
+      },
+      include: {
+        updates: true,
+        members: true
+      }
+    })
+  ])
+  return res.json({ clubs, others })
 }
