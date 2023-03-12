@@ -1,16 +1,10 @@
-export const Close = ({onClick}) => (
+export const Close = ({ onClick }) => (
   <>
-  <div
-    className="background"
-    onClick={onClick}
-  />
-  <div
-    className="close"
-    onClick={onClick}
-  >
-    ×
-  </div>
-  <style>{`
+    <div className="background" onClick={onClick} />
+    <div className="close" onClick={onClick}>
+      ×
+    </div>
+    <style>{`
     .close {
       position: absolute;
       right: 16px;
