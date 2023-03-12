@@ -5,6 +5,7 @@ import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
 
 const slugger = new GithubSlugger()
+const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
