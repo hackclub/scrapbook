@@ -37,13 +37,16 @@ export const LoginPopup = ({ closed, setLoginOpen, session }) => {
         }}
       >
         <h1 style={{ fontSize: '2.3em' }}>Sign-in to Scrapbook</h1>
+        <div style={{ marginTop: '-12px', fontSize: '18px' }}>
+          Member of the <a href="https://hackclub.com/slack" style={{color: 'var(--colors-cyan)'}} target="_blank">Hack Club Slack</a>? Use the same email you use for Slack to access your account from the web.
+        </div>
         <div>
           <input
             placeholder="orpheus@hackclub.com"
             type="email"
             name="email"
             style={{ fontSize: '1.1em', textAlign: 'left' }}
-            {...useField('email')}
+            {...useField('email', 'email', true)}
           />
         </div>
         <div

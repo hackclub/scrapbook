@@ -37,7 +37,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               <input
                 placeholder="sam@hackclub.com"
                 required
-                {...useField('email')}
+                {...useField('email', 'email', true)}
               ></input>
             </div>
             <div>
@@ -45,7 +45,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               <input
                 placeholder="sampoder"
                 required
-                {...useField('username')}
+                {...useField('username', 'text', true)}
               ></input>
             </div>
             <div>

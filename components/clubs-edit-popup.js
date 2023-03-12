@@ -55,8 +55,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               </label>
               <input
                 placeholder="Happy Hack Club"
-                required
-                {...useField('name')}
+                {...useField('name', 'text', true)}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -72,7 +71,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="Shelburne, Vermont, USA"
                 required
-                {...useField('location')}
+                {...useField('location', 'text', true)}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -88,7 +87,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="https://hackclub.com/banner.png"
                 required
-                {...useField('banner')}
+                {...useField('banner', 'url', true)}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -104,7 +103,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="https://hackclub.com/logo.png"
                 required
-                {...useField('logo')}
+                {...useField('logo', 'url', true)}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>

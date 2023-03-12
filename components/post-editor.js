@@ -18,8 +18,9 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
       router: router,
       clearOnSubmit: 3500,
       initData: {
-        attachments: []
-      }
+        attachments: null
+      },
+      requiredFields: ['attachments']
     }
   )
   async function uploadFilesToS3(files) {
@@ -76,7 +77,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
               placeholder=""
               required
               name="text"
-              {...useField('text')}
+              {...useField('text', 'text', true)}
             />
           </div>
           <div>

@@ -126,7 +126,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                 placeholder="Happy Hack Club"
                 required
                 style={{ background: starting ? '' : 'var(--colors-darker)' }}
-                {...useField('name')}
+                {...useField('name', 'text', true)}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -142,7 +142,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               <input
                 placeholder="Shelburne, Vermont, USA"
                 required
-                {...useField('location')}
+                {...useField('location', 'text', true)}
                 style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
