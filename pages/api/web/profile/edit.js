@@ -48,7 +48,7 @@ export default async (req, res) => {
       if (vercelFetch.error) {
         return res.json({
           error: true,
-          message: `Couldn't set your domain - here's the error: ${vercelFetch.error}`
+          message: `Couldn't set your domain - here's the error: ${JSON.stringify(vercelFetch.error)}`
         })
       } else if (!vercelFetch.verified) {
         return res.json({

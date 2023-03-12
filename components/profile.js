@@ -74,6 +74,13 @@ const Profile = ({ closed, setMenuOpen, session }) => {
                 {...useField('cssURL')}
               ></input>
             </div>
+            <div style={{ gridColumn: `1 / span 2` }}>
+              <label>Custom Domain</label>
+              <input
+                placeholder="orpheus.hackclub.com"
+                {...useField('customDomain')}
+              ></input>
+            </div>
           </form>
           <button
             className="lg cta-blue"
