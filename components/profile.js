@@ -1,3 +1,4 @@
+import { Optional } from '../components/optional'
 import useForm from '../lib/use-form'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
@@ -49,7 +50,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               ></input>
             </div>
             <div>
-              <label>Pronouns</label>
+              <label>Pronouns <Optional/></label>
               <input
                 placeholder="they/them/theirs"
                 required
@@ -57,25 +58,25 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               ></input>
             </div>
             <div>
-              <label>GitHub URL</label>
+              <label>GitHub URL <Optional/></label>
               <input placeholder="sampoder" {...useField('github')}></input>
             </div>
             <div>
-              <label>Website URL</label>
+              <label>Website URL <Optional/></label>
               <input
                 placeholder="sampoder.com"
                 {...useField('website')}
               ></input>
             </div>
             <div>
-              <label>CSS URL</label>
+              <label>CSS URL <Optional/></label>
               <input
                 placeholder="css.hackclub.com/theme.css"
                 {...useField('cssURL')}
               ></input>
             </div>
             <div style={{ gridColumn: `1 / span 2` }}>
-              <label>Custom Domain</label>
+              <label>Custom Domain <Optional/></label>
               <input
                 placeholder="orpheus.hackclub.com"
                 {...useField('customDomain')}

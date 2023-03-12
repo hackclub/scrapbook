@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import S3 from '../lib/s3'
 import useForm from '../lib/use-form'
+import { Optional } from '../components/optional'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
@@ -151,10 +152,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                   fontSize: '1.1em'
                 }}
               >
-                Club Website{' '}
-                <small style={{ paddingTop: '2.4px', opacity: 0.6 }}>
-                  Optional
-                </small>
+                Club Website
+                <Optional />
               </label>
               <input
                 placeholder="happy.hackclub.com"

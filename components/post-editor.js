@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import S3 from '../lib/s3'
 import { useState } from 'react'
 import useForm from '../lib/use-form'
+import { Optional } from '../components/optional'
 
 export const PostEditor = ({ closed, setPostOpen, session }) => {
   const [uploading, setUploading] = useState(false)
@@ -115,7 +116,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                   marginBottom: '8px'
                 }}
               >
-                Did you make this in a club? Post it to your club's page!
+                Did you make this in a club? Post it to your club's page! <Optional />
               </label>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
                 {session.user.ClubMember.map(club => club.club).map(club => (

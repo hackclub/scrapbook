@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import S3 from '../lib/s3'
 import { useState } from 'react'
+import { Optional } from '../components/optional'
 import useSWR from 'swr'
 import Link from 'next/link'
 import useForm from '../lib/use-form'
@@ -46,7 +47,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
@@ -61,7 +61,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
@@ -77,7 +76,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
@@ -93,7 +91,6 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
@@ -109,12 +106,11 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
               >
-                Website
+                Website <Optional />
               </label>
               <input
                 placeholder="happy.hackclub.com"
@@ -125,12 +121,11 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
               >
-                GitHub
+                GitHub <Optional />
               </label>
               <input
                 placeholder="github.com/hackclub"
@@ -141,12 +136,11 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
               >
-                Custom CSS
+                Custom CSS <Optional />
               </label>
               <input
                 placeholder="happy.hackclub.com/style.css"
@@ -157,12 +151,11 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px' }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
               >
-                Custom Domain
+                Custom Domain <Optional />
               </label>
               <input
                 placeholder="scrapbook.happy.hackclub.com"
@@ -173,12 +166,11 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
             <div style={{ paddingRight: '16px', gridColumn: `1 / span 2` }}>
               <label
                 style={{
-                  marginBottom: '8px',
                   display: 'inline-block',
                   fontSize: '1.1em'
                 }}
               >
-                Description
+                Description <Optional />
               </label>
               <textarea {...useField('description')} />
             </div>
