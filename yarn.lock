@@ -114,19 +114,12 @@
   dependencies:
     "@babel/types" "^7.18.6"
 
-"@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.16.0":
+"@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.13.12", "@babel/helper-module-imports@^7.16.0", "@babel/helper-module-imports@^7.16.7":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.18.6.tgz#1e3ebdbbd08aad1437b428c50204db13c5a3ca6e"
   integrity sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA==
   dependencies:
     "@babel/types" "^7.18.6"
-
-"@babel/helper-module-imports@^7.13.12", "@babel/helper-module-imports@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.16.7.tgz"
-  integrity sha512-LVtS6TqjJHFc+nYeITRo6VLXve70xmq7wPhWTqDJusJEgGmkAACWwMiTNrvfoQo6hEhFwAIixNkvB0jPXDL8Wg==
-  dependencies:
-    "@babel/types" "^7.16.7"
 
 "@babel/helper-module-transforms@^7.12.1":
   version "7.17.6"
@@ -324,15 +317,7 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/types@^7.12.7", "@babel/types@^7.13.17", "@babel/types@^7.16.7", "@babel/types@^7.17.0":
-  version "7.17.0"
-  resolved "https://registry.npmjs.org/@babel/types/-/types-7.17.0.tgz"
-  integrity sha512-TmKSNO4D5rzhL5bjWFcVHHLETzfQ/AmbKpKPOSjlP0WoHZ6L911fgoOKY4Alp/emzG4cHJdyN49zpgkbXFEHHw==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.16.7"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@^7.18.6", "@babel/types@^7.20.7", "@babel/types@^7.21.0", "@babel/types@^7.21.2":
+"@babel/types@^7.12.7", "@babel/types@^7.13.17", "@babel/types@^7.16.7", "@babel/types@^7.17.0", "@babel/types@^7.18.6", "@babel/types@^7.20.7", "@babel/types@^7.21.0", "@babel/types@^7.21.2":
   version "7.21.2"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.21.2.tgz#92246f6e00f91755893c2876ad653db70c8310d1"
   integrity sha512-3wRZSs7jiFaB8AjxiiD+VqN5DTG2iRvJGQ+qYFrs/654lg6kGTQWIOFjlBo5RaXuAZjBmP3+OQH4dmhqiiyYxw==
@@ -684,10 +669,10 @@ babel-plugin-extract-import-names@1.6.22:
     lodash "^4.17.11"
     picomatch "^2.3.0"
 
-babel-plugin-superjson-next@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.npmjs.org/babel-plugin-superjson-next/-/babel-plugin-superjson-next-0.4.4.tgz"
-  integrity sha512-V0BimtxEm1FZOWeG0POliEVN4Y8P9ZbSVVyN78id61U066c/24cUzKyiv6v/hwWQFY61xRFgKXoodrWqd4t9iA==
+babel-plugin-superjson-next@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-superjson-next/-/babel-plugin-superjson-next-0.4.5.tgz#988ca073fb2059f1dc0c2d439b42e82a478b8cd2"
+  integrity sha512-k7S99Qpsbi3OSdlCMXEiklzxepM6QbYEIUsrjgSkpx+ksT0iNfdY2r1kCzBK2UjG8fLN6NZEKpDA8XpG2pbDSA==
   dependencies:
     "@babel/helper-module-imports" "^7.13.12"
     "@babel/types" "^7.13.17"
