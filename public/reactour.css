@@ -8,8 +8,23 @@
 }
 
 [data-tour-elem='badge'] {
-  width: 1.875em;
+  width: 2.9em;
+  height: 2.9em!important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: none!important;
+  background-image: url("https://avatars.slack-edge.com/2020-06-15/1191279139508_0dec98185c1fa1a48059_512.png")!important;
+  background-size: cover!important;
+  color: rgba(0,0,0,0)!important;
+  border: 3px solid #00a2ff!important;
+}
+
+.reactour__dot--is-active {
+  color: #00a2ff!important;
+  background: #00a2ff!important;
+}
+
+.reactour__dot--is-active::before {
+  color: #00a2ff!important;;
 }

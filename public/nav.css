@@ -1,3 +1,15 @@
+@media (max-width: 48em) {
+  .nav-flag, .nav-link-about {
+    display: none!important;
+  }
+  .nav-link-home {
+    margin-left: 0px!important;
+  }
+  .nav {
+    padding: 8px 16px!important;
+  }
+}
+
 @media (min-width: 48em) {
   .nav {
     padding: 0 32px;

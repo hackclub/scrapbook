@@ -9,6 +9,7 @@ import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Banner from '../../components/banner'
+import Content from '../../components/content'
 import Message from '../../components/message'
 import { StaticMention } from '../../components/mention'
 import Post from '../../components/post'
@@ -112,6 +113,12 @@ const Club = ({ club = {}, posts = [], children, session }) => {
               </div>
             </section>
           </div>
+          {club.description && <><aside className="header-col-2" aria-hidden />
+          <aside className="header-col-3" style={{display: 'flex', alignItems: 'center'}}>
+            <div className="post" style={{borderRadius: 'var(--radii-default)'}}>
+            <Content>{club.description}</Content>
+            </div>
+          </aside></>}
         </header>
       </main>
       <main className="container">

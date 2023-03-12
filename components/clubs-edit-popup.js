@@ -14,9 +14,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
       initData: club,
       success: 'Club updated!',
       closingAction: () => setClubsOpen(false),
-      initData: {
-        admin: false
-      }
+      initData: club
     }
   )
   return (
@@ -139,6 +137,52 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 placeholder="github.com/hackclub"
                 type="url"
                 {...useField('github')}
+              />
+            </div>
+            <div style={{ paddingRight: '16px' }}>
+              <label
+                style={{
+                  marginBottom: '8px',
+                  display: 'inline-block',
+                  fontSize: '1.1em'
+                }}
+              >
+                Custom CSS
+              </label>
+              <input
+                placeholder="happy.hackclub.com/style.css"
+                type="url"
+                {...useField('cssURL')}
+              />
+            </div>
+            <div style={{ paddingRight: '16px' }}>
+              <label
+                style={{
+                  marginBottom: '8px',
+                  display: 'inline-block',
+                  fontSize: '1.1em'
+                }}
+              >
+                Custom Domain
+              </label>
+              <input
+                placeholder="scrapbook.happy.hackclub.com"
+                type="url"
+                {...useField('customDomain')}
+              />
+            </div>
+            <div style={{ paddingRight: '16px', gridColumn: `1 / span 2` }}>
+              <label
+                style={{
+                  marginBottom: '8px',
+                  display: 'inline-block',
+                  fontSize: '1.1em'
+                }}
+              >
+                Description
+              </label>
+              <textarea
+                {...useField('description')}
               />
             </div>
           </form>

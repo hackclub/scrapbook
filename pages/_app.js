@@ -33,7 +33,8 @@ const App = ({ Component, pageProps }) => {
         steps={[
           {
             selector: '',
-            content: 'This is my first Step'
+            content: `Why hello there??!! It's Scrappy here! 
+                      Let me show you around my home - Scrapbook.`
           },
           {
             selector: '.nav-link-about',
