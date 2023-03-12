@@ -28,6 +28,28 @@ export default async (req, res) => {
       ).then(res => res.json())
     }
     if (req.body.customDomain) {
+      let [allUsers, allClubs] = await prisma.$transaction([
+        prisma.accounts.findMany(),
+        prisma.club.findMany()
+      ])
+      allUsers = allUsers.filter(function (user) {
+        return user.customDomain == req.body.customDomain
+      })
+      allClubs = allClubs.filter(function (club) {
+        return club.customDomain == req.body.customDomain
+      })
+      if (allUsers.length != 0 && allUsers[0].id != session.user.id) {
+        return res.json({
+          error: true,
+          message: `Couldn't set your domain - owned by another user.`
+        })
+      }
+      if (allClubs.length != 0) {
+        return res.json({
+          error: true,
+          message: `Couldn't set your domain - owned by a club.`
+        })
+      }
       const vercelFetch = await fetch(
         `https://api.vercel.com/v9/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/domains?teamId=${TEAM_ID}`,
         {
@@ -48,7 +70,9 @@ export default async (req, res) => {
       if (vercelFetch.error) {
         return res.json({
           error: true,
-          message: `Couldn't set your domain - here's the error: ${JSON.stringify(vercelFetch.error)}`
+          message: `Couldn't set your domain - here's the error: ${JSON.stringify(
+            vercelFetch.error
+          )}`
         })
       } else if (!vercelFetch.verified) {
         return res.json({
