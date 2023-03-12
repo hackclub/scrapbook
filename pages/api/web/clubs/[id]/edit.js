@@ -19,7 +19,7 @@ export default async (req, res) => {
     }
   })
   if (req.body.customDomain || club.customDomain != null) {
-    if (account.customDomain != null) {
+    if (club.customDomain != null) {
       const prevDomain = club.customDomain
       const response = await fetch(
         `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
