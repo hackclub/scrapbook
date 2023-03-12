@@ -1,5 +1,6 @@
 import Masonry from 'react-masonry-css'
 import Post from '../components/post'
+import { Close } from '../components/close'
 import EmojiPicker from 'emoji-picker-react'
 import toast from 'react-hot-toast'
 import { mutate } from 'swr'
@@ -49,6 +50,7 @@ const Posts = ({ posts = [], swrKey = null }) => {
           background: 'rgba(0,0,0,0.7)'
         }}
       >
+        <Close onClick={() => setEmojiPickerOpen(false)} />
         <EmojiPicker onEmojiClick={react} />
       </div>
     ),

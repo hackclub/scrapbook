@@ -50,7 +50,9 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               ></input>
             </div>
             <div>
-              <label>Pronouns <Optional/></label>
+              <label>
+                Pronouns <Optional />
+              </label>
               <input
                 placeholder="they/them/theirs"
                 required
@@ -58,25 +60,33 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               ></input>
             </div>
             <div>
-              <label>GitHub URL <Optional/></label>
+              <label>
+                GitHub URL <Optional />
+              </label>
               <input placeholder="sampoder" {...useField('github')}></input>
             </div>
             <div>
-              <label>Website URL <Optional/></label>
+              <label>
+                Website URL <Optional />
+              </label>
               <input
                 placeholder="sampoder.com"
                 {...useField('website')}
               ></input>
             </div>
             <div>
-              <label>CSS URL <Optional/></label>
+              <label>
+                CSS URL <Optional />
+              </label>
               <input
                 placeholder="css.hackclub.com/theme.css"
                 {...useField('cssURL')}
               ></input>
             </div>
             <div style={{ gridColumn: `1 / span 2` }}>
-              <label>Custom Domain <Optional/></label>
+              <label>
+                Custom Domain <Optional />
+              </label>
               <input
                 placeholder="orpheus.hackclub.com"
                 {...useField('customDomain')}

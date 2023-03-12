@@ -35,7 +35,10 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
           Manage Members
         </h1>
         {club.members.map(member => (
-          <div key={`member-${member.id}`} style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+          <div
+            key={`member-${member.id}`}
+            style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}
+          >
             <img
               src={member.account.avatar}
               height="48px"
@@ -84,7 +87,7 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="harold@hackclub.com"
                 required
-                style={{ background: 'var(--colors-background)'}}
+                style={{ background: 'var(--colors-background)' }}
                 {...useField('email', 'email', true)}
               />
             </div>
