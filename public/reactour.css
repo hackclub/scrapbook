@@ -20,6 +20,10 @@
   border: 3px solid #00a2ff !important;
 }
 
+button[data-tour-elem="right-arrow"][disabled=""] {
+  opacity: 0!important;
+}
+
 .reactour__dot--is-active {
   color: #00a2ff !important;
   background: #00a2ff !important;

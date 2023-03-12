@@ -51,20 +51,21 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
   <>
     <span
       onClick={() => setPostOpen(true)}
-      className="nav-link nav-link-github"
+      className="nav-link nav-link-github nav-link-post"
       style={{ marginLeft: '8px', marginRight: '-4px' }}
     >
       <Icon glyph="post-fill" size={38.2} />
     </span>
     <span
       onClick={() => setClubsOpen(true)}
-      className="nav-link nav-link-github"
+      className="nav-link nav-link-github nav-link-clubs"
     >
       <ClubsIcon size={24} />
     </span>
     <img
       src={emailToPfp(session.user.email)}
       onClick={() => setMenuOpen(true)}
+      className="nav-link-profile"
       style={{
         height: '28px',
         borderRadius: '999px',

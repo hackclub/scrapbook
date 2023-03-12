@@ -34,11 +34,23 @@ const App = ({ Component, pageProps }) => {
           {
             selector: '',
             content: `Why hello there??!! It's Scrappy here! 
-                      Let me show you around my home - Scrapbook.`
+                      Let me show you around my home: Scrapbook.`
           },
           {
-            selector: '.nav-link-about',
+            selector: '.nav-link-profile',
             content: 'This is my second Step'
+          },
+          {
+            selector: '.nav-link-post',
+            content: 'This is my third Step'
+          },
+          {
+            selector: '.nav-link-clubs',
+            content: 'This is my fourth Step'
+          },
+          {
+            selector: '.nav-link-home',
+            content: 'This is my fifth Step'
           }
         ]}
         isOpen={tour}
