@@ -113,12 +113,22 @@ const Club = ({ club = {}, posts = [], children, session }) => {
               </div>
             </section>
           </div>
-          {club.description && <><aside className="header-col-2" aria-hidden />
-          <aside className="header-col-3" style={{display: 'flex', alignItems: 'center'}}>
-            <div className="post" style={{borderRadius: 'var(--radii-default)'}}>
-            <Content>{club.description}</Content>
-            </div>
-          </aside></>}
+          {club.description && (
+            <>
+              <aside className="header-col-2" aria-hidden />
+              <aside
+                className="header-col-3"
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <div
+                  className="post"
+                  style={{ borderRadius: 'var(--radii-default)' }}
+                >
+                  <Content>{club.description}</Content>
+                </div>
+              </aside>
+            </>
+          )}
         </header>
       </main>
       <main className="container">

@@ -1,12 +1,13 @@
 @media (max-width: 48em) {
-  .nav-flag, .nav-link-about {
-    display: none!important;
+  .nav-flag,
+  .nav-link-about {
+    display: none !important;
   }
   .nav-link-home {
-    margin-left: 0px!important;
+    margin-left: 0px !important;
   }
   .nav {
-    padding: 8px 16px!important;
+    padding: 8px 16px !important;
   }
 }
 

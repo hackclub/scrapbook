@@ -2,13 +2,64 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 
+const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
+
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
     return res.json({ error: true })
   }
+  let account = await prisma.accounts.findFirst({
+    where: {
+      id: session.user.id
+    }
+  })
+  if (req.body.customDomain || account.customDomain != null) {
+    if (account.customDomain != null) {
+      const prevDomain = account.customDomain
+      const response = await fetch(
+        `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${process.env.VC_SCRAPBOOK_TOKEN}`
+          }
+        }
+      ).then(res => res.json())
+    }
+    if (req.body.customDomain) {
+      const vercelFetch = await fetch(
+        `https://api.vercel.com/v9/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/domains?teamId=${TEAM_ID}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.VC_SCRAPBOOK_TOKEN}`
+          },
+          body: JSON.stringify({
+            name: req.body.customDomain
+          })
+        }
+      )
+        .then(r => r.json())
+        .catch(err => {
+          console.log(`Error while setting custom domain ${arg}: ${err}`)
+        })
+      if (vercelFetch.error) {
+        return res.json({
+          error: true,
+          message: `Couldn't set your domain - here's the error: ${vercelFetch.error}`
+        })
+      } else if (!vercelFetch.verified) {
+        return res.json({
+          error: true,
+          message: `Couldn't set your domain - domains using Vercel DNS aren't supported.`
+        })
+      }
+    }
+  }
   try {
-    let account = await prisma.accounts.update({
+    account = await prisma.accounts.update({
       where: {
         id: session.user.id
       },
@@ -37,7 +88,8 @@ export default async (req, res) => {
             req.body.github == ''
             ? req.body.github
             : 'https://'.concat(req.body.github)
-          : null
+          : null,
+        customDomain: req.body.customDomain ? req.body.customDomain : null
       }
     })
     return res.json(account)

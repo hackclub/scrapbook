@@ -181,9 +181,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
               >
                 Description
               </label>
-              <textarea
-                {...useField('description')}
-              />
+              <textarea {...useField('description')} />
             </div>
           </form>
           <button
