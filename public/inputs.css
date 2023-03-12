@@ -105,7 +105,7 @@ button.cta-green {
 input,
 textarea,
 select {
-  background: var(--colors-dark);
+  background: var(--colors-elevated);
   color: var(--text);
   font-family: inherit;
   border-radius: var(--radii-default);

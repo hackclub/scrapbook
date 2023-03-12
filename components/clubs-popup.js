@@ -79,7 +79,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
 
         <details
           style={{
-            background: starting ? 'none' : 'var(--colors-dark)',
+            background: starting ? 'none' : 'var(--colors-elevated)',
             padding: starting ? '0px' : '12px',
             borderRadius: '8px',
             marginTop: starting ? '0px' : '0px'
@@ -125,7 +125,6 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               <input
                 placeholder="Happy Hack Club"
                 required
-                style={{ background: starting ? '' : 'var(--colors-darker)' }}
                 {...useField('name', 'text', true)}
               />
             </div>
@@ -143,7 +142,6 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                 placeholder="Shelburne, Vermont, USA"
                 required
                 {...useField('location', 'text', true)}
-                style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
             <div style={{ paddingRight: '16px' }}>
@@ -162,7 +160,6 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
                 placeholder="happy.hackclub.com"
                 {...useField('website')}
                 type="url"
-                style={{ background: starting ? '' : 'var(--colors-darker)' }}
               />
             </div>
             <button className="lg cta-blue" onClick={() => submit()}>

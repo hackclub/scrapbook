@@ -63,7 +63,7 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
         ))}
         <div
           style={{
-            background: 'var(--colors-dark)',
+            background: 'var(--colors-elevated)',
             padding: '12px',
             borderRadius: '8px',
             marginTop: '18px'
@@ -84,7 +84,6 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
               <input
                 placeholder="harold@hackclub.com"
                 required
-                style={{ background: 'var(--colors-darker)' }}
                 {...useField('email', 'email', true)}
               />
             </div>
