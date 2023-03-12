@@ -124,6 +124,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                       gap: '4px',
                       alignItems: 'center'
                     }}
+                    key={`club-${club.id}`}
                   >
                     <input
                       type="checkbox"

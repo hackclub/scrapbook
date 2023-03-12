@@ -35,7 +35,7 @@ export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
           Manage Members
         </h1>
         {club.members.map(member => (
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+          <div key={`member-${member.id}`} style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
             <img
               src={member.account.avatar}
               height="48px"

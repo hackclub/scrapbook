@@ -47,6 +47,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
         </h1>
         {(starting ? [] : data?.clubs)?.map(club => (
           <div
+            key={club.id}
             style={{
               display: 'flex',
               gap: '12px',

@@ -160,7 +160,7 @@ const Profile = ({
                     </span>
                   )}
                 </StaticMention>
-                <style>
+                <style key={`style-${u.id}`}>
                   {`
                 #${u.id}:hover > span,
                 #${u.id}:focus > span {

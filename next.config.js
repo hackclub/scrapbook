@@ -44,6 +44,10 @@ module.exports = withMDX({
       {
         source: '/:username.rss',
         destination: '/api/rss/:username'
+      },
+      {
+        source: '/auth/error:path*{/}',
+        destination: '/404'
       }
     ]
   },

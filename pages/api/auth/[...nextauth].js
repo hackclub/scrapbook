@@ -101,7 +101,8 @@ export const authOptions = {
   secret: process.env.TOKEN_SECRET,
   adapter: PrismaAdapter(prisma),
   pages: {
-    verifyRequest: '/?checkYourEmail'
+    verifyRequest: '/?checkYourEmail',
+    error: '/auth/error'
   },
   callbacks: {
     async session({ session, user, token }) {
