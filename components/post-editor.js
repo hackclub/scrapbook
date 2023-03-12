@@ -4,6 +4,7 @@ import S3 from '../lib/s3'
 import { useState } from 'react'
 import useForm from '../lib/use-form'
 import { Optional } from '../components/optional'
+import { Close } from '../components/close'
 
 export const PostEditor = ({ closed, setPostOpen, session }) => {
   const [uploading, setUploading] = useState(false)
@@ -189,7 +190,9 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           left: 0
         }}
         onClick={() => setPostOpen(false)}
-      />
+      >
+        <Close />
+      </div>
       {!closed && (
         <style>
           {`

@@ -50,7 +50,7 @@ const Posts = ({ posts = [], swrKey = null }) => {
           background: 'rgba(0,0,0,0.7)'
         }}
       >
-        <Close onClick={() => setEmojiPickerOpen(false)} />
+        <Close onClick={() => setEmojiPickerOpen(false)} background={true} />
         <EmojiPicker onEmojiClick={react} />
       </div>
     ),

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { Close } from '../components/close'
 import useSWR from 'swr'
 import Link from 'next/link'
 import S3 from '../lib/s3'
@@ -220,7 +221,9 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
           left: 0
         }}
         onClick={() => setClubsOpen(false)}
-      />
+      >
+        <Close />
+      </div>
     </div>
   )
 }

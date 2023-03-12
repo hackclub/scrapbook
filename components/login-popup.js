@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { Close } from '../components/close'
 import { getProviders, signIn, signOut, useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import useSWR from 'swr'
@@ -137,7 +138,9 @@ export const LoginPopup = ({ closed, setLoginOpen, session }) => {
           left: 0
         }}
         onClick={() => setLoginOpen(false)}
-      />
+      >
+        <Close />
+      </div>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import S3 from '../lib/s3'
 import { useState } from 'react'
 import { Optional } from '../components/optional'
+import { Close } from '../components/close'
 import useSWR from 'swr'
 import Link from 'next/link'
 import useForm from '../lib/use-form'
@@ -207,7 +208,9 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
           left: 0
         }}
         onClick={() => setClubsOpen(false)}
-      />
+      >
+        <Close />
+      </div>
       {!closed && (
         <style>
           {`

@@ -1,6 +1,6 @@
-export const Close = ({ onClick }) => (
+export const Close = ({ onClick, background = false }) => (
   <>
-    <div className="background" onClick={onClick} />
+    {background && <div className="background" onClick={onClick} />}
     <div className="close" onClick={onClick}>
       ×
     </div>

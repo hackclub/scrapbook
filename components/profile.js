@@ -1,4 +1,5 @@
 import { Optional } from '../components/optional'
+import { Close } from '../components/close'
 import useForm from '../lib/use-form'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
@@ -125,7 +126,9 @@ const Profile = ({ closed, setMenuOpen, session }) => {
           left: 0
         }}
         onClick={() => setMenuOpen(false)}
-      />
+      >
+        <Close />
+      </div>
       {!closed && (
         <style>
           {`
