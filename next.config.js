@@ -17,6 +17,7 @@ module.exports = withMDX({
   async rewrites() {
     return [
       { source: '/summer', destination: '/r/summer-of-making' },
+      { source: '/new', destination: '/' },
       {
         source: '/attachments/:path*{/}?',
         destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'

@@ -102,7 +102,8 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   pages: {
     verifyRequest: '/?checkYourEmail',
-    error: '/auth/error'
+    error: '/auth/error',
+    newUser: '/new'
   },
   callbacks: {
     async session({ session, user, token }) {
