@@ -18,7 +18,7 @@
     "@mux/mux-node": "^7.3.0",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@next/mdx": "^12.3.1",
-    "@prisma/client": "4.5.0",
+    "@prisma/client": "4.11.0",
     "aws-sdk": "^2.1309.0",
     "emoji-picker-react": "^4.4.7",
     "github-slugger": "^2.0.0",
