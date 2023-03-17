@@ -16,6 +16,7 @@ const Header = ({ reactions, children }) => (
     />
     <header>
       {children}
+      <h3>beta v2.0</h3>
       <h1>Hack Club’s Scrapbook</h1>
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
@@ -44,6 +45,18 @@ const Header = ({ reactions, children }) => (
         font-size: 36px;
         line-height: 1;
         padding: 16px;
+        padding-top: 0px;
+      }
+      h3 {
+        color: var(--colors-text);
+        font-family: var(--fonts-display);
+        margin: auto;
+        font-size: 16px;
+        line-height: 1;
+        text-align: right;
+        max-width: 680px;
+        margin-bottom: -12px;
+        opacity: 0.6
       }
       p {
         font-size: 18px;

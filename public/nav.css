@@ -1,6 +1,7 @@
 @media (max-width: 48em) {
   .nav-flag,
-  .nav-link-about {
+  .nav-link-about,
+  .beta-label {
     display: none !important;
   }
   .nav-link-home {
