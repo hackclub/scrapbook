@@ -33,13 +33,14 @@ export const getPosts = async (user, max = null) => {
       {
         Accounts: { username: user.username }
       },
-      {
+      user.slackID ? {
         accountsSlackID: user.slackID
+      } : {
+        accountsID: user.id
       }
     ]
   }})
   if (!allUpdates) console.error('Could not fetch posts')
-  console.log(allUpdates[0])
   return allUpdates.map(p => transformPost(p))
 }
 

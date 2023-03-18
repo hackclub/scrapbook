@@ -23,7 +23,6 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
   if (api) {
     let updatesWith
   }
-  console.log(updates)
   return updates
 }
 
