@@ -10,25 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model WebAccounts {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user Accounts @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -46,13 +27,11 @@ model VerificationToken {
 }
 
 model Accounts {
-  id                      String        @unique @default(cuid())
-  slackID                 String?       @unique(map: "Accounts.slackID_unique")
-  email                   String?       @unique(map: "Accounts.email_unique")
+  id                      String       @unique @default(cuid())
+  slackID                 String?      @unique(map: "Accounts.slackID_unique")
+  email                   String?      @unique(map: "Accounts.email_unique")
   emailVerified           DateTime?
-  username                String        @unique(map: "Accounts.username_unique")
-  webAccounts             WebAccounts[]
-  sessions                Session[]
+  username                String       @unique(map: "Accounts.username_unique")
   streakCount             Int?
   maxStreaks              Int?
   displayStreak           Boolean?
@@ -65,21 +44,21 @@ model Accounts {
   fullSlackMember         Boolean?
   avatar                  String?
   webring                 String[]
-  newMember               Boolean       @default(false)
+  newMember               Boolean      @default(false)
   timezoneOffset          Int?
   timezone                String?
   pronouns                String?
   customAudioURL          String?
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
-  updates                 Updates[]
   ClubMember              ClubMember[]
+  sessions                Session[]
+  updates                 Updates[]
 }
 
 model Updates {
   id               String           @id @default(cuid())
   accountsSlackID  String?
-  accountsID       String?
   postTime         DateTime?        @default(now())
   text             String?
   attachments      String[]
@@ -91,11 +70,10 @@ model Updates {
   backupPlaybackID String?
   isLargeVideo     Boolean?
   channel          String?
-  clubscrapID      String?          @unique
-  Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
-  clubscrap        Clubscraps?      @relation(fields: [clubscrapID], references: [id])
+  accountsID       String?
+  ClubUpdate       ClubUpdate?
   emojiReactions   EmojiReactions[]
-  ClubUpdate       ClubUpdate[]
+  Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
 }
 
 model EmojiType {
@@ -114,32 +92,21 @@ model EmojiReactions {
   update        Updates?   @relation(fields: [updateId], references: [id])
 }
 
-model Clubscraps {
-  id          String   @id @default(cuid())
-  createdAt   DateTime
-  description String
-  name        String
-  email       String
-  club        String?
-  timestamp   Float    @unique
-  update      Updates?
-}
-
 model ClubMember {
   id        String   @id @default(cuid())
   accountId String
-  account   Accounts @relation(fields: [accountId], references: [id], onDelete: Cascade)
   clubId    String
-  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
   admin     Boolean  @default(false)
+  account   Accounts @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
 }
 
 model ClubUpdate {
   id       String  @id @default(cuid())
   updateId String  @unique
-  update   Updates @relation(fields: [updateId], references: [id], onDelete: Cascade)
   clubId   String
   club     Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  update   Updates @relation(fields: [updateId], references: [id], onDelete: Cascade)
 }
 
 model Club {
@@ -147,13 +114,13 @@ model Club {
   slug         String       @unique
   name         String
   logo         String
-  banner       String       @default("https://wallpapercave.com/wp/wp10026724.jpg")
   customDomain String?
   cssURL       String?
   website      String?
   location     String?
   github       String?
   description  String?
+  banner       String       @default("https://wallpapercave.com/wp/wp10026724.jpg")
   members      ClubMember[]
   updates      ClubUpdate[]
 }
