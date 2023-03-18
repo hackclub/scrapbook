@@ -23,6 +23,7 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
   if (api) {
     let updatesWith
   }
+  console.log(updates)
   return updates
 }
 
@@ -72,7 +73,7 @@ export const getPosts = async (max = null, api = false) => {
   return await getRawPosts(max, {}, api).then(posts =>
     posts
       .map(p => {
-        p.user = find(users, { id: p.accountsID }) || {}
+        p.user = find(users, { id: p.accountsID }) || find(users, { slackID: p.accountsSlackID })
         return p
       })
       .filter(p => !isEmpty(p.user))
