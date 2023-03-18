@@ -11,7 +11,8 @@ module.exports = withMDX({
       'avatars.slack-edge.com',
       'secure.gravatar.com',
       'i.imgur.com',
-      'www.gravatar.com'
+      'www.gravatar.com',
+      'ca.slack-edge.com'
     ]
   },
   async rewrites() {
