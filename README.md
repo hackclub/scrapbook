@@ -4,19 +4,6 @@ Scrapbook helps you **share the things you're working on every day!** As a [Hack
 
 Scrapbook was made by the Hack Club community because many of us have found that **showing up every day** has been key to our success in learning. Even if we didn’t make something big or impressive, showing up consistently and making something was key.
 
-## The Future of Scrapbook
-
-Scrapbook was originally developed in 2020 for the Summer of Making. Since then, it has received bug fixes & minor feature updates. However, there hasn't been major full time development on the project. We're currently exploring what a Scrapbook v2 looks like and have drafted up a these notes on what a second version of Scrapbook looks like (after a general spring cleaning of the codebase):
-
-1. Scrapbook is opened up to Clubs. This means building out a better UX for club members & then make the platform an important part of the Clubs program.
-   1. The platform includes features that enable hackathon organisers to use Scrapbook at their events.
-2. Scrapbook becomes place where things are happening on Hack Club through better intergration with community events.
-3. Scrapbook's website becomes something that a Hack Clubber would be proud to share outside of Hack Club.
-4. Scrapbook features consistent high-quality posts from HQ-ers that encourage sharing ongoing projects and create a buzz around the channel.
-5. Scrapbook streaks work consistently & feel meaningful again.
-
-If you have thoughts about how we could make [Scrapbook v2](https://github.com/hackclub/scrapbook) special, we'd love to hear them! Get in touch through [GitHub Issues](https://github.com/hackclub/scrapbook/issues), [#scrapbook-dev in Slack](https://hackclub.slack.com/archives/C0C78SG9L/p1662043963377279) or [email](mailto:sam@hackclub.com).
-
 ## How do I join?
 
 Your Scrapbook is automatically generated for you when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel.
