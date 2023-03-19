@@ -117,7 +117,10 @@ const Nav = () => {
             </a>
           ) : (
             <Link href="/">
-              <a className="nav-link nav-link-home">Scrapbook</a>
+              <a className="nav-link nav-link-home">
+                Scrapbook
+                <span className="beta-label">{" "}(Beta-V2)</span>
+              </a>
             </Link>
           ))}
         <Link href="/about/" passHref>

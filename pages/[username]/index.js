@@ -188,7 +188,6 @@ const Profile = ({
             'data-tip': v?.date ? `${v?.date} updates: ${v?.count}` : ''
           })}
         />
-        <Tooltip />
       </aside>
     </header>
     <article className="posts">
@@ -317,9 +316,9 @@ export const getStaticProps = async ({ params }) => {
     if (profile.webring) {
       webring = await Promise.all(
         profile.webring.map(async id => {
-          const u = await getProfile(id, 'id')
+          let u = id[0] == "U" ? await getProfile(id, 'slackID') : await getProfile(id, 'id')
           try {
-            u.mutual = u.webring.includes(profile.slackID)
+            u.mutual = u.webring.includes(profile.slackID) || u.webring.includes(profile.id)
           } catch {
             u.mutual = false
           }
@@ -327,6 +326,7 @@ export const getStaticProps = async ({ params }) => {
         })
       )
     }
+
     return {
       props: { profile, webring, heatmap, posts },
       revalidate: 1

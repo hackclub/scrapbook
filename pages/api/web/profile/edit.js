@@ -119,6 +119,9 @@ export default async (req, res) => {
     return res.json(account)
   } catch (e) {
     console.error(e)
+    if(e.toString().includes("Unique constraint failed on the fields: (`username`)")){
+      return res.json({ error: true, message: "Sorry! That username is taken." })
+    }
     return res.json({ error: true })
   }
 }

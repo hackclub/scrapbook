@@ -29,11 +29,17 @@ export const getProfile = async (value, field = 'username') => {
 
 export const getPosts = async (user, max = null) => {
   const allUpdates = await getRawPosts(max, {
-    where: {
-      Accounts: { username: user.username }
-    }
-  })
-
+    where:  {OR: [
+      {
+        Accounts: { username: user.username }
+      },
+      user.slackID ? {
+        accountsSlackID: user.slackID
+      } : {
+        accountsID: user.id
+      }
+    ]
+  }})
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates.map(p => transformPost(p))
 }
