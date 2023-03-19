@@ -56,7 +56,7 @@ const Header = ({ reactions, children }) => (
         text-align: right;
         max-width: 680px;
         margin-bottom: -12px;
-        opacity: 0.6
+        opacity: 0.6;
       }
       p {
         font-size: 18px;

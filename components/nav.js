@@ -119,7 +119,7 @@ const Nav = () => {
             <Link href="/">
               <a className="nav-link nav-link-home">
                 Scrapbook
-                <span className="beta-label">{" "}(Beta-V2)</span>
+                <span className="beta-label"> (Beta-V2)</span>
               </a>
             </Link>
           ))}
