@@ -6,46 +6,54 @@ Scrapbook was made by the Hack Club community because many of us have found that
 
 ## How do I join?
 
-Your Scrapbook is automatically generated for you when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel.
-
-A post requires just two things: a description and an image. Your image can be dragged straight into Slack and Scrapbook will take care of the rest. [An example message](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419) into Slack might look like:
+Your Scrapbook is automatically generated for you when you make your first Scrapbook post. A post requires just two things: a description and an image. Scrapbook will take care of the rest. [A post](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419) looks like this:
 
 ```
 learned Express generator today - now back to a ton of (organized) files
 ```
 
-![Example Scrapbook post image](https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png)
+<img src="https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png" />
 
 _Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
+
+### Posting from Slack (`#scrapbook`)
+
+Hack Clubbers can also post from [the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel. As long as you use the same email for Slack and `scrapbook.hackclub.com`, the two will be synced up!
+
+Here's how it would look on Slack to create a post:
+
+<img src="https://cloud-nf0autycv-hack-club-bot.vercel.app/0scrapbook-example.gif" />
 
 ## Scrappy (the Slack Bot)
 
 Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not only handles the automatic generation of things, but provides some helpful commands as well. These commands are also documented in our Slack if you send the message `/scrappy` in any channel.
 
+<details>
+  <summary>Available commands</summary>
+
 - `/scrappy-togglestreaks`: toggles your streak count on/off in your status
 - `/scrappy-togglestreaks all`: opts out of streaks completely
-- `/scrappy-open`: opens your scrapbook (or another user's if you specify a username)
-- `/scrappy-setcss`: adds a custom CSS file to your scrapbook profile. [Check out this cool example](https://scrapbook.hackclub.com/msw)!
-- `/scrappy-setdomain`: links a custom domain to your scrapbook profile, e.g. [scrapbook.maggieliu.dev](https://scrapbook.maggieliu.dev/)
+- `/scrappy-open`: opens your Scrapbook (or another user's if you specify a username)
+- `/scrappy-setcss`: adds a custom CSS file to your Scrapbook profile. [Check out this cool example](https://scrapbook.hackclub.com/msw)!
+- `/scrappy-setdomain`: links a custom domain to your Scrapbook profile, e.g. [scrapbook.maggieliu.dev](https://scrapbook.maggieliu.dev/)
 - `/scrappy-setusername`: change your profile username
 - `/scrappy-setaudio`: links an audio file to your Scrapbook. [See an example here](https://scrapbook.hackclub.com/matthew)!
 - `/scrappy-setwebhook`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
 - `/scrappy-webring`: adds or removes someone to your webring
 - _Remove_ a post: delete the Slack message and Scrappy will automatically update for you
 - _Edit_ a post: edit the Slack message and it will automatically update for you
-- _Post_ to the `#scrapbook` channel or add an existing Slack message to Scrapbook by reacting to it with the `:scrappy:` emoji (Note: If it isn't working, make sure Scrappy is added to the channel by mentioning `@scrappy`)
+
+</details>
 
 ## Custom domains
 
-To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
-
-Hack Clubbers can also use a `dino.icu` subdomain by submitting a PR to our [DNS repository](https://github.com/hackclub/dns).
+To put your profile on your own domain, edit the field in your profile or run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev/)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 ## CSS customization
 
-To customize the CSS on your profile page, run `/scrappy setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
+To customize the CSS on your profile page, edit the field in your profile or run `/scrappy-setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
-Want to preview your CSS before adding it to your profile? Check out [@jasonappah](https://github.com/jasonappah)’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
+Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
 
 If you are a beginner at coding and need a more in depth guide on how to work with CSS, check out [@sampoder](https://github.com/sampoder)’s workshop on the topic, this covers different useful areas like CSS variables, fonts and making custom animations. You can access it from [here](https://workshops.hackclub.com/scrapbook_css/).
 
