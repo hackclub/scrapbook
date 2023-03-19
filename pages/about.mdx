@@ -20,9 +20,7 @@ Scrapbook helps you **share those things you're working on** with the rest of th
 
 ## How do I join?
 
-Your Scrapbook is automatically generated for you when you make your first Scrapbook post. In order to post, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel.
-
-A post requires just two things: a description and an image. Your image can be dragged straight into Slack and Scrapbook will take care of the rest. [An example message](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419) into Slack might look like:
+Your Scrapbook is automatically generated for you when you make your first Scrapbook post. A post requires just two things: a description and an image. Scrapbook will take care of the rest. [A post](https://hackclub.slack.com/archives/C01504DCLVD/p1646030307450419)might look like:
 
 ```
 learned Express generator today - now back to a ton of (organized) files
@@ -30,7 +28,11 @@ learned Express generator today - now back to a ton of (organized) files
 
 <img src="https://cloud-f8by3gcpv-hack-club-bot.vercel.app/0screenshot_2022-02-27_223754.png" />
 
-_Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_
+_Example pulled from [audreyolafz's scrapbook](https://scrapbook.hackclub.com/audreyolafz)_ 
+  
+### Posting from Slack (`#scrapbook`)  
+  
+Hack Clubbers can also post from [the Hack Club Slack](https://hackclub.com/slack). Once you've completed the onboarding flow in Slack and have access to all of the channels, join the `#scrapbook` channel. From here, Scrapbook posts are automatically generated for you when you post a message in the `#scrapbook` channel. As long as you use the same email for Slack and `scrapbook.hackclub.com`, the two will be synced up!
 
 Here's how it would look on Slack to create a post:
 
@@ -59,13 +61,11 @@ Scrappy, our handy dandy [Slack bot](https://github.com/hackclub/scrappy), not o
 
 ## Custom domains
 
-To put your profile on your own domain, run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev/)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
-
-Hack Clubbers can also use a `dino.icu` subdomain by submitting a PR to our [DNS repository](https://github.com/hackclub/dns).
+To put your profile on your own domain, edit the field in your profile or run `/scrappy setdomain <domain>` in Slack, giving your website’s hostname (e.g. [`scrapbook.maggieliu.dev`](https://scrapbook.maggieliu.dev/)). Then, add a `CNAME` record on your DNS provider, pointed to `cname.vercel-dns.com`. If you’re curious how this works, it’s [open source right here](http://github.com/hackclub/summer-domains).
 
 ## CSS customization
 
-To customize the CSS on your profile page, run `/scrappy-setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
+To customize the CSS on your profile page, edit the field in your profile or run `/scrappy-setcss <link>` in Slack, giving a link to a CSS file or a [GitHub Gist](https://gist.github.com). [Here’s the default CSS](https://scrapbook.hackclub.com/themes/default.css), for your overwriting pleasure.
 
 Want to preview your CSS before adding it to your profile? Check out <Mention username="jasonaa" />’s [Scrapbook Customizer](https://scrapbook.hackclub.com/customizer).
 
