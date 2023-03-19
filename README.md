@@ -185,4 +185,4 @@ Scrapbook was originally built in a week while preparing for the 2020 [Summer of
 
 ---
 
-Hack Club, 2022. MIT License.
+Hack Club, 2023. MIT License.
