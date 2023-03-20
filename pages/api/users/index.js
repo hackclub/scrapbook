@@ -1,5 +1,5 @@
 import prisma from '../../../lib/prisma'
-import { transformProfile } from './[username]/index.js'
+import { transformProfile } from './[username]/index'
 
 export const getRawUsers = (onlyFull = false, where = undefined) =>
   prisma.accounts.findMany({ where })
