@@ -16,13 +16,16 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
         }
       }
     },
-    ...params
+    ...params,
+    where: {
+      NOT: {
+        accountsID: null
+      },
+      ...params?.where
+    }
   }
   if (max) opts.take = max
   const updates = await prisma.updates.findMany(opts)
-  if (api) {
-    let updatesWith
-  }
   return updates
 }
 
@@ -68,24 +71,22 @@ export const transformPost = p => ({
 })
 
 export const getPosts = async (max = null, api = false) => {
-  const users = await getRawUsers(true)
+  const users = await getRawUsers()
   return await getRawPosts(max, {}, api).then(posts =>
     posts
       .map(p => {
-        p.user =
-          find(users, { id: p.accountsID }) ||
-          find(users, { slackID: p.accountsSlackID })
+        p.user = find(
+          users,
+          p.accountsID ? { id: p.accountsID } : { slackID: p.accountsSlackID }
+        )
         return p
       })
-      .filter(p => !isEmpty(p.user))
+      //.filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
   )
 }
 
 export default async (req, res) => {
-  const posts = await getPosts(
-    req.query.max ? Number(req.query.max) : 200,
-    true
-  )
+  const posts = await getPosts(req.query.max ? Number(req.query.max) : 200)
   return res.json(posts)
 }

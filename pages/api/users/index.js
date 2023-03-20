@@ -1,13 +1,22 @@
 import prisma from '../../../lib/prisma'
 import { transformProfile } from './[username]/index'
 
-export const getRawUsers = (onlyFull = false, where = undefined, take = 100) =>
-  prisma.accounts.findMany({ where, take })
+export const getRawUsers = async (
+  where = undefined,
+  include = undefined,
+  take = undefined
+) => prisma.accounts.findMany({ where, include, take })
 
 // Find users with at least one Scrapbook post
 export default async (req, res) =>
   getRawUsers(
-    false,        
+    {
+      NOT: {
+        updates: {
+          none: {}
+        }
+      }
+    },
     undefined,
-    req.query.max || 100
+    Number(req.query.max) || undefined
   ).then(u => res.json(u.map(transformProfile) || []))

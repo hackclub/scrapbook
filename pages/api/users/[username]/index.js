@@ -49,7 +49,7 @@ export const getPosts = async (user, max = null) => {
 }
 
 export const getMentions = async user => {
-  const users = await getRawUsers(true)
+  const users = await getRawUsers()
   const allUpdates = await getRawPosts(null, {
     where: {
       text: { contains: `@${user.username}` }

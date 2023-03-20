@@ -50,7 +50,7 @@ export const getPosts = async (club, max = null) => {
   })
 
   if (!allUpdates) console.error('Could not fetch posts')
-  const users = await getRawUsers(true)
+  const users = await getRawUsers()
   return allUpdates
     .map(p => {
       p.user = find(users, { id: p.accountsID }) || {}

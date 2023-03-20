@@ -53,7 +53,8 @@ model Accounts {
   webhookURL              String?
   ClubMember              ClubMember[]
   sessions                Session[]
-  updates                 Updates[]
+  updates                 Updates[] @relation("updates")
+  slackUpdates            Updates[] @relation("slackUpdates")
 }
 
 model Updates {
@@ -73,7 +74,8 @@ model Updates {
   accountsID       String?
   ClubUpdate       ClubUpdate?
   emojiReactions   EmojiReactions[]
-  Accounts         Accounts?        @relation(fields: [accountsID], references: [id])
+  Accounts         Accounts?        @relation("updates", fields: [accountsID], references: [id])
+  SlackAccounts    Accounts?        @relation("slackUpdates", fields: [accountsSlackID], references: [slackID])
 }
 
 model EmojiType {

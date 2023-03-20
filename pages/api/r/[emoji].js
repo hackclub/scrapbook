@@ -3,7 +3,7 @@ import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
 export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
-  const users = await getRawUsers(true)
+  const users = await getRawUsers()
   const allUpdates = await getRawPosts(maxRecords, {
     where: {
       emojiReactions: {

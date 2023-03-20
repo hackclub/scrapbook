@@ -54,8 +54,8 @@
 }
 
 .header-streak {
-  padding: 4px 16px 4px 0!important;
-  margin: 8px 12px 8px 0!important;
+  padding: 4px 16px 4px 0 !important;
+  margin: 8px 12px 8px 0 !important;
   max-height: 28px;
 }
 .header-streak-zero {
@@ -168,6 +168,6 @@
 }
 
 .header-streak {
-  background-color: var(--colors-yellow)!important;
-  color: var(--colors-black)!important;
+  background-color: var(--colors-yellow) !important;
+  color: var(--colors-black) !important;
 }
