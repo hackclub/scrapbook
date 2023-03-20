@@ -20,9 +20,6 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
   }
   if (max) opts.take = max
   const updates = await prisma.updates.findMany(opts)
-  if (api) {
-    let updatesWith
-  }
   return updates
 }
 
