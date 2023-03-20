@@ -85,7 +85,7 @@ model EmojiType {
 }
 
 model EmojiReactions {
-  id            String     @id
+  id            String     @id @default(cuid())
   updateId      String?
   emojiTypeName String?
   usersReacted  String[]
