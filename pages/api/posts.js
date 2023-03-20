@@ -20,9 +20,6 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
   }
   if (max) opts.take = max
   const updates = await prisma.updates.findMany(opts)
-  if (api) {
-    let updatesWith
-  }
   return updates
 }
 
@@ -84,8 +81,7 @@ export const getPosts = async (max = null, api = false) => {
 
 export default async (req, res) => {
   const posts = await getPosts(
-    req.query.max ? Number(req.query.max) : 200,
-    true
+    req.query.max ? Number(req.query.max) : 200
   )
   return res.json(posts)
 }
