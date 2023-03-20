@@ -15,4 +15,4 @@ export default async (req, res) =>
         }
       }
     }
-  ).then(u => res.json(u.map(x => transformProfile(x) || []))
+  ).then(u => res.json(u.map(transformProfile) || []))
