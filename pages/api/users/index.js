@@ -11,4 +11,4 @@ export default async (req, res) =>
         none: {}
       }
     }
-  }).then(u => res.json(u || []))
+  }).then(u => res.json(u.map(x=> ({...x, email: null})) || []))
