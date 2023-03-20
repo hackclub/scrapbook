@@ -5,10 +5,4 @@ export const getRawUsers = (onlyFull = false, where = undefined) =>
 
 // Find users with at least one Scrapbook post
 export default async (req, res) =>
-  getRawUsers(false, {
-    NOT: {
-      updates: {
-        none: {}
-      }
-    }
-  }).then(u => res.json(u.map(x=> ({...x, email: null})) || []))
+  getRawUsers(false).then(u => res.json(u.map(x=> ({...x, email: null})) || []))
