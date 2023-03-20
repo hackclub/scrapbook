@@ -9,5 +9,5 @@ export default async (req, res) =>
   getRawUsers(
     false,        
     undefined,
-    100
+    req.query.max || 100
   ).then(u => res.json(u.map(transformProfile) || []))
