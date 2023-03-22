@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
-import { useRouter } from '@next/router'
 
 const Header = ({ reactions, children }) => (
   <>
