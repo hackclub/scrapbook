@@ -4,6 +4,7 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
+import { useRouter } from '@next/router'
 
 const Header = ({ reactions, children }) => (
   <>
@@ -113,11 +114,14 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-const IndexPage = ({ reactions, initialData }) => (
-  <Feed initialData={initialData} footer={<Footer />}>
-    <Header reactions={reactions} />
-  </Feed>
-)
+const IndexPage = ({ reactions, initialData }) => {
+  const router = useRouter()
+  return (
+    <Feed initialData={initialData} footer={<Footer />}>
+      {!router?.query?.embed && <Header reactions={reactions} />}
+    </Feed>
+  )
+}
 
 export default IndexPage
 
