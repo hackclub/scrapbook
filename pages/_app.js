@@ -28,7 +28,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <SessionProvider>
       <Toaster />
-      <Nav />
+      {!router?.query?.embed && <Nav />}
       <NProgress color={'#ec3750'} />
       <Component {...pageProps} />
       {router.asPath.substring(0, 4) == '/new' && (
