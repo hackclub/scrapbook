@@ -64,12 +64,14 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
             >
               <Icon glyph="plus" size={36} />
             </span>
-          )}
+          
         </h1>
-        <input
-          placeholder="Search for a club..."
-          {...search.useField('search')}
-        />
+        {!starting && (
+          <input
+            placeholder="Search for a club..."
+            {...search.useField('search')}
+          />
+        )}
         {(starting
           ? []
           : data
