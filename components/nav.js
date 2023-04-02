@@ -12,13 +12,6 @@ import { LoginPopup } from './login-popup'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
 
-const Join = () => (
-  <a href="https://hackclub.com/slack/" className="badge">
-    Join
-    <style>{badgeStyles}</style>
-  </a>
-)
-
 const badgeStyles = `
 .badge {
   background-color: var(--colors-muted);
@@ -52,12 +45,14 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
     <span
       onClick={() => setPostOpen(true)}
       className="nav-link nav-link-github nav-link-post"
+      title="Create a Post"
       style={{ marginLeft: '8px', marginRight: '-4px' }}
     >
       <Icon glyph="post-fill" size={38.2} />
     </span>
     <span
       onClick={() => setClubsOpen(true)}
+      title="Clubs on Scrapbook"
       className="nav-link nav-link-github nav-link-clubs"
     >
       <ClubsIcon size={24} />
@@ -66,6 +61,7 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
       src={emailToPfp(session.user.email)}
       onClick={() => setMenuOpen(true)}
       className="nav-link-profile"
+      title="Edit Your Profile"
       style={{
         height: '28px',
         borderRadius: '999px',
