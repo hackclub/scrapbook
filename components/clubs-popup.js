@@ -50,7 +50,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
           }}
         >
           <span style={{ flexGrow: 1, paddingTop: '1px' }}>
-            {starting ? 'Create a Club' : 'Clubs on Scrapbook'}
+            {starting ? `Create Your Club's Page` : 'Clubs on Scrapbook'}
           </span>
           {!starting && (
             <span
@@ -64,7 +64,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
             >
               <Icon glyph="plus" size={36} />
             </span>
-          
+          )}
         </h1>
         {!starting && (
           <input
