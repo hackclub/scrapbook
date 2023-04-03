@@ -26,7 +26,7 @@ const ExamplePosts = (club = false) => {
     ? [
         <Post
           key="club"
-          text="Your club's adventure beings."
+          text="Your club's adventure begins."
           postedAt="Today"
           attachments={[
             'https://cloud-frsxs88gv-hack-club-bot.vercel.app/0frame_1__3_.png'
