@@ -51,9 +51,9 @@ export default async (req, res) => {
         ...(clubKeys.length != 0
           ? {
               ClubUpdate: {
-                create: clubKeys.map(clubKey => ({
-                  clubId: clubKey
-                }))
+                create: {
+                  clubId: clubKeys[0]
+                }
               }
             }
           : {})
