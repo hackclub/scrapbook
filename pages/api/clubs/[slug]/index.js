@@ -42,9 +42,7 @@ export const getPosts = async (club, max = null) => {
   const allUpdates = await getRawPosts(max, {
     where: {
       ClubUpdate: {
-        some: {
-          clubId: club.id
-        }
+        clubId: club.id
       }
     }
   })
