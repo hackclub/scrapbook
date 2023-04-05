@@ -96,7 +96,7 @@ const Club = ({ club = {}, posts = [], children, session }) => {
                       className="header-link club-header-link header-link-github"
                     >
                       <Icon size={24} glyph="github" />
-                      {normalizeUrl(club.github, { stripProtocol: true })}
+                      {normalizeUrl(club.github, { stripProtocol: true }).replace("github.com/", "")}
                     </a>
                   )}
                   {club.website && (
