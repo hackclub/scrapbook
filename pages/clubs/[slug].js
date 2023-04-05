@@ -175,7 +175,8 @@ const Club = ({ club = {}, posts = [], children, session }) => {
             position: 'fixed',
             bottom: '32px',
             right: '32px',
-            display: 'flex'
+            display: 'flex',
+            color: 'white'
           }}
         >
           <div
