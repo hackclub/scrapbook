@@ -58,7 +58,7 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
       <ClubsIcon size={24} />
     </span>
     <img
-      src={emailToPfp(session.user.email)}
+      src={session.user.avatar || emailToPfp(session.user.email)}
       onClick={() => setMenuOpen(true)}
       className="nav-link-profile"
       title="Edit Your Profile"
