@@ -162,7 +162,7 @@ const Nav = () => {
             />
           </>
         ) : (
-          <>
+          !ext && <>
             <SignIn setLoginOpen={setLoginOpen} />
             <LoginPopup
               closed={!loginOpen}
