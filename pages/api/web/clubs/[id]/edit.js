@@ -23,7 +23,7 @@ export default async (req, res) => {
     if (club.customDomain != null) {
       const prevDomain = club.customDomain
       const response = await fetch(
-        `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
+        `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
           headers: {
@@ -56,7 +56,7 @@ export default async (req, res) => {
         })
       }
       const vercelFetch = await fetch(
-        `https://api.vercel.com/v9/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/domains?teamId=${TEAM_ID}`,
+        `https://api.vercel.com/v9/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/domains?teamId=${TEAM_ID}`,
         {
           method: 'POST',
           headers: {
