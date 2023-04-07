@@ -125,7 +125,7 @@ const IndexPage = ({ reactions, initialData }) => {
 
 export default IndexPage
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async (context) => {
   const { getPosts } = require('./api/posts')
   const initialData = await getPosts(48)
   const { find, compact, map, flatten } = require('lodash')
@@ -150,5 +150,6 @@ export const getStaticProps = async () => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData }, revalidate: 1 }
+  const host = context.req.headers.host;
+  return { props: { reactions, initialData } }
 }
