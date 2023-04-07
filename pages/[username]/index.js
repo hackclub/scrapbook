@@ -243,7 +243,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
         heatmap={initialData.heatmap}
         webring={initialData.webring}
       >
-        <Banner isVisible={router.query.welcome === 'true'}>
+        <Banner isVisible={router?.query.welcome === 'true'}>
           Woah!!! We’re communicating via a website now…welcome to your
           scrapbook page!
           <br />

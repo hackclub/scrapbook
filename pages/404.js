@@ -6,9 +6,6 @@ import Icon from '@hackclub/icons'
 
 const errorPage = () => {
   let router = useRouter()
-  let query = new URLSearchParams(
-    router.asPath.substring(router.asPath.indexOf('?'))
-  )
   return (
     <main>
       <Meta as={Head} name="Hack Club's Scrapbook" title="404" />
