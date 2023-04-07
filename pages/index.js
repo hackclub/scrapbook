@@ -120,7 +120,7 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-const IndexPage = ({ reactions, initialData, type ...props }) => {
+const IndexPage = ({ reactions, initialData, type, ...props }) => {
   const router = useRouter()
   if(type == "user") return <UserPage {...props} />
   if(type == "club") return <ClubPage {...props} />
