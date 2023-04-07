@@ -78,7 +78,11 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
 )
 
 const Nav = () => {
-  const { pathname, query } = useRouter()
+  let pathname
+  let query
+  if(window){
+    { pathname, query } = useRouter()
+  }
   const { data: session, status } = useSession()
   const home = pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
@@ -88,13 +92,13 @@ const Nav = () => {
   // This is a hack for using the right link on custom domains
   const [ext, setExt] = useState(false)
   useEffect(() => {
-    if (query.checkYourEmail !== undefined) {
+    if (query?.checkYourEmail !== undefined) {
       toast('Where now? Head to your email for a unique URL to login.')
-    } else if (query.successfullySaved !== undefined) {
+    } else if (query?.successfullySaved !== undefined) {
       toast('Profile saved successfully; nice update!')
-    } else if (query.successfullyPosted !== undefined) {
+    } else if (query?.successfullyPosted !== undefined) {
       toast("Post published successfully; it'll show up here soon!")
-    } else if (query.errorTryAgain !== undefined) {
+    } else if (query?.errorTryAgain !== undefined) {
       toast('Oh-no! Something errored on our end, please try again.')
     }
   }, query)
