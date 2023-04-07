@@ -1,4 +1,10 @@
 import { useRouter } from 'next/router'
+import { getStaticProps as getUserProps } from './[username]/'
+import { getStaticProps as getClubProps } from './clubs/[slug]/'
+import getUsers from './api/users'
+import getClubs from './api/clubs'
+import UserPage from './[username]/'
+import ClubPage from './clubs/[slug]/'
 import Head from 'next/head'
 import Link from 'next/link'
 import Meta from '@hackclub/meta'
@@ -114,8 +120,10 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-const IndexPage = ({ reactions, initialData }) => {
+const IndexPage = ({ reactions, initialData, type ...props }) => {
   const router = useRouter()
+  if(type == "user") return <UserPage {...props} />
+  if(type == "club") return <ClubPage {...props} />
   return (
     <Feed initialData={initialData} footer={<Footer />}>
       {!router?.query?.embed && <Header reactions={reactions} />}
@@ -151,5 +159,23 @@ export const getServerSideProps = async (context) => {
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
   const host = context.req.headers.host;
-  return { props: { reactions, initialData } }
+  if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
+    const users = await getUsers().then(r => r.filter(function(user){
+        return user.customDomain == host;
+    }))
+    if (user.length == 0) {
+      const clubs = await getClubs().then(r => r.filter(function(club){
+          return club.customDomain == host;
+      }))
+      if (clubs.length != 0) {
+        let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
+        return { props: { ...props, type: "club" } }
+      }
+    }
+    else {
+      let { props } = await getUserProps({ params: {slug: users[0].username}})
+      return { props: { ...props, type: "user" } }
+    }
+  }
+  return { props: { reactions, initialData, type: "index" } }
 }
