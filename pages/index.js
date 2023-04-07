@@ -157,6 +157,7 @@ export const getServerSideProps = async (context) => {
   const host = context.req.headers.host;
   if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
     let [users, clubs] = await Promise.all([getRawUsers, getRawClubs])
+    console.log([users, clubs])
     users = users.filter((user) => user.customDomain == host)
     clubs = clubs.filter((club) => club.customDomain == host)
     if (clubs.length != 0) {
