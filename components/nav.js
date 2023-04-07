@@ -88,6 +88,13 @@ const Nav = () => {
   // This is a hack for using the right link on custom domains
   const [ext, setExt] = useState(false)
   useEffect(() => {
+    try {
+      const l = document.createElement('a');
+      l.href = window.location.href;
+      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExt(true);
+    } catch (e) {}
+  }, []);
+  useEffect(() => {
     if (router?.query?.checkYourEmail !== undefined) {
       toast('Where now? Head to your email for a unique URL to login.')
     } else if (router?.query?.successfullySaved !== undefined) {
