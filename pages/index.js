@@ -174,7 +174,7 @@ export const getServerSideProps = async (context) => {
       }
     }
     else {
-      let { props } = await getUserProps({ params: {slug: users[0].username}})
+      let { props } = await getUserProps({ params: {username: users[0].username}})
       return { props: { ...props, type: "user" } }
     }
   }
