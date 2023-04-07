@@ -163,7 +163,7 @@ export const getServerSideProps = async (context) => {
     const users = await getRawUsers().then(r => r.filter(function(user){
         return user.customDomain == host;
     }))
-    if (user.length == 0) {
+    if (users.length == 0) {
       const clubs = await getRawClubs().then(r => r.filter(function(club){
           return club.customDomain == host;
       }))
