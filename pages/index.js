@@ -156,14 +156,13 @@ export const getServerSideProps = async (context) => {
   ]
   const host = context.req.headers.host;
   if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
-    const [users, clubs] = Promise.all([
-      getRawUsers().then(r => r.filter(function(user){
-          return user.customDomain == host;
-      })), 
-      getRawClubs().then(r => r.filter(function(club){
-          return club.customDomain == host;
-      }))
-    ])
+    let [users, clubs] = Promise.all([getRawUsers, getRawClubs])
+    users = users.filter(function(user){
+        return user.customDomain == host;
+    })
+    clubs = users.filter(function(user){
+        return user.customDomain == host;
+    })
     if (clubs.length != 0) {
       let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
       return { props: { ...props, type: "club" } }
