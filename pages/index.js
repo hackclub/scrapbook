@@ -168,17 +168,14 @@ export const getServerSideProps = async (context) => {
           return club.customDomain == host;
       }))
       if (clubs.length != 0) {
-        console.log("WE MADE IT HERE! CLUB.")
         let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
         return { props: { ...props, type: "club" } }
       }
     }
     else {
-      console.log("WE MADE IT HERE! USER.")
       let { props } = await getUserProps({ params: {slug: users[0].username}})
       return { props: { ...props, type: "user" } }
     }
   }
-  console.log("WE MADE IT HERE! INDEX.")
   return { props: { reactions, initialData, type: "index" } }
 }
