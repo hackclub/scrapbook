@@ -18,5 +18,5 @@ export default async (req, res) =>
       }
     },
     undefined,
-    Number(req.query.max) || undefined
+    Number(req.query?.max) || undefined
   ).then(u => res.json(u.map(transformProfile) || []))

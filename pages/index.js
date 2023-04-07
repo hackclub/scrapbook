@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { getStaticProps as getUserProps } from './[username]/'
 import { getStaticProps as getClubProps } from './clubs/[slug]'
-import getUsers from './api/users'
-import getClubs from './api/clubs'
+import { getRawUsers } from './api/users'
+import { getRawClubs } from './api/clubs'
 import UserPage from './[username]/'
 import ClubPage from './clubs/[slug]'
 import Head from 'next/head'
@@ -160,11 +160,11 @@ export const getServerSideProps = async (context) => {
   )
   const host = context.req.headers.host;
   if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
-    const users = await getUsers().then(r => r.filter(function(user){
+    const users = await getRawUsers().then(r => r.filter(function(user){
         return user.customDomain == host;
     }))
     if (user.length == 0) {
-      const clubs = await getClubs().then(r => r.filter(function(club){
+      const clubs = await getRawClubs().then(r => r.filter(function(club){
           return club.customDomain == host;
       }))
       if (clubs.length != 0) {
