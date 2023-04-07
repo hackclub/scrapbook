@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import Nav from '../components/nav'
 import NProgress from '../components/nprogress'
 import Analytics from '../components/analytics'
+import FourOhFour from './404'
 import '../public/app.css'
 import '../public/clubs.css'
 import '../public/emoji-picker.css'
@@ -25,6 +26,18 @@ const App = ({ Component, pageProps }) => {
   const Tour = dynamic(() => import('reactour'), {
     ssr: false
   })
+  // This is a hack for using the right link on custom domains
+  const [ext, setExt] = useState(false)
+  useEffect(() => {
+    try {
+      const l = document.createElement('a');
+      l.href = window.location.href;
+      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com" && l.pathname != "/") setExt(true);
+    } catch (e) {}
+  }, []);
+  if(ext){
+    return <FourOhFour />
+  }
   return (
     <SessionProvider>
       <Toaster />

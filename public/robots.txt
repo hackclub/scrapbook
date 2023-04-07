@@ -1,2 +1,31 @@
 User-agent: *
-Allow: /
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Googlebot
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Bingbot
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Slurp
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: DuckDuckBot
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Baiduspider
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Yandex
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: Sogou
+Disallow: /
+Allow: /$ # Allow only root path
+User-agent: *
+Disallow:
+Allow: /$ # Allow only root path for all other User-agents
+User-agent: *
+Disallow:
+Allow: / # Allow all for scrapbook.hackclub.com
+Host: scrapbook.hackclub.com
