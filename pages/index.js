@@ -135,7 +135,6 @@ export default IndexPage
 
 export const getServerSideProps = async (context) => {
   const { getPosts } = require('./api/posts')
-  const initialData = await getPosts(48)
   const { find, compact, map, flatten } = require('lodash')
   const names = [
     'art',
@@ -155,28 +154,28 @@ export const getServerSideProps = async (context) => {
     'birthday',
     'winter-hardware-wonderland'
   ]
-  const reactions = compact(
-    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
-  )
   const host = context.req.headers.host;
   if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
-    const users = await getRawUsers().then(r => r.filter(function(user){
-        return user.customDomain == host;
-    }))
-    console.log(users)
-    if (users.length == 0) {
-      const clubs = await getRawClubs().then(r => r.filter(function(club){
+    const [users, clubs] = Promise.all([
+      getRawUsers().then(r => r.filter(function(user){
+          return user.customDomain == host;
+      })), 
+      getRawClubs().then(r => r.filter(function(club){
           return club.customDomain == host;
       }))
-      if (clubs.length != 0) {
-        let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
-        return { props: { ...props, type: "club" } }
-      }
+    ])
+    if (clubs.length != 0) {
+      let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
+      return { props: { ...props, type: "club" } }
     }
-    else {
+    if (users.length != 0) {
       let { props } = await getUserProps({ params: {username: users[0].username}})
       return { props: { ...props, type: "user" } }
     }
   }
+  const initialData = await getPosts(48)
+  const reactions = compact(
+    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
+  )
   return { props: { reactions, initialData, type: "index" } }
 }
