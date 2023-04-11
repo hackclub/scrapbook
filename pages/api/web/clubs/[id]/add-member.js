@@ -27,7 +27,7 @@ export default async (req, res) => {
               },
               create: {
                 email: req.body.email,
-                username: `${req.body.email.split("@")[0])}${Math.ceil(Math.random()*1000)}`,
+                username: `${req.body.email.split("@")[0]}${Math.ceil(Math.random()*1000)}`,
               },
             },
           },
