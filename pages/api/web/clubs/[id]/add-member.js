@@ -21,9 +21,6 @@ export default async (req, res) => {
             }
           },
           account: {
-            connect: {
-              email: req.body.email
-            },
             connectOrCreate: {
               where: {
                 email: req.body.email,
