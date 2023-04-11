@@ -15,6 +15,6 @@
 
 @media (min-width: 48em) {
   .club-header {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr)!important;
   }
 }
