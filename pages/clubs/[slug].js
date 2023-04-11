@@ -71,7 +71,7 @@ const Club = ({ club = {}, posts = [], children, session }) => {
         )}
         {children}
         <header
-          className="header"
+          className="header clubs-header"
           style={{ maxWidth: '72rem', margin: 'auto', padding: '0.5rem 1rem' }}
         >
           <div className="header-col-1">
