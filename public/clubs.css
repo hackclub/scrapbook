@@ -12,3 +12,9 @@
   align-items: center;
   gap: 4px;
 }
+
+@media (min-width: 48em) {
+  .club-header {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
