@@ -23,7 +23,16 @@ export default async (req, res) => {
           account: {
             connect: {
               email: req.body.email
-            }
+            },
+            connectOrCreate: {
+              where: {
+                email: req.body.email,
+              },
+              create: {
+                email: req.body.email,
+                username: `${req.body.email.split("@")[0])}${Math.ceil(Math.random()*1000)}`,
+              },
+            },
           },
           admin: req.body.admin || false
         },
