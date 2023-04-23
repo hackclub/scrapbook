@@ -2,7 +2,7 @@
   "github": { "silent": true },
   "crons": [
     {
-      "path": "/api/cron",
+      "path": "/api/web/streaks",
       "schedule": "0 * * * *"
     }
   ]
