@@ -39,7 +39,7 @@
     "rss": "^1.2.2",
     "styled-components": "^4.0.0",
     "superjson": "^1.11.0",
-    "swr": "^2.1.4"
+    "swr": "^2.1.5"
   },
   "devDependencies": {
     "babel-plugin-superjson-next": "^0.4.4",
