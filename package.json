@@ -14,7 +14,7 @@
     "@hackclub/react-calendar-heatmap": "^1.8.2",
     "@mdx-js/loader": "^1.6.22",
     "@mux/mux-node": "^7.3.0",
-    "@next-auth/prisma-adapter": "^1.0.5",
+    "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "4.13.0",
     "@next/mdx": "^13.2.4",
     "aws-sdk": "^2.1363.0",
