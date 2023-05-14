@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Reaction from './reaction'
 import dynamic from 'next/dynamic'
 import EmojiPicker from 'emoji-picker-react'
+import { PostImage } from './post-image-popup'
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif']
@@ -46,6 +47,8 @@ const Post = ({
   swrKey,
   authSession
 }) => {
+  const [imageClosed, setImageOpen] = useState(false);
+
   return (
     <>
       <section
@@ -124,21 +127,17 @@ const Post = ({
           <div className="post-attachments">
             {filter(attachments, a => endsWithAny(imageFileTypes, a)).map(
               img => (
-                <a
-                  key={img}
-                  href={img}
-                  target="_blank"
-                  title={img}
-                  className="post-attachment"
-                >
+                <>
                   <img
-                    key={img}
-                    alt={img}
-                    src={img}
-                    loading="lazy"
-                    title={img}
+                      key={img}
+                      alt={img}
+                      src={img}
+                      loading="lazy"
+                      title={img}
+                      onClick={() => setImageOpen(true)}
                   />
-                </a>
+                  <PostImage {...img, setImageOpen} closed={imageClosed} />
+                </>
               )
             )}
             {filter(attachments, a => endsWithAny(audioFileTypes, a)).map(
