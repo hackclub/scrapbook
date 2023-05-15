@@ -136,7 +136,7 @@ const Post = ({
                       title={img}
                       onClick={() => setImageOpen(true)}
                   />
-                  <PostImage {...img, setImageOpen} closed={imageClosed} />
+                  <PostImage img={img} setImageOpen={setImageOpen} closed={imageClosed} />
                 </>
               )
             )}
