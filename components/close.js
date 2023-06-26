@@ -15,7 +15,7 @@ export const Close = ({ onClick, background = false }) => (
       cursor: pointer;
     }
     .close:hover {
-      color: var(--colors-cyan);
+      color: var(--colors-icon);
     }
     .background {
       position: absolute;
