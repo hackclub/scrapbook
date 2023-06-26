@@ -8,7 +8,26 @@ export default async (req, res) => {
   try {
     const session = await getServerSession(req, res, authOptions)
     if (session?.user === undefined) {
-      return res.json({ clubs: [] })
+      let [others] = await prisma.$transaction([
+        prisma.club.findMany({
+          where: {
+            NOT: {
+              members: {
+                some: {
+                  accountId: {
+                    equals: session.user.id
+                  }
+                }
+              }
+            }
+          },
+          include: {
+            updates: true,
+            members: true
+          }
+        })
+      ])
+      return res.json({ clubs: [], others })
     }
     let [clubs, others] = await prisma.$transaction([
       prisma.club.findMany({
@@ -47,6 +66,6 @@ export default async (req, res) => {
     return res.json({ clubs, others })
   }
   catch {
-    return res.json({ clubs: [] })
+    return res.json({ clubs: [], others: [] })
   }  
 }
