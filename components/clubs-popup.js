@@ -10,10 +10,10 @@ import { Optional } from '../components/optional'
 import Icon from '@hackclub/icons'
 const fetcher = url => fetch(url).then(r => r.json())
 
-export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn }) => {
-  const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
+export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) => {
+  const { data, error } = loggedIn ? useSWR('/api/web/clubs/my', fetcher, {
     refreshInterval: 5000
-  })
+  }) : undefined
   let router = useRouter()
   const [starting, setStarting] = useState(false)
   const search = useForm()
