@@ -5,6 +5,7 @@ import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
 
 export default async (req, res) => {
+  try {
   const session = await getServerSession(req, res, authOptions)
   if (session?.user === undefined) {
     return res.json({ clubs: [] })
@@ -44,4 +45,8 @@ export default async (req, res) => {
     })
   ])
   return res.json({ clubs, others })
+  }
+  catch {
+    return res.json({ clubs: [] })
+  }  
 }
