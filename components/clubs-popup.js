@@ -78,7 +78,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) 
           : data
           ? [
               ...data?.clubs,
-              ...data?.others.map(other => ({ ...other, other: true }))
+              ...data?.others?.map(other => ({ ...other, other: true }))
             ]
           : []
         )?.map(club => (
