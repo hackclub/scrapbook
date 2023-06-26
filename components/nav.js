@@ -164,6 +164,13 @@ const Nav = () => {
           </>
         ) : (
           !ext && <>
+            <span
+              onClick={() => setClubsOpen(true)}
+              title="Clubs on Scrapbook"
+              className="nav-link nav-link-github nav-link-clubs"
+            >
+              <ClubsIcon size={24} />
+            </span>
             <ClubsPopup
               closed={!clubsOpen}
               setClubsOpen={setClubsOpen}
