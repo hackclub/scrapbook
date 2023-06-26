@@ -148,7 +148,7 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               setStarting(true)
             }}
           >
-            <b style={{ flexGrow: 1 }}>Start A Club</b>
+            <b style={{ flexGrow: 1 }}>Add A Club</b>
             <b style={{ paddingRight: '8px' }}>▶︎</b>
           </summary>
           <div
