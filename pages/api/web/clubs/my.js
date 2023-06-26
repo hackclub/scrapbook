@@ -10,17 +10,6 @@ export default async (req, res) => {
     if (session?.user === undefined) {
       let [others] = await prisma.$transaction([
         prisma.club.findMany({
-          where: {
-            NOT: {
-              members: {
-                some: {
-                  accountId: {
-                    equals: session.user.id
-                  }
-                }
-              }
-            }
-          },
           include: {
             updates: true,
             members: true
