@@ -38,7 +38,7 @@
 
 .nav-link:hover,
 .nav-link:focus {
-  color: var(--colors-cyan);
+  color: var(--colors-icon);
 }
 
 .nav-link-home {
