@@ -82,7 +82,7 @@
 
 .header-link:hover,
 .header-link:focus {
-  color: var(--colors-cyan);
+  color: var(--colors-icon);
 }
 
 .header-content audio {
@@ -142,7 +142,7 @@
 
 .header-webring-mention:hover svg,
 .header-webring-mention:focus svg {
-  color: var(--colors-cyan);
+  color: var(--colors-icon);
 }
 
 .css {
