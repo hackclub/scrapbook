@@ -159,10 +159,17 @@ const Nav = () => {
               closed={!clubsOpen}
               setClubsOpen={setClubsOpen}
               session={session}
+              loggedIn={true}
             />
           </>
         ) : (
           !ext && <>
+            <ClubsPopup
+              closed={!clubsOpen}
+              setClubsOpen={setClubsOpen}
+              session={session}
+              loggedIn={false}
+            />
             <SignIn setLoginOpen={setLoginOpen} />
             <LoginPopup
               closed={!loginOpen}
