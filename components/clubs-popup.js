@@ -10,7 +10,7 @@ import { Optional } from '../components/optional'
 import Icon from '@hackclub/icons'
 const fetcher = url => fetch(url).then(r => r.json())
 
-export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
+export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn }) => {
   const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
     refreshInterval: 5000
   })
@@ -57,7 +57,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session }) => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                display: loggedIn ? 'inline' : 'none'
               }}
               className="nav-link"
               onClick={() => setStarting(true)}
