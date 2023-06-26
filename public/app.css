@@ -38,6 +38,7 @@
   --colors-elevated: var(--colors-white);
   --colors-sunken: var(--colors-smoke);
   --colors-progress: var(--colors-red);
+  --colors-icon: var(--colors-blue);
 
   --breakpoint-xs: 32em;
   --breakpoint-s: 48em;
@@ -106,6 +107,7 @@
     --colors-sheet: var(--colors-darkless);
     --colors-elevated: var(--colors-darkless);
     --colors-sunken: var(--colors-darker);
+    --colors-icon: var(--colors-cyan);
   }
 }
 
