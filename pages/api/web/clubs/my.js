@@ -6,29 +6,13 @@ import normalizeUrl from 'normalize-url'
 
 export default async (req, res) => {
   try {
-  const session = await getServerSession(req, res, authOptions)
-  if (session?.user === undefined) {
-    return res.json({ clubs: [] })
-  }
-  let [clubs, others] = await prisma.$transaction([
-    prisma.club.findMany({
-      where: {
-        members: {
-          some: {
-            accountId: {
-              equals: session.user.id
-            }
-          }
-        }
-      },
-      include: {
-        updates: true,
-        members: true
-      }
-    }),
-    prisma.club.findMany({
-      where: {
-        NOT: {
+    const session = await getServerSession(req, res, authOptions)
+    if (session?.user === undefined) {
+      return res.json({ clubs: [] })
+    }
+    let [clubs, others] = await prisma.$transaction([
+      prisma.club.findMany({
+        where: {
           members: {
             some: {
               accountId: {
@@ -36,15 +20,31 @@ export default async (req, res) => {
               }
             }
           }
+        },
+        include: {
+          updates: true,
+          members: true
         }
-      },
-      include: {
-        updates: true,
-        members: true
-      }
-    })
-  ])
-  return res.json({ clubs, others })
+      }),
+      prisma.club.findMany({
+        where: {
+          NOT: {
+            members: {
+              some: {
+                accountId: {
+                  equals: session.user.id
+                }
+              }
+            }
+          }
+        },
+        include: {
+          updates: true,
+          members: true
+        }
+      })
+    ])
+    return res.json({ clubs, others })
   }
   catch {
     return res.json({ clubs: [] })
