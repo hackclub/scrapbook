@@ -80,7 +80,7 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
 const Nav = () => {
   let router = useRouter()
   const { data: session, status } = useSession()
-  const home = router?.pathname === '/' || true
+  const home = router?.pathname === '/' ? true : false
   const [menuOpen, setMenuOpen] = useState(false)
   const [postOpen, setPostOpen] = useState(false)
   const [clubsOpen, setClubsOpen] = useState(false)
