@@ -1505,10 +1505,10 @@ react-tilt@^0.1.4:
   resolved "https://registry.yarnpkg.com/react-tilt/-/react-tilt-0.1.4.tgz#0ac1f33674a3fff6c617cf411002d7ecdd2ebcb1"
   integrity sha512-bVeRumg+RIn6QN8S92UmubGqX/BG6/QeQISBeAcrS/70dpo/jVj+sjikIawDl5wTuPdubFH8zH0EMulWIctsnw==
 
-react-tooltip@^5.11.1:
-  version "5.11.1"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-5.11.1.tgz#75857ffaed1d13e3e35189934e8a373751fc78c0"
-  integrity sha512-+2a/DvmOlPQd5e1f3s32E/+vv4Tv4UmPxZfCyeVr4BeY3SRCEKGHiE36jH+UtqxSuRP9TKviwmhow4gNDRXCMQ==
+react-tooltip@^5.20.0:
+  version "5.20.0"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-5.20.0.tgz#d8c183f66976fb793ce79d9a35283dd18018f844"
+  integrity sha512-LWBIHEZjwDW9ZJ/Dn2xeZrsz+WKMii61CIsx2XPfs1IiIRnWyvKJXrgy6uEGOXYvrnCd4jiEvurn8Y+zJ1bw5Q==
   dependencies:
     "@floating-ui/dom" "^1.0.0"
     classnames "^2.3.0"
