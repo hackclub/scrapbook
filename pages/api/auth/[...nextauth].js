@@ -236,7 +236,7 @@ function html(params) {
                 Hack Club is an
                 <a href="https://hackclub.com/opensource" target="_blank">open source</a>
                 and
-                <a href="https://bank.hackclub.com/hq" target="_blank"
+                <a href="https://hcb.hackclub.com/hq" target="_blank"
                   >financially transparent</a
                 >
                 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the
