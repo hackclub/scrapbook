@@ -7,8 +7,8 @@ export const ClubsIcon = ({ size, fill = 'currentcolor' }) => (
     xmlns="http://www.w3.org/2000/svg"
     fillRule="evenodd"
     clipRule="evenodd"
-    stroke-linejoin="round"
-    stroke-miterlimit="1.414"
+    strokeLinejoin="round"
+    strokeMiterlimit={1.414}
     preserveAspectRatio="xMidYMid meet"
   >
     <path

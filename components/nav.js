@@ -42,14 +42,18 @@ const SignIn = ({ setLoginOpen }) => (
 
 const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
   <>
-    <span
-      onClick={() => setPostOpen(true)}
-      className="nav-link nav-link-github nav-link-post"
-      title="Create a Post"
-      style={{ marginLeft: '8px', marginRight: '-4px' }}
+  <button
+    style={{
+      position: "fixed",
+      bottom: "2em",
+      right: "2em",
+      zIndex: 10
+    }}
+    onClick={() => setPostOpen(true)}
     >
-      <Icon glyph="post-fill" size={38.2} />
-    </span>
+      <Icon glyph='post' size={38.2} />
+      New Post
+    </button>
     <span
       onClick={() => setClubsOpen(true)}
       title="Clubs on Scrapbook"
@@ -86,12 +90,12 @@ const Nav = () => {
   const [clubsOpen, setClubsOpen] = useState(false)
   const [loginOpen, setLoginOpen] = useState(false)
   // This is a hack for using the right link on custom domains
-  const [ext, setExt] = useState(false)
+  const [external, setExternal] = useState(false)
   useEffect(() => {
     try {
       const l = document.createElement('a');
       l.href = window.location.href;
-      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExt(true);
+      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
     } catch (e) {}
   }, []);
   useEffect(() => {
@@ -111,7 +115,7 @@ const Nav = () => {
       <nav className="nav">
         <Flag />
         {!home &&
-          (ext ? (
+          (external ? (
             <a
               href="https://scrapbook.hackclub.com/"
               className="nav-link nav-link-home"
@@ -137,6 +141,9 @@ const Nav = () => {
         >
           <Icon glyph="github" size={32} />
         </a>
+        
+    
+
         {status === 'authenticated' ? (
           <>
             <SignOut
@@ -163,7 +170,7 @@ const Nav = () => {
             />
           </>
         ) : (
-          !ext && <>
+          !external && <>
             <span
               onClick={() => setClubsOpen(true)}
               title="Clubs on Scrapbook"
