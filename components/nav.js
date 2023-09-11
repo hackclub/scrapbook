@@ -47,6 +47,7 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
       position: "fixed",
       bottom: "2em",
       right: "2em",
+      padding: "1em",
       zIndex: 10
     }}
     onClick={() => setPostOpen(true)}
@@ -142,8 +143,6 @@ const Nav = () => {
           <Icon glyph="github" size={32} />
         </a>
         
-    
-
         {status === 'authenticated' ? (
           <>
             <SignOut
