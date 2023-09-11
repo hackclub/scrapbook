@@ -74,17 +74,18 @@ const Profile = ({ closed, setMenuOpen, session }) => {
                   border: '1px solid var(--muted)'
                 }}
               />
-              <button>Change</button>
                 <input 
                 type='file' 
                 placeholder="change profile" 
                 multiple="false"
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
+                className="file-upload__input"
                 onChange={event => {
                   replaceProfilePicture(event.target.files[0]);
                 }}
                 />
             </div>
+            <div></div>
             <div>
               <label>Email Address</label>
               <input

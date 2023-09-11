@@ -141,3 +141,36 @@ input[type='checkbox'] {
   -moz-appearance: checkbox;
   appearance: checkbox;
 }
+
+.file-upload__input {
+  color: transparent;
+}
+
+.file-upload__input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.file-upload__input::before {
+  content: 'Select some files';
+  color: white;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f94f28, #f24142);
+  border-radius: var(--radii-default);
+  padding: 0.5em;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+  width: 100%;
+  text-align: center;
+}
+.file-upload__input:hover::before {
+  border-color: black;
+}
+.file-upload__input:active {
+  outline: 0;
+}
+.file-upload__input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}
