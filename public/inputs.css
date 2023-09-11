@@ -142,14 +142,14 @@ input[type='checkbox'] {
   appearance: checkbox;
 }
 
-.file-upload__input {
+input[type='file'] {
   color: transparent;
 }
 
-.file-upload__input::-webkit-file-upload-button {
+input[type='file']::-webkit-file-upload-button {
   visibility: hidden;
 }
-.file-upload__input::before {
+input[type='file']::before {
   content: 'Select some files';
   color: white;
   display: inline-block;
@@ -165,12 +165,12 @@ input[type='checkbox'] {
   width: 100%;
   text-align: center;
 }
-.file-upload__input:hover::before {
+input[type='file']:hover::before {
   border-color: black;
 }
-.file-upload__input:active {
+input[type='file']:active {
   outline: 0;
 }
-.file-upload__input:active::before {
+input[type='file']:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
 }
