@@ -1,4 +1,5 @@
 import prisma from '../../../lib/prisma'
+import metrics from "../../../metrics";
 
 export const getRawClubs = async (where = undefined) => {
   try {

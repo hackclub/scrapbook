@@ -3,6 +3,7 @@ import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { getRawUsers } from '../../users'
 import { emailToPfp } from '../../../../lib/email'
+import metrics from "../../../../metrics";
 
 export const getClub = async (value, field = 'slug') => {
   let where = {}
