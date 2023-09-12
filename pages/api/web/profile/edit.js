@@ -113,6 +113,13 @@ export default async (req, res) => {
             ? req.body.github
             : 'https://'.concat(req.body.github)
           : null,
+        avatar: req.body.avatar 
+          ? req.body.avatar?.includes('https://') ||
+            req.body.avatar?.includes('http://') ||
+            req.body.avatar == ''
+            ? req.body.avatar
+            : 'https://'.concat(req.body.avatar)
+          : null,
         customDomain: req.body.customDomain ? req.body.customDomain : null
       }
     })
