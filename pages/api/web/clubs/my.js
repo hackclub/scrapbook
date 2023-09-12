@@ -1,8 +1,7 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
-import GithubSlugger from 'github-slugger'
-import normalizeUrl from 'normalize-url'
+import metrics from "../../../../metrics";
 
 export default async (req, res) => {
   try {
@@ -18,6 +17,7 @@ export default async (req, res) => {
       ])
       return res.json({ clubs: [], others })
     }
+
     let [clubs, others] = await prisma.$transaction([
       prisma.club.findMany({
         where: {
@@ -52,9 +52,12 @@ export default async (req, res) => {
         }
       })
     ])
+
+    metrics.increment("success.get_my_clubs", 1);
     return res.json({ clubs, others })
   }
   catch {
+    metrics.increment("errors.get_my_clubs", 1);
     return res.json({ clubs: [], others: [] })
-  }  
+  }
 }

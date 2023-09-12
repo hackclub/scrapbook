@@ -3,6 +3,7 @@ import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
 import { emailToPfp } from '../../lib/email'
+import metrics from "../../metrics";
 
 export const getRawPosts = async (max = null, params = {}, api = false) => {
   const opts = {
@@ -25,8 +26,14 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
     }
   }
   if (max) opts.take = max
-  const updates = await prisma.updates.findMany(opts)
-  return updates
+  try {
+    const updates = await prisma.updates.findMany(opts)
+    metrics.increment("success.get_raw_posts", 1);
+    return updates
+  } catch (err) {
+    metrics.increment("errors.get_raw_posts", 1);
+    return [];
+  }
 }
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
@@ -50,16 +57,16 @@ export const transformPost = p => ({
   id: p.id,
   user: p.user
     ? {
-        ...p.user,
-        avatar: p.user.avatar || emailToPfp(p.user.email)
-      }
+      ...p.user,
+      avatar: p.user.avatar || emailToPfp(p.user.email)
+    }
     : {},
   timestamp: p.messageTimestamp || null,
   slackUrl: p.messageTimestamp
     ? `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp
-        .toString()
-        .replace('.', '')
-        .padEnd(16, '0')}`
+      .toString()
+      .replace('.', '')
+      .padEnd(16, '0')}`
     : null,
   postedAt: p.messageTimestamp
     ? formatTS(p.messageTimestamp)
@@ -72,18 +79,25 @@ export const transformPost = p => ({
 
 export const getPosts = async (max = null, api = false) => {
   const users = await getRawUsers()
-  return await getRawPosts(max, {}, api).then(posts =>
-    posts
-      .map(p => {
-        p.user = find(
-          users,
-          p.accountsID ? { id: p.accountsID } : { slackID: p.accountsSlackID }
-        )
-        return p
-      })
-      //.filter(p => !isEmpty(p.user))
-      .map(p => transformPost(p))
-  )
+  try {
+    const posts = await getRawPosts(max, {}, api).then(posts =>
+      posts
+        .map(p => {
+          p.user = find(
+            users,
+            p.accountsID ? { id: p.accountsID } : { slackID: p.accountsSlackID }
+          )
+          return p
+        })
+        //.filter(p => !isEmpty(p.user))
+        .map(p => transformPost(p))
+    )
+    metrics.increment("success.get_posts", 1);
+    return posts;
+  } catch {
+    metrics.increment("errors.get_posts", 1);
+    return [];
+  }
 }
 
 export default async (req, res) => {

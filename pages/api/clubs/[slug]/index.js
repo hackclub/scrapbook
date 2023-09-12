@@ -7,6 +7,7 @@ import { emailToPfp } from '../../../../lib/email'
 export const getClub = async (value, field = 'slug') => {
   let where = {}
   where[field] = value
+
   const opts = {
     where,
     include: {
@@ -24,38 +25,54 @@ export const getClub = async (value, field = 'slug') => {
       }
     }
   }
-  let club = await prisma.club.findFirst(opts)
-  club.members = club.members.map(member => ({
-    ...member,
-    account: {
-      ...member.account,
-      avatar: member.account.avatar || emailToPfp(member.account.email),
-      email: null,
-      updates: member.account.updates.length
-    }
-  }))
-  if (!club) console.error('Could not fetch club', value)
-  return club && club?.slug ? club : {}
+
+  try {
+    let club = await prisma.club.findFirst(opts)
+    club.members = club.members.map(member => ({
+      ...member,
+      account: {
+        ...member.account,
+        avatar: member.account.avatar || emailToPfp(member.account.email),
+        email: null,
+        updates: member.account.updates.length
+      }
+    }))
+    metrics.increment("success.get_club", 1);
+    return club && club?.slug ? club : {};
+  } catch {
+    metrics.increment("errors.get_club", 1);
+    return {};
+  }
 }
 
 export const getPosts = async (club, max = null) => {
-  const allUpdates = await getRawPosts(max, {
-    where: {
-      ClubUpdate: {
-        clubId: club.id
+  try {
+    const allUpdates = await getRawPosts(max, {
+      where: {
+        ClubUpdate: {
+          clubId: club.id
+        }
       }
-    }
-  })
-
-  if (!allUpdates) console.error('Could not fetch posts')
-  const users = await getRawUsers()
-  return allUpdates
-    .map(p => {
-      p.user = find(users, { id: p.accountsID }) || {}
-      return p
     })
-    .filter(p => !isEmpty(p.user))
-    .map(p => transformPost(p))
+
+    if (!allUpdates) console.error('Could not fetch posts')
+
+    const users = await getRawUsers()
+
+    const clubUpdates = allUpdates
+      .map(p => {
+        p.user = find(users, { id: p.accountsID }) || {}
+        return p
+      })
+      .filter(p => !isEmpty(p.user))
+      .map(p => transformPost(p));
+
+    metrics.increment("success.get_club_posts", 1);
+    return clubUpdates;
+  } catch {
+    metrics.increment("errors.get_club_posts", 1);
+    return [];
+  }
 }
 
 export default async (req, res) => {

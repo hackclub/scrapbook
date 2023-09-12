@@ -3,25 +3,31 @@ import { authOptions } from '../../../auth/[...nextauth]'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
+import metrics from "../../../../../metrics";
 
 const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
+
   if (session?.user === undefined) {
     res.json({ error: true })
   }
+
   let id = req.body.id
   delete req.body.id
+
   let club = await prisma.club.findFirst({
     where: {
       id
     }
-  })
+  });
+
   if (req.body.customDomain || club.customDomain != null) {
     if (club.customDomain != null) {
       const prevDomain = club.customDomain
+
       const response = await fetch(
         `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
         {
@@ -32,15 +38,16 @@ export default async (req, res) => {
         }
       ).then(res => res.json())
     }
+
     if (req.body.customDomain) {
       let [allUsers, allClubs] = await prisma.$transaction([
         prisma.accounts.findMany(),
         prisma.club.findMany()
       ])
-      allUsers = allUsers.filter(function (user) {
+      allUsers = allUsers.filter(function(user) {
         return user.customDomain == req.body.customDomain
       })
-      allClubs = allClubs.filter(function (club) {
+      allClubs = allClubs.filter(function(club) {
         return club.customDomain == req.body.customDomain
       })
       if (allUsers.length != 0) {
@@ -87,6 +94,7 @@ export default async (req, res) => {
       }
     }
   }
+
   try {
     club = await prisma.club.update({
       where: {
@@ -101,8 +109,11 @@ export default async (req, res) => {
             : null
       }
     })
+
+    metrics.increment("success.edit_club", 1);
     res.json({ club })
   } catch (e) {
+    metrics.increment("errors.edit_club", 1);
     console.error(e)
     res.json({ error: true })
   }
