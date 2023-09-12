@@ -1,19 +1,23 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
+import metrics from "../../../../metrics";
 
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
+
   if (session?.user === undefined) {
     return res.json({ error: true })
   }
+
   let account = await prisma.accounts.findFirst({
     where: {
       id: session.user.id
     }
   })
+
   if (req.body.customDomain || account.customDomain != null) {
     if (account.customDomain != null) {
       const prevDomain = account.customDomain
@@ -27,29 +31,35 @@ export default async (req, res) => {
         }
       ).then(res => res.json())
     }
+
     if (req.body.customDomain) {
       let [allUsers, allClubs] = await prisma.$transaction([
         prisma.accounts.findMany(),
         prisma.club.findMany()
       ])
+
       allUsers = allUsers.filter(function (user) {
         return user.customDomain == req.body.customDomain
       })
+
       allClubs = allClubs.filter(function (club) {
         return club.customDomain == req.body.customDomain
       })
+
       if (allUsers.length != 0 && allUsers[0].id != session.user.id) {
         return res.json({
           error: true,
           message: `Couldn't set your domain - owned by another user.`
         })
       }
+
       if (allClubs.length != 0) {
         return res.json({
           error: true,
           message: `Couldn't set your domain - owned by a club.`
         })
       }
+
       const vercelFetch = await fetch(
         `https://api.vercel.com/v9/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/domains?teamId=${TEAM_ID}`,
         {
@@ -82,6 +92,7 @@ export default async (req, res) => {
       }
     }
   }
+
   try {
     account = await prisma.accounts.update({
       where: {
@@ -123,8 +134,14 @@ export default async (req, res) => {
         customDomain: req.body.customDomain ? req.body.customDomain : null
       }
     })
+
+    metrics.increment("success.edit_profile", 1);
+
     return res.json(account)
   } catch (e) {
+
+    metrics.increment("errors.edit_profile", 1);
+
     console.error(e)
     if (
       e

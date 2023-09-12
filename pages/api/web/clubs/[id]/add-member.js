@@ -3,14 +3,18 @@ import { authOptions } from '../../../auth/[...nextauth]'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
+import metrics from "../../../../../metrics";
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
+
   if (session?.user === undefined) {
     console.error('No user.')
     return res.json({ error: true })
   }
+
   let clubs = session?.user.ClubMember.filter(x => x.admin).map(x => x.clubId)
+
   if (clubs.includes(req.query.id)) {
     try {
       let newMember = await prisma.ClubMember.create({
@@ -41,12 +45,15 @@ export default async (req, res) => {
           }
         }
       })
+      metrics.increment("success.club_add_member", 1);
       return res.json({ newMember })
     } catch (e) {
+      metrics.increment("errors.club_add_member", 1);
       console.error(e)
       return res.json({ error: true })
     }
   }
+
   console.error('Not in club.')
   return res.json({ error: true })
 }

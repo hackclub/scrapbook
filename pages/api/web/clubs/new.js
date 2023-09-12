@@ -3,17 +3,21 @@ import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
+import metrics from "../../../../metrics";
 
 const slugger = new GithubSlugger()
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
+
   if (session?.user === undefined) {
     return res.json({ error: true })
   }
+
   try {
     let clubs = await prisma.club.findMany()
     let occurrences = {}
+
     clubs.map(club => {
       let slug = club.slug
       let toOccur = slug
@@ -25,7 +29,9 @@ export default async (req, res) => {
       }
       occurrences[toOccur] = occurrences[toOccur] ? occurrences[toOccur] + 1 : 0
     })
+
     slugger.occurrences = occurrences
+
     let club = await prisma.club.create({
       data: {
         slug: slugger.slug(req.body.name),
@@ -43,8 +49,12 @@ export default async (req, res) => {
         }
       }
     })
+
+    metrics.increment("success.create_new_club", 1);
+
     return res.json({ ...club, callback: `/clubs/${club.slug}` })
   } catch (e) {
+    metrics.increment("errors.create_new_club", 1);
     console.error(e)
     return res.json({ error: true })
   }

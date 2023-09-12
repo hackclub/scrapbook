@@ -18,13 +18,21 @@ export const transformProfile = profile => {
 
 export const getProfile = async (value, field = 'username') => {
   let where = {}
+
   where[field] = value
+
   const opts = {
     where
   }
-  const user = transformProfile(await prisma.accounts.findFirst(opts))
-  if (!user) console.error('Could not fetch account', value)
-  return user && user?.username ? user : {}
+
+  try {
+    const user = transformProfile(await prisma.accounts.findFirst(opts))
+    metrics.increment("success.get_profile", 1);
+    return user;
+  } catch {
+    metrics.increment("errors.get_profile", 1);
+    return {};
+  }
 }
 
 export const getPosts = async (user, max = null) => {
@@ -36,45 +44,62 @@ export const getPosts = async (user, max = null) => {
         },
         user.slackID
           ? {
-              accountsSlackID: user.slackID
-            }
+            accountsSlackID: user.slackID
+          }
           : {
-              accountsID: user.id
-            }
+            accountsID: user.id
+          }
       ]
     }
   })
+
   if (!allUpdates) console.error('Could not fetch posts')
+
   return allUpdates.map(p => transformPost(p))
 }
 
 export const getMentions = async user => {
-  const users = await getRawUsers()
-  const allUpdates = await getRawPosts(null, {
-    where: {
-      text: { contains: `@${user.username}` }
-    }
-  })
-  if (!allUpdates) console.error('Could not fetch posts')
-  return allUpdates
-    .map(p => {
-      p.user = find(users, { slackID: p.accountsSlackID }) || {}
-      return p
+  try {
+    const users = await getRawUsers()
+
+    const allUpdates = await getRawPosts(null, {
+      where: {
+        text: { contains: `@${user.username}` }
+      }
     })
-    .filter(p => !isEmpty(p.user))
-    .map(p => transformPost(p))
+
+    if (!allUpdates) console.error('Could not fetch posts')
+
+    const mentions = allUpdates
+      .map(p => {
+        p.user = find(users, { slackID: p.accountsSlackID }) || {}
+        return p
+      })
+      .filter(p => !isEmpty(p.user))
+      .map(p => transformPost(p))
+
+    metrics.increment("success.get_mentions", 1);
+    return mentions;
+  } catch {
+    metrics.increment("errors.get_mentions", 1);
+    return [];
+  }
 }
 
 export default async (req, res) => {
   const profile = await getProfile(req.query.username)
+
   if (!profile?.slackID && !profile?.username)
     return res.status(404).json({ status: 404, error: 'Cannot locate user' })
+
   let webring = []
+
   if (profile.webring) {
     webring = await Promise.all(
       profile.webring.map(async id => await getProfile(id, 'slackID'))
     )
   }
+
   const posts =
     (await getPosts(profile, req.query.max ? Number(req.query.max) : null)) ||
     []

@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
+import metrics from "../../../../metrics";
 
 const Mux = require('@mux/mux-node')
 
@@ -11,9 +12,11 @@ const { Video, Data } = new Mux(
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
+
   if (session?.user === undefined) {
     res.json({ error: true })
   }
+
   try {
     let muxAssetIDs = []
     let muxPlaybackIDs = []
@@ -37,6 +40,7 @@ export default async (req, res) => {
         }
       })
     )
+
     let clubKeys = Object.keys(req.body)
       .filter(x => x.includes('club-'))
       .map(key => key.replace('club-', ''))
@@ -62,8 +66,11 @@ export default async (req, res) => {
         Accounts: true
       }
     })
+
+    metrics.increment("success.create_new_post", 1);
     res.json({ update, callback: `/` })
   } catch (e) {
+    metrics.increment("errors.create_new_post", 1);
     console.error(e)
     res.json({ error: true })
   }
