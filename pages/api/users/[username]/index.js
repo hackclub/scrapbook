@@ -3,6 +3,7 @@ import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { emailToPfp } from '../../../../lib/email'
+import metrics from "../../../../metrics";
 
 export const transformProfile = profile => {
   if (profile) {

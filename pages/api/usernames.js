@@ -1,7 +1,8 @@
 import { map } from 'lodash'
 import prisma from '../../lib/prisma'
+import metrics from "../../metrics";
 
-export const getUsernames = (params = {}) => {
+export const getUsernames = async (params = {}) => {
   try {
     const usernames = await prisma.accounts.findMany(params).then(u => map(u, 'username'));
     metrics.increment("success.get_usernames", 1);
