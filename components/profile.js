@@ -1,9 +1,13 @@
 import { Optional } from '../components/optional'
 import { Close } from '../components/close'
 import useForm from '../lib/use-form'
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import toast from 'react-hot-toast';
+import S3 from "../lib/s3"
 
 const Profile = ({ closed, setMenuOpen, session }) => {
-  const { status, submit, useField, setData } = useForm(
+  const { status, submit, useField, setData, setDataValue } = useForm(
     '/api/web/profile/edit',
     {
       method: 'POST',
@@ -12,6 +16,27 @@ const Profile = ({ closed, setMenuOpen, session }) => {
       closingAction: setMenuOpen
     }
   )
+
+  const [uploading, setUploading] = useState(false);
+  async function replaceProfilePicture(file) {
+    let profilePicture;
+    console.log(file);
+    // do something silly...
+    try {
+      profilePicture = await S3.upload({
+        Bucket: "scrapbook-into-the-redwoods",
+        Key: `${uuidv4()}-${file.name}`,
+        Body: file
+      }).promise()
+      console.log(profilePicture);
+      toast.success("Yay you got some new looks there!");
+    } catch (e) {
+      toast.error(`Failed to upload profile picture; ${e}`);
+    }
+    setUploading(false);
+    setDataValue('avatar', profilePicture);
+  }
+
   return (
     <div
       className="overlay-wrapper"
@@ -31,9 +56,36 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               display: 'grid',
               gap: '16px',
               marginTop: '8px',
-              gridTemplateColumns: '1fr 1fr'
+              gridTemplateColumns: '1fr 1fr',
             }}
           >
+            <div>
+              <img
+                src={session.user.avatar || emailToPfp(session.user.email)}
+                onClick={() => setMenuOpen(true)}
+                className="nav-link-profile"
+                title="Edit Your Profile"
+                style={{
+                  height: '130px',
+                  borderRadius: '999px',
+                  marginLeft: '16px',
+                  cursor: 'pointer',
+                  border: '1px solid var(--muted)'
+                }}
+              />
+              <button>Change</button>
+                <input 
+                type='file' 
+                placeholder="change profile" 
+                multiple="false"
+                accept="image/png, image/jpeg, .mp4, .mov, .webm"
+                disabled={uploading}
+                onChange={event => {
+                  setUploading(true);
+                  replaceProfilePicture(event.target.files[0]);
+                }}
+                />
+            </div>
             <div>
               <label>Email Address</label>
               <input

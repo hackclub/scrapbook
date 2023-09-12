@@ -142,7 +142,7 @@ const Nav = () => {
         >
           <Icon glyph="github" size={32} />
         </a>
-        
+
         {status === 'authenticated' ? (
           <>
             <SignOut
