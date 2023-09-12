@@ -17,24 +17,25 @@ const Profile = ({ closed, setMenuOpen, session }) => {
     }
   )
 
-  const [uploading, setUploading] = useState(false);
-  async function replaceProfilePicture(file) {
-    let profilePicture;
-    console.log(file);
+  function replaceProfilePicture(file) {
+    // console.log(file);
     // do something silly...
     try {
-      profilePicture = await S3.upload({
-        Bucket: "scrapbook-into-the-redwoods",
-        Key: `${uuidv4()}-${file.name}`,
-        Body: file
-      }).promise()
-      console.log(profilePicture);
-      toast.success("Yay you got some new looks there!");
+      toast.promise(
+        S3.upload({
+          Bucket: "scrapbook-into-the-redwoods",
+          Key: `${uuidv4()}-${file.name}`,
+          Body: file
+        }).promise().then(newAvatar => setDataValue("avatar", newAvatar.Location)),
+        {
+          loading: "Uploading your new look",
+          error: "ack, failed to upload your profile picture",
+          success: "Yay you got some new looks there!"
+        }
+      ).then(() => toast("Make sure to save your profile"));
     } catch (e) {
-      toast.error(`Failed to upload profile picture; ${e}`);
+      toast.error("Humm... something wrong happened")
     }
-    setUploading(false);
-    setDataValue('avatar', profilePicture);
   }
 
   return (
@@ -79,9 +80,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
                 placeholder="change profile" 
                 multiple="false"
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
-                disabled={uploading}
                 onChange={event => {
-                  setUploading(true);
                   replaceProfilePicture(event.target.files[0]);
                 }}
                 />

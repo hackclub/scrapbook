@@ -94,9 +94,9 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                 ? 'Hold tight, uploading your fine photos!'
                 : `We'd love to see some photos or videos of that!`}
             </label>
-            <div class="file-upload">
+            <div className="file-upload">
               <input
-                class="file-upload__input"
+                className="file-upload__input"
                 multiple="true"
                 type="file"
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
