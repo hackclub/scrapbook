@@ -10,7 +10,7 @@ if (graphite == null) {
 const options = {
   host: graphite,
   port: 8125,
-  prefix: `${environment}.scrapbook`
+  prefix: `${environment}.scrapbook.`
 };
 
 const metrics = new StatsD(options);
