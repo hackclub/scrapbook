@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 import { Buffer } from "node:buffer";
 
+const timeoutController = new Promise((resolve) => {
+  setTimeout(resolve, 150);
+});
+
 async function sendMetric(hostName, metricKey) {
-  await fetch(`${hostName}/api/metric`, {
+  fetch(`${hostName}/api/metric`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ metricKey })
+    body: JSON.stringify({ metricKey }),
   });
 }
 
@@ -52,8 +56,7 @@ export async function middleware(req) {
     const data = await response.json();
 
     // send metric and ignore failure
-    sendMetric(HOST_NAME, `${response.status}.${_metricName}`)
-      .catch(() => { });
+    Promise.any([timeoutController,  sendMetric(HOST_NAME, `${response.status}.${_metricName}`)])
 
     return NextResponse.json(data);
   } catch (err) {
