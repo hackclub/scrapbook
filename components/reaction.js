@@ -56,7 +56,7 @@ const Reaction = ({
       {children}
     </span>
   ) : (
-    <Link href={`/r/${name}`}>
+    <Link href={`/r/${name}`} legacyBehavior>
       <a className="post-reaction" title={startCase(name)}>
         {children}
       </a>

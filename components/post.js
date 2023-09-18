@@ -67,7 +67,7 @@ const Post = ({
             </time>
           </header>
         ) : (
-          <Link href="/[profile]" as={`/${user.username}`} prefetch={false}>
+          <Link legacyBehavior href="/[profile]" as={`/${user.username}`} prefetch={false}>
             <a className="post-header">
               {user.avatar && (
                 <Image

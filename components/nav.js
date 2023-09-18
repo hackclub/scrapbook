@@ -92,6 +92,7 @@ const Nav = () => {
   const [loginOpen, setLoginOpen] = useState(false)
   // This is a hack for using the right link on custom domains
   const [external, setExternal] = useState(false)
+
   useEffect(() => {
     try {
       const l = document.createElement('a');
@@ -99,6 +100,7 @@ const Nav = () => {
       if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
     } catch (e) {}
   }, []);
+
   useEffect(() => {
     if (router?.query?.checkYourEmail !== undefined) {
       toast('Where now? Head to your email for a unique URL to login.')
@@ -124,14 +126,14 @@ const Nav = () => {
               Scrapbook
             </a>
           ) : (
-            <Link href="/">
+            <Link href="/" legacyBehavior>
               <a className="nav-link nav-link-home">
                 Scrapbook
                 <span className="beta-label"> (Beta-V2)</span>
               </a>
             </Link>
           ))}
-        <Link href="/about/" passHref>
+        <Link href="/about/" passHref legacyBehavior>
           <a className="nav-link nav-link-about">About</a>
         </Link>
         <a

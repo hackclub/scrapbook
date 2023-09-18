@@ -91,7 +91,7 @@ const Profile = ({
             </span>
             <div className="header-links">
               {profile.slackID && (
-                <Link
+                <Link legacyBehavior
                   href="/[username]/mentions"
                   as={`/${profile.username}/mentions`}
                 >
