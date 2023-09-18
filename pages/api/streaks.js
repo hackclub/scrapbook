@@ -1,5 +1,4 @@
 import prisma from '../../lib/prisma'
-import metrics from "../../metrics";
 
 export const getUserStreaks = async () => {
   try {
@@ -17,14 +16,19 @@ export const getUserStreaks = async () => {
         maxStreaks: true
       }
     })
-    metrics.increment("success.get_user_streaks", 1);
     return streaks;
   }
   catch {
-    metrics.increment("errors.get_user_streaks", 1);
-    return [];
+    throw Error("Failed to get streaks");
   }
 }
 
 
-export default async (req, res) => getUserStreaks().then(u => res.json(u || []))
+export default async (req, res) => {
+  try {
+    const streaks = getUserStreaks();
+    res.json(streaks);
+  } catch {
+    res.status(404).json(streaks);
+  }
+}

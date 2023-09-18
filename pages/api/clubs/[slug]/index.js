@@ -3,7 +3,6 @@ import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { getRawUsers } from '../../users'
 import { emailToPfp } from '../../../../lib/email'
-import metrics from "../../../../metrics";
 
 export const getClub = async (value, field = 'slug') => {
   let where = {}
@@ -38,10 +37,8 @@ export const getClub = async (value, field = 'slug') => {
         updates: member.account.updates.length
       }
     }))
-    metrics.increment("success.get_club", 1);
     return club && club?.slug ? club : {};
   } catch {
-    metrics.increment("errors.get_club", 1);
     return {};
   }
 }
@@ -68,10 +65,8 @@ export const getPosts = async (club, max = null) => {
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p));
 
-    metrics.increment("success.get_club_posts", 1);
     return clubUpdates;
   } catch {
-    metrics.increment("errors.get_club_posts", 1);
     return [];
   }
 }

@@ -3,7 +3,6 @@ import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
-import metrics from "../../../../metrics";
 
 const slugger = new GithubSlugger()
 
@@ -11,7 +10,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    return res.json({ error: true })
+    return res.status(401).json({ error: true })
   }
 
   try {
@@ -50,12 +49,9 @@ export default async (req, res) => {
       }
     })
 
-    metrics.increment("success.create_new_club", 1);
-
     return res.json({ ...club, callback: `/clubs/${club.slug}` })
   } catch (e) {
-    metrics.increment("errors.create_new_club", 1);
     console.error(e)
-    return res.json({ error: true })
+    return res.status(500).json({ error: true })
   }
 }

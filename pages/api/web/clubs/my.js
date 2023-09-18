@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
-import metrics from "../../../../metrics";
 
 export default async (req, res) => {
   try {
@@ -53,11 +52,9 @@ export default async (req, res) => {
       })
     ])
 
-    metrics.increment("success.get_my_clubs", 1);
     return res.json({ clubs, others })
   }
   catch {
-    metrics.increment("errors.get_my_clubs", 1);
-    return res.json({ clubs: [], others: [] })
+    return res.status(404).json({ clubs: [], others: [] })
   }
 }

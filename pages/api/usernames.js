@@ -1,16 +1,20 @@
 import { map } from 'lodash'
 import prisma from '../../lib/prisma'
-import metrics from "../../metrics";
 
 export const getUsernames = async (params = {}) => {
   try {
     const usernames = await prisma.accounts.findMany(params).then(u => map(u, 'username'));
-    metrics.increment("success.get_usernames", 1);
     return usernames;
   } catch {
-    metrics.increment("errors.get_usernames", 1);
-    return [];
+    throw Error("Failed to get usernames");
   }
 }
 
-export default async (req, res) => getUsernames().then(u => res.json(u || []))
+export default async (req, res) => {
+  try {
+    const usernames = getUsernames();
+    res.json(usernames);
+  } catch {
+    res.status(404).json([]);
+  }
+}
