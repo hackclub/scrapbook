@@ -13,7 +13,7 @@ const errorPage = () => {
         {router.asPath.split('error=')[1] || '404!'}{' '}
         {router.asPath.split('error=')[1] && 'Error'}
       </h1>
-      <Link href="/">
+      <Link href="/" legacyBehavior>
         <a className="badge">
           <Icon glyph="home" size={32} />
           Go home

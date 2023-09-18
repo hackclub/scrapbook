@@ -46,7 +46,7 @@ const Profile = ({ profile = {}, posts = [] }) => (
         />
       )}
       <div>
-        <Link href="/[username]" as={`/${profile.username}`}>
+        <Link legacyBehavior href="/[username]" as={`/${profile.username}`}>
           <a className="header-back">
             <Icon glyph="view-back" size={24} />@{profile.username}
           </a>
