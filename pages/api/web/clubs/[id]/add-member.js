@@ -46,7 +46,6 @@ export default async (req, res) => {
       })
       return res.json({ newMember })
     } catch (e) {
-      metrics.increment("errors.club_add_member", 1);
       return res.status(500).json({ error: true })
     }
   }

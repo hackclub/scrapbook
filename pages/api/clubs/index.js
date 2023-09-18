@@ -4,8 +4,8 @@ export const getRawClubs = async (where = undefined) => {
   try {
     const rawClubs = await prisma.club.findMany({ where })
     return rawClubs;
-  } catch {
-    throw Error("Failed to get raw clubs");
+  } catch (e) {
+    throw Error(e)
   }
 }
 

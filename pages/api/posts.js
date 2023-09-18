@@ -29,7 +29,7 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
     const updates = await prisma.updates.findMany(opts)
     return updates
   } catch (err) {
-    throw Error("Failed to get raw posts");
+    throw Error(err)
   }
 }
 
@@ -90,8 +90,8 @@ export const getPosts = async (max = null, api = false) => {
         .map(p => transformPost(p))
     )
     return posts;
-  } catch {
-    throw Error("Failed tog et posts");
+  } catch (e) {
+    throw Error(e)
   }
 }
 

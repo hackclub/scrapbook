@@ -24,9 +24,9 @@ export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
 
-  } catch {
+  } catch (err) {
     if (!allUpdates) console.error('Could not fetch posts')
-    throw new Error("Failed to get posts");
+    throw new Error(err);
   }
 }
 
