@@ -25,13 +25,14 @@ export async function middleware(req) {
   // skip the /api/metric api endpoint
   if (req.url.includes("metric")) return NextResponse.json({ success: true });
 
-  if (req.body) {
-    const rawBody = await req.body.getReader().read();
-    const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
-    // const reqHeaders = Object.fromEntries(req.headers.entries());
+  try {
+    let response;
+    if (req.body) {
+      const rawBody = await req.body.getReader().read();
+      const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
+      // const reqHeaders = Object.fromEntries(req.headers.entries());
 
-    try {
-      const response = await fetch(req.url, {
+      response = await fetch(req.url, {
         method: req.method,
         headers: {
           "Content-Type": "application/json",
@@ -40,35 +41,25 @@ export async function middleware(req) {
         body: JSON.stringify(body)
       });
 
-      const data = await response.json();
-
-      // send metric and ignore failure
-      sendMetric(HOST_NAME, `${response.status}.${_metricName}`)
-        .catch(() => {});
-
-      return NextResponse.json(data);
-    } catch (err) {
-      return NextResponse.json({ msg: "Failed", reason: err });
+    } else {
+      response = await fetch(req.url, {
+        headers: {
+          "Cookie": cookie
+        }
+      });
     }
-  } else {
-    try {
-      const response = await fetch(req.url, { headers: {
-        "Cookie": cookie
-      }});
 
-      const data = await response.json();
+    const data = await response.json();
 
-      // send metric and ignore failure
-      sendMetric(HOST_NAME, `${response.status}.${_metricName}`)
-        .catch(() => {});
+    // send metric and ignore failure
+    sendMetric(HOST_NAME, `${response.status}.${_metricName}`)
+      .catch(() => { });
 
-      return NextResponse.json(data);
-    } catch (err) {
-      return NextResponse.json({ msg: "Failed", reason: err });
-    }
+    return NextResponse.json(data);
+  } catch (err) {
+    return NextResponse.json({ msg: "Failed", reason: err });
   }
-
- }
+}
 
 export const config = {
   matcher: [
