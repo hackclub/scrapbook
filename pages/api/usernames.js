@@ -5,8 +5,8 @@ export const getUsernames = async (params = {}) => {
   try {
     const usernames = await prisma.accounts.findMany(params).then(u => map(u, 'username'));
     return usernames;
-  } catch {
-    throw Error("Failed to get usernames");
+  } catch(err) {
+    throw Error(err)
   }
 }
 

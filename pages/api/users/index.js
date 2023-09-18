@@ -9,8 +9,8 @@ export const getRawUsers = async (
   try {
     const users = await prisma.accounts.findMany({ where, include, take })
     return users;
-  } catch {
-    throw Error("Failed to get raw user");
+  } catch (err) {
+    throw Error(err)
   }
 }
 

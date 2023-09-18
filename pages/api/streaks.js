@@ -18,8 +18,8 @@ export const getUserStreaks = async () => {
     })
     return streaks;
   }
-  catch {
-    throw Error("Failed to get streaks");
+  catch (err) {
+    throw Error(err)
   }
 }
 
