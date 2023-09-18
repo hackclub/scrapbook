@@ -3,7 +3,6 @@ import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { emailToPfp } from '../../../../lib/email'
-import metrics from "../../../../metrics";
 
 export const transformProfile = profile => {
   if (profile) {
@@ -28,10 +27,8 @@ export const getProfile = async (value, field = 'username') => {
 
   try {
     const user = transformProfile(await prisma.accounts.findFirst(opts))
-    metrics.increment("success.get_profile", 1);
     return user;
   } catch {
-    metrics.increment("errors.get_profile", 1);
     return {};
   }
 }
@@ -79,10 +76,8 @@ export const getMentions = async user => {
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
 
-    metrics.increment("success.get_mentions", 1);
     return mentions;
   } catch {
-    metrics.increment("errors.get_mentions", 1);
     return [];
   }
 }

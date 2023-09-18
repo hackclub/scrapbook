@@ -3,7 +3,6 @@ import { authOptions } from '../../../auth/[...nextauth]'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 import normalizeUrl from 'normalize-url'
-import metrics from "../../../../../metrics";
 
 const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
@@ -12,7 +11,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    res.json({ error: true })
+    res.status(401).json({ error: true })
   }
 
   let id = req.body.id
@@ -51,13 +50,13 @@ export default async (req, res) => {
         return club.customDomain == req.body.customDomain
       })
       if (allUsers.length != 0) {
-        return res.json({
+        return res.status(403).json({
           error: true,
           message: `Couldn't set your domain - owned by another user.`
         })
       }
       if (allClubs.length != 0 && allClubs[0].id != id) {
-        return res.json({
+        return res.status(403).json({
           error: true,
           message: `Couldn't set your domain - owned by a club.`
         })
@@ -80,14 +79,14 @@ export default async (req, res) => {
           console.log(`Error while setting custom domain ${arg}: ${err}`)
         })
       if (vercelFetch.error) {
-        return res.json({
+        return res.status(500).json({
           error: true,
           message: `Couldn't set your domain - here's the error: ${JSON.stringify(
             vercelFetch.error
           )}`
         })
       } else if (!vercelFetch.verified) {
-        return res.json({
+        return res.status().json({
           error: true,
           message: `Couldn't set your domain - domains using Vercel DNS aren't supported.`
         })
@@ -110,11 +109,9 @@ export default async (req, res) => {
       }
     })
 
-    metrics.increment("success.edit_club", 1);
     res.json({ club })
   } catch (e) {
-    metrics.increment("errors.edit_club", 1);
     console.error(e)
-    res.json({ error: true })
+    res.status(500).json({ error: true })
   }
 }

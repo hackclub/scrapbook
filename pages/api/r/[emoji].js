@@ -1,7 +1,6 @@
 import { map, find, isEmpty, orderBy, filter } from 'lodash'
 import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
-import metrics from "../../../metrics";
 
 export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
   try {
@@ -16,7 +15,6 @@ export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
         ...where
       }
     })
-    metrics.increment("success.get_posts_by_emoji", 1);
 
     return allUpdates
       .map(p => {
@@ -28,28 +26,30 @@ export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
 
   } catch {
     if (!allUpdates) console.error('Could not fetch posts')
-    metrics.increment("errors.get_posts_by_emoji", 1);
-    return [];
+    throw new Error("Failed to get posts");
   }
-
-
 }
 
 export default async (req, res) => {
   const { emoji } = req.query
   if (!emoji)
     return res.status(404).json({ status: 404, error: 'Missing emoji name' })
-  const posts =
-    (await getPosts(
-      emoji,
-      1024,
-      emoji == 'summer-of-making'
-        ? {
-          postTime: {
-            lte: new Date(2021, 1)
+  try {
+    const posts =
+      (await getPosts(
+        emoji,
+        1024,
+        emoji == 'summer-of-making'
+          ? {
+            postTime: {
+              lte: new Date(2021, 1)
+            }
           }
-        }
-        : {}
-    )) || []
-  res.json(posts)
+          : {}
+      )) || []
+    res.json(posts);
+  } catch {
+    res.status(404).json([]);
+  }
+
 }

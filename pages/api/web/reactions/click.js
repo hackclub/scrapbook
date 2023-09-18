@@ -1,13 +1,12 @@
 import prisma from '../../../../lib/prisma'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
-import metrics from "../../../../metrics";
 
 export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    res.json({ error: true, message: 'User undefined.' })
+    res.status(401).json({ error: true, message: 'User undefined.' })
   }
 
   try {
@@ -39,10 +38,10 @@ export default async (req, res) => {
         }
       })
     }
-    metrics.increment("success.reaction_click", 1);
+
     res.json(updateEmoji)
 
   } catch {
-    metrics.increment("errors.reaction_click", 1);
+    res.status(500).send(" ");
   }
 }

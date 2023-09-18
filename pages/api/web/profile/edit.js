@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
-import metrics from "../../../../metrics";
 
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
@@ -9,7 +8,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    return res.json({ error: true })
+    return res.status(401).json({ error: true })
   }
 
   let account = await prisma.accounts.findFirst({
@@ -47,14 +46,14 @@ export default async (req, res) => {
       })
 
       if (allUsers.length != 0 && allUsers[0].id != session.user.id) {
-        return res.json({
+        return res.status(401).json({
           error: true,
           message: `Couldn't set your domain - owned by another user.`
         })
       }
 
       if (allClubs.length != 0) {
-        return res.json({
+        return res.status(401).json({
           error: true,
           message: `Couldn't set your domain - owned by a club.`
         })
@@ -77,6 +76,7 @@ export default async (req, res) => {
         .catch(err => {
           console.log(`Error while setting custom domain ${arg}: ${err}`)
         })
+
       if (vercelFetch.error) {
         return res.json({
           error: true,
@@ -135,12 +135,8 @@ export default async (req, res) => {
       }
     })
 
-    metrics.increment("success.edit_profile", 1);
-
     return res.json(account)
   } catch (e) {
-
-    metrics.increment("errors.edit_profile", 1);
 
     console.error(e)
     if (
@@ -148,11 +144,11 @@ export default async (req, res) => {
         .toString()
         .includes('Unique constraint failed on the fields: (`username`)')
     ) {
-      return res.json({
+      return res.status(401).json({
         error: true,
         message: 'Sorry! That username is taken.'
       })
     }
-    return res.json({ error: true })
+    return res.status(500).json({ error: true })
   }
 }

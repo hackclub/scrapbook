@@ -3,7 +3,6 @@ import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
 import { emailToPfp } from '../../lib/email'
-import metrics from "../../metrics";
 
 export const getRawPosts = async (max = null, params = {}, api = false) => {
   const opts = {
@@ -28,11 +27,9 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
   if (max) opts.take = max
   try {
     const updates = await prisma.updates.findMany(opts)
-    metrics.increment("success.get_raw_posts", 1);
     return updates
   } catch (err) {
-    metrics.increment("errors.get_raw_posts", 1);
-    return [];
+    throw Error("Failed to get raw posts");
   }
 }
 
@@ -92,15 +89,17 @@ export const getPosts = async (max = null, api = false) => {
         //.filter(p => !isEmpty(p.user))
         .map(p => transformPost(p))
     )
-    metrics.increment("success.get_posts", 1);
     return posts;
   } catch {
-    metrics.increment("errors.get_posts", 1);
-    return [];
+    throw Error("Failed tog et posts");
   }
 }
 
 export default async (req, res) => {
+  try {
   const posts = await getPosts(req.query.max ? Number(req.query.max) : 200)
-  return res.json(posts)
+    res.json(posts);
+  } catch {
+    res.status(404).json([]);
+  }
 }

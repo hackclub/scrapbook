@@ -1,15 +1,19 @@
 import prisma from '../../../lib/prisma'
-import metrics from "../../../metrics";
 
 export const getRawClubs = async (where = undefined) => {
   try {
     const rawClubs = await prisma.club.findMany({ where })
-    metrics.increment("success.get_raw_clubs", 1);
     return rawClubs;
   } catch {
-    metrics.increment("errors.get_raw_clubs", 1);
-    return [];
+    throw Error("Failed to get raw clubs");
   }
 }
 
-export default async (req, res) => getRawClubs().then(u => res.json(u || []))
+export default async (req, res) => {
+  try {
+    const rawClubs = await getRawClubs();
+    res.json(rawClubs);
+  } catch {
+    res.status(404).json([]);
+  }
+}
