@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { Buffer } from "node:buffer";
 
-const timeoutController = new Promise((resolve) => {
-  setTimeout(resolve, 150);
+const createTimeoutPromise = (timeout) => new Promise((resolve) => {
+  setTimeout(resolve, timeout);
 });
 
 async function sendMetric(hostName, metricKey) {
@@ -55,8 +55,9 @@ export async function middleware(req) {
 
     const data = await response.json();
 
-    // send metric and ignore failure
-    Promise.any([timeoutController,  sendMetric(HOST_NAME, `${response.status}.${_metricName}`)])
+    // attempt to send metric
+    // will timeout after 150ms
+    Promise.any([createTimeoutPromise(150), sendMetric(HOST_NAME, `${response.status}.${_metricName}`)])
 
     return NextResponse.json(data);
   } catch (err) {
