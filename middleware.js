@@ -5,13 +5,23 @@ const createTimeoutPromise = (timeout) => new Promise((resolve) => {
   setTimeout(resolve, timeout);
 });
 
-async function sendMetric(hostName, metricKey, time) {
+async function sendMetric(hostName, metricKey) {
   fetch(`${hostName}/api/metric`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ time, metricKey }),
+    body: JSON.stringify({ metricKey }), 
+  });
+}
+
+async function sendTimerMetric(hostName, metricKey, time) {
+  fetch(`${hostName}/api/metric`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ time, metricKey }), 
   });
 }
 
@@ -60,9 +70,14 @@ export async function middleware(req) {
 
     const data = await response.json();
 
-    // attempt to send metric
-    // will timeout after 150ms
-    Promise.any([createTimeoutPromise(150), sendMetric(HOST_NAME, `${response.status}.${_metricName}`, time)])
+    // attempt to send metric counter
+    // and timer metric
+    // ...will timeout after 150ms
+    Promise.any([
+      createTimeoutPromise(150), 
+      sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
+      sendTimerMetric(HOST_NAME, `${_metricName}`, time), // send timing metric
+    ])
 
     return NextResponse.json(data);
   } catch (err) {
