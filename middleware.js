@@ -5,13 +5,13 @@ const createTimeoutPromise = (timeout) => new Promise((resolve) => {
   setTimeout(resolve, timeout);
 });
 
-async function sendMetric(hostName, metricKey) {
+async function sendMetric(hostName, metricKey, time) {
   fetch(`${hostName}/api/metric`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ metricKey }),
+    body: JSON.stringify({ time, metricKey }),
   });
 }
 
@@ -31,11 +31,13 @@ export async function middleware(req) {
 
   try {
     let response;
+    let time;
     if (req.body) {
       const rawBody = await req.body.getReader().read();
       const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
       // const reqHeaders = Object.fromEntries(req.headers.entries());
 
+      const startTime = new Date().getTime();
       response = await fetch(req.url, {
         method: req.method,
         headers: {
@@ -44,20 +46,23 @@ export async function middleware(req) {
         },
         body: JSON.stringify(body)
       });
+      time = (new Date().getTime()) - startTime;
 
     } else {
+      const startTime = new Date().getTime();
       response = await fetch(req.url, {
         headers: {
           "Cookie": cookie
         }
       });
+      time = (new Date().getTime()) - startTime;
     }
 
     const data = await response.json();
 
     // attempt to send metric
     // will timeout after 150ms
-    Promise.any([createTimeoutPromise(150), sendMetric(HOST_NAME, `${response.status}.${_metricName}`)])
+    Promise.any([createTimeoutPromise(150), sendMetric(HOST_NAME, `${response.status}.${_metricName}`, time)])
 
     return NextResponse.json(data);
   } catch (err) {
