@@ -73,6 +73,11 @@ export async function middleware(req) {
     // attempt to send metric counter
     // and timer metric
     // ...will timeout after 150ms
+    // 
+    /* sending metrics is dispatched to /api/metrics because next.js middleware
+    * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
+    * including UDP which node-statsd requires
+    */
     Promise.any([
       createTimeoutPromise(150), 
       sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
