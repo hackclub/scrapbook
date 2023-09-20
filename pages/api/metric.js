@@ -4,8 +4,8 @@ export default async function pushMetrics(req, res) {
   const { time, metricKey } = req.body;
 
   if (time) {
-    metrics.timing(metricKey.split(".")[1], time);
-    console.log(metricKey.split(".")[1], time);
+    metrics.timing(metricKey, time);
+    console.log(metricKey, time);
     return res.json({ success: true });
   }
 
