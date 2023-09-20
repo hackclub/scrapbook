@@ -76,7 +76,7 @@ export async function middleware(req) {
     Promise.any([
       createTimeoutPromise(150), 
       sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
-      sendTimerMetric(HOST_NAME, `${_metricName}`, time), // send timing metric
+      sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
     ])
 
     return NextResponse.json(data);
