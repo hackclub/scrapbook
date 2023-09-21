@@ -29,10 +29,15 @@ export async function middleware(req) {
   const cookie = req.headers.get("Cookie");
   const split_url = req.url.split("/");
   const HOST_NAME = split_url.slice(0, 3).join("/");
+
   let _metricName;
+
   if (req.url.includes("profile")) {
-    _metricName = split_url.slice(3, -1).join("_");
-  } else _metricName = split_url.slice(3).join("_");
+    _metricName = split_url.slice(3, -1);
+  } else if (req.url.includes("users")) {
+    _metricName = split_url.slice(3, -2);
+  } else _metricName = split_url.slice(3);
+  _metricName = _metricName.join("_");
 
   // console.log(HOST_NAME, _metricName);
 
