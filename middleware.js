@@ -35,7 +35,7 @@ export async function middleware(req) {
   if (req.url.includes("profile")) {
     _metricName = split_url.slice(3, -1);
   } else if (req.url.includes("users")) {
-    _metricName = split_url.slice(3, -2);
+    _metricName = split_url.slice(3, -1);
   } else _metricName = split_url.slice(3);
   _metricName = _metricName.join("_");
 
