@@ -27,20 +27,20 @@ async function sendTimerMetric(hostName, metricKey, time) {
 
 export async function middleware(req) {
   const cookie = req.headers.get("Cookie");
-  const split_url = req.url.split("/");
-  const HOST_NAME = split_url.slice(0, 3).join("/");
+  const url = new URL(req.url);
+  const path = url.pathname.slice(1).split("/");
+  const HOST_NAME = url.origin;
 
-  let _metricName;
-
-  if (req.url.includes("profile") || req.url.includes("users")) {
-    _metricName = split_url.slice(3, -1);
-  } else _metricName = split_url.slice(3);
+  let _metricName = path;
+  if (path.includes("profile") || path.includes("users")) {
+    _metricName.slice(0, -1);
+  }
   _metricName = _metricName.join("_");
 
   // console.log(HOST_NAME, _metricName);
 
   // skip the /api/metric api endpoint
-  if (req.url.includes("metric")) return NextResponse.json({ success: true });
+  if (path.includes("metric")) return NextResponse.json({ success: true });
 
   try {
     let response;
