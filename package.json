@@ -17,7 +17,7 @@
     "@next-auth/prisma-adapter": "^1.0.7",
     "@next/mdx": "^13.2.4",
     "@prisma/client": "4.16.2",
-    "aws-sdk": "^2.1409.0",
+    "aws-sdk": "^2.1467.0",
     "emoji-picker-react": "^4.4.9",
     "github-slugger": "^2.0.0",
     "hls.js": "^1.4.6",
