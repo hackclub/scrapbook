@@ -3,7 +3,6 @@ const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'mdx'],
   trailingSlash: false,
-  productionBrowserSourceMaps: true,
   images: {
     imageSizes: [18, 36, 54, 24, 48, 72, 96, 144],
     domains: [

@@ -169,7 +169,7 @@ export const getServerSideProps = async (context) => {
       return { props: { ...props, type: "user" } }
     }
   }
-  const initialData = await getPosts(48)
+  const initialData = await getPosts(200)
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
