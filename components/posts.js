@@ -66,7 +66,7 @@ const Posts = ({ posts = [], swrKey = null }) => {
       className="masonry-posts"
       columnClassName="masonry-posts-column"
     >
-      {posts.map(post => (
+      {posts.map((post, idx) => (
         <Post
           key={post.id}
           openEmojiPicker={openEmojiPicker}

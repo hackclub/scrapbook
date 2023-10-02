@@ -5,7 +5,7 @@ import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
 import Video from './video'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Reaction from './reaction'
 import dynamic from 'next/dynamic'
 import EmojiPicker from 'emoji-picker-react'
@@ -158,9 +158,9 @@ const Post = ({
           </div>
         )}
         <footer className="post-reactions" aria-label="Emoji reactions">
-          {reactions.map(reaction => (
+          {reactions.map((reaction, idx) => (
             <Reaction
-              key={id + reaction.name}
+              key={id + reaction.name + idx}
               {...reaction}
               postID={id}
               authStatus={authStatus}

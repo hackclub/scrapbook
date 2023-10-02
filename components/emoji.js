@@ -1,6 +1,6 @@
 import { memo, useState, useEffect } from 'react'
 import { stripColons } from '../lib/emoji'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 
 export const EmojiImg = ({ name, ...props }) => (
   <div

@@ -111,7 +111,7 @@ const Nav = () => {
     } else if (router?.query?.errorTryAgain !== undefined) {
       toast('Oh-no! Something errored on our end, please try again.')
     }
-  }, router?.query)
+  }, [router?.query])
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Meta from '@hackclub/meta'
 import Icon from '@hackclub/icons'
 import Message from '../../components/message'
