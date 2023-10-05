@@ -5,6 +5,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import toast from 'react-hot-toast';
 import S3 from "../lib/s3"
+import { emailToPfp } from '../lib/email';
 
 const Profile = ({ closed, setMenuOpen, session }) => {
   const { status, submit, useField, setData, setDataValue } = useForm(
