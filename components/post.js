@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 import EmojiPicker from 'emoji-picker-react'
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
-const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif']
+const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
 const audioFileTypes = ['mp3', 'wav', 'aiff', 'm4a']
 
