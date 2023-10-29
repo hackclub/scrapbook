@@ -46,6 +46,9 @@ export const formatText = text =>
     if (chunk?.startsWith('_')) {
       return <i key={i}>{chunk.replace(/_/g, '')}</i>
     }
+    if (chunk?.startsWith('~~')) {
+      return <del key={i}>{chunk.replace(/~/g, '')}</del>; // Added strikethrough formatting
+    }
     return <Fragment key={i}>{chunk?.replace(/&amp;/g, '&')}</Fragment>
   })
 
