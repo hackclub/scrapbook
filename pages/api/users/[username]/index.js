@@ -29,7 +29,7 @@ export const getProfile = async (value, field = 'username') => {
     const user = transformProfile(await prisma.accounts.findFirst(opts))
     return user;
   } catch {
-    return {};
+    return null;
   }
 }
 
