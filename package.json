@@ -18,7 +18,7 @@
     "@next/mdx": "^14.0.0",
     "@prisma/client": "4.16.2",
     "aws-sdk": "^2.1478.0",
-    "emoji-picker-react": "^4.4.9",
+    "emoji-picker-react": "^4.5.16",
     "github-slugger": "^2.0.0",
     "hls.js": "^1.4.12",
     "lodash": "^4.17.21",
