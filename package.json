@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hackclub/icons": "^0.0.12",
-    "@hackclub/meta": "^1.1.32",
+    "@hackclub/meta": "^1.1.33",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
     "@mdx-js/loader": "^1.6.22",
     "@mux/mux-node": "^7.3.0",
