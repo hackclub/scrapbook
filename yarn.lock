@@ -318,10 +318,10 @@
   dependencies:
     "@floating-ui/core" "^1.2.4"
 
-"@hackclub/icons@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@hackclub/icons/-/icons-0.0.12.tgz#a82dd20fdbc263c956aaee3ec8689078965d22fa"
-  integrity sha512-YXPpalHN0lEjgaUD++u43NucSfgXlaQRbNKH+CJusS9erCF1jyu0pUH0peXqmlWZybbIg1PnuYJyOvKDvACA2g==
+"@hackclub/icons@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@hackclub/icons/-/icons-0.0.14.tgz#c590432d5a1e4b39c384d577e59e24bffdd94197"
+  integrity sha512-xH/DV6TxlsvLuNGeBIausfKlH4eyp6CYXCckAxcYahL2NOdcZTZoJWKZBG38BzM5WfWnhfFkud/mQ5bqeFQK3g==
 
 "@hackclub/meta@^1.1.33":
   version "1.1.33"
