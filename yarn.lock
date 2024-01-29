@@ -858,12 +858,12 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-emoji-picker-react@^4.6.11:
-  version "4.6.11"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.6.11.tgz#8b1859aa06beacb8e5a8854b11b4ea72295217b8"
-  integrity sha512-MDCaNdRCiNftKVNDNj0jhTmjU8+3/jvG8W9aFUDTOOGf031BsHO5sluF+e6cpJx00OHtFeRG6OQJay7IUPKoMw==
+emoji-picker-react@^4.7.10:
+  version "4.7.10"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.7.10.tgz#14b262b2b555d6cad4710d810780cb88daf27156"
+  integrity sha512-vsrEmiwfz+h3zYN3ZR4sZ/ExRWooE3AAMBbgIGgSq5HbCNZoG4ri//WlhxoMhp8QI7X56d8Xyqo7vGGf5cy1Pw==
   dependencies:
-    flairup "0.0.31"
+    flairup "0.0.35"
 
 emojis-list@^3.0.0:
   version "3.0.0"
@@ -890,10 +890,10 @@ extend@^3.0.0:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
-flairup@0.0.31:
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/flairup/-/flairup-0.0.31.tgz#e2063f01c46a855e1a5b7df26e2743b53273f5c8"
-  integrity sha512-Kuwql97uWKFQuEnO+gyPK/apLhFUP7HFcm+Sg+v55XDS7816tIrbWcavfilw+QlyuU1ey7QzyLmxcBCealMbrw==
+flairup@0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/flairup/-/flairup-0.0.35.tgz#d14abb36e823e8e5091574049417d8ea758a7c4e"
+  integrity sha512-nXDgTr2WT7UT7HJnNRHRnbo93xs5B3ar5lRWqIbJ6hiwWTSIex5xp56uhEzow6+S5hySoX0mEhzYbLtU3K3A+A==
 
 focus-lock@^0.9.1:
   version "0.9.2"
