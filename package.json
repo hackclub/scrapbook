@@ -20,7 +20,7 @@
     "aws-sdk": "^2.1548.0",
     "emoji-picker-react": "^4.7.10",
     "github-slugger": "^2.0.0",
-    "hls.js": "^1.4.14",
+    "hls.js": "^1.5.4",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "next": "^14.1.0",
