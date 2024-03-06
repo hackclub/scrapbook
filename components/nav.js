@@ -129,7 +129,6 @@ const Nav = () => {
             <Link href="/" legacyBehavior>
               <a className="nav-link nav-link-home">
                 Scrapbook
-                <span className="beta-label"> (Beta-V2)</span>
               </a>
             </Link>
           ))}
