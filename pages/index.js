@@ -23,7 +23,6 @@ const Header = ({ reactions, children }) => (
     />
     <header>
       {children}
-      <h3>beta v2.0</h3>
       <h1>Hack Club’s Scrapbook</h1>
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
