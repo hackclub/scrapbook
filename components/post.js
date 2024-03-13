@@ -7,9 +7,7 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
-import dynamic from 'next/dynamic'
 import EmojiPicker from 'emoji-picker-react'
-const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
