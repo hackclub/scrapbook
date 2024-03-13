@@ -19,8 +19,6 @@ import FourOhFour from '../404'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
-
 // Calculate heat map date range
 const today = new Date()
 const dateString = dt => dt.toISOString().substring(0, 10)

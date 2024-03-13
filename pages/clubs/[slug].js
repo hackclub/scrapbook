@@ -25,8 +25,6 @@ import { ClubsMemberPopup } from '../../components/clubs-member-popup'
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
 
-const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
-
 const Club = ({ club = {}, posts = [], children, session }) => {
   const [clubsEditOpen, setClubsEditOpen] = useState(false)
   const [clubsMemberOpen, setClubsMemberOpen] = useState(false)
