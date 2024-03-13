@@ -34,50 +34,51 @@ const Posts = ({ posts = [], swrKey = null }) => {
       })
   }
   const { data: session, status } = useSession()
-  return [
-    emojiPickerOpen && (
-      <div
-        style={{
-          position: 'fixed',
-          zIndex: 999,
-          top: 0,
-          left: 0,
-          height: '100vh',
-          width: '100vw',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'rgba(0,0,0,0.7)'
+  return (
+    <>
+      {emojiPickerOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            zIndex: 999,
+            top: 0,
+            left: 0,
+            height: '100vh',
+            width: '100vw',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,0,0,0.7)'
+          }}
+        >
+          <Close onClick={() => setEmojiPickerOpen(false)} background={true} />
+          <EmojiPicker onEmojiClick={react} />
+        </div>
+      )}
+      <Masonry
+        key="masonry"
+        breakpointCols={{
+          10000: 4,
+          1024: 3,
+          640: 2,
+          480: 1,
+          default: 1
         }}
+        className="masonry-posts"
+        columnClassName="masonry-posts-column"
       >
-        <Close onClick={() => setEmojiPickerOpen(false)} background={true} />
-        <EmojiPicker onEmojiClick={react} />
-      </div>
-    ),
-    <Masonry
-      key="masonry"
-      breakpointCols={{
-        10000: 4,
-        1024: 3,
-        640: 2,
-        480: 1,
-        default: 1
-      }}
-      className="masonry-posts"
-      columnClassName="masonry-posts-column"
-    >
-      {posts.map(post => (
-        <Post
-          key={post.id}
-          openEmojiPicker={openEmojiPicker}
-          authStatus={status}
-          authSession={session}
-          swrKey={swrKey}
-          {...post}
-        />
-      ))}
-    </Masonry>,
-    <style jsx global key="masonry-style">{`
+        {posts.map(post => (
+          <Post
+            key={post.id}
+            openEmojiPicker={openEmojiPicker}
+            authStatus={status}
+            authSession={session}
+            swrKey={swrKey}
+            {...post}
+          />
+        ))}
+      </Masonry>
+      <style jsx global key="masonry-style">{`
       .masonry-posts {
         display: flex;
         width: 100%;
@@ -121,7 +122,8 @@ const Posts = ({ posts = [], swrKey = null }) => {
         }
       }
     `}</style>
-  ]
+    </>
+  )
 }
 
 export default Posts
