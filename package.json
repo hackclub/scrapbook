@@ -44,7 +44,7 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.11.30",
     "babel-plugin-superjson-next": "^0.4.4",
     "nodemailer": "^6.9.12"
   }
