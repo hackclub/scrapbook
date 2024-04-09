@@ -170,7 +170,7 @@ const Nav = () => {
             />
           </>
         ) : (
-          external && <>
+          !external && <>
             <span
               onClick={() => setClubsOpen(true)}
               title="Clubs on Scrapbook"
