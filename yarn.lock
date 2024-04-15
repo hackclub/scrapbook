@@ -1359,11 +1359,6 @@ lodash.debounce@4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
-lodash.pick@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
-  integrity sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==
-
 lodash.uniq@4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
@@ -1774,16 +1769,15 @@ react@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
 
-reactour@^1.19.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/reactour/-/reactour-1.19.0.tgz#b8f98dbb00f2b366a658b6533683c25660732050"
-  integrity sha512-KHWX46yRXgQX1iD+cS/qI33VYH5jFgZeRxXIk4yJyIAGsTrDTwPeFFa6m7Pv+WX/CoEfggGfdSi2LPAkkuOkOg==
+reactour@^1.19.3:
+  version "1.19.3"
+  resolved "https://registry.yarnpkg.com/reactour/-/reactour-1.19.3.tgz#d83877496a3af211a881fba3709276accf2ac3e7"
+  integrity sha512-a2/j+xmbGlPMQhMy/zdpSmJN1STc0PcLUxhJbAC+bOcYdWHStFR02j6dhNuF/+IeqpX/d44PvlrRXSTt4LGk6w==
   dependencies:
     "@rooks/use-mutation-observer" "4.11.2"
     classnames "2.3.1"
     focus-outline-manager "^1.0.2"
     lodash.debounce "4.0.8"
-    lodash.pick "4.4.0"
     prop-types "15.7.2"
     react-focus-lock "2.5.2"
     scroll-smooth "1.1.1"
