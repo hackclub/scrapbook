@@ -420,10 +420,10 @@
   resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.22.tgz#219dfd89ae5b97a8801f015323ffa4b62f45718b"
   integrity sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==
 
-"@mux/mux-node@^8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@mux/mux-node/-/mux-node-8.3.0.tgz#7a3eee17c5b9e762ea38d8b66042792a42b956a0"
-  integrity sha512-s+6YQHuW4SyZGPil2AJGt+eR1ugJvtZyryXNodkAnd8fi1p42mhLbBnHpYFntvxOI63Ws5qjr8Dv+L5QIKTvxw==
+"@mux/mux-node@^8.5.0":
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/@mux/mux-node/-/mux-node-8.5.0.tgz#268a5b73d69cabb3bbdcedd9eb0d7dea93e7c1b8"
+  integrity sha512-+7Mq3k/LG1BmGsAxtHlrPUyf65KDD78+8eLcuO8XUgYGxeeA8gTDCyRrXb0GNlnkGPXcaSVVfDCdPcerc/9psQ==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
