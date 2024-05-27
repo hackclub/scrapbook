@@ -32,7 +32,7 @@
     "prisma": "5.14.0",
     "react": "^18.3.1",
     "react-audio-player": "^0.17.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-masonry-css": "^1.0.16",
     "react-tilt": "^0.1.4",
