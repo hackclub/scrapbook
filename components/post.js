@@ -7,6 +7,7 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
+import { useState } from 'react'
 import EmojiPicker from 'emoji-picker-react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
@@ -28,6 +29,7 @@ const Post = ({
   profile = false,
   user = {
     username: 'abc',
+    id: 'abc',
     avatar: '',
     displayStreak: false,
     streakCount: 0
@@ -44,6 +46,30 @@ const Post = ({
   swrKey,
   authSession
 }) => {
+  const [isVisible, setIsVisible] = useState(true);
+  
+  const deletePost = async (id) => {
+    try {
+      const response = await fetch('/api/web/post/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }) 
+      });
+      const responseText = await response.text()
+      if (responseText.includes("Post Deleted")){
+        setIsVisible(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  if (!isVisible) {
+    return null; 
+  }
+
   return (
     <>
       <section
@@ -154,6 +180,7 @@ const Post = ({
           </div>
         )}
         <footer className="post-reactions" aria-label="Emoji reactions">
+        <div style={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1 }}>
           {reactions.map(reaction => (
             <Reaction
               key={id + reaction.name}
@@ -169,6 +196,8 @@ const Post = ({
               +
             </div>
           )}
+          </div>
+          <Icon glyph="delete" size={32} className="delete-button post-reaction" onClick={() => deletePost(id)} />
         </footer>
       </section>
     </>
