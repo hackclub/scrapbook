@@ -7,7 +7,7 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import EmojiPicker from 'emoji-picker-react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
@@ -34,6 +34,7 @@ const Post = ({
     displayStreak: false,
     streakCount: 0
   },
+  sessionID = 'abc',
   text,
   attachments = [],
   mux = [],
@@ -41,13 +42,25 @@ const Post = ({
   postedAt,
   slackUrl,
   muted = false,
-  openEmojiPicker = () => {},
+  openEmojiPicker = () => { },
   authStatus,
   swrKey,
   authSession
 }) => {
   const [isVisible, setIsVisible] = useState(true);
-  
+  const [sessionUserId, setSessionUserId] = useState(null);
+
+  useEffect(() => {
+    if (authStatus === 'authenticated') {
+        const fetchSessionUserID = async () => {
+            const id = await getSessionUserID(user.id);
+            setSessionUserId(id);
+        };
+        fetchSessionUserID();
+    }
+}, [user.id, authStatus]);
+
+
   const deletePost = async (id) => {
     try {
       const response = await fetch('/api/web/post/delete', {
@@ -55,10 +68,10 @@ const Post = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id }) 
+        body: JSON.stringify({ id })
       });
       const responseText = await response.text()
-      if (responseText.includes("Post Deleted")){
+      if (responseText.includes("Post Deleted")) {
         setIsVisible(false);
       }
     } catch (error) {
@@ -67,7 +80,7 @@ const Post = ({
   };
 
   if (!isVisible) {
-    return null; 
+    return null;
   }
 
   return (
@@ -106,11 +119,10 @@ const Post = ({
                 <span className="post-header-name">
                   <strong>@{user.username}</strong>
                   <span
-                    className={`badge post-header-streak ${
-                      !user.displayStreak || user.streakCount === 0
-                        ? 'header-streak-zero'
-                        : ''
-                    }`}
+                    className={`badge post-header-streak ${!user.displayStreak || user.streakCount === 0
+                      ? 'header-streak-zero'
+                      : ''
+                      }`}
                     title={`${user.streakCount}-day streak`}
                   >
                     {`${user.streakCount <= 7 ? user.streakCount : '7+'}`}
@@ -180,24 +192,24 @@ const Post = ({
           </div>
         )}
         <footer className="post-reactions" aria-label="Emoji reactions">
-        <div style={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1 }}>
-          {reactions.map(reaction => (
-            <Reaction
-              key={id + reaction.name}
-              {...reaction}
-              postID={id}
-              authStatus={authStatus}
-              authSession={authSession}
-              swrKey={swrKey}
-            />
-          ))}
-          {authStatus == 'authenticated' && (
-            <div className="post-reaction" onClick={() => openEmojiPicker(id)}>
-              +
-            </div>
-          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1 }}>
+            {reactions.map(reaction => (
+              <Reaction
+                key={id + reaction.name}
+                {...reaction}
+                postID={id}
+                authStatus={authStatus}
+                authSession={authSession}
+                swrKey={swrKey}
+              />
+            ))}
+            {authStatus == 'authenticated' && (
+              <div className="post-reaction" onClick={() => openEmojiPicker(id)}>
+                +
+              </div>
+            )}
           </div>
-          <Icon glyph="delete" size={32} className="delete-button post-reaction" onClick={() => deletePost(id)} />
+          {( authStatus == 'authenticated' && sessionUserId === user.id) && <Icon glyph="delete" size={32} className="delete-button post-reaction" onClick={() => deletePost(id)} />}
         </footer>
       </section>
     </>
@@ -205,3 +217,20 @@ const Post = ({
 }
 
 export default Post
+
+const getSessionUserID = async (id) => {
+  try {
+    const response = await fetch('/api/web/session/get', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id })
+    });
+
+    const responseText = JSON.parse(await response.text());
+    return responseText.message;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
