@@ -121,8 +121,8 @@ export const LoginPopup = ({ closed, setLoginOpen, session }) => {
           {`
         body {
           height: 100%;
-          overflow-y: hidden; 
-        }  
+          overflow-y: hidden;
+        }
       `}
         </style>
       )}

@@ -250,7 +250,7 @@ function html(params) {
       </table>
     </div>
   </div>
-  
+
   </body>
   </html>
 `
@@ -260,6 +260,6 @@ function text({ url }) {
   return `Hi 👋, \n\n
 
   You requested a login URL for Hack Club's Scrapbook. It's here: ${url}. \n\n
-  
+
   - Hack Club`
 }
