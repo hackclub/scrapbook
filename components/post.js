@@ -228,7 +228,7 @@ const getSessionUserID = async (id) => {
       body: JSON.stringify({ id })
     });
 
-    const responseText = JSON.parse(await response.text());
+    const responseText = await response.json();
     return responseText.message;
   } catch (error) {
     console.error('Error:', error);
