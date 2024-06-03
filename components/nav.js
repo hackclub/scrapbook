@@ -94,14 +94,6 @@ const Nav = () => {
   const [external, setExternal] = useState(false)
 
   useEffect(() => {
-    try {
-      const l = document.createElement('a');
-      l.href = window.location.href;
-      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
-    } catch (e) {}
-  }, []);
-
-  useEffect(() => {
     if (router?.query?.checkYourEmail !== undefined) {
       toast('Where now? Head to your email for a unique URL to login.')
     } else if (router?.query?.successfullySaved !== undefined) {
@@ -170,7 +162,7 @@ const Nav = () => {
             />
           </>
         ) : (
-          !external && <>
+          <>
             <span
               onClick={() => setClubsOpen(true)}
               title="Clubs on Scrapbook"
