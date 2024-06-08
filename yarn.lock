@@ -918,12 +918,12 @@ dotenv@^16.4.5:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
-emoji-picker-react@^4.9.3:
-  version "4.9.3"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.9.3.tgz#ea6b87fd93021922a1787ddfdded581d755d950f"
-  integrity sha512-1O38tt6Yty8MiAB/3BWBpjyKr6sKVIl7Uc/fcATBxgz43fN31j1gVAsbY0+S2Yolaxgro838tFd2iADV2Ot2nA==
+emoji-picker-react@^4.9.4:
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.9.4.tgz#869256913545405a3bd6d52f5a319ba3580101d0"
+  integrity sha512-u/3IsmMPr3l9Tcsuwpw4VgHb34W0BjC6iE06EXNHNOnNjBtW0BUN8upba8V3piUht00Sa+/L1+hs/xVmdWsswA==
   dependencies:
-    flairup "0.0.38"
+    flairup "0.0.39"
 
 emojis-list@^3.0.0:
   version "3.0.0"
@@ -962,10 +962,10 @@ extend@^3.0.0:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
-flairup@0.0.38:
-  version "0.0.38"
-  resolved "https://registry.yarnpkg.com/flairup/-/flairup-0.0.38.tgz#62216990a8317a1b07d1d816033624c5b2130f31"
-  integrity sha512-W9QA5TM7eYNlGoBYwfVn/o6v4yWBCxfq4+EJ5w774oFeyWvVWnYq6Dgt4CJltjG9y/lPwbOqz3jSSr8K66ToGg==
+flairup@0.0.39:
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/flairup/-/flairup-0.0.39.tgz#edc3a0f27548f0a0a0cb3569f4971ae4c0b73d46"
+  integrity sha512-UVPkzZmZeBWBx1+Ovo++kYKk9Wi32Jxt+c7HsxnEY80ExwFV54w+NyquFziqMLS0BnGVE43yGD4OvIwaAm/WiQ==
 
 focus-lock@^0.9.1:
   version "0.9.2"
