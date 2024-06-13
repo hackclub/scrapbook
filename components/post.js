@@ -8,6 +8,7 @@ import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
 import { useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import EmojiPicker from 'emoji-picker-react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
@@ -62,21 +63,24 @@ const Post = ({
 
 
   const deletePost = async (id) => {
-    try {
-      const response = await fetch('/api/web/post/delete', {
+    toast.promise(
+      fetch('/api/web/post/delete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id })
-      });
-      const responseText = await response.text()
-      if (responseText.includes("Post Deleted")) {
-        setIsVisible(false);
+      }).then(response => response.text()).then(responseText => {
+        if (responseText.includes("Post Deleted")) {
+          setIsVisible(false);
+        }
+      }),
+      {
+        loading: 'Deleting post...',
+        success: 'Post Deleted Successfully!',
+        error: 'Error deleting post.',
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    );
   };
 
   if (!isVisible) {
