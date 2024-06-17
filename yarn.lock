@@ -918,10 +918,10 @@ dotenv@^16.4.5:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
-emoji-picker-react@^4.9.4:
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.9.4.tgz#869256913545405a3bd6d52f5a319ba3580101d0"
-  integrity sha512-u/3IsmMPr3l9Tcsuwpw4VgHb34W0BjC6iE06EXNHNOnNjBtW0BUN8upba8V3piUht00Sa+/L1+hs/xVmdWsswA==
+emoji-picker-react@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.10.0.tgz#c6ad68ae7f2b36dff61cffde07cfec237195950d"
+  integrity sha512-EfvOsGbyweMNcJ1F99XUv+XPdfkpa2NRAYkhwdIeYS6DWeISu3kHWX+iwvFLUVAc533aWbsGpETbxwbhzsiMnw==
   dependencies:
     flairup "0.0.39"
 
