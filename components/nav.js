@@ -126,14 +126,12 @@ const Nav = () => {
               Scrapbook
             </a>
           ) : (
-            <Link href="/" legacyBehavior>
-              <a className="nav-link nav-link-home">
+            <Link href="/" className='nav-link nav-link-home'>
                 Scrapbook
-              </a>
             </Link>
           ))}
-        <Link href="/about/" passHref legacyBehavior>
-          <a className="nav-link nav-link-about">About</a>
+        <Link href="/about/" passHref className='nav-link nav-link-about'>
+          About
         </Link>
         <a
           href="https://github.com/hackclub/scrapbook"
