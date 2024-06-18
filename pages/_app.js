@@ -26,18 +26,14 @@ const App = ({ Component, pageProps }) => {
   const Tour = dynamic(() => import('reactour'), {
     ssr: false
   })
-  // This is a hack for using the right link on custom domains
-  const [ext, setExt] = useState(false)
+
   useEffect(() => {
     try {
       const l = document.createElement('a');
       l.href = window.location.href;
-      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com" && l.pathname != "/") setExt(true);
     } catch (e) {}
   }, []);
-  if(ext){
-    return <FourOhFour />
-  }
+  
   return (
     <SessionProvider>
       <Toaster />
