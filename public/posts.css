@@ -24,6 +24,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 8px;
   line-height: 1;
 }
@@ -40,6 +41,7 @@
 
 .post-header-container {
   padding-left: 8px;
+  flex-grow: 1;
 }
 
 .post-header-name {
@@ -122,6 +124,7 @@ a.post-text-mention {
   align-items: center;
   margin-top: 16px;
 }
+
 .post-attachment {
   border-radius: 6px;
   overflow: hidden;
@@ -160,6 +163,7 @@ a.post-attachment:first-child:last-child {
   flex-wrap: wrap;
   margin-top: 16px;
   margin-bottom: -12px;
+  justify-content: space-between;
 }
 
 .post-reaction {
@@ -197,4 +201,25 @@ a.post-attachment:first-child:last-child {
   overflow: hidden;
   width: 24px;
   height: 24px;
+}
+
+.delete-button {
+  color: var(--colors-background);
+  background-color: #ec3750;
+  border-color: black;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+  color: var(--colors-background);
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-5deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.2);
+  }
 }
