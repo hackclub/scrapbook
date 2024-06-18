@@ -27,8 +27,8 @@ const Header = ({ reactions, children }) => (
       <p>
         A daily diary of what <a href="https://hackclub.com/">Hack Clubbers</a>{' '}
         are learning & making{' '}
-        <Link href="/streaks" passHref legacyBehavior>
-          <a>every day</a>
+        <Link href="/streaks" passHref>
+          every day
         </Link>
         .
       </p>

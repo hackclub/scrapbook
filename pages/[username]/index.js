@@ -89,13 +89,12 @@ const Profile = ({
             </span>
             <div className="header-links">
               {profile.slackID && (
-                <Link legacyBehavior
+                <Link
                   href="/[username]/mentions"
                   as={`/${profile.username}/mentions`}
+                  className='header-link header-link-mentions'
                 >
-                  <a className="header-link header-link-mentions">
                     <Icon size={32} glyph="mention" />
-                  </a>
                 </Link>
               )}
               {profile.slackID && (

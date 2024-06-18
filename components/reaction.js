@@ -39,7 +39,6 @@ const Reaction = ({
           name={name}
           width={24}
           height={24}
-          layout="responsive"
         />
       )}
       <span style={{ transform: 'translateY(2px)' }}>{char}</span>
@@ -56,10 +55,8 @@ const Reaction = ({
       {children}
     </span>
   ) : (
-    <Link href={`/r/${name}`} legacyBehavior>
-      <a className="post-reaction" title={startCase(name)}>
+    <Link href={`/r/${name}`} legacyBehavior className='post-reaction' title={startCase(name)}>
         {children}
-      </a>
     </Link>
   )
 }

@@ -65,8 +65,7 @@ const Post = ({
             </time>
           </header>
         ) : (
-          <Link legacyBehavior href="/[profile]" as={`/${user.username}`} prefetch={false}>
-            <a className="post-header">
+          <Link href="/[profile]" as={`/${user.username}`} className='post-header' prefetch={false}>
               {user.avatar && (
                 <Image
                   loading="lazy"
@@ -114,7 +113,6 @@ const Post = ({
                     : postedAt}
                 </time>
               </section>
-            </a>
           </Link>
         )}
         <Content>{text}</Content>
