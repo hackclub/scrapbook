@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 import { mutate } from 'swr'
-import S3 from '../lib/s3'
 import { useState } from 'react'
 import { Close } from '../components/close'
 import useSWR from 'swr'
