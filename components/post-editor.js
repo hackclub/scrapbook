@@ -36,19 +36,24 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           reader.onload = async (event) => {
             const fileData = event.target.result;
             if (fileData) {
+              const presignedUrl = new URL("/api/upload-image", location.origin);
+              presignedUrl.searchParams.set("filename", file.name);
+              presignedUrl.searchParams.set("filetype", file.type);
+
+              console.log({ url: presignedUrl.href, filename: file.name, filetype: file.type })
+
               const response = await fetch(
-                `/api/upload-image?filename=${file.name}&filetype=${file.type}`
+                presignedUrl.toString()
               )
               const { signedUrl } = await response.json();
 
-              console.log("SIGNED URL", signedUrl)
               // file blob
               const blob = new Blob([fileData], { type: file.type });
               fetch(signedUrl, {
                 method: "PUT",
                 body: blob
               }).then(() => {
-                uploadedImage = signedUrl;
+                uploadedImage = signedUrl.split("?")[0];
               });
             }
           }
@@ -56,11 +61,6 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           // read the file
           reader.readAsArrayBuffer(file);
 
-        //   uploadedImage = await S3.upload({
-        //     Bucket: 'scrapbook-into-the-redwoods',
-        //     Key: `${uuidv4()}-${file.name}`,
-        //     Body: file
-        //   }).promise()
         } catch (e) {
           alert(
             `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
