@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
-import S3 from '../lib/s3'
 import { useState } from 'react'
 import useForm from '../lib/use-form'
 import { Optional } from '../components/optional'
@@ -36,11 +35,9 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           reader.onload = async (event) => {
             const fileData = event.target.result;
             if (fileData) {
-              const presignedUrl = new URL("/api/upload-image", location.origin);
+              const presignedUrl = new URL("/api/presigned-s3", location.origin);
               presignedUrl.searchParams.set("filename", file.name);
               presignedUrl.searchParams.set("filetype", file.type);
-
-              console.log({ url: presignedUrl.href, filename: file.name, filetype: file.type })
 
               const response = await fetch(
                 presignedUrl.toString()
@@ -49,12 +46,16 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
 
               // file blob
               const blob = new Blob([fileData], { type: file.type });
-              fetch(signedUrl, {
+
+              await fetch(signedUrl, {
                 method: "PUT",
                 body: blob
-              }).then(() => {
-                uploadedImage = signedUrl.split("?")[0];
               });
+              // uploadedImage = signedUrl.split("?")[0];
+              uploadedImages.push(signedUrl.split("?")[0])
+
+              // set uploading state to false when all images have been uploaded
+              if (uploadedImages.filter(image => typeof image === "string").length === files.length) setUploading(false);
             }
           }
 
@@ -68,11 +69,11 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           console.error(e)
           return
         }
-        uploadedImages.push(uploadedImage)
+        // uploadedImages.push(uploadedImage)
+        // doesn't matter if it's null or not as it's not used
         return uploadedImage
       })
     )
-    setUploading(false)
     setDataValue('attachments', uploadedImages)
   }
   return (
