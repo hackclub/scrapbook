@@ -7,7 +7,7 @@ export default async function handleGetSignedUrl(req, res) {
   console.log(filename, filetype)
 
   const s3Client = new S3Client({
-    region: "eu-west-1",
+    region: "us-east-1",
     credentials: {
       accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
       secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY
