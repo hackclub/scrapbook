@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.621.0",
+    "@aws-sdk/s3-request-presigner": "^3.621.0",
     "@hackclub/icons": "^0.0.14",
     "@hackclub/meta": "^1.1.33",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
