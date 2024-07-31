@@ -31,11 +31,36 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
       Array.from(files).map(async file => {
         let uploadedImage
         try {
-          uploadedImage = await S3.upload({
-            Bucket: 'scrapbook-into-the-redwoods',
-            Key: `${uuidv4()}-${file.name}`,
-            Body: file
-          }).promise()
+          // here we need to upload that particular file
+          const reader = new FileReader();
+          reader.onload = async (event) => {
+            const fileData = event.target.result;
+            if (fileData) {
+              const response = await fetch(
+                `/api/upload-image?filename=${file.name}&filetype=${file.type}`
+              )
+              const { signedUrl } = await response.json();
+
+              console.log("SIGNED URL", signedUrl)
+              // file blob
+              const blob = new Blob([fileData], { type: file.type });
+              fetch(signedUrl, {
+                method: "PUT",
+                body: blob
+              }).then(() => {
+                uploadedImage = signedUrl;
+              });
+            }
+          }
+
+          // read the file
+          reader.readAsArrayBuffer(file);
+
+        //   uploadedImage = await S3.upload({
+        //     Bucket: 'scrapbook-into-the-redwoods',
+        //     Key: `${uuidv4()}-${file.name}`,
+        //     Body: file
+        //   }).promise()
         } catch (e) {
           alert(
             `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
@@ -43,8 +68,8 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           console.error(e)
           return
         }
-        uploadedImages.push(uploadedImage.Location)
-        return uploadedImage.Location
+        uploadedImages.push(uploadedImage)
+        return uploadedImage
       })
     )
     setUploading(false)
@@ -198,8 +223,8 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           {`
         body {
           height: 100%;
-          overflow-y: hidden; 
-        }  
+          overflow-y: hidden;
+        }
       `}
         </style>
       )}
