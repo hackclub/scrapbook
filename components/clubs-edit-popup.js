@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import S3 from '../lib/s3'
 import { useState } from 'react'
 import { Optional } from '../components/optional'
 import { Close } from '../components/close'
@@ -216,8 +215,8 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
           {`
         body {
           height: 100%;
-          overflow-y: hidden; 
-        }  
+          overflow-y: hidden;
+        }
       `}
         </style>
       )}

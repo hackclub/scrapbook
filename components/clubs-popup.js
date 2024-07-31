@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { Close } from '../components/close'
 import useSWR from 'swr'
 import Link from 'next/link'
-import S3 from '../lib/s3'
 import useForm from '../lib/use-form'
 import { Optional } from '../components/optional'
 import Icon from '@hackclub/icons'
@@ -252,8 +251,8 @@ export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) 
           {`
         body {
           height: 100%;
-          overflow-y: hidden; 
-        }  
+          overflow-y: hidden;
+        }
       `}
         </style>
       )}

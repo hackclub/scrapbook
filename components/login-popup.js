@@ -6,7 +6,6 @@ import { getProviders, signIn, signOut, useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import useSWR from 'swr'
 import Link from 'next/link'
-import S3 from '../lib/s3'
 import useForm from '../lib/use-form'
 const fetcher = url => fetch(url).then(r => r.json())
 
