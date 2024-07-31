@@ -1,11 +1,8 @@
 import { Optional } from '../components/optional'
 import { Close } from '../components/close'
 import useForm from '../lib/use-form'
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import toast from 'react-hot-toast';
-import S3 from "../lib/s3"
-import { emailToPfp } from '../lib/email';
+import toast from 'react-hot-toast'
+import { emailToPfp } from '../lib/email'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
   const { status, submit, useField, setData, setDataValue } = useForm(
@@ -21,21 +18,45 @@ const Profile = ({ closed, setMenuOpen, session }) => {
   function replaceProfilePicture(file) {
     // console.log(file);
     // do something silly...
-    try {
-      toast.promise(
-        S3.upload({
-          Bucket: "scrapbook-into-the-redwoods",
-          Key: `${uuidv4()}-${file.name}`,
-          Body: file
-        }).promise().then(newAvatar => setDataValue("avatar", newAvatar.Location)),
-        {
-          loading: "Uploading your new look",
-          error: "ack, failed to upload your profile picture",
-          success: "Yay you got some new looks there!"
+
+    async function uploadProfileImage(file) {
+      const reader = new FileReader()
+      reader.onload = async event => {
+        const fileData = event.target.result
+        if (fileData) {
+          const presignedUrl = new URL('/api/presigned-s3', location.origin)
+          presignedUrl.searchParams.set('filename', file.name)
+          presignedUrl.searchParams.set('filetype', file.type)
+
+          const response = await fetch(presignedUrl.toString())
+          const { signedUrl } = await response.json()
+
+          // file blob
+          const blob = new Blob([fileData], { type: file.type })
+          fetch(signedUrl, {
+            method: 'PUT',
+            body: blob
+          }).then(() => {
+            setDataValue('avatar', signedUrl.split("?")[0]);
+          })
         }
-      ).then(() => toast("Make sure to save your profile"));
+      }
+      reader.readAsArrayBuffer(file)
+    }
+
+    try {
+      toast
+        .promise(
+          uploadProfileImage(file),
+          {
+            loading: 'Uploading your new look',
+            error: 'ack, failed to upload your profile picture',
+            success: 'Yay you got some new looks there!'
+          }
+        )
+        .then(() => toast('Make sure to save your profile'))
     } catch (e) {
-      toast.error("Humm... something wrong happened")
+      toast.error('Humm... something wrong happened')
     }
   }
 
@@ -58,7 +79,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               display: 'grid',
               gap: '16px',
               marginTop: '8px',
-              gridTemplateColumns: '1fr 1fr',
+              gridTemplateColumns: '1fr 1fr'
             }}
           >
             <div>
@@ -75,16 +96,16 @@ const Profile = ({ closed, setMenuOpen, session }) => {
                   border: '1px solid var(--muted)'
                 }}
               />
-                <input 
-                type='file' 
-                placeholder="change profile" 
+              <input
+                type="file"
+                placeholder="change profile"
                 multiple="false"
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
                 className="file-upload__input"
                 onChange={event => {
-                  replaceProfilePicture(event.target.files[0]);
+                  replaceProfilePicture(event.target.files[0])
                 }}
-                />
+              />
             </div>
             <div></div>
             <div>
@@ -187,8 +208,8 @@ const Profile = ({ closed, setMenuOpen, session }) => {
           {`
       body {
         height: 100%;
-        overflow-y: hidden; 
-      }  
+        overflow-y: hidden;
+      }
     `}
         </style>
       )}
