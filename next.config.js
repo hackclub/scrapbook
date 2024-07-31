@@ -14,7 +14,8 @@ module.exports = withMDX({
       'i.imgur.com',
       'www.gravatar.com',
       'ca.slack-edge.com',
-      'scrapbook-into-the-redwoods.s3.amazonaws.com'
+      'scrapbook-into-the-redwoods.s3.amazonaws.com',
+      'scrapbook-into-the-redwoods.s3.us-east-1.amazonaws.com'
     ]
   },
   async rewrites() {
