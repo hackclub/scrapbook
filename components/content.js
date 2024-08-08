@@ -12,7 +12,8 @@ export const formatText = text =>
     if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
       return <Emoji name={chunk} key={i} />
     }
-    if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
+    
+    if ((chunk?.startsWith('@') || chunk?.startsWith('<@')) && Array.from(chunk.matchAll("@"), m => m[0]).length == 1) {
       const punct = /([,!:.'"’”]|’s|'s|\))+$/g
       const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
       return (
