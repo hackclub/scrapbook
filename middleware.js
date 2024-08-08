@@ -26,18 +26,12 @@ async function sendTimerMetric(hostName, metricKey, time) {
 }
 
 export async function middleware(req) {
+  const url = new URL(decodeURIComponent(req.url));
+
   const cookie = req.headers.get("Cookie");
-  const split_url = req.url.split("/");
-  const HOST_NAME = split_url.slice(0, 3).join("/");
+  const HOST_NAME = "http://" + url.host;
 
-  let _metricName;
-
-  if (req.url.includes("profile") || req.url.includes("users")) {
-    _metricName = split_url.slice(3, -1);
-  } else _metricName = split_url.slice(3);
-  _metricName = _metricName.join("_");
-
-  // console.log(HOST_NAME, _metricName);
+  let _metricName = url.pathname.slice(1).split("/").join("_");
 
   // skip the /api/metric api endpoint
   if (req.url.includes("metric")) return NextResponse.json({ success: true });
@@ -48,10 +42,9 @@ export async function middleware(req) {
     if (req.body) {
       const rawBody = await req.body.getReader().read();
       const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
-      // const reqHeaders = Object.fromEntries(req.headers.entries());
 
       const startTime = new Date().getTime();
-      response = await fetch(req.url, {
+      response = await fetch(url.href, {
         method: req.method,
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +56,7 @@ export async function middleware(req) {
 
     } else {
       const startTime = new Date().getTime();
-      response = await fetch(req.url, {
+      response = await fetch(url.href, {
         headers: {
           "Cookie": cookie
         }
