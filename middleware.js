@@ -64,7 +64,14 @@ export async function middleware(req) {
       time = (new Date().getTime()) - startTime;
     }
 
-    const data = await response.json();
+    const contentType = response.headers.get("content-type")
+
+    let data;
+    if (contentType === "application/json") {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
 
     // attempt to send metric counter
     // and timer metric
@@ -80,7 +87,7 @@ export async function middleware(req) {
       sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
     ])
 
-    return NextResponse.json(data);
+    return contentType === "application/json" ? NextResponse.json(data) : new Response(data);
   } catch (err) {
     return NextResponse.json({ msg: "Failed", reason: err });
   }
