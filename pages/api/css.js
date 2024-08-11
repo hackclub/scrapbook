@@ -1,5 +1,5 @@
 export default async (req, res) => {
-  const { url } = req.query
+  const { url } = req.query;
   if (!url)
     return res
       .status(400)
@@ -9,6 +9,6 @@ export default async (req, res) => {
     return res
       .status(500)
       .json({ status: 500, error: 'Could not download CSS' })
-  res.setHeader('Content-Type', 'text/css')
-  res.send(css)
-}
+
+    res.send(css)
+  }
