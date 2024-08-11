@@ -55,11 +55,10 @@ const Profile = ({
     {profile.cssURL && (
       <link
         rel="stylesheet"
-        type="text/css"
         href={HOST + `/api/css?url=${profile.cssURL}`}
       />
     )}
-    {children}
+   {children}
     <header className="header">
       <div className="header-col-1">
         {profile.avatar && (
