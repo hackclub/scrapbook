@@ -72,6 +72,15 @@ module.exports = withMDX({
         ]
       },
       {
+        source: "/api/css",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "text/css;charset=UTF-8"
+          }
+        ]
+      },
+      {
         source: '/attachments/(.+)',
         headers: [
           { key: 'Access-Control-Allow-Origin', value: '*' },
