@@ -52,14 +52,12 @@ const Profile = ({
           : ''
       }`}
     />
-    <Head>
-      {profile.cssURL && (
-        <link
-          rel="stylesheet"
-          href={HOST + `/api/css?url=${profile.cssURL}`}
-        />
-      )}
-    </Head>
+    {profile.cssURL && (
+      <link
+        rel="stylesheet"
+        href={HOST + `/api/css?url=${profile.cssURL}`}
+      />
+    )}  
    {children}
     <header className="header">
       <div className="header-col-1">
