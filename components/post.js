@@ -207,20 +207,3 @@ const Post = ({
 }
 
 export default Post
-
-const getSessionUserID = async (id) => {
-  try {
-    const response = await fetch('/api/web/session/get', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id })
-    });
-
-    const responseText = await response.json();
-    return responseText.message;
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
