@@ -70,7 +70,6 @@ const Posts = ({ posts = [], swrKey = null }) => {
         {posts.map(post => (
           <Post
             key={post.id}
-            userID={post.user.id}
             openEmojiPicker={openEmojiPicker}
             authStatus={status}
             authSession={session}
