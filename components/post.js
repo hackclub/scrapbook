@@ -1,5 +1,4 @@
 import { convertTimestampToDate } from '../lib/dates'
-import { proxy } from '../lib/images'
 import { filter } from 'lodash'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
@@ -9,7 +8,6 @@ import Image from 'next/image'
 import Reaction from './reaction'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
-import EmojiPicker from 'emoji-picker-react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
@@ -49,18 +47,6 @@ const Post = ({
   authSession
 }) => {
   const [isVisible, setIsVisible] = useState(true);
-  const [sessionUserId, setSessionUserId] = useState(null);
-
-  useEffect(() => {
-    if (authStatus === 'authenticated') {
-        const fetchSessionUserID = async () => {
-            const id = await getSessionUserID(user.id);
-            setSessionUserId(id);
-        };
-        fetchSessionUserID();
-    }
-}, [user.id, authStatus]);
-
 
   const deletePost = async (id) => {
     toast.promise(
@@ -213,7 +199,7 @@ const Post = ({
               </div>
             )}
           </div>
-          {( authStatus == 'authenticated' && sessionUserId === user.id) && <Icon glyph="delete" size={32} className="delete-button post-reaction" onClick={() => deletePost(id)} />}
+          {( authStatus == 'authenticated' && authSession.user.id === user.id) && <Icon glyph="delete" size={32} className="delete-button post-reaction" onClick={() => deletePost(id)} />}
         </footer>
       </section>
     </>
