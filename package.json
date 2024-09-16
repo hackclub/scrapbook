@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.637.0",
+    "@aws-sdk/client-s3": "^3.651.1",
     "@aws-sdk/s3-request-presigner": "^3.637.0",
     "@hackclub/icons": "^0.0.15",
     "@hackclub/meta": "^1.1.33",
