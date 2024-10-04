@@ -4,6 +4,10 @@ import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
 import { emailToPfp } from '../../lib/email'
 
+export function exclude(object, keys) {
+  return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
+}
+
 export const getRawPosts = async (max = null, params = {}, api = false) => {
   const opts = {
     orderBy: {
@@ -50,29 +54,31 @@ export const transformReactions = (raw = []) =>
     })
   )
 
-export const transformPost = p => ({
-  id: p.id,
-  user: p.user
-    ? {
-      ...p.user,
-      avatar: p.user.avatar || emailToPfp(p.user.email)
-    }
-    : {},
-  timestamp: p.messageTimestamp || null,
-  slackUrl: p.messageTimestamp
-    ? `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp
-      .toString()
-      .replace('.', '')
-      .padEnd(16, '0')}`
-    : null,
-  postedAt: p.messageTimestamp
-    ? formatTS(p.messageTimestamp)
-    : new Date(p.postTime).toISOString(),
-  text: p.text != null ? p.text : '',
-  attachments: p.attachments,
-  mux: p.muxPlaybackIDs,
-  reactions: transformReactions(p.emojiReactions) || []
-})
+export const transformPost = p => {
+  return ({
+    id: p.id,
+    user: exclude(p.user
+      ? {
+        ...p.user,
+        avatar: p.user.avatar || emailToPfp(p.user.email)
+      }
+      : {}, ['slackID', 'email', 'emailVerified']),
+    timestamp: p.messageTimestamp || null,
+    slackUrl: p.messageTimestamp
+      ? `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp
+        .toString()
+        .replace('.', '')
+        .padEnd(16, '0')}`
+      : null,
+    postedAt: p.messageTimestamp
+      ? formatTS(p.messageTimestamp)
+      : new Date(p.postTime).toISOString(),
+    text: p.text != null ? p.text : '',
+    attachments: p.attachments,
+    mux: p.muxPlaybackIDs,
+    reactions: transformReactions(p.emojiReactions) || []
+  });
+}
 
 export const getPosts = async (max = null, api = false) => {
   const users = await getRawUsers()
