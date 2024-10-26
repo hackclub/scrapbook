@@ -15,7 +15,7 @@ import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-// import { exclude } from "../api/posts";
+import { exclude } from "../api/posts";
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -298,9 +298,7 @@ export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
-  const { exclude } = require("../api/posts");
   const profile = exclude(await getProfile(params.username), ['slackID', 'email', 'emailVerified'])
-  // const profile = await getProfile(params.username);
   if (!profile || !profile?.username)
     return console.error('No profile') || { props: {} }
   try {
