@@ -5,6 +5,7 @@ import prisma from '../../lib/prisma'
 import { emailToPfp } from '../../lib/email'
 
 export function exclude(object, keys) {
+  if (!object) return {}
   return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
 }
 
