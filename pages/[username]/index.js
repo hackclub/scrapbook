@@ -289,7 +289,6 @@ export const getStaticPaths = async () => {
     orderBy: { streakCount: 'desc' },
     take: 75
   })
-  console.log("got usernames", usernames.length);
   const paths = usernames.map(username => ({ params: { username } }))
   return { paths, fallback: true }
 }
