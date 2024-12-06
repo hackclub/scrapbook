@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import Message from '../components/message'
 import Posts from '../components/posts'
 import { orderBy } from 'lodash'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 const fetcher = url => fetch(url).then(r => r.json())
 
 const Feed = ({
@@ -19,6 +19,7 @@ const Feed = ({
     refreshInterval: 5000
   });
 
+
   if (error) {
     return (
       <main className="container">
@@ -34,7 +35,7 @@ const Feed = ({
         `}</style>
         {children}
         <Posts
-          posts={orderBy([initialData, data], a => a.length)[0]}
+          posts={Object.values(feedData)}
           swrKey={src}
         />
       </main>
@@ -45,9 +46,15 @@ const Feed = ({
     return <Message text="Loading…" />
   }
 
+  useEffect(() => {
+    setCursor(data[0].timestamp);
+  }, []);
+
   // update to the latest data we have
   useEffect(() => {
     if (data.length === 0) return;
+    // only go ahead to update the feed data if the cursor is not the same as the latest post
+    if (data[0].timestamp <= cursor) return;
     setCursor(data[0].timestamp); // set the cursor to always point to the latest post
     setFeedData({ ...data.reduce((obj, curr) => ({ ...obj, [curr.id]: curr }), {}), ...feedData })
   }, [data]);
