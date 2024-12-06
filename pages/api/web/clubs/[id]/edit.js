@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../auth/[...nextauth]'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
-import normalizeUrl from 'normalize-url'
 
 const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
@@ -104,7 +103,7 @@ export default async (req, res) => {
         members: undefined,
         website:
           req.body?.website != '' && req.body?.website
-            ? normalizeUrl(req.body.website, { forceHttps: true })
+            ? new URL(req.body.website).href.replace('http://', 'https://')
             : null
       }
     })

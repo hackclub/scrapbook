@@ -36,7 +36,7 @@ export default async (req, res) => {
         slug: slugger.slug(req.body.name),
         name: req.body.name,
         website: req.body.website
-          ? normalizeUrl(req.body.website, { forceHttps: true })
+          ? new URL(req.body.website).href.replace("http://", "https://")
           : null,
         logo: req.query.website
           ? `https://unavatar.io/${normalizeUrl(req.body.website, {
