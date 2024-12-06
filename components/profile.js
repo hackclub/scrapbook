@@ -16,8 +16,6 @@ const Profile = ({ closed, setMenuOpen, session }) => {
   )
 
   function replaceProfilePicture(file) {
-    // console.log(file);
-    // do something silly...
 
     async function uploadProfileImage(file) {
       const reader = new FileReader()
@@ -99,7 +97,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               <input
                 type="file"
                 placeholder="change profile"
-                multiple="false"
+                multiple={false}
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
                 className="file-upload__input"
                 onChange={event => {

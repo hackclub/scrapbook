@@ -123,7 +123,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
             <div className="file-upload">
               <input
                 className="file-upload__input"
-                multiple="true"
+                multiple={true}
                 type="file"
                 accept="image/png, image/jpeg, .mp4, .mov, .webm"
                 disabled={uploading}
