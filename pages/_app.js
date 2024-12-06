@@ -32,7 +32,7 @@ const App = ({ Component, pageProps }) => {
     <SessionProvider>
       <Toaster />
       {!router?.query?.embed && <Nav />}
-      <NProgress color={'#ec3750'} />
+      {/* <NProgress color={'#ec3750'} /> */}
       <Component {...pageProps} />
       <Analytics />
     </SessionProvider>
