@@ -5,18 +5,51 @@ module.exports = withMDX({
   trailingSlash: false,
   images: {
     imageSizes: [18, 36, 54, 24, 48, 72, 96, 144],
-    domains: [
-      'dl.airtable.com',
-      'emoji.slack-edge.com',
-      'cloud-lp0r5yk68.vercel.app',
-      'avatars.slack-edge.com',
-      'secure.gravatar.com',
-      'i.imgur.com',
-      'www.gravatar.com',
-      'ca.slack-edge.com',
-      'scrapbook-into-the-redwoods.s3.amazonaws.com',
-      'scrapbook-into-the-redwoods.s3.us-east-1.amazonaws.com',
-      'imgutil.s3.us-east-2.amazonaws.com'
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'dl.airtable.com'
+      },
+      {
+        protocol: 'https', 
+        hostname: 'emoji.slack-edge.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cloud-lp0r5yk68.vercel.app'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.slack-edge.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.gravatar.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'ca.slack-edge.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'scrapbook-into-the-redwoods.s3.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'scrapbook-into-the-redwoods.s3.us-east-1.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'imgutil.s3.us-east-2.amazonaws.com'
+      }
     ],
     formats: ['image/webp']
   },
