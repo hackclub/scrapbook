@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
-import normalizeUrl from 'normalize-url'
 
 const slugger = new GithubSlugger()
 
@@ -36,7 +35,7 @@ export default async (req, res) => {
         slug: slugger.slug(req.body.name),
         name: req.body.name,
         website: req.body.website
-          ? normalizeUrl(req.body.website, { forceHttps: true })
+          ? new URL(req.body.website).href.replace("http://", "https://")
           : null,
         logo: req.query.website
           ? `https://unavatar.io/${normalizeUrl(req.body.website, {
