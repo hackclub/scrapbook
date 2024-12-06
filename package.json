@@ -41,7 +41,6 @@
     "reactour": "^1.19.4",
     "rss": "^1.2.2",
     "styled-components": "^4.0.0",
-    "superjson": "^1.13.3",
     "swr": "^2.2.5"
   },
   "devDependencies": {
