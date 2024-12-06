@@ -21,27 +21,9 @@ export const EmojiImg = ({ name, ...props }) => (
   </div>
 )
 
-const CustomEmoji = memo(({ name }) => {
+const CustomEmoji = memo(({ url, name }) => {
   const emoji = stripColons(name)
-  let [image, setImage] = useState(null)
-  useEffect(() => {
-    try {
-      fetch('/api/emoji/')
-        .then(r => r.json())
-        .then(emojis => {
-          if (emojis[emoji]) {
-            if (emojis[emoji].includes('http')) {
-              setImage(emojis[emoji])
-              return
-            }
-          }
-          setImage(
-            'https://emoji.slack-edge.com/T0266FRGM/parrot/c9f4fddc5e03d762.gif'
-          )
-        })
-    } catch (e) {}
-  }, [])
-  return image ? <EmojiImg src={image} name={emoji} /> : <span>:{emoji}:</span>
+  return <EmojiImg src={url} name={emoji} />;
 })
 
 export default CustomEmoji
