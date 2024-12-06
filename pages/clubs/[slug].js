@@ -17,7 +17,6 @@ import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
 import { clamp } from 'lodash'
-import normalizeUrl from 'normalize-url'
 import { useSession } from 'next-auth/react'
 import { ClubsEditPopup } from '../../components/clubs-edit-popup'
 import { ClubsMemberPopup } from '../../components/clubs-member-popup'
@@ -94,7 +93,7 @@ const Club = ({ club = {}, posts = [], children, session }) => {
                       className="header-link club-header-link header-link-github"
                     >
                       <Icon size={24} glyph="github" />
-                      {normalizeUrl(club.github, { stripProtocol: true }).replace("github.com/", "")}
+                      {new URL(club.github).pathname}
                     </a>
                   )}
                   {club.website && (
