@@ -81,10 +81,10 @@ export const transformPost = p => {
   });
 }
 
-export const getPosts = async (max = null, api = false) => {
+export const getPosts = async (where = {}, max = null, api = false) => {
   const users = await getRawUsers()
   try {
-    const posts = await getRawPosts(max, {}, api).then(posts =>
+    const posts = await getRawPosts(max, { where }, api).then(posts =>
       posts
         .map(p => {
           p.user = find(
@@ -104,7 +104,16 @@ export const getPosts = async (max = null, api = false) => {
 
 export default async (req, res) => {
   try {
-  const posts = await getPosts(req.query.max ? Number(req.query.max) : 200)
+    let where = {}
+    if (req.query.gt) {
+      where = {
+        postTime: {
+          gt: new Date(req.query.gt * 1000) // multiply by 1000 to get timestamp
+        }
+      }
+    }
+
+    const posts = await getPosts(where, req.query.max ? Number(req.query.max) : 200)
     res.json(posts);
   } catch {
     res.status(404).json([]);
