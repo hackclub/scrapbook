@@ -135,6 +135,7 @@ const Post = ({
                     title={img}
                     width={400}
                     height={300}
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </a>
               )
