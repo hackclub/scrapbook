@@ -127,12 +127,14 @@ const Post = ({
                   title={img}
                   className="post-attachment"
                 >
-                  <img
+                  <Image 
                     key={img}
                     alt={img}
                     src={img}
-                    loading="lazy"
+                    loading='lazy'
                     title={img}
+                    width={400}
+                    height={300}
                   />
                 </a>
               )
