@@ -21,7 +21,6 @@ import '../public/profiles.css'
 
 const App = ({ Component, pageProps }) => {
   let router = useRouter()
-  const [tour, setTour] = useState(true)
   useEffect(() => {
     try {
       const l = document.createElement('a');
