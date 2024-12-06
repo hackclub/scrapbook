@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]'
 import prisma from '../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
-import normalizeUrl from 'normalize-url'
 
 const slugger = new GithubSlugger()
 
