@@ -16,6 +16,7 @@ export const EmojiImg = ({ name, ...props }) => (
       width={18}
       height={18}
       {...props}
+      unoptimized
     />
   </div>
 )
