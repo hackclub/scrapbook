@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Buffer } from "node:buffer";
 
 const createTimeoutPromise = (timeout) => new Promise((resolve) => {
   setTimeout(resolve, timeout);
@@ -46,7 +45,10 @@ export async function middleware(req) {
     let time;
     if (req.body) {
       const rawBody = await req.body.getReader().read();
-      const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
+
+      const body = JSON.parse(
+        new TextDecoder().decode(rawBody.value)
+      );
 
       const startTime = new Date().getTime();
       response = await fetch(url.href, {
