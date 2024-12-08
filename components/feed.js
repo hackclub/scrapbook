@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import Message from '../components/message'
 import Posts from '../components/posts'
-import { orderBy } from 'lodash'
+import { orderBy } from 'lodash-es'
 import { useState, useEffect, useMemo } from "react";
 const fetcher = url => fetch(url).then(r => r.json())
 
@@ -47,6 +47,7 @@ const Feed = ({
   }
 
   useEffect(() => {
+    if (data.length == 0) return;
     setCursor(data[0].timestamp);
   }, []);
 

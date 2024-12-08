@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import Mention from '../components/mention'
-import { orderBy } from 'lodash'
+import { orderBy } from 'lodash-es'
 
 const StreaksPage = ({ users }) => {
   return (

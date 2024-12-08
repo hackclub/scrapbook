@@ -1,4 +1,4 @@
-import { map, find, isEmpty, orderBy, filter } from 'lodash'
+import { map, find, isEmpty, orderBy, filter } from 'lodash-es'
 import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 

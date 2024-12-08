@@ -1,4 +1,4 @@
-import { map } from 'lodash'
+import { map } from 'lodash-es'
 import prisma from '../../lib/prisma'
 
 export const getUsernames = async (params = {}) => {

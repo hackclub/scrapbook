@@ -7,7 +7,7 @@ import Head from 'next/head'
 import Meta from '@hackclub/meta'
 import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import { clamp } from 'lodash'
+import { clamp } from 'lodash-es'
 import Banner from '../../components/banner'
 import Message from '../../components/message'
 import { StaticMention } from '../../components/mention'
@@ -302,7 +302,7 @@ export const getStaticProps = async ({ params }) => {
     return console.error('No profile') || { props: {} }
   try {
     const posts = await getPosts(profile)
-    const { groupBy } = require('lodash')
+    const { groupBy } = require('lodash-es')
     const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
     const heatmap = Object.keys(days).map(date => ({
       date,

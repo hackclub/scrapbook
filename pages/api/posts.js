@@ -1,4 +1,4 @@
-import { find, compact, isEmpty } from 'lodash'
+import { find, compact, isEmpty } from 'lodash-es'
 import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'

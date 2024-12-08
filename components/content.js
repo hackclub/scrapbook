@@ -1,6 +1,6 @@
 // Credit to https://blog.rstankov.com/building-auto-link-component-in-react/
 import { Fragment, memo } from 'react'
-import { last } from 'lodash'
+import { last } from 'lodash-es'
 import Mention from './mention'
 import Emoji from './emoji'
 
