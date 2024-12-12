@@ -41,61 +41,90 @@ export async function middleware(req) {
   // skip the /api/metric api endpoint
   if (req.url.includes("metric")) return NextResponse.json({ success: true });
 
-  try {
-    let response;
-    let time;
-    if (req.body) {
-      const rawBody = await req.body.getReader().read();
-      const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
+  const startTime = new Date().getTime();
+  const hasFormData = req.headers.get("Content-Type")?.includes("multipart/form-data");
+  const response = await fetch(url.href, {
+    method: req.method,
+    headers: req.headers,
+    body: hasFormData ? await req.formData() : req.body
+  });
 
-      const startTime = new Date().getTime();
-      response = await fetch(url.href, {
-        method: req.method,
-        headers: {
-          "Content-Type": "application/json",
-          "Cookie": cookie
-        },
-        body: JSON.stringify(body)
-      });
-      time = (new Date().getTime()) - startTime;
+  const time = (new Date().getTime()) - startTime;
 
-    } else {
-      const startTime = new Date().getTime();
-      response = await fetch(url.href, {
-        headers: {
-          "Cookie": cookie
-        }
-      });
-      time = (new Date().getTime()) - startTime;
-    }
 
-    const contentType = response.headers.get("content-type")
+      // attempt to send metric counter
+      // and timer metric
+      // ...will timeout after 150ms
+      //
+      /* sending metrics is dispatched to /api/metrics because next.js middleware
+      * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
+      * including UDP which node-statsd requires
+      */
+      Promise.any([
+        createTimeoutPromise(150),
+        // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
+        sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
+      ])
 
-    let data;
-    if (contentType === "application/json") {
-      data = await response.json();
-    } else {
-      data = await response.arrayBuffer();
-    }
 
-    // attempt to send metric counter
-    // and timer metric
-    // ...will timeout after 150ms
-    //
-    /* sending metrics is dispatched to /api/metrics because next.js middleware
-    * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
-    * including UDP which node-statsd requires
-    */
-    Promise.any([
-      createTimeoutPromise(150),
-      // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
-      sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
-    ])
+  const responseBody = hasFormData ? await response.formData() : await response.text();
+  return new NextResponse(responseBody, { headers: response.headers, status: response.status });
 
-    return contentType === "application/json" ? NextResponse.json(data) : new NextResponse(data, { headers: { ...response.headers } });
-  } catch (err) {
-    return NextResponse.json({ msg: "Failed", reason: err });
-  }
+  // try {
+  //   let response;
+  //   let time;
+  //   if (req.body) {
+  //     const rawBody = await req.body.getReader().read();
+  //     const body = JSON.parse(Buffer.from(rawBody?.value).toString("utf8"));
+
+  //     const startTime = new Date().getTime();
+  //     response = await fetch(url.href, {
+  //       method: req.method,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Cookie": cookie
+  //       },
+  //       body: JSON.stringify(body)
+  //     });
+  //     time = (new Date().getTime()) - startTime;
+
+  //   } else {
+  //     const startTime = new Date().getTime();
+  //     response = await fetch(url.href, {
+  //       headers: {
+  //         "Cookie": cookie
+  //       }
+  //     });
+  //     time = (new Date().getTime()) - startTime;
+  //   }
+
+  //   const contentType = response.headers.get("content-type")
+
+  //   let data;
+  //   if (contentType === "application/json") {
+  //     data = await response.json();
+  //   } else {
+  //     data = await response.arrayBuffer();
+  //   }
+
+  //   // attempt to send metric counter
+  //   // and timer metric
+  //   // ...will timeout after 150ms
+  //   //
+  //   /* sending metrics is dispatched to /api/metrics because next.js middleware
+  //   * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
+  //   * including UDP which node-statsd requires
+  //   */
+  //   Promise.any([
+  //     createTimeoutPromise(150),
+  //     // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
+  //     sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
+  //   ])
+
+  //   return contentType === "application/json" ? NextResponse.json(data) : new NextResponse(data, { headers: { ...response.headers } });
+  // } catch (err) {
+  //   return NextResponse.json({ msg: "Failed", reason: err });
+  // }
 }
 
 export const config = {
