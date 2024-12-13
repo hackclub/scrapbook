@@ -8,7 +8,7 @@ import Feed from '../../components/feed'
 import Message from '../../components/message'
 import Reaction from '../../components/reaction'
 import FourOhFour from '../404'
-import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash'
+import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash-es'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'

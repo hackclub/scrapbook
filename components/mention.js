@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from 'react'
-import { trim } from 'lodash'
+import { trim } from 'lodash-es'
 import Image from 'next/image'
 import Link from 'next/link'
 

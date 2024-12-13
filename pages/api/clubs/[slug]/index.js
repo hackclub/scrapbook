@@ -1,4 +1,4 @@
-import { map, find, isEmpty, orderBy } from 'lodash'
+import { map, find, isEmpty, orderBy } from 'lodash-es'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { getRawUsers } from '../../users'

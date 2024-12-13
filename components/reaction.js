@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { EmojiImg } from './emoji'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 import toast from 'react-hot-toast'
 import { mutate } from 'swr'
 
