@@ -7,6 +7,11 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
+import { getStaticProps as getUserProps } from './[username]/'
+import { getStaticProps as getClubProps } from './clubs/[slug]'
+import { getRawUsers } from './api/users'
+import { getRawClubs } from './api/clubs'
+import { find, compact, map, flatten } from "lodash-es";
 
 const Header = ({ reactions, children }) => (
   <>
@@ -128,10 +133,44 @@ const IndexPage = ({ reactions, initialData, type, ...props }) => {
 
 export default IndexPage
 
-export const getStaticProps = async (context) => {
-  const hostname = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.VERCEL_URL;
-  const response = await fetch(hostname + '/api/feed');
-  const data = await response.json();
-
-  return { props: { ...data }, revalidate: 60 }
+export const getServerSideProps = async (context) => {
+  const { getPosts } = require('./api/posts')
+  const names = [
+    'art',
+    'package',
+    'hardware',
+    'vsc',
+    'nextjs',
+    'js',
+    'vercel',
+    'swift',
+    'rustlang',
+    'slack',
+    'github',
+    'car',
+    'musical_note',
+    'robot_face',
+    'birthday',
+    'winter-hardware-wonderland'
+  ]
+  const host = context.req.headers.host;
+  if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
+    let [users, clubs] = await Promise.all([getRawUsers(), getRawClubs()])
+    // console.log([users, clubs])
+    users = users.filter((user) => user.customDomain == host)
+    clubs = clubs.filter((club) => club.customDomain == host)
+    if (clubs.length != 0) {
+      let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
+      return { props: { ...props, type: "club" } }
+    }
+    if (users.length != 0) {
+      let { props } = await getUserProps({ params: {username: users[0].username}})
+      return { props: { ...props, type: "user" } }
+    }
+  }
+  const initialData = await getPosts(48)
+  const reactions = compact(
+    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
+  )
+  return { props: { reactions, initialData, type: "index" } }
 }
