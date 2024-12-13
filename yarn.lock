@@ -927,10 +927,10 @@
   resolved "https://registry.npmjs.org/@next/env/-/env-15.0.4.tgz"
   integrity sha512-WNRvtgnRVDD4oM8gbUcRc27IAhaL4eXQ/2ovGbgLnPGUvdyDr8UdXP4Q/IBDdAdojnD2eScryIDirv0YUCjUVw==
 
-"@next/mdx@^15.0.3":
-  version "15.0.3"
-  resolved "https://registry.npmjs.org/@next/mdx/-/mdx-15.0.3.tgz"
-  integrity sha512-EwCJKDeJqfbHbsS7rIdWpKDOZsOPsif9AX4PaIhy5ghSMsZvi+/vIZVc07pZT7BdwCIoL9XM1KZMd/vzxCxF5A==
+"@next/mdx@^15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-15.1.0.tgz#651a7fffcbee0c5bc366bf18f01974a0da26ba5b"
+  integrity sha512-1USYedy2yRmPdIvQC1b2MBVwiJYrcZnCSHHZZETEuV1rAxjjXedbHmo43kwAv6DL3f9AgDHnl1/s1cqI7xhXdA==
   dependencies:
     source-map "^0.7.0"
 
