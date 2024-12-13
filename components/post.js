@@ -1,6 +1,6 @@
 import { convertTimestampToDate } from '../lib/dates'
 import { proxy } from '../lib/images'
-import { filter } from 'lodash'
+import { filter } from 'lodash-es'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
 import Content from './content'
