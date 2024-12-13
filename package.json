@@ -18,7 +18,11 @@
     "@mux/mux-node": "^8.8.0",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@next/mdx": "^15.0.3",
+<<<<<<< HEAD
     "@prisma/client": "6.0.1",
+=======
+    "@prisma/client": "^6.0.1",
+>>>>>>> e9c17cd (upgrade prisma and other packages)
     "dotenv": "^16.4.5",
     "emoji-picker-react": "^4.12.0",
     "github-slugger": "^2.0.0",
@@ -29,7 +33,7 @@
     "next-auth": "^4.24.7",
     "node-statsd": "^0.1.1",
     "nprogress": "^0.2.0",
-    "prisma": "5.21.1",
+    "prisma": "^6.0.1",
     "react": "^19.0.0",
     "react-audio-player": "^0.17.0",
     "react-dom": "^19.0.0",
