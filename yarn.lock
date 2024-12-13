@@ -933,10 +933,10 @@
   resolved "https://registry.npmjs.org/@next/env/-/env-15.0.4.tgz"
   integrity sha512-WNRvtgnRVDD4oM8gbUcRc27IAhaL4eXQ/2ovGbgLnPGUvdyDr8UdXP4Q/IBDdAdojnD2eScryIDirv0YUCjUVw==
 
-"@next/mdx@^15.0.3":
-  version "15.0.3"
-  resolved "https://registry.npmjs.org/@next/mdx/-/mdx-15.0.3.tgz"
-  integrity sha512-EwCJKDeJqfbHbsS7rIdWpKDOZsOPsif9AX4PaIhy5ghSMsZvi+/vIZVc07pZT7BdwCIoL9XM1KZMd/vzxCxF5A==
+"@next/mdx@^15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-15.1.0.tgz#651a7fffcbee0c5bc366bf18f01974a0da26ba5b"
+  integrity sha512-1USYedy2yRmPdIvQC1b2MBVwiJYrcZnCSHHZZETEuV1rAxjjXedbHmo43kwAv6DL3f9AgDHnl1/s1cqI7xhXdA==
   dependencies:
     source-map "^0.7.0"
 
@@ -985,13 +985,12 @@
   resolved "https://registry.npmjs.org/@panva/hkdf/-/hkdf-1.0.4.tgz"
   integrity sha512-003xWiCuvePbLaPHT+CRuaV4GlyCAVm6XYSbBZDHoWZGn1mNkVKFaDbGJjjxmEFvizUwlCoM6O18FCBMMky2zQ==
 
-"@prisma/client@6.0.1":
 "@polka/url@^1.0.0-next.24":
   version "1.0.0-next.28"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.28.tgz#d45e01c4a56f143ee69c54dd6b12eade9e270a73"
   integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
 
-"@prisma/client@^6.0.1":
+"@prisma/client@6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-6.0.1.tgz#e24c5a44fb46d04a92426879bd9f8a2c28338420"
   integrity sha512-60w7kL6bUxz7M6Gs/V+OWMhwy94FshpngVmOY05TmGD0Lhk+Ac0ZgtjlL6Wll9TD4G03t4Sq1wZekNVy+Xdlbg==
