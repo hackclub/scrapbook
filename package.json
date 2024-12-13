@@ -19,11 +19,7 @@
     "@next-auth/prisma-adapter": "^1.0.7",
     "@next/bundle-analyzer": "^15.0.4",
     "@next/mdx": "^15.0.3",
-<<<<<<< HEAD
     "@prisma/client": "6.0.1",
-=======
-    "@prisma/client": "^6.0.1",
->>>>>>> e9c17cd (upgrade prisma and other packages)
     "dotenv": "^16.4.5",
     "emoji-picker-react": "^4.12.0",
     "github-slugger": "^2.0.0",
