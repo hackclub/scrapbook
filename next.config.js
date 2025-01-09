@@ -131,7 +131,7 @@ let nextConfig = withMDX({
         ]
       }
     ]
-  }
+  },
 })
 
 module.exports = withBundleAnalyzer(nextConfig);
