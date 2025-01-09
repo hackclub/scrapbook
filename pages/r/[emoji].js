@@ -141,7 +141,6 @@ const Footer = ({ reactions = [] }) => (
 )
 
 const Page = ({ status, emoji, related = [], posts = [], css }) => {
-  const posts = SuperJSON.parse(posts);
   const router = useRouter()
 
   if (status === 404) {
@@ -153,7 +152,7 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
   } else if (emoji) {
     return (
       <Feed
-        initialData={posts}
+        initialData={SuperJSON.parse(posts)}
         src={`/api/r/${emoji.name}`}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
