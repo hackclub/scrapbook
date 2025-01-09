@@ -282,18 +282,18 @@ const UserPage = props => {
 
 export default UserPage
 
-export const getStaticPaths = async () => {
-  const { getUsernames } = require('../api/usernames')
-  let usernames = await getUsernames({
-    where: { fullSlackMember: true },
-    orderBy: { streakCount: 'desc' },
-    take: 75
-  })
-  const paths = usernames.map(username => ({ params: { username } }))
-  return { paths, fallback: true }
-}
+// export const getStaticPaths = async () => {
+//   const { getUsernames } = require('../api/usernames')
+//   let usernames = await getUsernames({
+//     where: { fullSlackMember: true },
+//     orderBy: { streakCount: 'desc' },
+//     take: 75
+//   })
+//   const paths = usernames.map(username => ({ params: { username } }))
+//   return { paths, fallback: true }
+// }
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
@@ -329,11 +329,58 @@ export const getStaticProps = async ({ params }) => {
 
     return {
       props: { profile, webring, heatmap, posts },
-      revalidate: 1
+      // revalidate: 1
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, revalidate: 1 }
+    return { props: { profile } }
+    // return { props: { profile }, revalidate: 1 }
   }
 
+
 }
+
+// export const getStaticProps = async ({ params }) => {
+//   const { getProfile, getPosts } = require('../api/users/[username]/index')
+//   if (params.username?.length < 2)
+//     return console.error('No username') || { props: {} }
+//   const profile = exclude(await getProfile(params.username), ['slackID', 'email', 'emailVerified'])
+//   if (!profile || !profile?.username)
+//     return console.error('No profile') || { props: {} }
+//   try {
+//     const posts = await getPosts(profile)
+//     const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
+//     const heatmap = Object.keys(days).map(date => ({
+//       date,
+//       count: days[date].length || 0
+//     }))
+//     let webring = []
+//     if (profile.webring) {
+//       webring = await Promise.all(
+//         profile.webring.map(async id => {
+//           let u =
+//             id[0] == 'U'
+//               ? await getProfile(id, 'slackID')
+//               : await getProfile(id, 'id')
+//           try {
+//             u.mutual =
+//               u.webring.includes(profile.slackID) ||
+//               u.webring.includes(profile.id)
+//           } catch {
+//             u.mutual = false
+//           }
+//           return u
+//         })
+//       )
+//     }
+
+//     return {
+//       props: { profile, webring, heatmap, posts },
+//       revalidate: 1
+//     }
+//   } catch (error) {
+//     console.error(error)
+//     return { props: { profile }, revalidate: 1 }
+//   }
+
+// }
