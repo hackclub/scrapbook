@@ -132,12 +132,6 @@ let nextConfig = withMDX({
       }
     ]
   },
-  experimental: {
-    swcPlugins: [
-      'next-superjson-plugin',
-      { excluded: [] }
-    ]
-  }
 })
 
 module.exports = withBundleAnalyzer(nextConfig);

@@ -28,7 +28,6 @@
     "md5": "^2.3.0",
     "next": "^15.1.0",
     "next-auth": "^4.24.7",
-    "next-superjson-plugin": "^0.6.3",
     "node-statsd": "^0.1.1",
     "nprogress": "^0.2.0",
     "prisma": "^6.0.1",
@@ -40,6 +39,7 @@
     "react-tilt": "^0.1.4",
     "react-tooltip": "^5.28.0",
     "rss": "^1.2.2",
+    "superjson": "^2.2.2",
     "swr": "^2.2.5"
   },
   "devDependencies": {
