@@ -340,7 +340,7 @@ export const getServerSideProps = async ({ params }) => {
 
 }
 
-// export const _getStaticProps = async ({ params }) => {
+// export const getStaticProps = async ({ params }) => {
 //   const { getProfile, getPosts } = require('../api/users/[username]/index')
 //   if (params.username?.length < 2)
 //     return console.error('No username') || { props: {} }
