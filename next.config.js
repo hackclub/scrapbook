@@ -131,6 +131,12 @@ let nextConfig = withMDX({
         ]
       }
     ]
+  },
+  experimental: {
+    swcPlugins: [
+      'next-superjson-plugin',
+      { excluded: [] }
+    ]
   }
 })
 
