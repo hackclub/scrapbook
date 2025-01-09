@@ -382,5 +382,4 @@ export const getServerSideProps = async ({ params }) => {
 //     console.error(error)
 //     return { props: { profile }, revalidate: 1 }
 //   }
-
 // }
