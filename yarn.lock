@@ -919,10 +919,10 @@
   resolved "https://registry.npmjs.org/@next-auth/prisma-adapter/-/prisma-adapter-1.0.7.tgz"
   integrity sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==
 
-"@next/bundle-analyzer@^15.1.0":
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-15.1.0.tgz#444549cac0d1fb41172dd4b2f4a65e81ebe5af4b"
-  integrity sha512-uEyuNZZgAbSWgiUbtihTA8y6QgEzc4b8Fpslmc4SXAjj67Ax5mlcv1HLlez+5dIGwO+vJ9PgCoI8ngWtBh/g1Q==
+"@next/bundle-analyzer@^15.1.4":
+  version "15.1.4"
+  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-15.1.4.tgz#17f000db3a16492180270b4d23a77ca78facacfa"
+  integrity sha512-W8X96jOW0U5VjLVAkFr1P37kH2f/Ma9zzwgX2o3Omft92pI0XHpFG8Xa9YUT3NlhRJCe4ZKznr1VxhSrFNA+BA==
   dependencies:
     webpack-bundle-analyzer "4.10.1"
 
