@@ -169,8 +169,10 @@ export const getServerSideProps = async (context) => {
     }
   }
   const initialData = await getPosts(48)
+  console.log("got initial posts");
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
+  console.log("got reactions");
   return { props: { reactions, initialData, type: "index" } }
 }
