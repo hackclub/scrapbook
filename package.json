@@ -20,7 +20,6 @@
     "@next/bundle-analyzer": "^15.1.4",
     "@next/mdx": "^15.1.4",
     "@prisma/client": "6.0.1",
-    "babel-plugin-superjson-next": "^0.4.5",
     "dotenv": "^16.4.7",
     "emoji-picker-react": "^4.12.0",
     "github-slugger": "^2.0.0",
@@ -45,6 +44,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.9.3",
+    "babel-plugin-superjson-next": "^0.4.5",
     "nodemailer": "^6.9.16"
   }
 }
