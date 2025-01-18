@@ -2016,10 +2016,10 @@ asynckit@^0.4.0:
   resolved "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-babel-plugin-superjson-next@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-superjson-next/-/babel-plugin-superjson-next-0.4.5.tgz#988ca073fb2059f1dc0c2d439b42e82a478b8cd2"
-  integrity sha512-k7S99Qpsbi3OSdlCMXEiklzxepM6QbYEIUsrjgSkpx+ksT0iNfdY2r1kCzBK2UjG8fLN6NZEKpDA8XpG2pbDSA==
+babel-plugin-superjson-next@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-superjson-next/-/babel-plugin-superjson-next-0.4.4.tgz#3eef52d6453da499d2a02bf752320189281ca1ce"
+  integrity sha512-V0BimtxEm1FZOWeG0POliEVN4Y8P9ZbSVVyN78id61U066c/24cUzKyiv6v/hwWQFY61xRFgKXoodrWqd4t9iA==
   dependencies:
     "@babel/helper-module-imports" "^7.13.12"
     "@babel/types" "^7.13.17"
