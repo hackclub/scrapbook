@@ -39,7 +39,7 @@
     "react-tilt": "^0.1.4",
     "react-tooltip": "^5.28.0",
     "rss": "^1.2.2",
-    "superjson": "^2.2.2",
+    "superjson": "1.13.3",
     "swr": "^2.2.5"
   },
   "devDependencies": {
