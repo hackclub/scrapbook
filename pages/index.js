@@ -7,10 +7,6 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
-import { getServerSideProps as getUserProps } from './[username]/'
-import { getStaticProps as getClubProps } from './clubs/[slug]'
-import { getRawUsers } from './api/users'
-import { getRawClubs } from './api/clubs'
 import { find, compact, map, flatten } from "lodash-es";
 
 const Header = ({ reactions, children }) => (
@@ -134,7 +130,12 @@ const IndexPage = ({ reactions, initialData, type, ...props }) => {
 export default IndexPage
 
 export const getServerSideProps = async (context) => {
+  const { getServerSideProps: getUserProps } = require('./[username]/')
+  const { getStaticProps: getClubProps } = require('./clubs/[slug]')
+  const { getRawUsers } = require('./api/users')
+  const { getRawClubs } = require('./api/clubs')
   const { getPosts } = require('./api/posts')
+
   const names = [
     'art',
     'package',
@@ -154,7 +155,7 @@ export const getServerSideProps = async (context) => {
     'winter-hardware-wonderland'
   ]
   const host = context.req.headers.host;
-  if(!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
+  if (!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
     let [users, clubs] = await Promise.all([getRawUsers(), getRawClubs()])
     // console.log([users, clubs])
     users = users.filter((user) => user.customDomain == host)
@@ -168,7 +169,7 @@ export const getServerSideProps = async (context) => {
       return { props: { ...props, type: "user" } }
     }
   }
-  const initialData = await getPosts(48)
+  const initialData = await getPosts({}, 48, false)
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
