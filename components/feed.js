@@ -1,16 +1,15 @@
 import useSWR from 'swr'
 import Message from '../components/message'
 import Posts from '../components/posts'
-import { orderBy } from 'lodash-es'
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 const fetcher = url => fetch(url).then(r => r.json())
+
 
 const Feed = ({
   src = '/api/posts',
   initialData,
   children,
   footer,
-  ...props
 }) => {
   const [cursor, setCursor] = useState(null);
   const [feedData, setFeedData] = useState(initialData.reduce((obj, curr) => ({ ...obj, [curr.id]: curr}), {}));
@@ -19,6 +18,21 @@ const Feed = ({
     refreshInterval: 5000
   });
 
+  useEffect(() => {
+    if (error || !data) return;
+    if (data.length == 0) return;
+    setCursor(data[0].timestamp);
+  }, []);
+
+  // update to the latest data we have
+  useEffect(() => {
+    if (error || !data) return;
+    if (data.length === 0) return;
+    // only go ahead to update the feed data if the cursor is not the same as the latest post
+    if (data[0].timestamp <= cursor) return;
+    setCursor(data[0].timestamp); // set the cursor to always point to the latest post
+    setFeedData({ ...data.reduce((obj, curr) => ({ ...obj, [curr.id]: curr }), {}), ...feedData })
+  }, [data]);
 
   if (error) {
     return (
@@ -46,19 +60,6 @@ const Feed = ({
     return <Message text="Loading…" />
   }
 
-  useEffect(() => {
-    if (data.length == 0) return;
-    setCursor(data[0].timestamp);
-  }, []);
-
-  // update to the latest data we have
-  useEffect(() => {
-    if (data.length === 0) return;
-    // only go ahead to update the feed data if the cursor is not the same as the latest post
-    if (data[0].timestamp <= cursor) return;
-    setCursor(data[0].timestamp); // set the cursor to always point to the latest post
-    setFeedData({ ...data.reduce((obj, curr) => ({ ...obj, [curr.id]: curr }), {}), ...feedData })
-  }, [data]);
 
   return (
     <main>
