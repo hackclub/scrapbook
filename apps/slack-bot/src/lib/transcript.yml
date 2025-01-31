@@ -1,0 +1,292 @@
+ping: pong
+error: |
+  ERROR! ERROR! :skull:
+  ```
+  <@${this.e}>
+  ```
+messages:
+  help: |
+    Hello!!!!!!!!!!!!!! I'm a bot that helps you build your <https://scrapbook.hackclub.com/|Scrapbook>. Here are all the commands you can run:
+
+    - \`/scrappy-togglestreaks\`: toggles your streak count on/off in your status
+    - \`/scrappy-togglestreaks all\`: opts out of streaks completely
+    - \`/scrappy-setcss\`: adds a custom CSS file to your scrapbook profile. <https://scrapbook.hackclub.com/sampoder|Check out this cool example!>
+    - \`/scrappy-setdomain\`: links a custom domain to your scrapbook profile, e.g. https://zachlatta.com
+    - \`/scrappy-setusername\`: change your profile username
+    - \`/scrappy-setaudio\`: links an audio file to your Scrapbook. <https://scrapbook.hackclub.com/matthew|See an example here!>
+    - \`/scrappy-setwebhook\`: create a Scrappy Webhook we will make a blank fetch request to this URL every time you post
+    - \`/scrappy-webring\`: adds or removes someone to your webring
+
+    BTW if you want to delete or update a post you can do so by simply editing or deleting your Slack message.
+
+    Learn all about Scrapbook at https://scrapbook.hackclub.com/about
+    PS: for scrappy_dev, prepend the commands with \`test-\` e.g \`/test-scrappy\`
+  forget: |
+    Forgetting about all recorded scraps from....
+    uhhhh....
+    who are you?
+  join:
+    scrapbook: |
+      hey heeEEEey there <@${this.user}>, I hope you brought your gluestix and silly-scissors cuz this is the world of *SCRAPBOOKS*! To begin a magical journey,
+      > :star: *POST A PHOTO TO THIS CHANNEL* :camera_with_flash: > :slack: > :mindblown:
+      (It could be anything. A project you're starting. An art project you made. Something you're reading. <https://scrapbook.hackclub.com/about|Click here to learn more about me!>)
+    css: |
+      WooOOAAah hey! Welcome to <#C015M6U6JKU>! This is the place where people go to make their profiles look cool!!!
+
+      To add a custom style to your scrapbook, find a link to a CSS file and post it in this channel. Feel free to use any of the others posted in the channel, or you can create your own at <https://gist.github.com|gist.github.com> or <https://repl.it|Repl.it>.
+  streak:
+    1: |
+      Groovy! Congratulations <@${this.user}> on your first post in <#${process.env.CHANNEL}>. Your scrapbook is live at <${this.scrapbookLink}?welcome=true|${this.scrapbookLink}>!
+
+      *Next step:* Type \`/scrappy displaystreaks\` to display your streak in your status!
+    2: |
+      Day two already! It's felt like 100! Keep it up! I'll add that to your scrapbook at ${this.scrapbookLink}.
+
+      Did you know you can add custom CSS to your scrapbook? Join <#C015M6U6JKU> to learn how!
+    3: |
+      I'll scarf that down and add it to your scrapbook for day 3. You're moving up the ranks! ${this.scrapbookLink}
+
+      Did you know you can add a custom domain to your scrapbook? Check out <@USNPNJXNX>\'s: https://scrapbook.sampoder.com
+      Add your own domain by typing \`/scrappy setdomain\`.
+    4: Hello, hello? Uh, I wanted to let you know that that's day 4 completed!!! ${this.scrapbookLink}
+    5: 5 whole days of streaks! That's like one more than yesterday!!! ${this.scrapbookLink}
+    6: 6 days! You've almost made it to a week!!! Don't stop now!!!! A week is 7 days by the way. ${this.scrapbookLink}
+    7: |
+      A WHOLE WEEK OF STREAKS?!?! https://www.youtube.com/watch?v=i0dmSIAzWeQ
+
+      ${this.scrapbookLink}
+    "7+":
+      - Yahoo! ${this.scrapbookLink}
+      - ":yay: ${this.scrapbookLink}"
+      - ":dance::dance1::dance2: ${this.scrapbookLink}"
+      - ":parrotwave1::parrotwave2::parrotwave3::parrotwave4::parrotwave5::parrotwave6::parrotwave7: ${this.scrapbookLink}"
+      - |
+        Thanks for the memory on ${this.scrapbookLink}!
+        —Your future self
+      - |
+        :congaparrot::congaparrot::congaparrot::congaparrot:
+        ${this.scrapbookLink}
+        :congaparrot::congaparrot::congaparrot::congaparrot:
+    nostreak: |
+      :yay::yay::yay: Your update is live on your scrapbook! :yay::yay::yay: ${this.scrapbookLink}
+
+      (PS: you've already posted today, so I didn't increment your streak. But great job!)
+    newstreak: ':yay: You just started a streak! Keep posting every day to continue your streak. In the meantime, type \`/scrappy help\` to see what else you can do!'
+    oldmember:
+      1: |
+        Far out! You've started a new streak! Welcome back to Scrapbook :yay:
+
+        ${this.scrapbookLink}
+      2: Right on for day two! I'll add that to your scrapbook on ${this.scrapbookLink}.
+      3: I'll scarf that down and add it to your scrapbook for day 3. You're getting up there! ${this.scrapbookLink}
+    toggle:
+      status:
+        visible: Your streak count is now visible.
+        invisible: Your streak count is now invisible.
+      all:
+        optin: Nice! I\'ll will start counting your streaks. from now on, they\'ll be in your status and on your scrapbook.
+        optout: Cool beans, I\'ll stop counting your streaks.
+  delete: |
+    WoooOOOAAAh there! You can only share images, audio files, videos or links with previews in <#${process.env.CHANNEL}>! I've deleted your message:
+
+    ${this.text}
+
+    But feel free to repost it with an image or video and I'll let it be :eye::lips::eye:
+  webring:
+    add: <@${this.webringUser}> has been added to your webring! Now their latest post will occasionally appear under your scrapbook updates. See them live on <${this.scrapbookLink}|your scrapbook>!
+    remove: <@${this.webringUser}> has been removed from <${this.scrapbookLink}|your webring>.
+    noargs: Webrings are a way to link to your friends' scrapbooks in your scrapbook, and to receive scrapbook updates from your friends when you post. To add or remove someone to your webring, type \`/scrappy webring @username\`
+    toolong: Wowwwwzaaa! I have stage fright and that is a few too many people, you can only add 8 people to your webring.... I'm being serious...
+    yourself: |
+      Hey! :watchingyou:  Add other people to your webring, not yourself!!!!
+    invaliduser: |
+      I couldn't find that user :thunj: Make sure you're tagging the user, and make sure they're a Scrapbook user.
+    nonexistence: |
+      ALSO BTW i tried to get the latest post from someone in your webring, but they've never posted to Scrapbook so there's no post to get!!!! you may wanna consider removing them from your webring. this is the someone in question: ${this.scrapbookUrl}
+    random:
+      - Put on your clout goggles for a new post from your webring! ${this.randomWebringPost}
+      - Bounce on over to this new post from your webring! ${this.randomWebringPost}
+      - "Quick!!!!!!! Go check out this new post from your webring before it blows away: ${this.randomWebringPost}"
+      - "Here, have a new post from your webring to munch on: ${this.randomWebringPost}"
+      - "Check it out!!! Go CHOMP DOWN on this new post from your webring: ${this.randomWebringPost}"
+  css:
+    noargs: To link a custom CSS file, type \`/scrappy-setcss\` followed by a link to a CSS file online. Try this one, which sets your background to hot pink! \`/scrappy setcss https://gist.github.com/MatthewStanciu/a0c10a8d4264b737fcc3c1724591c232\`
+    removed: Your CSS file has been removed from your profile. If you would like to re-add it, type \`/scrappy-setcss <link to css file>\`.
+    set: '<${this.url}|Your CSS file> has been linked to your profile! Check it out: \`https://scrapbook.hackclub.com/${this.username}\`'
+    nocss: You linked a Gist, but there isn’t a .css file on your Gist. Try again with the raw URL to the CSS.
+    broadcast: Anyone can now click the button below to add this CSS style to their scrapbook! <${this.scrapbookLink}|See it live on this profile>.
+  audio:
+    noargs: To link a custom sound file to your scrapbook, type \`scrappy-setaudio\` followed by a sound file url.
+    removed: I've wiped your previous audio file. You can re-add it with "/scrappy-setaudio ${this.previous}"
+    set: Woohoo! Check out your new tunes at ${this.url}.
+    notaccepted: Your file doesn't contain an accepted audio filetype. Try reuploading a file that ends in mp3, aiff, wav, or m4a.
+    emoji:
+      accepted:
+        - musical_note
+        - musical_score
+        - guitar
+        - musical_keyboard
+  username:
+    noargs: To change your scrapbook username, type \`/scrappy-setusername\` followed by your desired username.
+    set: Woohoo! Check out your new username at ${this.url}.
+    time: Sorry, but you can only update your username every 24 hours.
+    short: Seriously?! -_- Your username needs to be AT LEAST 3 characters.
+    exists: Looks some one already has this username, what are you trying to pull?
+  webhook:
+    noargs: To add a Scrappy Webhook, type \`/scrappy-setwebhook\` followed by your webhook URL.
+    set: |
+      Ping pong! We're on the road to automation, now when ever you feed me a post I'll ping that URL :sparkles:
+  domain:
+    noargs: To link a custom domain to your scrapbook, type \`/scrappy-setdomain\` followed by the domain or subdomain you want to link. e.g. \`/scrappy-setdomain zachlatta.com\`. Then, create a CNAME record in your DNS provider for your domain and point it to \`cname.vercel-dns.com\`.
+    overlimit: Couldn't set your domain. Only 50 custom domains can be added to a project, and 50 people have already added their custom domains. <https://hackclub.slack.com/archives/C0M8PUPU6/p1602535670075000|Here's an alternative>.
+    domainerror: Couldn't set your domain \`${this.text}\`. Here's the error - \`${this.error}\`
+    domainverifyerror: Couldn't verify your domain \`${this.text}\`. Here's the error - \`${this.error}\`
+    domaindoesnotexist: |
+      Couldn't verify your domain \`${this.text}\`. Here's the error - \`${this.error}\`
+
+      Try running \`/scrappy-setdomain ${this.text}\` first.
+    domainverify: Couldn't set your domain \`${this.text}\`. You can't add a domain if it's already set to another Vercel project. Try again with a different domain.
+    domainset: |
+      Custom domain \`${this.text}\` set!
+
+      *Your next steps*: create a CNAME record in your DNS provider for your domain and point it to \`cname.vercel-dns.com\`.
+    domainverified: Your custom domain \`${this.text}\` has been verified and set!
+    debug: Error - \`${this.error}\`
+  open:
+    invaliduser: Hmmmmmmmm THAT'S NOT A REAL USER!!!! What are you trying to pull here????
+    userArg: <@${this.userArg}>'s scrapbook is ${this.scrapbookLink}
+    self: Your scrapbook profile is ${this.scrapbookLink}
+  steal:
+    invaliduser: Hmmmmmmmm THAT'S NOT A REAL USER!!!! What are you trying to pull here???? I don't like it :(
+    done: <@${this.victimUser}>'s CSS is now live on <${this.scrapbookLink}|your profile>!
+    noargs: This command sets someone's CSS file to your Scrapbook profile. To use it, type \`/scrappy-stealcss @user\`
+    empty: <@${this.victimUser}>'s custom CSS is empty, try another person.
+  profileUpdate: Your profile details have been updated! ${this.scrapbookLink}
+  assetReady: <@${this.user}> Your video has been processed and is live on your scrapbook!
+  errors:
+    filetype: WHAT THE HECK this filetype isn't supported. Make sure you\'re uploading a photo or video and try again.
+    heic: WHAT THE HEIC!!!! the HEIC filetype isn't supported :(((((((( try <https://heictojpg.com|converting your image to jpg> and reuploading.
+    bigvideo: |
+      Woweee!!! What's that??? That file is so big...I don't have enough memory for it...
+
+      Since I can't download this file, I'm going to make it "public" via Slack's API and upload it to your scrapbook that way. The update will be live on your scrapbook in 30 seconds, but it'll take anywhere between 30 seconds and a few minutes for it to be viewable. I'll notify you when it's ready.
+
+      (PS: You may receive a notification from Slackbot—go ahead and ignore it.)
+    imagefail: |
+      Hmmmmm :thonkspin: I couldn't fetch your image for some reason. I'm going to try to upload your image another way. You may receive a DM from Slackbot—go ahead and ignore it. If you don't see your image live on your Scrapbook, please let <@U4QAK9SRW> know.
+    zach: Zaaaaaaaaaaaaaaaaaaaach!!!!!!!!!!!!!!! I just tried to update your streak, but <@U4QAK9SRW> reinstalled me with his Slack tokens at some point, so it didn\'t work. When you get a chance, reinstall me with your tokens and update the env variables in the Heroku deployment. Then toggle \`/scrappy displaystreaks\` off and on again.
+    promise: |
+      NOOOOOOOOOOOOOOOOO something went wrong!!!! <@U4QAK9SRW> fix it please
+      ```
+      ${this.err}
+      ```
+    anywhere:
+      op: |
+        Sorry, but only the original message poster can react with :${this.reaction}: to upload to Scrapbook.
+      files: |
+        Hmm... :thonk: I don't detect any files in this message. Please attach a video or an image file.
+  mentionKeyword:
+    - <@${this.user}> no u
+    - <@${this.user}> :()
+    - <@${this.user}> aosidjghlkj;LKasASDLKGJ AASDFLKJ LAKJSHDF ;OIHA GKLJRWHG AJSDGH
+    - <@${this.user}> no u ${'!'.repeat(Math.floor(Math.random() * 7))}
+    - <@${this.user}> you are SO MEAN OMG. i am going to delete your account
+    - take it back <@${this.user}>, or i will ping staff and ask them to ban you from the slack
+    - oh yeah <@${this.user}>?? actually i think the same abotu you're mom. pwned
+    - <@${this.user}> BULLLYYY :((((
+    - <@${this.user}> https://cloud-r8zkxq6k0.vercel.app/image.png
+    - <@${this.user}> 01110011 01100011 01110010 01100101 01110111 00100000 01111001 01101111 01110101
+    - here <@${this.user}>, eat some dog food and rethink your actions
+    - <@${this.user}> i don't think thats very nice!!!!!!!!!!!!!!!
+    - <@${this.user}> OMG SHUT YOUR MOUTH I DO SO MUCH FOR YOU AND THIS HOW YOU TREAT MEJKMMEMEEEEE?????!!!?!?
+    - <@${this.user}> OMG Lemme tell zach to ban you.
+    - <@${this.user}> GET LOST OR I WILL RESET YOUR STREAK
+    - <@${this.user}> Why did you do this to me! You traitor :(
+    - <@${this.user}> Gimme your address, i wanna ship you some trash
+    - <@${this.user}> imma tell my creator, they're an adminnnnn
+    - <@${this.user}> haha todays opposite day so no u MWHAHAHAHAHAH
+    - <@${this.user}> u wanna fight? im gonna fight hyou. stinky
+    - <@${this.user}> help.\n<@${this.user}> i'm stuck.\n<@${this.user}> let me out.\n<@${this.user}> i'm alive.
+    - Salutations <@${this.user}>, banker just transferred all of your GP to me! I'll be enjoying my new Hack Club sticker box, thank you very much.
+    - You think you can hurt me, <@${this.user}>? You can't <3.
+  mention:
+    - this message can't stop me because i can't read!
+    - WEEEEEEEEEEEEEEEEEEE
+    - (gobbling down trash) what???????????????? i am busy
+    - asdfl kshfd kjs aighsdu AIU SYDGIUAYSD Y76R42 DS 723R DSFJKS 287RI7SD
+    - cGxlYXNlIGhlbHAgbWU=
+    - you mentioned me but i dropped out of elementary school because i wanted to eat trash so i can't read your message
+    - hiiiiiiiiiii hELLLOOOOOOOOOOOO
+    - I love you 3<
+    - but like why though
+    - huh?
+    - not funny. didn't laugh
+    - You are the best
+    - no. 3>
+    - 01100111 01101111 00100000 01100001 01110111 01100001 01111001
+    - leave me alone I'm trying to finish eating the rest of my trash.
+    - i'm buzzy trying to keep track of all these scrapbooksasdjlasaaousao
+    - 3 looks like a sideways butt haha
+    - garbador i chooooseeee youuuuuuuuuu
+    - cAn yOu lEt mE eAt mY tRaSh iN pEaCe?!÷™¡™¡˙ø∆b
+    - ļ̴̹̪̳͍̦̹̣̖̺̺͔͖̽̒̄̏̀e̴̢̯̗̱̳͇̦̩̤͚̟̎́̇͋̉̔͆͌͐̒̅̀̌̏ẗ̴̛̩̎͂̾̒̓̏͂̾̒ ̷̧̛͎̞̮͍̫͛̍̐̒̾̈́̿ṃ̸̓̋̐̍̍͠ȩ̴̙̼͓̺̌͐̔͊̓̆͆̀͝͝ ̶͙̟͎͛̀͑͂̕̚͘͜ỡ̵̗͚͍̞͇̲̟̭̬͉͉̌̒̆̊͑̋͛̕̕͜ͅṷ̴̧̡͎̬̈́̆͗̑̀͒̑͐͒̎̐̈́͝͝ṭ̷̢̙̮̭͎̘̥̩̳̟̖̞͆̈̇͑̇̂͛͛̆́͜͜
+    - So guys, in a way, people are like trash cans. When you stomp on them, their mouth opens up. *stomp*
+    - Hiya, I hope you're having a great day so far, <@${this.user}>! I need to go back to eating trash, but here's a virtual hugQ34978UFAIHSAI;DFGHSLHAS ;LKSADFG ;LOKAOISGPHOIUASG IAYUWEYAFSZVAG;EOUROIU;AHSAUGPI;.
+    - System.out.println("Go away");
+    - Ok fine I'll give you my Bitcoin wallet.\n\nThe public key is \`1ATX8RXjVigphrYUxLJRziLstSdCan3Nig\`\n\nThe private key is \`L3wPf8yeQmrMSoVk1fY7w1qa5K79uaAxgGcB1keYyTYsn7TwiVi4\`
+    - no
+    - yea
+    - ya
+    - yes
+startup:
+  trashType:
+    - type ${1 + Math.floor(Math.random() * 7)} recyclables
+    - polyethylene terephthalate
+    - high-density polyethylene
+    - polyvinyl chloride
+    - poop
+    - low-density polyethylene
+    - polypropylene
+    - polystyrene
+    - the scraps left on your plate
+    - non fungible tokens
+  eats:
+    - eats
+    - consumes
+    - devours
+    - wolfs down
+    - scarfs down
+    - swallows
+    - slurps
+    - gobbles
+    - gulps down
+    - ingests
+    - guzzles
+  improvements:
+    - Bug fixes and improvements
+    - Bug fixes + improvements
+    - More bug fixes and improvements
+    - More bugs & improvements
+    - More bugs & less fixes
+    - Bug fixes and imps
+    - Bugs and imps
+  randomChange:
+    - ${1 + Math.ceil(Math.random() * 5)}x as many beatles
+    - ${1 + Math.ceil(Math.random() * 5)}x as many gears
+    - ${1 + Math.ceil(Math.random() * 5)}x as many levers
+    - ${1 + Math.ceil(Math.random() * 5)}x more flavors available
+    - Increased scrappy's self esteem by ${1 + Math.ceil(Math.random() * 5)}x
+    - Decreased scrappy's self esteem by ${1 + Math.ceil(Math.random() * 5)}x
+    - converted all bits -> bytes
+    - converted all bytes -> bits
+    - converted all 1s -> 0s
+    - A startup message!
+  scrappyChange:
+    - now scrappy ${this.t('startup.eats')} trash
+    - scrappy can now digest ${this.t('startup.trashType')}
+  message: |
+    We continuously update our app to improve your experience. This update includes:
+      - ${this.t('startup.improvements')}
+      - ${this.t('startup.randomChange')}
+      - ${this.t('startup.scrappyChange')}
+      - ${this.latestCommitMsg}
