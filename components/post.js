@@ -1,5 +1,4 @@
 import { convertTimestampToDate } from '../lib/dates'
-import { proxy } from '../lib/images'
 import { filter } from 'lodash-es'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
@@ -7,7 +6,7 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
-import EmojiPicker from 'emoji-picker-react'
+import React from 'react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
@@ -44,6 +43,14 @@ const Post = ({
   swrKey,
   authSession
 }) => {
+  const [formattedDate, setFormattedDate] = React.useState(postedAt)
+  
+  React.useEffect(() => {
+    if (postedAt?.startsWith('20')) {
+      setFormattedDate(convertTimestampToDate(postedAt))
+    }
+  }, [postedAt])
+
   return (
     <>
       <section
@@ -59,9 +66,7 @@ const Post = ({
               data-for={`tip-${id}`}
               dateTime={postedAt}
             >
-              {postedAt?.startsWith('20')
-                ? convertTimestampToDate(postedAt)
-                : postedAt}
+              {formattedDate}
             </time>
           </header>
         ) : (
@@ -108,9 +113,7 @@ const Post = ({
                   )}
                 </span>
                 <time className="post-header-date" dateTime={postedAt}>
-                  {postedAt?.startsWith('20')
-                    ? convertTimestampToDate(postedAt)
-                    : postedAt}
+                  {formattedDate}
                 </time>
               </section>
           </Link>
