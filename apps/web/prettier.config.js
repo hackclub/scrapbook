@@ -3,5 +3,6 @@ module.exports = {
   trailingComma: 'none',
   arrowParens: 'avoid',
   printWidth: 80,
-  semi: false
+  semi: false,
+  ignorePath: ['node_modules', '**/.*', '.next/**/*']
 }

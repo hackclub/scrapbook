@@ -25,9 +25,16 @@
     "deps-install": "cd apps/slack-bot && yarn install && cd ../web && yarn install",
     "dev": "concurrently \"cd apps/slack-bot && yarn dev\" \"cd apps/web && yarn dev\" ",
     "dev:web": "cd apps/web && yarn dev",
-    "dev:slack-bot": "cd apps/slack-bot && yarn dev"
+    "dev:slack-bot": "cd apps/slack-bot && yarn dev",
+    "build:web": "cd apps/web && yarn build",
+    "checkFormat": "cd apps/web && npx prettier --check . && ../web && npx prettier --check .",
+    "prettier:slack-bot": "cd apps/slack-bolt && npx prettier --write .",
+    "prettier:web": "cd apps/web && npx prettier --write ."
   },
   "dependencies": {
     "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
   }
 }
