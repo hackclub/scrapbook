@@ -1,0 +1,127 @@
+// This needs to be synced with hackclub/scrapbook
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("PG_DATABASE_URL")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         Accounts @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Accounts {
+  id                      String       @unique @default(cuid())
+  slackID                 String?      @unique(map: "Accounts.slackID_unique")
+  email                   String?      @unique(map: "Accounts.email_unique")
+  emailVerified           DateTime?
+  username                String       @unique(map: "Accounts.username_unique")
+  streakCount             Int?
+  maxStreaks              Int?
+  displayStreak           Boolean?
+  streaksToggledOff       Boolean?
+  customDomain            String?
+  cssURL                  String?
+  website                 String?
+  github                  String?
+  image                   String?
+  fullSlackMember         Boolean?
+  avatar                  String?
+  webring                 String[]
+  newMember               Boolean      @default(false)
+  timezoneOffset          Int?
+  timezone                String?
+  pronouns                String?
+  customAudioURL          String?
+  lastUsernameUpdatedTime DateTime?
+  webhookURL              String?
+  ClubMember              ClubMember[]
+  sessions                Session[]
+  updates                 Updates[] @relation("updates")
+  slackUpdates            Updates[] @relation("slackUpdates")
+}
+
+model Updates {
+  id               String           @id @default(cuid())
+  accountsSlackID  String?
+  postTime         DateTime?        @default(now())
+  text             String?
+  attachments      String[]
+  muxAssetIDs      String[]
+  muxPlaybackIDs   String[]
+  muxAssetStatuses String?
+  messageTimestamp Float?
+  backupAssetID    String?
+  backupPlaybackID String?
+  isLargeVideo     Boolean?
+  channel          String?
+  accountsID       String?
+  ClubUpdate       ClubUpdate?
+  emojiReactions   EmojiReactions[]
+  Accounts         Accounts?        @relation("updates", fields: [accountsID], references: [id])
+  SlackAccounts    Accounts?        @relation("slackUpdates", fields: [accountsSlackID], references: [slackID])
+}
+
+model EmojiType {
+  name           String           @unique(map: "EmojiType.name_unique")
+  emojiSource    String?
+  emojiReactions EmojiReactions[]
+}
+
+model EmojiReactions {
+  id            String     @id @default(cuid())
+  updateId      String?
+  emojiTypeName String?
+  usersReacted  String[]
+  updatedAt     DateTime   @default(now()) @map("created_at")
+  EmojiType     EmojiType? @relation(fields: [emojiTypeName], references: [name])
+  update        Updates?   @relation(fields: [updateId], references: [id])
+}
+
+model ClubMember {
+  id        String   @id @default(cuid())
+  accountId String
+  clubId    String
+  admin     Boolean  @default(false)
+  account   Accounts @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+}
+
+model ClubUpdate {
+  id       String  @id @default(cuid())
+  updateId String  @unique
+  clubId   String
+  club     Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  update   Updates @relation(fields: [updateId], references: [id], onDelete: Cascade)
+}
+
+model Club {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String
+  logo         String
+  customDomain String?
+  cssURL       String?
+  website      String?
+  location     String?
+  github       String?
+  description  String?
+  banner       String       @default("https://wallpapercave.com/wp/wp10026724.jpg")
+  members      ClubMember[]
+  updates      ClubUpdate[]
+}
