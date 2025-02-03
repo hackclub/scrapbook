@@ -1,0 +1,15 @@
+services:
+  slack-bot:
+    build: 
+      context: apps/slack-bot
+      dockerfile: Dockerfile
+    ports: 
+      - "3001:3001"
+    env_file: "scrappy.env"
+  scrapbook: 
+    build: 
+      context: apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file: "scrappy.env"
