@@ -6,6 +6,9 @@ services:
     ports: 
       - "3001:3001"
     env_file: "scrappy.env"
+    environment:
+      - PG_DATABASE_URL=${PG_DATABASE_URL}
+      - GRAPHITE_HOST=${GRAPHITE_HOST}
   scrapbook: 
     build: 
       context: apps/web
@@ -13,3 +16,6 @@ services:
     ports:
       - "3000:3000"
     env_file: "scrappy.env"
+    environment:
+      - PG_DATABASE_URL=${PG_DATABASE_URL
+      - GRAPHITE_HOST=${GRAPHITE_HOST}
