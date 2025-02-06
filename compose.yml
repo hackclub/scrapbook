@@ -20,7 +20,7 @@ services:
         - PG_DATABASE_URL=${PG_DATABASE_URL}
         - GRAPHITE_HOST=${GRAPHITE_HOST}
     ports:
-      - "3000:3000"
+      - "3002:3000"
     env_file: "scrappy.env"
     environment:
       - PG_DATABASE_URL=${PG_DATABASE_URL}
