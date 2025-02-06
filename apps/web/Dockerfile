@@ -10,6 +10,7 @@ RUN yarn install
 COPY . .
 
 ARG GRAPHITE_HOST
+ARG PG_DATABASE_URL
 
 RUN yarn build
 
