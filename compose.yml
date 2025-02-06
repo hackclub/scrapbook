@@ -3,6 +3,9 @@ services:
     build: 
       context: apps/slack-bot
       dockerfile: Dockerfile
+      args:
+        - PG_DATABASE_URL=${PG_DATABASE_URL}
+        - GRAPHITE_HOST=${GRAPHITE_HOST}
     ports: 
       - "3001:3001"
     env_file: "scrappy.env"
@@ -13,6 +16,9 @@ services:
     build: 
       context: apps/web
       dockerfile: Dockerfile
+      args:
+        - PG_DATABASE_URL=${PG_DATABASE_URL}
+        - GRAPHITE_HOST=${GRAPHITE_HOST}
     ports:
       - "3000:3000"
     env_file: "scrappy.env"
