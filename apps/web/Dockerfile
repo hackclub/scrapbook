@@ -9,6 +9,8 @@ RUN yarn install
 
 COPY . .
 
+ARG GRAPHITE_HOST
+
 RUN yarn build
 
 EXPOSE 3000
