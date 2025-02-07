@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, isValidElement } from 'react'
 import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
@@ -11,6 +11,7 @@ import { ClubsPopup } from './clubs-popup'
 import { LoginPopup } from './login-popup'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
+import { BASE_URL, isDevDeployment } from "../lib/util";
 
 const badgeStyles = `
 .badge {
@@ -97,7 +98,8 @@ const Nav = () => {
     try {
       const l = document.createElement('a');
       l.href = window.location.href;
-      if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
+      // if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
+      if (isDevDeployment(l.hostname)) setExternal(true);
     } catch (e) {}
   }, []);
 

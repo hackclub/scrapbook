@@ -1,7 +1,13 @@
+const { config } = require("dotenv");
 const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE == 'true'
 });
+
+
+// load environment variables
+config();
+const BASE_URL = process.env.APP_URL;
 
 let nextConfig = withMDX({
   pageExtensions: ['js', 'jsx', 'mdx'],
@@ -74,11 +80,13 @@ let nextConfig = withMDX({
       },
       {
         source: '/avatar/(.*)',
-        destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
+        // destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
+        destination: `https://${BASE_URL}/api/users/$1/avatar`
       },
       {
         source: '/(.*).png',
-        destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
+        // destination: 'https://scrapbook.hackclub.com/api/users/$1/avatar'
+        destination: `https://${BASE_URL}/api/users/$1/avatar`
       },
       {
         source: '/api/emoji',

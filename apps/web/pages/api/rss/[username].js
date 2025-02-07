@@ -1,13 +1,16 @@
 import RSS from 'rss'
 import { getPosts } from '../users/[username]'
+import { BASE_URL } from '../../../lib/util'
 
 export default async (req, res) => {
   const { username } = req.query
 
   const feed = new RSS({
     title: `${username}'s Hack Club Scrapbook`,
-    feed_url: `https://scrapbook.hackclub.com/${username}.rss`,
-    site_url: 'https://scrapbook.hackclub.com'
+    // feed_url: `https://scrapbook.hackclub.com/${username}.rss`,
+    // site_url: 'https://scrapbook.hackclub.com'
+    feed_url: `https://${BASE_URL}/${username}.rss`,
+    site_url: 'https://' + BASE_URL
   })
 
   const posts = await getPosts({ username })
