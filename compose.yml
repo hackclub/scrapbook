@@ -25,3 +25,4 @@ services:
     environment:
       - PG_DATABASE_URL=${PG_DATABASE_URL}
       - GRAPHITE_HOST=${GRAPHITE_HOST}
+      - APP_URL=${APP_URL}
