@@ -29,6 +29,8 @@ const useForm = (
     const empty = checkbox ? false : ''
     const onChange = e => onFieldChange(e, name, type)
     const value = data[name]
+    console.log("[useField] logging field value", name);
+    console.log("[useField] logging field value", value);
     if (required && !requiredFields.includes(name)) {
       setRequired([...requiredFields, name])
     }
