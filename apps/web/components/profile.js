@@ -15,8 +15,17 @@ const Profile = ({ closed, setMenuOpen, session }) => {
     }
   )
 
-  function replaceProfilePicture(file) {
+  console.log('[editing profile] with data', {
+    url: '/api/web/profile/edit',
+    others: {
+      method: 'POST',
+      initData: session.user,
+      success: 'Profile updated!',
+      closingAction: setMenuOpen
+    }
+  });
 
+  function replaceProfilePicture(file) {
     async function uploadProfileImage(file) {
       const reader = new FileReader()
       reader.onload = async event => {
@@ -35,7 +44,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
             method: 'PUT',
             body: blob
           }).then(() => {
-            setDataValue('avatar', signedUrl.split("?")[0]);
+            setDataValue('avatar', signedUrl.split('?')[0])
           })
         }
       }
@@ -44,14 +53,11 @@ const Profile = ({ closed, setMenuOpen, session }) => {
 
     try {
       toast
-        .promise(
-          uploadProfileImage(file),
-          {
-            loading: 'Uploading your new look',
-            error: 'ack, failed to upload your profile picture',
-            success: 'Yay you got some new looks there!'
-          }
-        )
+        .promise(uploadProfileImage(file), {
+          loading: 'Uploading your new look',
+          error: 'ack, failed to upload your profile picture',
+          success: 'Yay you got some new looks there!'
+        })
         .then(() => toast('Make sure to save your profile'))
     } catch (e) {
       toast.error('Humm... something wrong happened')

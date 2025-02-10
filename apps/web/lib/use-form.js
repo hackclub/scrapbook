@@ -71,6 +71,7 @@ const useForm = (
       .then(r => r.json())
       .then(r => {
         if (r.error) {
+          console.log("[editing profile] error: ", r);
           if (r.message) {
             errorMessage = r.message
           }
