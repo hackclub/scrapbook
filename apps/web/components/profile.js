@@ -3,6 +3,7 @@ import { Close } from '../components/close'
 import useForm from '../lib/use-form'
 import toast from 'react-hot-toast'
 import { emailToPfp } from '../lib/email'
+import { useEffect } from 'react'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
   const { status, submit, useField, setData, setDataValue } = useForm(
