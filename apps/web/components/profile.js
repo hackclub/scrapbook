@@ -64,6 +64,9 @@ const Profile = ({ closed, setMenuOpen, session }) => {
     }
   }
 
+  useEffect(() => {
+    console.log("the current status is ", status);
+  }, [status]);
   return (
     <div
       className="overlay-wrapper"
