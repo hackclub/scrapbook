@@ -15,4 +15,4 @@ ARG PG_DATABASE_URL
 RUN yarn build
 
 EXPOSE 3000
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
