@@ -42,46 +42,29 @@ export async function middleware(req) {
   const startTime = new Date().getTime();
   const hasFormData = req.headers.get("Content-Type")?.includes("multipart/form-data");
 
-  console.log('[middleware]', {
-    url: req.url,
-    others: {
-      method: req.method,
-      headers: req.headers,
-      body: hasFormData ? await req.formData() : req.body
-    }
+  const response = await fetch(req.url, {
+    method: req.method,
+    headers: req.headers,
+    body: hasFormData ? await req.formData() : req.body
   });
 
-  try {
+  const time = (new Date().getTime()) - startTime;
 
-    const response = await fetch(req.url, {
-      method: req.method,
-      headers: req.headers,
-      body: hasFormData ? await req.formData() : req.body
-    });
+  // attempt to send metric counter
+  // and timer metric
+  // ...will timeout after 150ms
+  //
+  /* sending metrics is dispatched to /api/metrics because next.js middleware
+  * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
+  * including UDP which node-statsd requires
+  */
+  Promise.any([
+    createTimeoutPromise(150),
+    // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
+    sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
+  ])
 
-    const time = (new Date().getTime()) - startTime;
-
-    // attempt to send metric counter
-    // and timer metric
-    // ...will timeout after 150ms
-    //
-    /* sending metrics is dispatched to /api/metrics because next.js middleware
-    * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
-    * including UDP which node-statsd requires
-    */
-    Promise.any([
-      createTimeoutPromise(150),
-      // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
-      sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
-    ])
-
-    return new NextResponse(hasFormData ? await response.formData() : await response.text(), { headers: response.headers, status: response.status });
-  } catch (error) {
-    console.log('[middleware] error', {
-      error
-    });
-    return NextResponse.json({ success: false });
-  }
+  return new NextResponse(hasFormData ? await response.formData() : await response.text(), { headers: response.headers, status: response.status });
 }
 
 export const config = {
