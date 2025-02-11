@@ -16,16 +16,6 @@ const Profile = ({ closed, setMenuOpen, session }) => {
     }
   )
 
-  console.log('[editing profile] with data', {
-    url: '/api/web/profile/edit',
-    others: {
-      method: 'POST',
-      initData: session.user,
-      success: 'Profile updated!',
-      closingAction: setMenuOpen
-    }
-  });
-
   function replaceProfilePicture(file) {
     async function uploadProfileImage(file) {
       const reader = new FileReader()
