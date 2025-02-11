@@ -62,6 +62,8 @@ const useForm = (
     if (!allRequiredFilled) {
       return
     }
+    const valuesBeingSubmitted = name ? { ...data, [name]: value || '' } : data;
+    console.log('[use-form] submitting values', valuesBeingSubmitted);
     fetch(action, {
       method,
       headers: {
