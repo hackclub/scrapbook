@@ -5,6 +5,11 @@ import prisma from '../../../../lib/prisma'
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
+  console.log("[getServerSession]", {
+    req, res,
+    authOptions
+  });
+    
   const session = await getServerSession(req, res, authOptions)
 
   console.log("[edit_profile] got server side session");
