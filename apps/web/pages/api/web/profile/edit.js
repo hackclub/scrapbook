@@ -8,7 +8,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   console.log("[edit_profile] got server side session");
-  consolel.log("server session", session);
+  console.log("server session", session);
 
   if (session?.user === undefined) {
     console.log("no server session found");
