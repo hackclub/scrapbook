@@ -80,7 +80,7 @@ export async function middleware(req) {
     console.log('[middleware] error', {
       error
     });
-    return NextResponse.json({ success: false, message: error.message });
+    return NextResponse.json({ success: false, message: error });
   }
 }
 
