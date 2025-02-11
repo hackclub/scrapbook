@@ -69,6 +69,6 @@ export async function middleware(req) {
 
 export const config = {
   matcher: [
-    '/(api\/(?!auth).*)'
+    '/(api\/(?!auth|web/profile/edit).*)'
   ]
 }
