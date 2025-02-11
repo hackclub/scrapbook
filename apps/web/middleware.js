@@ -42,6 +42,17 @@ export async function middleware(req) {
   const startTime = new Date().getTime();
   const hasFormData = req.headers.get("Content-Type")?.includes("multipart/form-data");
 
+  console.log('[middleware]', {
+    url: req.url,
+    others: {
+      method: req.method,
+      headers: req.headers,
+      body: hasFormData ? await req.formData() : req.body
+    }
+  });
+
+  try {
+
   const response = await fetch(req.url, {
     method: req.method,
     headers: req.headers,
@@ -65,6 +76,9 @@ export async function middleware(req) {
   ])
 
   return new NextResponse(hasFormData ? await response.formData() : await response.text(), { headers: response.headers, status: response.status });
+  } catch (error) {
+    return new NextResponse.json({ success: false, message: error.message });
+  }
 }
 
 export const config = {
