@@ -5,15 +5,7 @@ import prisma from '../../../../lib/prisma'
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
-  console.log("[getServerSession]", {
-    req, res,
-    authOptions
-  });
-    
   const session = await getServerSession(req, res, authOptions)
-
-  console.log("[edit_profile] got server side session");
-  console.log("server session", session);
 
   if (session?.user === undefined) {
     console.log("no server session found");
@@ -101,7 +93,6 @@ export default async (req, res) => {
       }
     }
   }
-  console.log('[edit_profile] db query');
   try {
     account = await prisma.accounts.update({
       where: {

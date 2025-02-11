@@ -29,8 +29,6 @@ const useForm = (
     const empty = checkbox ? false : ''
     const onChange = e => onFieldChange(e, name, type)
     const value = data[name]
-    console.log("[useField] logging field value", name);
-    console.log("[useField] logging field value", value);
     if (required && !requiredFields.includes(name)) {
       setRequired([...requiredFields, name])
     }
@@ -63,7 +61,6 @@ const useForm = (
       return
     }
     const valuesBeingSubmitted = name ? { ...data, [name]: value || '' } : data;
-    console.log('[use-form] submitting values', valuesBeingSubmitted);
     fetch(action, {
       method,
       headers: {
@@ -75,7 +72,6 @@ const useForm = (
       .then(r => r.json())
       .then(r => {
         if (r.error) {
-          console.log("[editing profile] error: ", r);
           if (r.message) {
             errorMessage = r.message
           }
