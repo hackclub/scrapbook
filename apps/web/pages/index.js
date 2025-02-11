@@ -8,6 +8,7 @@ import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
 import { find, compact, map, flatten } from "lodash-es";
+import { isDevDeployment } from '../lib/util'
 
 const Header = ({ reactions, children }) => (
   <>
@@ -155,7 +156,8 @@ export const getServerSideProps = async (context) => {
     'winter-hardware-wonderland'
   ]
   const host = context.req.headers.host;
-  if (!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
+  // if (!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
+  if (isDevDeployment(host)){
     let [users, clubs] = await Promise.all([getRawUsers(), getRawClubs()])
     // console.log([users, clubs])
     users = users.filter((user) => user.customDomain == host)

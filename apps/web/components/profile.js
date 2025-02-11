@@ -3,6 +3,7 @@ import { Close } from '../components/close'
 import useForm from '../lib/use-form'
 import toast from 'react-hot-toast'
 import { emailToPfp } from '../lib/email'
+import { useEffect } from 'react'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
   const { status, submit, useField, setData, setDataValue } = useForm(
@@ -16,7 +17,6 @@ const Profile = ({ closed, setMenuOpen, session }) => {
   )
 
   function replaceProfilePicture(file) {
-
     async function uploadProfileImage(file) {
       const reader = new FileReader()
       reader.onload = async event => {
@@ -35,7 +35,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
             method: 'PUT',
             body: blob
           }).then(() => {
-            setDataValue('avatar', signedUrl.split("?")[0]);
+            setDataValue('avatar', signedUrl.split('?')[0])
           })
         }
       }
@@ -44,20 +44,19 @@ const Profile = ({ closed, setMenuOpen, session }) => {
 
     try {
       toast
-        .promise(
-          uploadProfileImage(file),
-          {
-            loading: 'Uploading your new look',
-            error: 'ack, failed to upload your profile picture',
-            success: 'Yay you got some new looks there!'
-          }
-        )
+        .promise(uploadProfileImage(file), {
+          loading: 'Uploading your new look',
+          error: 'ack, failed to upload your profile picture',
+          success: 'Yay you got some new looks there!'
+        })
         .then(() => toast('Make sure to save your profile'))
     } catch (e) {
       toast.error('Humm... something wrong happened')
     }
   }
 
+  useEffect(() => {
+  }, [status]);
   return (
     <div
       className="overlay-wrapper"

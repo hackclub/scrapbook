@@ -8,6 +8,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
+    console.log("no server session found");
     return res.status(401).json({ error: true })
   }
 
@@ -92,7 +93,6 @@ export default async (req, res) => {
       }
     }
   }
-
   try {
     account = await prisma.accounts.update({
       where: {
@@ -124,7 +124,7 @@ export default async (req, res) => {
             ? req.body.github
             : 'https://'.concat(req.body.github)
           : null,
-        avatar: req.body.avatar 
+        avatar: req.body.avatar
           ? req.body.avatar?.includes('https://') ||
             req.body.avatar?.includes('http://') ||
             req.body.avatar == ''
