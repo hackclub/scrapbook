@@ -60,6 +60,7 @@ const useForm = (
     if (!allRequiredFilled) {
       return
     }
+    const valuesBeingSubmitted = name ? { ...data, [name]: value || '' } : data;
     fetch(action, {
       method,
       headers: {

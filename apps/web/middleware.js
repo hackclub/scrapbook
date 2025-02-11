@@ -27,7 +27,7 @@ async function sendTimerMetric(hostName, metricKey, time) {
 export async function middleware(req) {
   const url = new URL(decodeURIComponent(req.url));
 
-  const HOST_NAME = "http://" + url.host;
+  const HOST_NAME = "https://" + url.host;
 
   let _metricName = url.pathname.slice(1).split("/").join("_");
 
@@ -69,6 +69,6 @@ export async function middleware(req) {
 
 export const config = {
   matcher: [
-    '/(api\/(?!auth).*)'
+    '/(api\/(?!auth|web/profile/edit).*)'
   ]
 }
