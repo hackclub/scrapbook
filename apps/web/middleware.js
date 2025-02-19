@@ -27,7 +27,7 @@ async function sendTimerMetric(hostName, metricKey, time) {
 export async function middleware(req) {
   const url = new URL(decodeURIComponent(req.url));
 
-  const HOST_NAME = "https://" + url.host;
+  const HOST_NAME = "http://" + url.host;
 
   let _metricName = url.pathname.slice(1).split("/").join("_");
 
