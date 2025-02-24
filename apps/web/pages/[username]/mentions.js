@@ -43,6 +43,7 @@ const Profile = ({ profile = {}, posts = [] }) => (
           height={96}
           alt={profile.username}
           className="header-title-avatar"
+            {...(profile.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
         />
       )}
       <div>
