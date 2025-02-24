@@ -73,6 +73,7 @@ const Post = ({
                   width={48}
                   height={48}
                   alt={user.username}
+                  {...(user.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
                   className="post-header-avatar"
                 />
               )}
@@ -136,6 +137,7 @@ const Post = ({
                     width={400}
                     height={300}
                     style={{ width: 'auto', height: 'auto' }}
+                    {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
                   />
                 </a>
               )

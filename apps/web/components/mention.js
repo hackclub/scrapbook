@@ -39,6 +39,7 @@ const Mention = memo(({ username }) => {
             width={24}
             height={24}
             className="mention-avatar post-text-mention-avatar"
+            {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
           />
         )}
         @{username}
