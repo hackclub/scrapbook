@@ -34,7 +34,7 @@ export default async ({ event }) => {
 
     // if a user does not have the fields property on them
     // then they probably don't have timezone information available as well
-    if (!info.user.profile.fields) return;
+    if (info.user.profile.fields === null) return;
 
     // return if we got an unsuccessful response from Slack
     if (!info.ok) return;
