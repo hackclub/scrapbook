@@ -36,7 +36,7 @@ export default async ({ event }) => {
     if (!info.ok) return;
 
     userBeforeError = info.user;
-    console.log("user info", info.user);
+    // console.log("user info", info.user);
 
     await prisma.accounts.update({
       where: { slackID: user.id },
