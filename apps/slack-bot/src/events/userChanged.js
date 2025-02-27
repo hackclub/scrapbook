@@ -4,11 +4,12 @@ import { app } from "../app.js";
 import prisma from "../lib/prisma.js";
 import metrics from "../metrics.js";
 
+let userBeforeError;
 export default async ({ event }) => {
   try {
     const { user } = event;
     const statusEmoji = user.profile.status_emoji;
-    if (statusEmoji?.startsWith("som-") && 
+    if (statusEmoji?.startsWith("som-") &&
     // the character that follows "som-" MUST be a numbe
     !Number.isNaN(parseInt(statusEmoji?.slice("som-".length)[0]))
   ) {
@@ -32,7 +33,11 @@ export default async ({ event }) => {
     // return if there is no user with this slackID
     if (!user.profile.fields) return;
     // return if we got an unsuccessful response from Slack
-    if (!info.ok) return; 
+    if (!info.ok) return;
+
+    userBeforeError = info.user;
+    console.log("user info", info.user);
+
     await prisma.accounts.update({
       where: { slackID: user.id },
       data: {
@@ -47,5 +52,7 @@ export default async ({ event }) => {
   }
   catch (e) {
     console.log(e);
+    console.log("user info below");
+    console.log(userBeforeError);
   }
 };
