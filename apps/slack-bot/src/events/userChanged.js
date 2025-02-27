@@ -8,7 +8,7 @@ export default async ({ event }) => {
   try {
     const { user } = event;
     const statusEmoji = user.profile.status_emoji;
-    if (statusEmoji?.startsWith("som-") && 
+    if (statusEmoji?.startsWith("som-") &&
     // the character that follows "som-" MUST be a numbe
     !Number.isNaN(parseInt(statusEmoji?.slice("som-".length)[0]))
   ) {
@@ -31,8 +31,13 @@ export default async ({ event }) => {
     });
     // return if there is no user with this slackID
     if (!user.profile.fields) return;
+
+    // if a user does not have the fields property on them
+    // then they probably don't have timezone information available as well
+    if (!info.user.profile.fields) return;
+
     // return if we got an unsuccessful response from Slack
-    if (!info.ok) return; 
+    if (!info.ok) return;
     await prisma.accounts.update({
       where: { slackID: user.id },
       data: {
