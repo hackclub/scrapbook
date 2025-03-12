@@ -26,7 +26,7 @@ export default async ({ event }) => {
       );
       await getUserRecord(event.message.user);
     }
-    metrics.increment("success.update_post", 1);
+    // metrics.increment("success.update_post", 1);
   } catch (e) {
     metrics.increment("errors.update_post", 1);
     console.log(e);

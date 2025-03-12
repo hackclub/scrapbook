@@ -8,7 +8,8 @@
     "dev": "nodemon src/app.js",
     "start": "node src/app.js",
     "format": "prettier --write .",
-    "checkFormat": "prettier --check ."
+    "checkFormat": "prettier --check .",
+    "streakResetter": "node src/streakResetter.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.712.0",

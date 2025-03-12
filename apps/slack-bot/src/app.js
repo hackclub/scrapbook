@@ -53,12 +53,12 @@ export const execute = (actionToExecute) => {
     }
 
     try {
-      const metricMsg = `success.${metricKey}`;
-      const startTime = new Date().getTime();
+      // const metricMsg = `success.${metricKey}`;
+      // const startTime = new Date().getTime();
       actionToExecute(slackObject, ...props)
         .then(() => {
-        const time = (new Date().getTime()) - startTime;
-        if (isCommandOrMessage) metrics.timing(metricKey, time);
+        // const time = (new Date().getTime()) - startTime;
+        // if (isCommandOrMessage) metrics.timing(metricKey, time);
       });
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
     } catch (e) {
