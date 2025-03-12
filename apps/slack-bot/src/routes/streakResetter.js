@@ -53,7 +53,7 @@ export default async (req, res) => {
           where: { slackID: user.slackID },
           data: { streakCount: 0 }
         });
-        metrics.increment("success.streak_reset", 1);
+        // metrics.increment("success.streak_reset", 1);
       } catch (err) {
         console.log("Error: Failed to update user streak")
         metrics.increment("errors.streak_reset", 1);

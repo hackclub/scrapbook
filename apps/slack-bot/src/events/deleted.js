@@ -62,7 +62,7 @@ export default async ({ event }) => {
         deleteThreadedMessages(ts, channel, previous_message.user),
       ]);
     }
-    metrics.increment("success.delete_msg", 1);
+    // metrics.increment("success.delete_msg", 1);
   } catch (e) {
     metrics.increment("errors.delete_msg", 1);
     console.log(e);
