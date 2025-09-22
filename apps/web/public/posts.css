@@ -96,6 +96,22 @@
   object-fit: contain;
 }
 
+.post-emoji-unicode {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.post-emoji-fallback {
+  color: #666;
+  font-style: italic;
+}
+
 .post-text a {
   color: var(--colors-blue);
 }

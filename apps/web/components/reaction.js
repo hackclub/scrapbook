@@ -33,15 +33,13 @@ const Reaction = ({
 }) => {
   let children = (
     <>
-      {url && (
-        <EmojiImg
-          src={url}
-          name={name}
-          width={24}
-          height={24}
-        />
-      )}
-      <span style={{ transform: 'translateY(2px)' }}>{char}</span>
+      <EmojiImg
+        src={url}
+        char={char}
+        name={name}
+        width={24}
+        height={24}
+      />
     </>
   )
   return authStatus == 'authenticated' ? (
