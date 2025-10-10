@@ -92,6 +92,6 @@ export const postEphemeral = async (channel, text, user, threadTs) => {
     // metrics.increment("success.post_ephemeral", 1);
   } catch (e) {
     metrics.increment("errors.post_ephemeral", 1);
-    console.log(e);
+    // console.log(e);
   }
 };

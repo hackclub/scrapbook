@@ -50,7 +50,7 @@ export default async (req, res) => {
 
     return res.json({ ...club, callback: `/clubs/${club.slug}` })
   } catch (e) {
-    console.error(e)
+    // console.error(e)
     return res.status(500).json({ error: true })
   }
 }

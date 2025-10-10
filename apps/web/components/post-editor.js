@@ -66,7 +66,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
           alert(
             `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
           )
-          console.error(e)
+          // console.error(e)
           return
         }
         // uploadedImages.push(uploadedImage)

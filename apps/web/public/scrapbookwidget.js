@@ -20,6 +20,6 @@ function displayScrapbookUsername(username, customDomain) {
       )
     })
     .catch(function (error) {
-      console.error(error)
-    })
+    // console.error(error)
+  })
 }

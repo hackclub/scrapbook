@@ -29,6 +29,6 @@ export default async ({ event }) => {
     // metrics.increment("success.update_post", 1);
   } catch (e) {
     metrics.increment("errors.update_post", 1);
-    console.log(e);
+    // console.log(e);
   }
 };

@@ -92,15 +92,15 @@ const useForm = (
         }
       })
       .catch(e => {
-        console.error(e)
-        setStatus('error')
-        toast.dismiss(toastId)
-        toast.error(
-          options.error ||
-            errorMessage ||
-            'An unexpected error occured - please try again.'
-        )
-      })
+      // console.error(e)
+      setStatus('error')
+      toast.dismiss(toastId)
+      toast.error(
+        options.error ||
+          errorMessage ||
+          'An unexpected error occured - please try again.'
+      )
+    })
   }
 
   return { status, data, touched, useField, setData, setDataValue, submit }

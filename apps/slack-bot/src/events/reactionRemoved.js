@@ -37,12 +37,15 @@ export default async ({ event }) => {
         });
         const emojiRecord = await getEmojiRecord(reaction.emojiTypeName);
         if (Object.keys(clubEmojis).includes(emojiRecord.name)) {
+          /*
           console.log({
             updateId: update.id,
             club: {
               slug: clubEmojis[emojiRecord.name]
             }
           })
+          */
+
           await prisma.clubUpdate.deleteMany({
             where: {
               updateId: update.id,

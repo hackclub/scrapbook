@@ -236,7 +236,7 @@ export const getStaticProps = async ({ params }) => {
     )
     return { props: { emoji, posts: SuperJSON.stringify(posts), related, css }, revalidate: 1 }
   } catch (error) {
-    console.error(error)
+    // console.error(error)
     return { props: { emoji: { name }, css }, revalidate: 1 }
   }
 }

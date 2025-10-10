@@ -53,7 +53,8 @@ export const getPosts = async (club, max = null) => {
       }
     })
 
-    if (!allUpdates) console.error('Could not fetch posts')
+    if (!allUpdates)
+      // console.error('Could not fetch posts');
 
     const users = await getRawUsers()
 

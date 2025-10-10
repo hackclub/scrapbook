@@ -22,9 +22,11 @@ const Video = ({ mux, ...props }) => {
       hls.loadSource(src)
       hls.attachMedia(video)
     } else {
+      /*
       console.error(
         'This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API'
       )
+      */
     }
 
     return () => {

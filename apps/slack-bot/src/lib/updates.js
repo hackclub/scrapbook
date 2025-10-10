@@ -35,7 +35,7 @@ export const createUpdate = async (files = [], channel, ts, user, text) => {
     metrics.increment(`referrer.channel.${channelName}`, 1);
   } else {
     metrics.increment("errors.get_channel_name", 1);
-    console.error(channelInfo.error);
+    // console.error(channelInfo.error);
   }
 
   const upload = await Promise.all([
@@ -71,7 +71,7 @@ export const createUpdate = async (files = [], channel, ts, user, text) => {
           break;
         }
       } catch (error) {
-        console.error(`Error processing URL ${url}:`, error);
+        // console.error(`Error processing URL ${url}:`, error);
         continue;
       }
     }

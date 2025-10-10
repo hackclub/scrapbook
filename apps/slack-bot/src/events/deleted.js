@@ -42,7 +42,7 @@ const deleteThreadedMessages = async (ts, channel, user) => {
       user
     );
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
@@ -65,6 +65,6 @@ export default async ({ event }) => {
     // metrics.increment("success.delete_msg", 1);
   } catch (e) {
     metrics.increment("errors.delete_msg", 1);
-    console.log(e);
+    // console.log(e);
   }
 };

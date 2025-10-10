@@ -95,7 +95,7 @@ async function processPosts() {
   });
 
   while (processed <= postsWithPotentiallyOGImages.length) {
-    console.log("Processing posts", processed, "to", processed + 100);
+    // console.log("Processing posts", processed, "to", processed + 100);
     await regenerateOGImages(postsWithPotentiallyOGImages.slice(processed, processed + 100));
     processed += 100;
   }
@@ -106,7 +106,7 @@ async function regenerateOGImages(posts) {
     // this is the date when fallbacks to OG images was originally introduced
     const prismaClient = new PrismaClient();
     Promise.all(posts.map(async post => {
-      console.log("Working on post", post.id);
+      // console.log("Working on post", post.id);
       // check if the post has an image that is hosted on `imgutil.s3.us-east-2.amazonaws.com` and it's actually an image
       const imageWasOnBucky = image => image.includes('imgutil.s3.us-east-2.amazonaws.com') && ["jpg", "jpeg", "png", "gif", "webp", "heic"].some(ext => image.toLowerCase().endsWith(ext))
       const attachmentsOnBucky = post.attachments.filter(attachment => imageWasOnBucky(attachment));
@@ -128,7 +128,7 @@ async function regenerateOGImages(posts) {
           let imageUrl = await getAndUploadOgImage(ogUrls);
           return imageUrl;
         } catch (error) {
-          console.log("Failed to update OG image", url, error);
+          // console.log("Failed to update OG image", url, error);
           return null;
         }
       }));
@@ -145,11 +145,11 @@ async function regenerateOGImages(posts) {
         }
       });
 
-      console.log("Updated post attachments", post.id);
+      // console.log("Updated post attachments", post.id);
     })).then(() => {
       resolve();
     });
-    console.log("Done!");
+    // console.log("Done!");
   });
 }
 

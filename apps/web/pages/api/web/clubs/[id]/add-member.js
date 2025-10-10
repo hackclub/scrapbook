@@ -7,7 +7,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    console.error('No user.')
+    // console.error('No user.')
     return res.status(401).json({ error: true })
   }
 
@@ -49,6 +49,6 @@ export default async (req, res) => {
     }
   }
 
-  console.error('Not in club.')
+  // console.error('Not in club.')
   return res.status(404).json({ error: true })
 }

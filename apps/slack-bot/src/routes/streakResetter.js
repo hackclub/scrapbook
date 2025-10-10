@@ -45,9 +45,12 @@ export default async (req, res) => {
     yesterday.setHours(0)
     yesterday.setMinutes(0)
     if ((createdDate <= yesterday) && user.streakCount != 0) {
+      /*
       console.log(
         `It's been more than a day since ${username} last posted. Resetting their streak...`
       )
+      */
+
       try {
         await prisma.accounts.update({
           where: { slackID: user.slackID },
@@ -55,7 +58,7 @@ export default async (req, res) => {
         });
         // metrics.increment("success.streak_reset", 1);
       } catch (err) {
-        console.log("Error: Failed to update user streak")
+        // console.log("Error: Failed to update user streak")
         metrics.increment("errors.streak_reset", 1);
       }
 
