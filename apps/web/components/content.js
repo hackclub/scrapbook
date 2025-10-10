@@ -7,12 +7,34 @@ import Emoji from './emoji'
 const dataDetector =
   /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/
 
+// Enhanced emoji detection regex that also catches Unicode emojis
+const emojiRegex = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu
+
+
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
     if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
       return <Emoji name={chunk} key={i} />
     }
     
+    // Handle Unicode emojis in text
+    if (emojiRegex.test(chunk)) {
+      return (
+        <span 
+          key={i} 
+          className="post-emoji-unicode"
+          style={{
+            fontSize: '18px',
+            verticalAlign: 'middle',
+            display: 'inline-block',
+            lineHeight: 1
+          }}
+        >
+          {chunk}
+        </span>
+      )
+    }
+
     if ((chunk?.startsWith('@') || chunk?.startsWith('<@')) && Array.from(chunk.matchAll("@"), m => m[0]).length == 1) {
       const punct = /([,!:.'"’”]|’s|'s|\))+$/g
       const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
