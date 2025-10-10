@@ -46,4 +46,13 @@ yarn prettier:web
 ```
 
 
+Run the codemod for commenting the lines
+
+```shell
+npx jscodeshift \
+-t scripts/codemods/comment-console-logs.js \
+apps/web apps/slack-bot \
+--extensions=js,jsx \
+--ignore-pattern '**/node_modules/**'
+```
 
