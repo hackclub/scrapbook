@@ -64,7 +64,7 @@ export const execute = (actionToExecute) => {
     } catch (e) {
       const metricMsg = `errors.${metricKey}`;
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
-      console.log(e);
+      // console.log(e);
       await app.client.chat.postMessage({
         channel: "C04ULNY90BC",
         text: t("error", { e }),
@@ -121,7 +121,7 @@ app.message("<@U015D6A36AG>", execute(mention));
 try {
   receiver.router.post("/api/mux", mux.handler);
 } catch (e) {
-  console.log(e);
+  // console.log(e);
 }
 
 try {
@@ -129,13 +129,13 @@ try {
     res.send("Hello World from Scrappy");
   });
 } catch {
-  console.log("Something went wrong")
+  // console.log("Something went wrong")
 }
 
 try {
   receiver.router.get("/api/streakResetter", streakResetter);
 } catch (e) {
-  console.log(e);
+  // console.log(e);
 }
 
 (async () => {
@@ -151,5 +151,5 @@ try {
     unfurl_links: false,
     unfurl_media: false,
   });
-  console.log("⚡️ Scrappy is running !");
+  // console.log("⚡️ Scrappy is running !");
 })();

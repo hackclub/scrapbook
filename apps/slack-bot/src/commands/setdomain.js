@@ -37,8 +37,8 @@ export default async ({ command, respond }) => {
     )
       .then((r) => r.json())
       .catch((err) => {
-        console.log(`Error while setting custom domain ${arg}: ${err}`);
-      });
+      // console.log(`Error while setting custom domain ${arg}: ${err}`);
+    });
     if (vercelFetch.error) {
       await respond(
         t("messages.domain.domainerror", {
@@ -47,8 +47,11 @@ export default async ({ command, respond }) => {
         })
       );
     } else if (!vercelFetch.verified) {
+      /*
       // domain is owned by another Vercel account, but we can ask the owner to verify
       console.log(vercelFetch.verification);
+      */
+
       if (!vercelFetch.verification) {
         await respond(
           t("messages.domain.domainerror", {

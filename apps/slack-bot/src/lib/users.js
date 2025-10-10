@@ -8,8 +8,8 @@ export const getUserRecord = async (userId) => {
     user = await app.client.users.profile.get({ token: process.env.SLACK_USER_TOKEN, user: userId });
   }
   catch (e) {
-    console.log(userId)
-    console.error(e)
+    // console.log(userId)
+    // console.error(e)
     return
   }
   if (user.profile === undefined) return;

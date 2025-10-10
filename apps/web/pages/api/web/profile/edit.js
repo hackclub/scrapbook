@@ -8,7 +8,7 @@ export default async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    console.log("no server session found");
+    // console.log("no server session found");
     return res.status(401).json({ error: true })
   }
 
@@ -75,8 +75,8 @@ export default async (req, res) => {
       )
         .then(r => r.json())
         .catch(err => {
-          console.log(`Error while setting custom domain ${arg}: ${err}`)
-        })
+        // console.log(`Error while setting custom domain ${arg}: ${err}`)
+      })
 
       if (vercelFetch.error) {
         return res.json({
@@ -137,8 +137,7 @@ export default async (req, res) => {
 
     return res.json(account)
   } catch (e) {
-
-    console.error(e)
+    // console.error(e)
     if (
       e
         .toString()

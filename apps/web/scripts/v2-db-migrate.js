@@ -6,42 +6,42 @@ let failed = []
 let prisma = new PrismaClient()
 
 async function migrateAccounts(){
-	let accounts = await fetch("http://scrappy-hackclub.herokuapp.com/api/accounts").then(r => r.json())
-	for(let x=22; x < accounts.length; x++){
+    let accounts = await fetch("http://scrappy-hackclub.herokuapp.com/api/accounts").then(r => r.json())
+    for(let x=22; x < accounts.length; x++){
 		let account
 		let profile
 		let newAccount
 		try {
-			account = accounts[x]
-			profile = await fetch(
+            account = accounts[x]
+            profile = await fetch(
 			  `https://slack.com/api/users.info?user=${account.slackID}&pretty=1`,{
 				headers: {
 				  Authorization: `Bearer XXX`
 				}
 			  }
 			).then((r) => r.json())
-			newAccount = await prisma.accounts.create({
+            newAccount = await prisma.accounts.create({
 				data: {
 					...account,
 					email: profile.user.profile.email || undefined
 				}
 			})
-			console.log(`Just created ${newAccount.username}. Email: ${newAccount.email}`)
-			if(x < 5){
-				console.log(account)
-				console.log(newAccount)
-				console.log(profile)
-			}
-		}
+            // console.log(`Just created ${newAccount.username}. Email: ${newAccount.email}`)
+            if(x < 5){
+                // console.log(account)
+                // console.log(newAccount)
+                // console.log(profile)
+            }
+        }
 		catch(e){
-			console.log(e)
-			console.log(account)
-			console.log(newAccount)
-			console.log(profile)
-			failed.push(account.slackID)
-		}
+            // console.log(e)
+            // console.log(account)
+            // console.log(newAccount)
+            // console.log(profile)
+            failed.push(account.slackID)
+        }
 	}
-	console.log(failed)
+    // console.log(failed)
 }
 
 async function migrateUpdates(){

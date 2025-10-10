@@ -75,8 +75,8 @@ export default async (req, res) => {
       )
         .then(r => r.json())
         .catch(err => {
-          console.log(`Error while setting custom domain ${arg}: ${err}`)
-        })
+        // console.log(`Error while setting custom domain ${arg}: ${err}`)
+      })
       if (vercelFetch.error) {
         return res.status(500).json({
           error: true,
@@ -110,7 +110,7 @@ export default async (req, res) => {
 
     res.json({ club })
   } catch (e) {
-    console.error(e)
+    // console.error(e)
     res.status(500).json({ error: true })
   }
 }
