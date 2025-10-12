@@ -3,7 +3,7 @@ import Meta from '@hackclub/meta'
 import Mention from '../components/mention'
 import { orderBy } from 'lodash-es'
 
-const StreaksPage = ({ users }) => {
+const StreaksPage = ({ users = [] }) => {
   return (
     <>
       <Meta
@@ -112,12 +112,19 @@ const StreaksPage = ({ users }) => {
 export default StreaksPage
 
 export const getStaticProps = async () => {
-  const streaks = require('./api/streaks')
-  const users = await streaks.getUserStreaks()
-  return {
-    props: {
-      users
-    },
-    revalidate: 10
+  try {
+    const streaks = require('./api/streaks')
+    const users = await streaks.getUserStreaks()
+    return {
+      props: {
+        users: users ?? []
+      },
+      revalidate: 10
+    }
+  } catch (err) {
+    return {
+      props: { users: [] },
+      revalidate: 10
+    }
   }
 }
