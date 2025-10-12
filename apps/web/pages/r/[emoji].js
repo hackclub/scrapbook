@@ -152,7 +152,7 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
   } else if (emoji) {
     return (
       <Feed
-        initialData={SuperJSON.parse(posts)}
+      initialData={typeof posts === 'string' ? SuperJSON.parse(posts) : (posts || [])}
         src={`/api/r/${emoji.name}`}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
@@ -237,6 +237,6 @@ export const getStaticProps = async ({ params }) => {
     return { props: { emoji, posts: SuperJSON.stringify(posts), related, css }, revalidate: 1 }
   } catch (error) {
     // console.error(error)
-    return { props: { emoji: { name }, css }, revalidate: 1 }
+    return { props: { emoji: { name }, posts: SuperJSON.stringify([]), css }, revalidate: 1 }
   }
 }

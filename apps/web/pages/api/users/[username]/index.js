@@ -51,8 +51,9 @@ export const getPosts = async (user, max = null) => {
     }
   })
 
-  if (!allUpdates)
+  if (!allUpdates) {
     // console.error('Could not fetch posts');
+  }
 
   return allUpdates.map(p => transformPost(p))
 }
@@ -67,8 +68,9 @@ export const getMentions = async user => {
       }
     })
 
-    if (!allUpdates)
+    if (!allUpdates) {
       // console.error('Could not fetch posts');
+    }
 
     const mentions = allUpdates
       .map(p => {

@@ -1,19 +1,24 @@
 import StatsD from "node-statsd";
-import { config } from "dotenv";
 
-const environment = process.env.NODE_ENV;
+const environment = process.env.NODE_ENV || "development";
 const graphite = process.env.GRAPHITE_HOST;
 
-if (graphite == null) {
-  throw new Error("Graphite host not configured");
-}
-
-const options = {
-  host: graphite,
-  port: 8125,
-  prefix: `${environment}.scrapbook.`
+// Provide a no-op metrics client when Graphite is not configured,
+// so builds and local dev do not fail.
+const noopMetrics = {
+  timing: () => {},
+  increment: () => {}
 };
 
-const metrics = new StatsD(options);
+let metricsClient;
+if (graphite && graphite.length > 0) {
+  metricsClient = new StatsD({
+    host: graphite,
+    port: 8125,
+    prefix: `${environment}.scrapbook.`
+  });
+} else {
+  metricsClient = noopMetrics;
+}
 
-export default metrics; 
+export default metricsClient;
