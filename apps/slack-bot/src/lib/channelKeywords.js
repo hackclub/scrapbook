@@ -29,5 +29,6 @@ export default {
   CDJMS683D: "1234", // #counttoamillion
   CGVCSNLAJ: "first", // #frc
   C064PGB86JE: "quests", // #quests
-  C06CHS2D05Q: "leaders-summit" //#the-summit
+  C06CHS2D05Q: "leaders-summit", //#the-summit
+  C09SWT5DCGY: "50days" // #50-days
 };
