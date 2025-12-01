@@ -14,7 +14,12 @@ export default async (req, res) => {
 
   try {
     const update = await prisma.updates.delete({
-      where: { id: req.body.id },
+      where: { 
+        id: req.body.id,
+        accountId: {
+          equals: session.user.id
+        }
+      },
     });
 
     for (let attachment of update.attachments) {
