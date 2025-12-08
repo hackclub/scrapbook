@@ -244,5 +244,6 @@ export default {
   summit: "leaders-summit",
   "summit vision": "summit-vision",
   "apple vision": "summit-vision",
-  nest: "nest"
+  nest: "nest",
+  flavortown: "flavortown"
 };
