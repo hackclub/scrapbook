@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Email from 'next-auth/providers/email'
+import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from '../../../lib/prisma'
 import { createTransport } from 'nodemailer'
 
@@ -102,23 +103,197 @@ exports.PrismaAdapter = PrismaAdapter
 export const authOptions = {
   secret: process.env.TOKEN_SECRET,
   adapter: PrismaAdapter(prisma),
+  // pages: {
+  //   verifyRequest: '/?checkYourEmail',
+  //   error: '/auth/error',
+  //   newUser: '/new'
+  // },
   pages: {
+    login: "/login",
     verifyRequest: '/?checkYourEmail',
     error: '/auth/error',
-    newUser: '/new'
+    // newUser: '/new',
   },
   callbacks: {
     async session({ session, user, token }) {
-      return {
-        ...session,
-        user: { ...session.user, username: user.username, id: user.id, ...user }
+      const userId = (token?.sub) ?? undefined;
+      if (!userId) {
+        return session;
       }
+
+      try {
+        const dbUser = await prisma.user.findUnique({ where: { id: userId } });
+
+        if (dbUser) {
+          return {
+            ...session,
+            user: {
+              ...session.user,
+              id: dbUser.id,
+              role: dbUser.role,
+              emailVerified: dbUser.emailVerified,
+            },
+          };
+        }
+      } catch (err) {
+        console.error("Error enriching session from DB:", err);
+      }
+
+      return session;
+      // return {
+      //   ...session,
+      //   user: { ...session.user, username: user.username, id: user.id, ...user }
+      // }
+      
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      return token
+      if (user) {
+        // Persist user id in token on initial sign-in
+        (token).sub = (user).id;
+      }
+      return token;
+    },
+    async signIn({ user, account, profile }) {
+      // Log the sign in attempt
+      console.log("Sign in attempt:", {
+        email: user.email,
+        provider: account?.provider,
+        hasHackatimeId: !!user.hackatimeId,
+        isAdmin: user.isAdmin,
+      });
+
+      if (!user.email) {
+        metrics.increment("errors.sign_in", 1);
+        return false;
+      }
+
+      // If signing in with email, check if a Slack account exists
+      if (account?.provider === "email") {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          include: { accounts: true },
+        });
+
+        if (existingUser) {
+          // Update the current user with any existing hackatimeId
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              hackatimeId: existingUser.hackatimeId,
+              slack: existingUser.slack,
+            },
+          });
+        }
+      }
+
+      return true;
     }
   },
-  providers: [
+  providers: [   
+    CredentialsProvider({
+      id: "hc-identity",
+      name: "Identity",
+      type: "credentials",
+      credentials: {
+        code: { type: "text" },
+      },
+      async authorize(credentials) {
+        try {
+          const code = credentials?.code;
+          if (!code) return null;
+
+          // Normalize identity base URL (strip trailing slashes)
+          const identityBaseUrl = (process.env.IDENTITY_URL || '').replace(/\/+$/, '') || 'https://hca.dinosaurbbq.org';
+
+          // Use the same redirect URI for both the authorize step and the token exchange
+          // so the Identity provider doesn't reject the grant with `invalid_grant`.
+          const redirectUri =
+            process.env.IDENTITY_REDIRECT_URI ||
+            `${(process.env.NEXTAUTH_URL || '').replace(/\/+$/, '')}/login`;
+
+          // Construct token request parameters
+          const tokenUrl = `${identityBaseUrl}/oauth/token`;
+          const tokenParams = new URLSearchParams({
+            client_id: process.env.IDENTITY_CLIENT_ID,
+            client_secret: process.env.IDENTITY_CLIENT_SECRET,
+            redirect_uri: redirectUri,
+            grant_type: "authorization_code",
+            code: code,
+          }).toString();
+
+          // Exchange code for token
+          const tokenResponse = await fetch(tokenUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: tokenParams,
+          });
+
+          console.log("sent token params", tokenParams, tokenUrl);
+
+          if (!tokenResponse.ok) {
+            console.error('Identity token exchange failed:', tokenResponse.status, await tokenResponse.text());
+            return null;
+          }
+
+          console.log("token response", tokenResponse.status);
+
+          const { access_token } = await tokenResponse.json();
+
+          console.log("access token:", access_token);
+
+          // Fetch user info from identity provider
+          const userInfoResponse = await fetch(
+            `${identityBaseUrl}/api/v1/me`,
+            {
+              headers: { Authorization: `Bearer ${access_token}` },
+            },
+          );
+          if (!userInfoResponse.ok) {
+            console.error('Identity user info fetch failed:', userInfoResponse.status, await userInfoResponse.text());
+            return null;
+          }
+
+          const { identity } = await userInfoResponse.json();
+          const email = identity?.primary_email;
+          const firstName = identity?.first_name ?? "";
+          const lastName = identity?.last_name ?? "";
+          const name = `${firstName} ${lastName}`.trim();
+
+          if (!email || !name) {
+            console.error('Identity missing required fields:', { email, name, identity });
+            return null;
+          }
+
+          // Upsert user record in database against the Accounts model
+          const username =
+            identity?.username ||
+            email ||
+            identity?.id;
+
+          const userRecord = await prisma.accounts.upsert({
+            where: { email },
+            update: {
+              username: username || email,
+              email,
+              image: identity?.avatar || null,
+              emailVerified: new Date(),
+            },
+            create: {
+              username: username || email,
+              email,
+              image: identity?.avatar || null,
+              emailVerified: new Date(),
+            },
+          });
+
+          console.log('Identity login successful for user:', email);
+          return userRecord;
+        } catch (error) {
+          console.error('Identity login error:', error);
+          return null;
+        }
+      },
+    }),
     Email({
       server: {
         host: process.env.SMTP_HOST,
