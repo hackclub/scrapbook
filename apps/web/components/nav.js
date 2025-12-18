@@ -3,12 +3,11 @@ import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
-import { getProviders, signIn, signOut, useSession } from 'next-auth/react'
+import { getProviders, signOut, useSession } from 'next-auth/react'
 import Profile from './profile'
 import { emailToPfp } from '../lib/email'
 import { PostEditor } from './post-editor'
 import { ClubsPopup } from './clubs-popup'
-import { LoginPopup } from './login-popup'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
 import { BASE_URL, isDevDeployment } from "../lib/util";
@@ -29,17 +28,20 @@ const badgeStyles = `
   background-color: var(--colors-purple);
 }`
 
-const SignIn = ({ setLoginOpen }) => (
-  <span
-    className="badge"
-    onClick={() => {
-      setLoginOpen(true)
-    }}
-  >
-    Sign-in
-    <style>{badgeStyles}</style>
-  </span>
-)
+const SignIn = ({ clickHandler }) => {
+  return (
+    <span
+      className="badge"
+      onClick={() => {
+        clickHandler();
+      }}
+    >
+      Sign-in
+      <style>{badgeStyles}</style>
+    </span>
+
+  )
+}
 
 const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
   <>
@@ -90,7 +92,7 @@ const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [postOpen, setPostOpen] = useState(false)
   const [clubsOpen, setClubsOpen] = useState(false)
-  const [loginOpen, setLoginOpen] = useState(false)
+
   // This is a hack for using the right link on custom domains
   const [external, setExternal] = useState(false)
 
@@ -184,12 +186,11 @@ const Nav = () => {
               session={session}
               loggedIn={false}
             />
-            <SignIn setLoginOpen={setLoginOpen} />
-            <LoginPopup
-              closed={!loginOpen}
-              setLoginOpen={setLoginOpen}
-              session={session}
-            />
+            <SignIn clickHandler={async () => {
+              const repsonse = await fetch("/api/identity/start")
+              const data = await repsonse.text();
+              window.open(data, "_self");
+            }} />
           </>
         )}
       </nav>
