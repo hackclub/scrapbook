@@ -9,6 +9,7 @@ import Feed from '../components/feed'
 import Footer from '../components/footer'
 import { find, compact, map, flatten } from "lodash-es";
 import { isDevDeployment } from '../lib/util'
+import { serialize, deserialize } from 'superjson'
 
 const Header = ({ reactions, children }) => (
   <>
@@ -122,7 +123,7 @@ const IndexPage = ({ reactions, initialData, type, ...props }) => {
   if(type == "user") return <UserPage {...props} />
   if(type == "club") return <ClubPage {...props} />
   return (
-    <Feed initialData={initialData} footer={<Footer />}>
+    <Feed initialData={deserialize(initialData, { inPlace: true })} footer={<Footer />}>
       {!router?.query?.embed && <Header reactions={reactions} />}
     </Feed>
   )
@@ -175,5 +176,5 @@ export const getServerSideProps = async (context) => {
   const reactions = compact(
     names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
   )
-  return { props: { reactions, initialData, type: "index" } }
+  return { props: { reactions, initialData: serialize(initialData), type: "index" } }
 }
