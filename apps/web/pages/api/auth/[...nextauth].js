@@ -269,18 +269,11 @@ export const authOptions = {
           }
 
           // Upsert user record in database against the Accounts model
-          const username =
-            identity?.username ||
-            email ||
-            identity?.id;
+          const username = name || email;
 
           const userRecord = await prisma.accounts.upsert({
             where: { email },
             update: {
-              username: username || email,
-              email,
-              image: identity?.avatar || null,
-              emailVerified: new Date(),
               slackID: identity?.slack_id || null,
             },
             create: {
