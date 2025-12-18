@@ -134,7 +134,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
               />
             </div>
           </div>
-          {session.user.ClubMember.length != 0 && (
+          {session.user.ClubMember && session.user.ClubMember.length != 0 && (
             <div>
               <label
                 style={{
