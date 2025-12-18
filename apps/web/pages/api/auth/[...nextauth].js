@@ -126,17 +126,12 @@ export const authOptions = {
       }
 
       try {
-        const dbUser = await prisma.user.findUnique({ where: { id: userId } });
+        const dbUser = await prisma.accounts.findUnique({ where: { id: userId } });
 
         if (dbUser) {
           return {
             ...session,
-            user: {
-              ...session.user,
-              id: dbUser.id,
-              role: dbUser.role,
-              emailVerified: dbUser.emailVerified,
-            },
+            user: { ...session.user, ...dbUser }
           };
         }
       } catch (err) {
@@ -144,11 +139,6 @@ export const authOptions = {
       }
 
       return session;
-      // return {
-      //   ...session,
-      //   user: { ...session.user, username: user.username, id: user.id, ...user }
-      // }
-      
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
@@ -162,32 +152,12 @@ export const authOptions = {
       console.log("Sign in attempt:", {
         email: user.email,
         provider: account?.provider,
-        hasHackatimeId: !!user.hackatimeId,
-        isAdmin: user.isAdmin,
+        user
       });
 
       if (!user.email) {
         metrics.increment("errors.sign_in", 1);
         return false;
-      }
-
-      // If signing in with email, check if a Slack account exists
-      if (account?.provider === "email") {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
-          include: { accounts: true },
-        });
-
-        if (existingUser) {
-          // Update the current user with any existing hackatimeId
-          await prisma.user.update({
-            where: { id: user.id },
-            data: {
-              hackatimeId: existingUser.hackatimeId,
-              slack: existingUser.slack,
-            },
-          });
-        }
       }
 
       return true;
@@ -285,7 +255,6 @@ export const authOptions = {
             },
           });
 
-          console.log('Identity login successful for user:', email);
           return userRecord;
         } catch (error) {
           console.error('Identity login error:', error);
