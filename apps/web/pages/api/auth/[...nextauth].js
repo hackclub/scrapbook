@@ -101,6 +101,10 @@ function PrismaAdapter(p) {
 exports.PrismaAdapter = PrismaAdapter
 
 export const authOptions = {
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   secret: process.env.TOKEN_SECRET,
   adapter: PrismaAdapter(prisma),
   // pages: {
@@ -277,12 +281,14 @@ export const authOptions = {
               email,
               image: identity?.avatar || null,
               emailVerified: new Date(),
+              slackID: identity?.slack_id || null,
             },
             create: {
               username: username || email,
               email,
               image: identity?.avatar || null,
               emailVerified: new Date(),
+              slackID: identity?.slack_id || null,
             },
           });
 
