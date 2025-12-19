@@ -253,7 +253,7 @@ async function consolidateScrapbookAccounts(email, slackID) {
   const accountWithSlackID = await prisma.accounts.findUnique({ where: { slackID: slackID } });
 
   // if they have an associated scrapbook account from slack but not email
-  if (!accountWithEmail && accountWithSlackID) {
+  if (!accountWithEmail && accountWithSlackID && !accountWithSlackID.email) {
     return await prisma.accounts.update({
       where: { slackID },
       data: {
@@ -274,7 +274,7 @@ async function consolidateScrapbookAccounts(email, slackID) {
   }
 
   // if they have both, merge their accounts into one
-  if (accountWithSlackID && accountWithEmail) {
+  if (accountWithSlackID && accountWithEmail && !accountWithSlackID.email) {
     try {
       // first move all posts to the account with slack ID
       await prisma.updates.updateMany({
