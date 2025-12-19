@@ -226,19 +226,7 @@ export const authOptions = {
           // Upsert user record in database against the Accounts model
           const username = name || email;
 
-          return await prisma.accounts.upsert({
-            where: {email},
-            update: {
-              slackID: identity?.slack_id || null,
-            },
-            create: {
-              username: username || email,
-              email,
-              image: identity?.avatar || null,
-              emailVerified: new Date(),
-              slackID: identity?.slack_id || null,
-            },
-          });
+          return await consolidateScrapbookAccounts(email, identity?.slack_id)
         } catch (error) {
           console.error('Identity login error:', error);
           return null;
@@ -248,4 +236,49 @@ export const authOptions = {
   ]
 }
 
+async function consolidateScrapbookAccounts(email, slackID) {
+  const accountWithEmail = await prisma.accounts.findUnique({ where: { email } });
+  const accountWithSlackID = await prisma.accounts.findUnique({ where: { slackID: slackID } });
+
+  if (!accountWithEmail && accountWithSlackID) {
+    return await prisma.accounts.update({
+      where: { slackID },
+      data: {
+        email: email,
+        emailVerified: new Date(),
+      }
+    })
+  }
+
+  if (accountWithSlackID && accountWithEmail) {
+    try {
+      // first move all posts to the account with slack ID
+      await prisma.updates.updateMany({
+        where: {
+          email,
+        },
+        data: {
+          accountsSlackID: slackID,
+          accountsID: accountWithSlackID.id,
+        }
+      });
+
+      // secondly, delete the accounts with email only
+      await prisma.accounts.delete({
+        where: { email }
+      });
+
+      // last thing, set the email on the accounts slack ID with the current email
+      return await prisma.accounts.update({
+        where: {slackID},
+        data: {
+          email,
+          emailVerified: new Date(),
+        }
+      });
+    } catch (err) {
+      console.error("Failed to consolidate slack account");
+    }
+  }
+}
 export default NextAuth(authOptions)
