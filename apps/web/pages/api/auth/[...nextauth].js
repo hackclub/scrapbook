@@ -207,7 +207,12 @@ export const authOptions = {
             return null;
           }
 
-          const { identity } = await userInfoResponse.json();
+          const data = await userInfoResponse.json();
+          const { identity } = data;
+
+          console.log("identity response data ", data);
+          console.log("identity ", identity);
+
           const email = identity?.primary_email;
           const firstName = identity?.first_name ?? "";
           const lastName = identity?.last_name ?? "";
