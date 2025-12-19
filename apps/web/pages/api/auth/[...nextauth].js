@@ -226,7 +226,19 @@ export const authOptions = {
           // Upsert user record in database against the Accounts model
           const username = name || email;
 
-          return await consolidateScrapbookAccounts(email, identity?.slack_id)
+          const account =  await consolidateScrapbookAccounts(email, identity?.slack_id)
+          if (!account) {
+            return await prisma.accounts.create({
+              data: {
+                email,
+                emailVerified: new Date(),
+                username: username,
+                slackID: identity?.slack_id,
+              }
+            })
+          } else {
+            return account;
+          }
         } catch (error) {
           console.error('Identity login error:', error);
           return null;
@@ -240,6 +252,7 @@ async function consolidateScrapbookAccounts(email, slackID) {
   const accountWithEmail = await prisma.accounts.findUnique({ where: { email } });
   const accountWithSlackID = await prisma.accounts.findUnique({ where: { slackID: slackID } });
 
+  // if they have an associated scrapbook account from slack but not email
   if (!accountWithEmail && accountWithSlackID) {
     return await prisma.accounts.update({
       where: { slackID },
@@ -250,6 +263,17 @@ async function consolidateScrapbookAccounts(email, slackID) {
     })
   }
 
+  // if they have an associated scrapbook account from email but not slack
+  if (!accountWithSlackID && accountWithEmail) {
+    return await prisma.accounts.update({
+      where: { email },
+      data: {
+        slackID,
+      }
+    })
+  }
+
+  // if they have both, merge their accounts into one
   if (accountWithSlackID && accountWithEmail) {
     try {
       // first move all posts to the account with slack ID
@@ -280,5 +304,8 @@ async function consolidateScrapbookAccounts(email, slackID) {
       console.error("Failed to consolidate slack account");
     }
   }
+
+  // if they have neither accounts
+  return null;
 }
 export default NextAuth(authOptions)
