@@ -250,62 +250,194 @@ export const authOptions = {
 
 async function consolidateScrapbookAccounts(email, slackID) {
   const accountWithEmail = await prisma.accounts.findUnique({ where: { email } });
-  const accountWithSlackID = await prisma.accounts.findUnique({ where: { slackID: slackID } });
 
-  // if they have an associated scrapbook account from slack but not email
-  if (!accountWithEmail && accountWithSlackID && !accountWithSlackID.email) {
-    return await prisma.accounts.update({
-      where: { slackID },
-      data: {
-        email: email,
-        emailVerified: new Date(),
-      }
-    })
-  }
+  // slackID is optional from identity; never query with undefined (Prisma throws).
+  const accountWithSlackID = slackID
+    ? await prisma.accounts.findUnique({ where: { slackID } })
+    : null;
 
-  // if they have an associated scrapbook account from email but not slack
-  if (!accountWithSlackID && accountWithEmail) {
-    return await prisma.accounts.update({
-      where: { email },
-      data: {
-        slackID,
-      }
-    })
-  }
-
-  // if they have both, merge their accounts into one
-  if (accountWithSlackID && accountWithEmail && !accountWithSlackID.email) {
-    try {
-      // first move all posts to the account with slack ID
-      await prisma.updates.updateMany({
-        where: {
-          email,
-        },
-        data: {
-          accountsSlackID: slackID,
-          accountsID: accountWithSlackID.id,
-        }
-      });
-
-      // secondly, delete the accounts with email only
-      await prisma.accounts.delete({
-        where: { email }
-      });
-
-      // last thing, set the email on the accounts slack ID with the current email
+  // Already consolidated (same row matched both lookups)
+  if (accountWithEmail && accountWithSlackID && accountWithEmail.id === accountWithSlackID.id) {
+    if (!accountWithSlackID.emailVerified) {
       return await prisma.accounts.update({
-        where: {slackID},
+        where: { id: accountWithSlackID.id },
+        data: { emailVerified: new Date() }
+      });
+    }
+    return accountWithSlackID;
+  }
+
+  // Can't consolidate without a slackID; still return an existing email account if present.
+  if (!slackID) {
+    if (accountWithEmail && !accountWithEmail.emailVerified) {
+      return await prisma.accounts.update({
+        where: { id: accountWithEmail.id },
+        data: { emailVerified: new Date() }
+      });
+    }
+    return accountWithEmail || null;
+  }
+
+  // Slack account exists, but no email account exists yet.
+  if (!accountWithEmail && accountWithSlackID) {
+    // If the slack account doesn't have an email yet, attach it.
+    if (!accountWithSlackID.email) {
+      return await prisma.accounts.update({
+        where: { slackID },
         data: {
           email,
-          emailVerified: new Date(),
+          emailVerified: new Date()
         }
+      });
+    }
+    // Ensure emailVerified is set when identity login confirms the email.
+    if (!accountWithSlackID.emailVerified && accountWithSlackID.email === email) {
+      return await prisma.accounts.update({
+        where: { id: accountWithSlackID.id },
+        data: { emailVerified: new Date() }
+      });
+    }
+    // Otherwise, don't mutate anything (could be a conflict).
+    return accountWithSlackID;
+  }
+
+  // Email account exists, but no slack account exists yet.
+  if (accountWithEmail && !accountWithSlackID) {
+    // If the email account isn't linked to a slackID yet, link it.
+    if (!accountWithEmail.slackID) {
+      return await prisma.accounts.update({
+        where: { email },
+        data: { slackID }
+      });
+    }
+    return accountWithEmail;
+  }
+
+  // Both exist (different rows). Merge into the slack-based account, since it anchors slack relationships.
+  if (accountWithEmail && accountWithSlackID) {
+    // If the slack account already has a *different* email, do not merge.
+    if (accountWithSlackID.email && accountWithSlackID.email !== email) {
+      console.warn("Not consolidating accounts: slackID is linked to a different email", {
+        slackID,
+        identityEmail: email,
+        slackAccountEmail: accountWithSlackID.email
+      });
+      return accountWithEmail;
+    }
+
+    try {
+      return await prisma.$transaction(async tx => {
+        // Preserve useful profile fields from the email-only account (only when missing on slack account).
+        const mergedProfileData = {};
+        const mergeField = (field, { treatEmptyStringAsMissing = false } = {}) => {
+          const from = accountWithEmail[field];
+          const to = accountWithSlackID[field];
+
+          const toMissing =
+            to === null ||
+            to === undefined ||
+            (Array.isArray(to) && to.length === 0) ||
+            (treatEmptyStringAsMissing && to === "");
+
+          const fromPresent =
+            from !== null &&
+            from !== undefined &&
+            (!Array.isArray(from) || from.length > 0) &&
+            (!treatEmptyStringAsMissing || from !== "");
+
+          if (toMissing && fromPresent) mergedProfileData[field] = from;
+        };
+
+        // Strings (treat empty string as missing)
+        mergeField("customDomain", { treatEmptyStringAsMissing: true });
+        mergeField("cssURL", { treatEmptyStringAsMissing: true });
+        mergeField("website", { treatEmptyStringAsMissing: true });
+        mergeField("github", { treatEmptyStringAsMissing: true });
+        mergeField("image", { treatEmptyStringAsMissing: true });
+        mergeField("avatar", { treatEmptyStringAsMissing: true });
+        mergeField("pronouns", { treatEmptyStringAsMissing: true });
+        mergeField("timezone", { treatEmptyStringAsMissing: true });
+        mergeField("customAudioURL", { treatEmptyStringAsMissing: true });
+        mergeField("webhookURL", { treatEmptyStringAsMissing: true });
+
+        // Non-strings
+        mergeField("timezoneOffset");
+        mergeField("fullSlackMember");
+        mergeField("displayStreak");
+        mergeField("streaksToggledOff");
+        mergeField("streakCount");
+        mergeField("maxStreaks");
+        mergeField("newMember");
+        mergeField("lastUsernameUpdatedTime");
+        mergeField("webring");
+
+        if (Object.keys(mergedProfileData).length) {
+          await tx.accounts.update({
+            where: { slackID },
+            data: mergedProfileData
+          });
+        }
+
+        // Move web-created posts (keyed by accountsID) from the email account to the slack account.
+        await tx.updates.updateMany({
+          where: { accountsID: accountWithEmail.id },
+          data: {
+            accountsID: accountWithSlackID.id,
+            accountsSlackID: slackID
+          }
+        });
+
+        // Move DB sessions (if any) from the email account to the slack account.
+        await tx.session.updateMany({
+          where: { userId: accountWithEmail.id },
+          data: { userId: accountWithSlackID.id }
+        });
+
+        // Merge club memberships safely (avoid duplicates; preserve admin when either is admin).
+        const [emailMemberships, slackMemberships] = await Promise.all([
+          tx.clubMember.findMany({ where: { accountId: accountWithEmail.id } }),
+          tx.clubMember.findMany({ where: { accountId: accountWithSlackID.id } })
+        ]);
+
+        const slackByClubId = new Map(slackMemberships.map(m => [m.clubId, m]));
+
+        for (const m of emailMemberships) {
+          const existing = slackByClubId.get(m.clubId);
+          if (existing) {
+            if (m.admin && !existing.admin) {
+              await tx.clubMember.update({
+                where: { id: existing.id },
+                data: { admin: true }
+              });
+            }
+            await tx.clubMember.delete({ where: { id: m.id } });
+          } else {
+            await tx.clubMember.update({
+              where: { id: m.id },
+              data: { accountId: accountWithSlackID.id }
+            });
+          }
+        }
+
+        // Delete the now-merged email-only account (frees the unique email).
+        await tx.accounts.delete({ where: { id: accountWithEmail.id } });
+
+        // Finally, attach the email to the slack account.
+        return await tx.accounts.update({
+          where: { slackID },
+          data: {
+            email,
+            emailVerified: new Date()
+          }
+        });
       });
     } catch (err) {
-      console.error("Failed to consolidate slack account");
+      console.error("Failed to consolidate scrapbook accounts", err);
+      // Be conservative: if anything exists, return it so we don't accidentally create a duplicate.
+      return accountWithSlackID || accountWithEmail;
     }
   }
 
-  // if they have neither accounts
   return null;
 }
 export default NextAuth(authOptions)
