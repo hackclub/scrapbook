@@ -2842,10 +2842,10 @@ node-statsd@^0.1.1:
   resolved "https://registry.npmjs.org/node-statsd/-/node-statsd-0.1.1.tgz"
   integrity sha512-QDf6R8VXF56QVe1boek8an/Rb3rSNaxoFWb7Elpsv2m1+Noua1yy0F1FpKpK5VluF8oymWM4w764A4KsYL4pDg==
 
-nodemailer@^6.9.16:
-  version "6.9.16"
-  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.16.tgz"
-  integrity sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==
+nodemailer@^7.0.10:
+  version "7.0.10"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-7.0.10.tgz#540062dbbe574220b42e79d2d949956d3eac5a46"
+  integrity sha512-Us/Se1WtT0ylXgNFfyFSx4LElllVLJXQjWi2Xz17xWw7amDKO2MLtFnVp1WACy7GkVGs+oBlRopVNUzlrGSw1w==
 
 nprogress@^0.2.0:
   version "0.2.0"
