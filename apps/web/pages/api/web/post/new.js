@@ -10,10 +10,15 @@ const { Video, Data } = new Mux(
 )
 
 export default async (req, res) => {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', ['POST'])
+    return res.status(405).json({ error: true, message: 'Method Not Allowed' })
+  }
+
   const session = await getServerSession(req, res, authOptions)
 
   if (session?.user === undefined) {
-    res.status(401).json({ error: true })
+    return res.status(401).json({ error: true })
   }
 
   try {
@@ -43,6 +48,20 @@ export default async (req, res) => {
     let clubKeys = Object.keys(req.body)
       .filter(x => x.includes('club-'))
       .map(key => key.replace('club-', ''))
+
+    if (clubKeys.length !== 0) {
+      const clubId = clubKeys[0]
+      const isMember = await prisma.clubMember.findFirst({
+        where: {
+          clubId,
+          accountId: session.user.id
+        },
+        select: { id: true }
+      })
+      if (!isMember) {
+        return res.status(403).json({ error: true, message: 'Not a member of that club' })
+      }
+    }
 
     let update = await prisma.updates.create({
       data: {
