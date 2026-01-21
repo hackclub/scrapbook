@@ -134,6 +134,18 @@ export const createUpdate = async (files = [], channel, ts, user, text) => {
   metrics.increment("new_post", 1);
   await incrementStreakCount(user, channel, messageText, ts);
 
+  if (Math.random() < 0.1) {
+    const flavortownMessages = [
+      "ooooOooOooOOooooh, you gonna ship that in #flavortown?",
+      "ooooOooOooOOooooh, that's going straight to #flavortown!",
+      "ooooOooOooOOooooh, ship it to #flavortown!",
+      "ooooOooOooOOooooh, #flavortown is calling!",
+      "ooooOooOooOOooooh, ready to ship that to #flavortown?",
+    ];
+    const randomMessage = flavortownMessages[Math.floor(Math.random() * flavortownMessages.length)];
+    await reply(channel, ts, randomMessage);
+  }
+
   // send a copy of the updates to the subcribers
   base("Update Listeners").select({
     maxRecords: 100,
