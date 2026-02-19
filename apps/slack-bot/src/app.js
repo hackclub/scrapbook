@@ -52,9 +52,8 @@ export const execute = (actionToExecute) => {
       metricKey = payload.type;
     }
 
-    const metricMsg = `errors.${metricKey}`;
     try {
-      // const metricMsg = `success.${metricKey}`;
+      const metricMsg = `success.${metricKey}`;
       // const startTime = new Date().getTime();
       actionToExecute(slackObject, ...props)
         .then(() => {
@@ -63,6 +62,7 @@ export const execute = (actionToExecute) => {
       });
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
     } catch (e) {
+      const metricMsg = `errors.${metricKey}`;
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
 
       // log error being evaluated
