@@ -64,7 +64,7 @@ export const execute = (actionToExecute) => {
     } catch (e) {
       const metricMsg = `errors.${metricKey}`;
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
-      // console.log(e);
+      console.log(e);
       await app.client.chat.postMessage({
         channel: "C04ULNY90BC",
         text: t("error", { e }),
