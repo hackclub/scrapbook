@@ -52,6 +52,7 @@ export const execute = (actionToExecute) => {
       metricKey = payload.type;
     }
 
+    const metricMsg = `errors.${metricKey}`;
     try {
       // const metricMsg = `success.${metricKey}`;
       // const startTime = new Date().getTime();
@@ -62,9 +63,11 @@ export const execute = (actionToExecute) => {
       });
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
     } catch (e) {
-      const metricMsg = `errors.${metricKey}`;
       if (isCommandOrMessage) metrics.increment(metricMsg, 1);
+
+      // log error being evaluated
       console.log(e);
+
       await app.client.chat.postMessage({
         channel: "C04ULNY90BC",
         text: t("error", { e }),
