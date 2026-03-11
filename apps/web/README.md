@@ -147,7 +147,7 @@ This site exposes a public JSON API powered by [Next.js API routes](https://next
 
 Contributions are encouraged and welcome! There are two GitHub repositories that contain code for Scrapbook: the [Scrapbook website](https://github.com/hackclub/scrapbook#contributing) and [Scrappy the Slack bot](https://github.com/hackclub/scrappy#contributing).
 
-Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client/T0266FRGM/C035D6S6TFW) channel in the [Hack Club Slack](https://hackclub.com/slack/).
+Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client/T09V59WQY1E/C035D6S6TFW) channel in the [Hack Club Slack](https://hackclub.com/slack/).
 
 ## Running Locally
 

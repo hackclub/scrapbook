@@ -100,7 +100,7 @@ const Profile = ({
               )}
               {profile.slackID && (
                 <a
-                  href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slackID}`}
+                  href={`https://app.slack.com/client/T09V59WQY1E/C01504DCLVD/user_profile/${profile.slackID}`}
                   target="_blank"
                   className="header-link header-link-slack"
                 >
@@ -252,7 +252,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
           ?
           <br />
           <a
-            href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU"
+            href="https://app.slack.com/client/T09V59WQY1E/C015M6U6JKU"
             target="_blank"
           >
             Join the #scrapbook-css channel
