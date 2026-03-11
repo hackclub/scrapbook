@@ -53,7 +53,7 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
       file: fileId,
     });
     const pubSecret = publicFile.file.permalink_public.split("-").pop();
-    const directUrl = `https://files.slack.com/files-pri/T0266FRGM-${fileId}/${fileName}?pub_secret=${pubSecret}`;
+    const directUrl = `https://files.slack.com/files-pri/T09V59WQY1E-${fileId}/${fileName}?pub_secret=${pubSecret}`;
     if (isVideo) {
       postEphemeral(channel, t("messages.errors.bigvideo"), user);
       await timeout(30000);
