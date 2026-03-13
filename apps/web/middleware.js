@@ -1,5 +1,16 @@
 import { NextResponse } from "next/server";
 
+export async function middleware() {
+  // Pass requests through without proxying. The previous implementation
+  // refetched API routes via APP_URL, which can recurse and exhaust memory.
+  return NextResponse.next();
+}
+
+/*
+Legacy middleware implementation kept for reference.
+We no longer intercept/re-route API requests here now that this path
+is not used for log capture.
+
 const createTimeoutPromise = (timeout) => new Promise((resolve) => {
   setTimeout(resolve, timeout);
 });
@@ -7,9 +18,7 @@ const createTimeoutPromise = (timeout) => new Promise((resolve) => {
 async function sendMetric(hostName, metricKey) {
   fetch(`${hostName}/api/metric`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ metricKey }),
   });
 }
@@ -17,26 +26,20 @@ async function sendMetric(hostName, metricKey) {
 async function sendTimerMetric(hostName, metricKey, time) {
   fetch(`${hostName}/api/metric`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ time, metricKey }),
   });
 }
 
 export async function middleware(req) {
   const url = new URL(decodeURIComponent(req.url));
-
   const HOST_NAME = process.env.APP_URL;
 
   let _metricName = url.pathname.slice(1).split("/").join("_");
-
   if (_metricName.includes("users") || _metricName.includes("profiles")) {
-    // strip away specific user/profile names in the metric key
     _metricName = _metricName.split("_").slice(0, -1).join("_");
   }
 
-  // skip the /api/metric api endpoint
   if (req.url.includes("metric")) return NextResponse.json({ success: true });
 
   const startTime = new Date().getTime();
@@ -50,22 +53,17 @@ export async function middleware(req) {
 
   const time = (new Date().getTime()) - startTime;
 
-  // attempt to send metric counter
-  // and timer metric
-  // ...will timeout after 150ms
-  //
-  /* sending metrics is dispatched to /api/metrics because next.js middleware
-  * is based off edge-runtime which has limited support for node APIs (see: https://nextjs.org/docs/app/api-reference/edge),
-  * including UDP which node-statsd requires
-  */
   Promise.any([
     createTimeoutPromise(150),
-    // sendMetric(HOST_NAME, `${response.status}.${_metricName}`),
-    sendTimerMetric(HOST_NAME, _metricName, time), // send timing metric
-  ])
+    sendTimerMetric(HOST_NAME, _metricName, time),
+  ]);
 
-  return new NextResponse(hasFormData ? await response.formData() : await response.text(), { headers: response.headers, status: response.status });
+  return new NextResponse(
+    hasFormData ? await response.formData() : await response.text(),
+    { headers: response.headers, status: response.status }
+  );
 }
+*/
 
 export const config = {
   matcher: [

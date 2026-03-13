@@ -2,7 +2,32 @@ import { map, find, isEmpty, orderBy, filter } from 'lodash-es'
 import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
-export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
+const DEFAULT_MAX_RECORDS = 200
+const HARD_MAX_RECORDS = 300
+
+const parseMaxRecords = value => {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_MAX_RECORDS
+  return Math.min(Math.floor(parsed), HARD_MAX_RECORDS)
+}
+
+const isBrokenMediaURL = value =>
+  typeof value === 'string' &&
+  /^https?:\/\//.test(value) &&
+  /(?:^|[-_/])undefined(?:$|[./?])/i.test(value)
+
+const sanitizePost = post => ({
+  ...post,
+  user: {
+    ...post.user,
+    avatar: isBrokenMediaURL(post?.user?.avatar) ? null : post?.user?.avatar
+  },
+  attachments: Array.isArray(post.attachments)
+    ? post.attachments.filter(url => typeof url === 'string' && !isBrokenMediaURL(url))
+    : []
+})
+
+export const getPosts = async (emoji, maxRecords = DEFAULT_MAX_RECORDS, where = {}) => {
   try {
     const users = await getRawUsers()
     const allUpdates = await getRawPosts(maxRecords, {
@@ -23,6 +48,7 @@ export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
       })
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
+      .map(sanitizePost)
 
   } catch (err) {
     // console.error(err)
@@ -32,13 +58,14 @@ export const getPosts = async (emoji, maxRecords = 256, where = {}) => {
 
 export default async (req, res) => {
   const { emoji } = req.query
+  const maxRecords = parseMaxRecords(req.query?.max)
   if (!emoji)
     return res.status(404).json({ status: 404, error: 'Missing emoji name' })
   try {
     const posts =
       (await getPosts(
         emoji,
-        1024,
+        maxRecords,
         emoji == 'summer-of-making'
           ? {
             postTime: {

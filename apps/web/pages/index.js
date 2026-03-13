@@ -1,6 +1,4 @@
 import { useRouter } from 'next/router'
-import UserPage from './[username]/'
-import ClubPage from './clubs/[slug]'
 import Head from 'next/head'
 import Link from 'next/link'
 import Meta from '@hackclub/meta'
@@ -8,10 +6,9 @@ import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
 import { find, compact, map, flatten } from "lodash-es";
-import { isDevDeployment } from '../lib/util'
 import { serialize, deserialize } from 'superjson'
 
-const Header = ({ reactions, children }) => (
+const Header = ({ reactions = [], children }) => (
   <>
     <Meta
       as={Head}
@@ -118,13 +115,22 @@ const Header = ({ reactions, children }) => (
   </>
 )
 
-const IndexPage = ({ reactions, initialData, type, ...props }) => {
+const safeDeserializePosts = (value) => {
+  try {
+    const parsed = deserialize(value, { inPlace: true })
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+const IndexPage = ({ reactions = [], initialData }) => {
   const router = useRouter()
-  if(type == "user") return <UserPage {...props} />
-  if(type == "club") return <ClubPage {...props} />
+  const parsedInitialData = safeDeserializePosts(initialData)
+  const safeReactions = Array.isArray(reactions) ? reactions : []
   return (
-    <Feed initialData={deserialize(initialData, { inPlace: true })} footer={<Footer />}>
-      {!router?.query?.embed && <Header reactions={reactions} />}
+    <Feed initialData={parsedInitialData} footer={<Footer />}>
+      {!router?.query?.embed && <Header reactions={safeReactions} />}
     </Feed>
   )
 }
@@ -132,10 +138,6 @@ const IndexPage = ({ reactions, initialData, type, ...props }) => {
 export default IndexPage
 
 export const getServerSideProps = async (context) => {
-  const { getServerSideProps: getUserProps } = require('./[username]/')
-  const { getStaticProps: getClubProps } = require('./clubs/[slug]')
-  const { getRawUsers } = require('./api/users')
-  const { getRawClubs } = require('./api/clubs')
   const { getPosts } = require('./api/posts')
 
   const names = [
@@ -156,25 +158,16 @@ export const getServerSideProps = async (context) => {
     'birthday',
     'winter-hardware-wonderland'
   ]
-  const host = context.req.headers.host;
-  // if (!host.includes("hackclub.dev") && host != "scrapbook.hackclub.com"){
-  if (isDevDeployment(host)){
-    let [users, clubs] = await Promise.all([getRawUsers(), getRawClubs()])
-    // console.log([users, clubs])
-    users = users.filter((user) => user.customDomain == host)
-    clubs = clubs.filter((club) => club.customDomain == host)
-    if (clubs.length != 0) {
-      let { props } = await getClubProps({ params: {slug: clubs[0].slug}})
-      return { props: { ...props, type: "club" } }
-    }
-    if (users.length != 0) {
-      let { props } = await getUserProps({ params: {username: users[0].username}})
-      return { props: { ...props, type: "user" } }
-    }
+  // Custom-domain routing is deprecated; always render the standard homepage.
+  try {
+    const initialData = await getPosts({}, 48, false)
+    const safeInitialData = Array.isArray(initialData) ? initialData : []
+    const reactions = compact(
+      names.map(name => find(flatten(map(safeInitialData, 'reactions')), { name }))
+    )
+    return { props: { reactions, initialData: serialize(safeInitialData) } }
+  } catch (error) {
+    console.error('Failed to fetch homepage data:', error)
+    return { props: { reactions: [], initialData: serialize([]) } }
   }
-  const initialData = await getPosts({}, 48, false)
-  const reactions = compact(
-    names.map(name => find(flatten(map(initialData, 'reactions')), { name }))
-  )
-  return { props: { reactions, initialData: serialize(initialData), type: "index" } }
 }
