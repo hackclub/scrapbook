@@ -7,19 +7,21 @@ const fetcher = url => fetch(url).then(r => r.json())
 
 const Feed = ({
   src = '/api/posts',
-  initialData,
+  initialData = [],
   children,
   footer,
 }) => {
+  const normalizedInitialData = Array.isArray(initialData) ? initialData : [];
   const [cursor, setCursor] = useState(null);
-  const [feedData, setFeedData] = useState(initialData.reduce((obj, curr) => ({ ...obj, [curr.id]: curr}), {}));
+  const [feedData, setFeedData] = useState(normalizedInitialData.reduce((obj, curr) => ({ ...obj, [curr.id]: curr}), {}));
   const { data, error } = useSWR(cursor ? `${src}?gt=${cursor}` : src, fetcher, {
-    fallbackData: initialData,
+    fallbackData: normalizedInitialData,
     refreshInterval: 5000
   });
 
   useEffect(() => {
     if (error || !data) return;
+    if (!Array.isArray(data)) return;
     if (data.length == 0) return;
     setCursor(data[0].timestamp);
   }, []);
@@ -27,6 +29,7 @@ const Feed = ({
   // update to the latest data we have
   useEffect(() => {
     if (error || !data) return;
+    if (!Array.isArray(data)) return;
     if (data.length === 0) return;
     // only go ahead to update the feed data if the cursor is not the same as the latest post
     if (data[0].timestamp <= cursor) return;

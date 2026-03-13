@@ -10,7 +10,6 @@ import { PostEditor } from './post-editor'
 import { ClubsPopup } from './clubs-popup'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
-import { BASE_URL, isDevDeployment } from "../lib/util";
 
 const badgeStyles = `
 .badge {
@@ -93,18 +92,6 @@ const Nav = () => {
   const [postOpen, setPostOpen] = useState(false)
   const [clubsOpen, setClubsOpen] = useState(false)
 
-  // This is a hack for using the right link on custom domains
-  const [external, setExternal] = useState(false)
-
-  useEffect(() => {
-    try {
-      const l = document.createElement('a');
-      l.href = window.location.href;
-      // if (!l.hostname.includes("hackclub.dev") && l.hostname != "scrapbook.hackclub.com") setExternal(true);
-      if (isDevDeployment(l.hostname)) setExternal(true);
-    } catch (e) {}
-  }, []);
-
   useEffect(() => {
     if (router?.query?.checkYourEmail !== undefined) {
       toast('Where now? Head to your email for a unique URL to login.')
@@ -122,18 +109,11 @@ const Nav = () => {
       <nav className="nav">
         <Flag />
         {!home &&
-          (external ? (
-            <a
-              href="https://scrapbook.hackclub.com/"
-              className="nav-link nav-link-home"
-            >
-              Scrapbook
-            </a>
-          ) : (
+          (
             <Link href="/" className='nav-link nav-link-home'>
-                Scrapbook
+              Scrapbook
             </Link>
-          ))}
+          )}
         <Link href="/about/" passHref className='nav-link nav-link-about'>
           About
         </Link>
