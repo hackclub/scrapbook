@@ -67,7 +67,7 @@ let nextConfig = withMDX({
       { source: '/summer', destination: '/r/summer-of-making' },
       { source: '/new', destination: '/' },
       {
-        source: '/attachments/:path*{/}?',
+        source: '/attachments/:path*',
         destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
       },
       {
@@ -97,7 +97,7 @@ let nextConfig = withMDX({
         destination: '/api/rss/:username'
       },
       {
-        source: '/auth/error:path*{/}',
+        source: '/auth/error/:path*',
         destination: '/404'
       }
     ]
