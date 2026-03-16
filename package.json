@@ -21,7 +21,7 @@
     "@next/mdx": "^16.1.6",
     "@prisma/client": "6.7.0",
     "dotenv": "^16.4.7",
-    "emoji-picker-react": "^4.12.0",
+    "emoji-picker-react": "^4.18.0",
     "github-slugger": "^2.0.0",
     "hls.js": "^1.5.19",
     "lodash-es": "^4.17.21",
