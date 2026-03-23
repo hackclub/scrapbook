@@ -1040,10 +1040,10 @@
     chevrotain "^10.5.0"
     lilconfig "^2.1.0"
 
-"@mux/mux-node@^9.0.1":
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/@mux/mux-node/-/mux-node-9.0.1.tgz#f39df56139fa2f700e920454b1804d25a219be65"
-  integrity sha512-+wSqwCkb3/RplJkhd35R44+Ov1pQTzXDJSCLF8yxBRodUL2uqG/ajCSix+miIiPNY+v/tx0rJ9+t6dxe2ZR/Dg==
+"@mux/mux-node@^12.8.1":
+  version "12.8.1"
+  resolved "https://registry.yarnpkg.com/@mux/mux-node/-/mux-node-12.8.1.tgz#35568ebfb0525d14670cd70d9e74eacd6e910bc8"
+  integrity sha512-ey2eKn7iwVrjRVJfB/yF9HPDVpEl+fZV00ydx0kc9/BMs+wjBi0KgU0HMqUjTgEoyMUTlHmJ3U3BfDvreyg5iQ==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
