@@ -792,10 +792,10 @@
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.1.tgz"
   integrity sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==
 
-"@hackclub/icons@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.npmjs.org/@hackclub/icons/-/icons-0.0.15.tgz"
-  integrity sha512-IKJ5JQhRhlkYINv9pxzT//fn3aYwsGBeyNNBcw7eU+J0lfs0wGrq9lh7CGcXUUGXaKFxDPRlWhTxaAVaRdZVRA==
+"@hackclub/icons@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@hackclub/icons/-/icons-0.2.1.tgz#2e8057bff430995b8f4390330d88ce9da5ac338b"
+  integrity sha512-5IAnIwSCoMBPyBICr0RGLioC6T95QzN8lIYXeF0vZ4h1AM4V9QTBFI5bFCcw22m8fB7nXoEpJ0f0d1tpBzbrVQ==
 
 "@hackclub/meta@^1.1.33":
   version "1.1.33"
