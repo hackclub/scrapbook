@@ -1,20 +1,29 @@
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
 import { signOut, useSession } from 'next-auth/react'
-import Profile from './profile'
 import { emailToPfp } from '../lib/email'
-import { PostEditor } from './post-editor'
-import { ClubsPopup } from './clubs-popup'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
 
+const Profile = dynamic(() => import('./profile'), { ssr: false })
+const ClubsPopup = dynamic(() =>
+  import('./clubs-popup').then(module => module.ClubsPopup), { ssr: false }
+)
+const PostEditor = dynamic(() =>
+  import('./post-editor').then(module => module.PostEditor), { ssr: false }
+)
+
 const badgeStyles = `
 .badge {
-  background-color: var(--colors-muted);
-  color: var(--colors-background);
+  background-color: var(--colors-slate);
+  color: var(--colors-white);
+  border: 0;
+  font: inherit;
+  appearance: none;
   padding: 3px 12px 1px;
   margin-left: 16px;
   text-decoration: none;
@@ -29,25 +38,27 @@ const badgeStyles = `
 
 const SignIn = ({ clickHandler }) => {
   return (
-    <span
+    <button
+      type="button"
       className="badge"
       onClick={() => {
-        clickHandler();
+        clickHandler()
       }}
     >
       Sign-in
       <style>{badgeStyles}</style>
-    </span>
+    </button>
 
   )
 }
 
 const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
   <>
-  <button
-    style={{
-      position: "fixed",
-      bottom: "2em",
+    <button
+      type="button"
+      style={{
+        position: "fixed",
+        bottom: "2em",
       right: "2em",
       padding: "1em",
       zIndex: 10
@@ -57,13 +68,15 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
       <Icon glyph='post' size={38.2} />
       New Post
     </button>
-    <span
+    <button
+      type="button"
       onClick={() => setClubsOpen(true)}
       title="Clubs on Scrapbook"
       className="nav-link nav-link-github nav-link-clubs"
+      aria-label="Clubs on Scrapbook"
     >
       <ClubsIcon size={24} />
-    </span>
+    </button>
     <img
       src={session.user.avatar || emailToPfp(session.user.email)}
       onClick={() => setMenuOpen(true)}
@@ -77,10 +90,10 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
         border: '1px solid var(--muted)'
       }}
     />
-    <span className="badge" onClick={() => signOut()}>
+    <button type="button" className="badge" onClick={() => signOut()}>
       Sign-out
       <style>{badgeStyles}</style>
-    </span>
+    </button>
   </>
 )
 
@@ -159,13 +172,15 @@ const Nav = () => {
           </>
         ) : (
           <>
-            <span
+            <button
+              type="button"
               onClick={() => setClubsOpen(true)}
               title="Clubs on Scrapbook"
               className="nav-link nav-link-github nav-link-clubs"
+              aria-label="Clubs on Scrapbook"
             >
               <ClubsIcon size={24} />
-            </span>
+            </button>
             {clubsOpen && (
               <ClubsPopup
                 closed={!clubsOpen}

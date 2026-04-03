@@ -43,15 +43,17 @@ const Reaction = ({
     </>
   )
   return authStatus == 'authenticated' ? (
-    <span
+    <button
+      type="button"
       className={`post-reaction ${
         usersReacted.includes(authSession.user.id) ? 'post-reaction-active' : ''
       }`}
+      aria-label={startCase(name)}
       title={startCase(name)}
       onClick={() => clickEmoji(name, postID, swrKey)}
     >
       {children}
-    </span>
+    </button>
   ) : (
     <Link href={`/r/${name}`} className='post-reaction' title={startCase(name)}>
         {children}

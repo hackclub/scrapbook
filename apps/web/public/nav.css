@@ -33,6 +33,9 @@
   color: var(--colors-muted);
   text-decoration: none;
   transition: 0.125s color ease-in-out;
+  background: transparent;
+  border: 0;
+  font: inherit;
 }
 
 .nav-link:hover,
