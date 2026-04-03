@@ -70,6 +70,8 @@ const Profile = ({
             height={96}
             alt={profile.username}
             className="header-title-avatar"
+            unoptimized
+            style={{ objectFit: 'cover' }}
             {...(profile.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
           />
         )}

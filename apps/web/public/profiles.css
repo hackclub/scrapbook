@@ -31,6 +31,7 @@
 .header-title-avatar {
   border-radius: 64px;
   margin-right: 16px;
+  object-fit: cover;
 }
 
 .header-title-name {
