@@ -77,6 +77,7 @@ const Post = ({
               data-tip
               data-for={`tip-${id}`}
               dateTime={postedAt}
+              suppressHydrationWarning
             >
               {postedAt?.startsWith('20')
                 ? convertTimestampToDate(postedAt)
@@ -92,6 +93,8 @@ const Post = ({
                   width={48}
                   height={48}
                   alt={user.username}
+                  unoptimized
+                  style={{ objectFit: 'cover' }}
                   {...(user.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
                   className="post-header-avatar"
                 />
@@ -127,7 +130,11 @@ const Post = ({
                     />
                   )}
                 </span>
-                <time className="post-header-date" dateTime={postedAt}>
+                <time
+                  className="post-header-date"
+                  dateTime={postedAt}
+                  suppressHydrationWarning
+                >
                   {postedAt?.startsWith('20')
                     ? convertTimestampToDate(postedAt)
                     : postedAt}
@@ -174,7 +181,7 @@ const Post = ({
             ))}
           </div>
         )}
-        <footer className="post-reactions" aria-label="Emoji reactions">
+        <section className="post-reactions" aria-label="Emoji reactions">
           {reactions.map(reaction => (
             <Reaction
               key={id + reaction.name}
@@ -186,11 +193,16 @@ const Post = ({
             />
           ))}
           {authStatus == 'authenticated' && (
-            <div className="post-reaction" onClick={() => openEmojiPicker(id)}>
+            <button
+              type="button"
+              className="post-reaction"
+              aria-label="Add reaction"
+              onClick={() => openEmojiPicker(id)}
+            >
               +
-            </div>
+            </button>
           )}
-        </footer>
+        </section>
       </section>
     </>
   )

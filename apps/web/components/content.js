@@ -8,7 +8,12 @@ const dataDetector =
   /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/
 
 // Enhanced emoji detection regex that also catches Unicode emojis
-const emojiRegex = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu
+const emojiRegex = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u
+
+const hasSingleAtMention = chunk => {
+  const firstAt = chunk.indexOf('@')
+  return firstAt !== -1 && firstAt === chunk.lastIndexOf('@')
+}
 
 
 export const formatText = text =>
@@ -35,7 +40,7 @@ export const formatText = text =>
       )
     }
 
-    if ((chunk?.startsWith('@') || chunk?.startsWith('<@')) && Array.from(chunk.matchAll("@"), m => m[0]).length == 1) {
+    if ((chunk?.startsWith('@') || chunk?.startsWith('<@')) && hasSingleAtMention(chunk)) {
       const punct = /([,!:.'"’”]|’s|'s|\))+$/g
       const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
       return (

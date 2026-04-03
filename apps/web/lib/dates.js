@@ -67,6 +67,18 @@ const monthNames = [
   'November',
   'December'
 ].map(m => m.substring(0, 3))
+
+const formatUtcTime = timestamp => {
+  const formatted = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'UTC',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  }).format(new Date(timestamp))
+
+  return formatted.replace(' ', '').toLowerCase()
+}
+
 export const convertTimestampToDate = timestamp => {
   const today = new Date()
   const isToday =
@@ -79,17 +91,7 @@ export const convertTimestampToDate = timestamp => {
   let month = monthNames[monthIndex]
   let year = date.getFullYear()
   year = year != today.getFullYear() ? `, ${year}` : ''
-  let hours = date.getHours() || 0
-  let cleanHours
-  if (hours === 0) {
-    cleanHours = 12 // if timestamp is between midnight and 1am, show 12:XX am
-  } else {
-    cleanHours = hours > 12 ? hours - 12 : hours // else show proper am/pm
-  }
-  let minutes = date.getMinutes()
-  minutes = minutes >= 10 ? minutes : '0' + minutes.toString() // turns 4 minutes into 04 minutes
-  let ampm = hours >= 12 ? 'pm' : 'am'
   return isToday
-    ? `${cleanHours}:${minutes}${ampm}`
+    ? formatUtcTime(timestamp)
     : `${week}, ${month} ${day}` + year
 }

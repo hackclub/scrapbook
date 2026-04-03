@@ -1,20 +1,23 @@
-import { signIn } from "next-auth/react";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { signIn } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Login() {
-    const searchParams = useSearchParams();
+  const router = useRouter()
 
-    useEffect(() => {
-        const code = searchParams.get("code");
-        if (code) {
-            signIn("hc-identity", { code, callbackUrl: "/" });
-        }
-    }, [searchParams]);
+  useEffect(() => {
+    if (!router.isReady) return
 
-    return (
-        <div>
-            <h1>Logging you in...</h1>
-        </div>
-    );
+    const code = typeof router.query.code === 'string' ? router.query.code : null
+
+    if (code) {
+      signIn('hc-identity', { code, callbackUrl: '/' })
+    }
+  }, [router.isReady, router.query.code])
+
+  return (
+    <div>
+      <h1>Logging you in...</h1>
+    </div>
+  )
 }
