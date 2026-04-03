@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { trim } from 'lodash-es'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,16 +22,27 @@ export const StaticMention = memo(
 
 const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
+
   useEffect(() => {
-    try {
-      fetch(`/api/profiles/${trim(username)}/`)
-        .then(r => r.json())
-        .then(profile => setImg(profile.avatar))
-    } catch (e) {}
-  }, [])
+    let isMounted = true
+
+    fetch(`/api/profiles/${trim(username)}/`)
+      .then(r => r.json())
+      .then(profile => {
+        if (isMounted) {
+          setImg(profile.avatar)
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
+  }, [username])
+
   return (
     <Link href={`/${username}`} className='mention post-text-mention'>
-        {img && (
+        {img ? (
           <Image
             src={img}
             alt={username}
@@ -41,6 +52,8 @@ const Mention = memo(({ username }) => {
             className="mention-avatar post-text-mention-avatar"
             {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
           />
+        ) : (
+          <span className="mention-avatar post-text-mention-avatar" aria-hidden />
         )}
         @{username}
     </Link>

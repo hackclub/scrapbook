@@ -6,6 +6,8 @@ import { emailToPfp } from '../lib/email'
 import { useEffect } from 'react'
 
 const Profile = ({ closed, setMenuOpen, session }) => {
+  if (closed) return null
+
   const { status, submit, useField, setData, setDataValue } = useForm(
     '/api/web/profile/edit',
     {

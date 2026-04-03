@@ -1,53 +1,82 @@
 // Credit to https://github.com/vercel/next.js/blob/canary/examples/with-mux-video/components/video-player.js
-import { useEffect, useRef } from 'react'
-import Hls from 'hls.js'
+import { useCallback, useEffect, useRef } from 'react'
+
+const POSTER_WIDTH = 384
+const POSTER_HEIGHT = 216
 
 const Video = ({ mux, ...props }) => {
   const videoRef = useRef(null)
+  const hlsRef = useRef(null)
+  const hasLoadedRef = useRef(false)
   const src = `https://stream.mux.com/${mux}.m3u8`
+  const poster = `https://image.mux.com/${mux}/thumbnail.jpg?width=${POSTER_WIDTH}&height=${POSTER_HEIGHT}&fit_mode=preserve&time=0`
 
-  useEffect(() => {
+  const loadVideo = useCallback(async () => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || hasLoadedRef.current) return
 
-    video.controls = true
-    let hls
+    hasLoadedRef.current = true
 
     if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // This will run in safari, where HLS is supported natively
-      video.src = src
-    } else if (Hls.isSupported()) {
-      // This will run in all other modern browsers
-      hls = new Hls()
-      hls.loadSource(src)
-      hls.attachMedia(video)
-    } else {
-      /*
-      console.error(
-        'This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API'
-      )
-      */
+      if (video.src !== src) {
+        video.src = src
+      }
+      return
     }
 
+    try {
+      const { default: Hls } = await import('hls.js')
+
+      if (!Hls.isSupported()) return
+
+      const hls = new Hls()
+      hls.loadSource(src)
+      hls.attachMedia(video)
+      hlsRef.current = hls
+    } catch {
+      hasLoadedRef.current = false
+    }
+  }, [src])
+
+  const playPreview = useCallback(async () => {
+    await loadVideo()
+
+    try {
+      await videoRef.current?.play()
+    } catch {}
+  }, [loadVideo])
+
+  const pausePreview = useCallback(() => {
+    videoRef.current?.pause()
+  }, [])
+
+  useEffect(() => {
     return () => {
-      if (hls) {
-        hls.destroy()
+      if (hlsRef.current) {
+        hlsRef.current.destroy()
+        hlsRef.current = null
       }
     }
-  }, [src, videoRef])
+  }, [])
 
   return (
     <video
       ref={videoRef}
-      poster={`https://image.mux.com/${mux}/thumbnail.jpg?width=512&fit_mode=pad&time=0`}
+      poster={poster}
       className="post-attachment"
       id={mux}
+      width={POSTER_WIDTH}
+      height={POSTER_HEIGHT}
       controls
       playsInline
       loop
-      preload="metadata"
-      onMouseOver={e => e.target.play()}
-      onMouseOut={e => e.target.pause()}
+      preload="none"
+      style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9' }}
+      onPointerDown={loadVideo}
+      onTouchStart={loadVideo}
+      onMouseEnter={playPreview}
+      onMouseLeave={pausePreview}
+      onPlay={loadVideo}
       {...props}
     />
   )

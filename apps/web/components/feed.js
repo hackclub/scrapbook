@@ -4,6 +4,8 @@ import Posts from '../components/posts'
 import { useState, useEffect } from "react";
 const fetcher = url => fetch(url).then(r => r.json())
 
+const toFeedMap = posts =>
+  Object.fromEntries(posts.map(post => [post.id, post]))
 
 const Feed = ({
   src = '/api/posts',
@@ -13,10 +15,10 @@ const Feed = ({
 }) => {
   const normalizedInitialData = Array.isArray(initialData) ? initialData : [];
   const [cursor, setCursor] = useState(null);
-  const [feedData, setFeedData] = useState(normalizedInitialData.reduce((obj, curr) => ({ ...obj, [curr.id]: curr}), {}));
+  const [feedData, setFeedData] = useState(() => toFeedMap(normalizedInitialData));
   const { data, error } = useSWR(cursor ? `${src}?gt=${cursor}` : src, fetcher, {
     fallbackData: normalizedInitialData,
-    refreshInterval: 5000
+    refreshInterval: 10000
   });
 
   useEffect(() => {
@@ -34,8 +36,11 @@ const Feed = ({
     // only go ahead to update the feed data if the cursor is not the same as the latest post
     if (data[0].timestamp <= cursor) return;
     setCursor(data[0].timestamp); // set the cursor to always point to the latest post
-    setFeedData({ ...data.reduce((obj, curr) => ({ ...obj, [curr.id]: curr }), {}), ...feedData })
-  }, [data]);
+    setFeedData(currentFeedData => ({
+      ...toFeedMap(data),
+      ...currentFeedData
+    }))
+  }, [cursor, data, error]);
 
   if (error) {
     return (

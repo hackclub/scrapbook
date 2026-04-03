@@ -17,6 +17,8 @@
   background-color: var(--colors-elevated);
   position: relative;
   width: 100%;
+  content-visibility: auto;
+  contain-intrinsic-size: 480px;
 }
 
 .post-header {
@@ -94,6 +96,9 @@
 
 .post-emoji {
   object-fit: contain;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .post-emoji-unicode {
@@ -142,6 +147,7 @@ a.post-text-mention {
   border-radius: 6px;
   overflow: hidden;
   text-align: center;
+  display: block;
 }
 
 a.post-attachment {
@@ -159,9 +165,12 @@ video.post-attachment {
   max-width: 100%;
   max-height: 384px;
   object-fit: contain;
+  width: 100%;
+  height: auto;
 }
 
 .post-attachment img {
+  display: block;
   max-height: 384px;
 }
 
@@ -169,6 +178,10 @@ video.post-attachment,
 audio.post-attachment,
 a.post-attachment:first-child:last-child {
   grid-column: span 2;
+}
+
+video.post-attachment {
+  aspect-ratio: 16 / 9;
 }
 
 .post-reactions {

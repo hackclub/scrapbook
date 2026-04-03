@@ -10,6 +10,8 @@ import Icon from '@hackclub/icons'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) => {
+  if (closed) return null
+
   const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
     refreshInterval: 5000
   })

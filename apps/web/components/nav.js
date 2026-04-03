@@ -1,9 +1,9 @@
-import { useState, useEffect, isValidElement } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
-import { getProviders, signOut, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import Profile from './profile'
 import { emailToPfp } from '../lib/email'
 import { PostEditor } from './post-editor'
@@ -85,9 +85,9 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
 )
 
 const Nav = () => {
-  let router = useRouter()
+  const router = useRouter()
   const { data: session, status } = useSession()
-  const home = router?.pathname === '/' ? true : false
+  const home = router?.pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
   const [postOpen, setPostOpen] = useState(false)
   const [clubsOpen, setClubsOpen] = useState(false)
@@ -134,22 +134,28 @@ const Nav = () => {
               setPostOpen={setPostOpen}
               setClubsOpen={setClubsOpen}
             />
-            <Profile
-              closed={!menuOpen}
-              setMenuOpen={setMenuOpen}
-              session={session}
-            />
-            <PostEditor
-              closed={!postOpen}
-              setPostOpen={setPostOpen}
-              session={session}
-            />
-            <ClubsPopup
-              closed={!clubsOpen}
-              setClubsOpen={setClubsOpen}
-              session={session}
-              loggedIn={true}
-            />
+            {menuOpen && (
+              <Profile
+                closed={!menuOpen}
+                setMenuOpen={setMenuOpen}
+                session={session}
+              />
+            )}
+            {postOpen && (
+              <PostEditor
+                closed={!postOpen}
+                setPostOpen={setPostOpen}
+                session={session}
+              />
+            )}
+            {clubsOpen && (
+              <ClubsPopup
+                closed={!clubsOpen}
+                setClubsOpen={setClubsOpen}
+                session={session}
+                loggedIn={true}
+              />
+            )}
           </>
         ) : (
           <>
@@ -160,12 +166,14 @@ const Nav = () => {
             >
               <ClubsIcon size={24} />
             </span>
-            <ClubsPopup
-              closed={!clubsOpen}
-              setClubsOpen={setClubsOpen}
-              session={session}
-              loggedIn={false}
-            />
+            {clubsOpen && (
+              <ClubsPopup
+                closed={!clubsOpen}
+                setClubsOpen={setClubsOpen}
+                session={session}
+                loggedIn={false}
+              />
+            )}
             <SignIn clickHandler={async () => {
               const repsonse = await fetch("/api/identity/start")
               const data = await repsonse.text();

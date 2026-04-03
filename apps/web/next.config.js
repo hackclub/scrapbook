@@ -1,3 +1,4 @@
+const path = require('path');
 const { config } = require("dotenv");
 const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -10,10 +11,16 @@ config();
 const BASE_URL = process.env.APP_URL;
 
 let nextConfig = withMDX({
+  outputFileTracingRoot: path.join(__dirname, '../..'),
   pageExtensions: ['js', 'jsx', 'mdx'],
   trailingSlash: false,
+  turbopack: {
+    root: path.join(__dirname, '../..')
+  },
   images: {
+    deviceSizes: [320, 420, 640, 768, 1024, 1280],
     imageSizes: [18, 36, 54, 24, 48, 72, 96, 144],
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       {
         protocol: 'https',
@@ -58,9 +65,25 @@ let nextConfig = withMDX({
       {
         protocol: 'https',
         hostname: 'imgutil.s3.us-east-2.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'user-cdn.hackclub-assets.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.mux.com'
       }
     ],
-    formats: ['image/webp']
+    formats: ['image/avif', 'image/webp']
   },
   async rewrites() {
     return [
