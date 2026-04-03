@@ -1,5 +1,4 @@
 import { convertTimestampToDate } from '../lib/dates'
-import { proxy } from '../lib/images'
 import { filter } from 'lodash-es'
 import Icon from '@hackclub/icons'
 import Link from 'next/link'
@@ -7,7 +6,6 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
-import EmojiPicker from 'emoji-picker-react'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
@@ -21,6 +19,18 @@ function endsWithAny(suffixes, string) {
   } catch {
     return false
   }
+}
+
+function getAttachmentSizes({ profile, visualCount }) {
+  if (profile) {
+    return visualCount === 1
+      ? '(min-width: 64em) 680px, calc(100vw - 48px)'
+      : '(min-width: 64em) 340px, calc(50vw - 32px)'
+  }
+
+  return visualCount === 1
+    ? '(min-width: 64em) 31vw, (min-width: 40em) 46vw, calc(100vw - 48px)'
+    : '(min-width: 64em) 15vw, (min-width: 40em) 23vw, calc(50vw - 24px)'
 }
 
 const Post = ({
@@ -44,6 +54,15 @@ const Post = ({
   swrKey,
   authSession
 }) => {
+  const imageAttachments = filter(attachments, attachment =>
+    endsWithAny(imageFileTypes, attachment)
+  )
+  const audioAttachments = filter(attachments, attachment =>
+    endsWithAny(audioFileTypes, attachment)
+  )
+  const visualCount = imageAttachments.length + mux.length
+  const attachmentSizes = getAttachmentSizes({ profile, visualCount })
+
   return (
     <>
       <section
@@ -119,40 +138,37 @@ const Post = ({
         <Content>{text}</Content>
         {(attachments.length > 0 || mux.length > 0) && (
           <div className="post-attachments">
-            {filter(attachments, a => endsWithAny(imageFileTypes, a)).map(
-              img => (
+            {imageAttachments.map(img => (
                 <a
                   key={img}
                   href={img}
                   target="_blank"
+                  rel="noreferrer"
                   title={img}
                   className="post-attachment"
                 >
-                  <Image 
-                    key={img}
+                  <Image
                     alt={img}
                     src={img}
-                    loading='lazy'
+                    loading="lazy"
                     title={img}
                     width={400}
                     height={300}
-                    style={{ width: 'auto', height: 'auto' }}
-                    {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
+                    sizes={attachmentSizes}
+                    style={{ width: '100%', height: 'auto' }}
+                    {...(img.endsWith('.gif') ? { unoptimized: true } : {})}
                   />
                 </a>
-              )
-            )}
-            {filter(attachments, a => endsWithAny(audioFileTypes, a)).map(
-              aud => (
+              ))}
+            {audioAttachments.map(aud => (
                 <audio
-                  key={aud.url}
+                  key={aud}
                   className="post-attachment"
-                  src={aud.url}
+                  src={aud}
                   controls
                   preload="metadata"
                 />
-              )
-            )}
+              ))}
             {mux.map(id => (
               <Video key={id} mux={id} />
             ))}

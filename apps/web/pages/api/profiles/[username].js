@@ -10,5 +10,9 @@ export default async (req, res) => {
   if (!profile?.slackID) {
     return res.status(404).json({ status: 404, error: 'Cannot locate user' })
   }
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=86400'
+  )
   res.json(profile)
 }

@@ -29,18 +29,22 @@ const Club = ({ club = {}, posts = [], children, session }) => {
   const [clubsMemberOpen, setClubsMemberOpen] = useState(false)
   return (
     <>
-      <ClubsEditPopup
-        closed={!clubsEditOpen}
-        setClubsOpen={setClubsEditOpen}
-        session={session}
-        club={club}
-      />
-      <ClubsMemberPopup
-        closed={!clubsMemberOpen}
-        setClubsOpen={setClubsMemberOpen}
-        session={session}
-        club={club}
-      />
+      {clubsEditOpen && (
+        <ClubsEditPopup
+          closed={false}
+          setClubsOpen={setClubsEditOpen}
+          session={session}
+          club={club}
+        />
+      )}
+      {clubsMemberOpen && (
+        <ClubsMemberPopup
+          closed={false}
+          setClubsOpen={setClubsMemberOpen}
+          session={session}
+          club={club}
+        />
+      )}
       <main
         className="container"
         style={{

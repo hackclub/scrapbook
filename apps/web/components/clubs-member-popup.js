@@ -9,6 +9,8 @@ import useForm from '../lib/use-form'
 const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsMemberPopup = ({ closed, setClubsOpen, session, club }) => {
+  if (closed) return null
+
   const { status, submit, useField, setData, setDataValue } = useForm(
     `/api/web/clubs/${club.id}/add-member`,
     {

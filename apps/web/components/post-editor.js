@@ -6,6 +6,8 @@ import { Optional } from '../components/optional'
 import { Close } from '../components/close'
 
 export const PostEditor = ({ closed, setPostOpen, session }) => {
+  if (closed) return null
+
   const [uploading, setUploading] = useState(false)
   let router = useRouter()
   const { status, submit, useField, setData, setDataValue } = useForm(

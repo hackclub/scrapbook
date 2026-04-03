@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 
-export async function middleware() {
+export async function proxy() {
   // Pass requests through without proxying. The previous implementation
   // refetched API routes via APP_URL, which can recurse and exhaust memory.
   return NextResponse.next();
 }
 
 /*
-Legacy middleware implementation kept for reference.
+Legacy proxy implementation kept for reference.
 We no longer intercept/re-route API requests here now that this path
 is not used for log capture.
 
@@ -31,7 +31,7 @@ async function sendTimerMetric(hostName, metricKey, time) {
   });
 }
 
-export async function middleware(req) {
+export async function proxy(req) {
   const url = new URL(decodeURIComponent(req.url));
   const HOST_NAME = process.env.APP_URL;
 
@@ -67,6 +67,6 @@ export async function middleware(req) {
 
 export const config = {
   matcher: [
-    '/(api\/(?!auth|web/profile/edit).*)'
+    '/(api\\/(?!auth|web/profile/edit).*)'
   ]
 }

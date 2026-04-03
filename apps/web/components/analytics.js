@@ -2,7 +2,7 @@ import Script from 'next/script'
 
 const Analytics = () => (
   <Script
-    defer
+    strategy="lazyOnload"
     data-domain="scrapbook.hackclub.com"
     src="https://plausible.io/js/plausible.js"
   />

@@ -1,14 +1,21 @@
-import { memo, useState, useEffect } from 'react'
+import { memo } from 'react'
 import { stripColons } from '../lib/emoji'
 import Image from 'next/image'
 
-export const EmojiImg = ({ name, src, char, ...props }) => {
+export const EmojiImg = ({
+  name,
+  src,
+  char,
+  height = 18,
+  width = height,
+  ...props
+}) => {
   // If we have a character (Unicode emoji), render it directly
   if (char) {
     return (
       <span
         style={{
-          fontSize: props.height ? `${props.height}px` : '18px',
+          fontSize: `${height}px`,
           verticalAlign: 'middle',
           display: 'inline-block',
           lineHeight: 1
@@ -22,32 +29,38 @@ export const EmojiImg = ({ name, src, char, ...props }) => {
 
   // If we have a URL, render as image
   if (src) {
+    const isGif = /\.gif($|\?)/i.test(src)
+
     return (
-      <div
+      <span
         style={{
-          height: !props.height ? '18px' : `${props.height}px`,
-          verticalAlign: 'middle'
+          height: `${height}px`,
+          width: `${width}px`,
+          verticalAlign: 'middle',
+          display: 'inline-flex',
+          lineHeight: 1
         }}
       >
         <Image
           alt={name + ' emoji'}
           loading="lazy"
           className="post-emoji"
-          width={18}
-          height={18}
+          width={width}
+          height={height}
+          sizes={`${width}px`}
           src={src}
+          unoptimized={isGif}
           {...props}
-          unoptimized
         />
-      </div>
+      </span>
     )
   }
 
   // Fallback: render the name as text
   return (
-    <span
-      style={{
-        fontSize: props.height ? `${props.height}px` : '18px',
+      <span
+        style={{
+        fontSize: `${height}px`,
         verticalAlign: 'middle',
         display: 'inline-block',
         lineHeight: 1

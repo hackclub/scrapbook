@@ -1,11 +1,15 @@
+import dynamic from 'next/dynamic'
 import Masonry from 'react-masonry-css'
 import Post from '../components/post'
 import { Close } from '../components/close'
-import EmojiPicker from 'emoji-picker-react'
 import toast from 'react-hot-toast'
 import { mutate } from 'swr'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+
+const EmojiPicker = dynamic(() => import('emoji-picker-react'), {
+  ssr: false
+})
 
 const Posts = ({ posts = [], swrKey = null }) => {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false)

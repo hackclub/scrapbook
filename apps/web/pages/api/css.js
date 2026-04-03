@@ -10,5 +10,9 @@ export default async (req, res) => {
       .status(500)
       .json({ status: 500, error: 'Could not download CSS' })
 
-    res.send(css)
-  }
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=86400, stale-while-revalidate=604800'
+  )
+  res.send(css)
+}
