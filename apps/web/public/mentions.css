@@ -20,4 +20,5 @@
 
 .mention-avatar {
   margin-right: 4px;
+  object-fit: cover;
 }

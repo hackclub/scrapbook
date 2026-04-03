@@ -3,6 +3,13 @@
   "version": "2.0.0",
   "license": "MIT",
   "private": true,
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 113",
+    "safari >= 16.4",
+    "ios_saf >= 16.4"
+  ],
   "scripts": {
     "dev": "next",
     "build": "yarn run prisma generate && yarn run next build",

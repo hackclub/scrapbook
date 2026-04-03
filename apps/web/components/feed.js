@@ -5,7 +5,10 @@ import { useState, useEffect } from "react";
 const fetcher = url => fetch(url).then(r => r.json())
 
 const toFeedMap = posts =>
-  Object.fromEntries(posts.map(post => [post.id, post]))
+  posts.reduce((mappedPosts, post) => {
+    mappedPosts[post.id] = post
+    return mappedPosts
+  }, {})
 
 const Feed = ({
   src = '/api/posts',

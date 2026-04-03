@@ -5,7 +5,12 @@ import Link from 'next/link'
 
 export const StaticMention = memo(
   ({ user = {}, className = '', size = 24, children, ...props }) => (
-    <Link href={`/${user.username}`} className={`mention ${className}`} {...props}>
+    <Link
+      href={`/${user.username}`}
+      className={`mention ${className}`}
+      prefetch={false}
+      {...props}
+    >
         <Image
           src={user.avatar}
           alt={user.username}
@@ -13,6 +18,8 @@ export const StaticMention = memo(
           width={size}
           height={size}
           className="mention-avatar"
+          unoptimized
+          style={{ objectFit: 'cover' }}
         />{' '}
         @{user.username}
         {children}
@@ -22,26 +29,42 @@ export const StaticMention = memo(
 
 const Mention = memo(({ username }) => {
   const [img, setImg] = useState(null)
+  const [hasProfile, setHasProfile] = useState(true)
 
   useEffect(() => {
     let isMounted = true
 
     fetch(`/api/profiles/${trim(username)}/`)
-      .then(r => r.json())
+      .then(async r => {
+        if (!r.ok) {
+          throw new Error('Profile not found')
+        }
+
+        return r.json()
+      })
       .then(profile => {
         if (isMounted) {
           setImg(profile.avatar)
+          setHasProfile(true)
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        if (isMounted) {
+          setHasProfile(false)
+        }
+      })
 
     return () => {
       isMounted = false
     }
   }, [username])
 
+  if (!hasProfile) {
+    return <span className="mention post-text-mention">@{username}</span>
+  }
+
   return (
-    <Link href={`/${username}`} className='mention post-text-mention'>
+    <Link href={`/${username}`} className='mention post-text-mention' prefetch={false}>
         {img ? (
           <Image
             src={img}
@@ -50,6 +73,8 @@ const Mention = memo(({ username }) => {
             width={24}
             height={24}
             className="mention-avatar post-text-mention-avatar"
+            unoptimized
+            style={{ objectFit: 'cover' }}
             {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
           />
         ) : (

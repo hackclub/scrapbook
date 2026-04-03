@@ -6,8 +6,19 @@ import { emailToPfp } from '../../lib/email'
 
 export function exclude(object, keys) {
   if (!object) return {}
-  return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
+  return Object.entries(object).reduce((filteredObject, [key, value]) => {
+    if (!keys.includes(key)) {
+      filteredObject[key] = value
+    }
+
+    return filteredObject
+  }, {})
 }
+
+const isBrokenMediaURL = value =>
+  typeof value === 'string' &&
+  /^https?:\/\//.test(value) &&
+  /(?:^|[-_/])undefined(?:$|[./?])/i.test(value)
 
 export const getRawPosts = async (max = null, params = {}, api = false) => {
   const opts = {
@@ -61,7 +72,9 @@ export const transformPost = p => {
     user: exclude(p.user
       ? {
         ...p.user,
-        avatar: p.user.avatar || emailToPfp(p.user.email)
+        avatar: isBrokenMediaURL(p.user.avatar)
+          ? null
+          : p.user.avatar || emailToPfp(p.user.email)
       }
       : {}, ['slackID', 'email', 'emailVerified']),
     timestamp: p.messageTimestamp || null,
@@ -75,8 +88,12 @@ export const transformPost = p => {
       ? formatTS(p.messageTimestamp)
       : new Date(p.postTime).toISOString(),
     text: p.text != null ? p.text : '',
-    attachments: p.attachments,
-    mux: p.muxPlaybackIDs,
+    attachments: Array.isArray(p.attachments)
+      ? p.attachments.filter(url => typeof url === 'string' && !isBrokenMediaURL(url))
+      : [],
+    mux: Array.isArray(p.muxPlaybackIDs)
+      ? p.muxPlaybackIDs.filter(id => typeof id === 'string' && id.trim().length > 0)
+      : [],
     reactions: transformReactions(p.emojiReactions) || []
   });
 }

@@ -9,7 +9,6 @@ const Video = ({ mux, ...props }) => {
   const hlsRef = useRef(null)
   const hasLoadedRef = useRef(false)
   const src = `https://stream.mux.com/${mux}.m3u8`
-  const poster = `https://image.mux.com/${mux}/thumbnail.jpg?width=${POSTER_WIDTH}&height=${POSTER_HEIGHT}&fit_mode=preserve&time=0`
 
   const loadVideo = useCallback(async () => {
     const video = videoRef.current
@@ -62,7 +61,6 @@ const Video = ({ mux, ...props }) => {
   return (
     <video
       ref={videoRef}
-      poster={poster}
       className="post-attachment"
       id={mux}
       width={POSTER_WIDTH}
