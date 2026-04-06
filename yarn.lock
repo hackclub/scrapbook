@@ -762,10 +762,10 @@
   resolved "https://registry.yarnpkg.com/@hackclub/icons/-/icons-0.2.1.tgz#2e8057bff430995b8f4390330d88ce9da5ac338b"
   integrity sha512-5IAnIwSCoMBPyBICr0RGLioC6T95QzN8lIYXeF0vZ4h1AM4V9QTBFI5bFCcw22m8fB7nXoEpJ0f0d1tpBzbrVQ==
 
-"@hackclub/meta@^1.1.33":
-  version "1.1.33"
-  resolved "https://registry.npmjs.org/@hackclub/meta/-/meta-1.1.33.tgz"
-  integrity sha512-03gvSNcjIy1c2kO0XW+uuxgPHALsPubqGivb2/9NBalGNH0FqnvRvWD5h+sPV6L6hpe+TbqYZG+Sq/e/vyT8wQ==
+"@hackclub/meta@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@hackclub/meta/-/meta-1.2.1.tgz#872bd8d279fca5a1a1a256c6286d076db0cd5e66"
+  integrity sha512-9gIVUwjVYiip33l+pVknaLubFcPCGJsudF+cmYhUvlSf5pgOX3SGYDar11BgXSD6IjLy0igZM+flqOMl2RVAkg==
 
 "@hackclub/react-calendar-heatmap@^1.8.2":
   version "1.8.2"
