@@ -2515,10 +2515,10 @@ hast-util-whitespace@^3.0.0:
   dependencies:
     "@types/hast" "^3.0.0"
 
-hls.js@^1.5.19:
-  version "1.5.19"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.19.tgz#bc8471a7c712f1314b04b2be4639dd273819d3dc"
-  integrity sha512-C020dKWEJcyvLnrqsFKW4q6D/6IEzKWdhktIS5bgoyEFE8lHgrFBq4RIngdy113abJOlIruhv8qjg7UX8hwxOw==
+hls.js@^1.6.15:
+  version "1.6.15"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.6.15.tgz#9ce13080d143a9bc9b903fb43f081e335b8321e5"
+  integrity sha512-E3a5VwgXimGHwpRGV+WxRTKeSp2DW5DI5MWv34ulL3t5UNmyJWCQ1KmLEHbYzcfThfXG8amBL+fCYPneGHC4VA==
 
 hoist-non-react-statics@^3.3.2:
   version "3.3.2"
