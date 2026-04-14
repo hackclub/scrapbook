@@ -1090,10 +1090,17 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.28.tgz#d45e01c4a56f143ee69c54dd6b12eade9e270a73"
   integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
 
-"@prisma/client@6.7.0":
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-6.7.0.tgz#69f913b0a8cfb6aa5de5dca6aa57bfd4e91e7e95"
-  integrity sha512-+k61zZn1XHjbZul8q6TdQLpuI/cvyfil87zqK2zpreNIXyXtpUv3+H/oM69hcsFcZXaokHJIzPAt5Z8C8eK2QA==
+"@prisma/client-runtime-utils@7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client-runtime-utils/-/client-runtime-utils-7.7.0.tgz#7d45c5754358e9d4d006a137818ebdb5f0c4dcb6"
+  integrity sha512-BLyd0UpFYOtyJFTHm7jS9vesHW7P83abibodQMiIofqjBKzDHQ1VAsQkdfvXyYDkPlONPfOTz7/rv3x/+CQqvQ==
+
+"@prisma/client@7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-7.7.0.tgz#68110e87288c4fdb5b3b928d4cff589b0ac6c33b"
+  integrity sha512-5Ar4OsZpJ54s21sy5oDNNW9gQtd4NuxCaiM7+JDTOU07D6VvlpLjYzAVCMB1+JzokN+08dAVomlx+b7bhJd3ww==
+  dependencies:
+    "@prisma/client-runtime-utils" "7.7.0"
 
 "@prisma/config@7.6.0":
   version "7.6.0"
