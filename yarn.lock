@@ -3257,10 +3257,10 @@ react-tilt@^0.1.4:
   resolved "https://registry.npmjs.org/react-tilt/-/react-tilt-0.1.4.tgz"
   integrity sha512-bVeRumg+RIn6QN8S92UmubGqX/BG6/QeQISBeAcrS/70dpo/jVj+sjikIawDl5wTuPdubFH8zH0EMulWIctsnw==
 
-react-tooltip@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-6.0.0.tgz#bd9882bebf7ead6ecbdf48ad8204c89eda011ec4"
-  integrity sha512-J7m56tmdmhpjHz8YsQXGNaJdsYtrByKQvKj/Vcd0GBru1fcGRP2yv0ehCEuJbKTirlt3iBg9W5gcMWnM1dj67w==
+react-tooltip@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-6.0.2.tgz#475d020f8bbdba9e3d9ebbb68d297982ac54d9e8"
+  integrity sha512-34/RxCkIu+MzIUGZIdRr/BR6heuopU1m1k8EeVEkApFQdloM8nzgYdiigrJ/DniCoMHyx/PcFe0pbG2MtlDwnw==
   dependencies:
     "@floating-ui/dom" "1.7.6"
     clsx "2.1.1"
