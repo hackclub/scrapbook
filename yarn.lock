@@ -2088,10 +2088,10 @@ effect@3.20.0:
     "@standard-schema/spec" "^1.0.0"
     fast-check "^3.23.1"
 
-emoji-picker-react@^4.18.0:
-  version "4.18.0"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.18.0.tgz#3519f300753a601c58b0c9c7829267088ca9f67a"
-  integrity sha512-vLTrLfApXAIciguGE57pXPWs9lPLBspbEpPMiUq03TIli2dHZBiB+aZ0R9/Wat0xmTfcd4AuEzQgSYxEZ8C88Q==
+emoji-picker-react@^4.19.1:
+  version "4.19.1"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.19.1.tgz#b901e17c91612257c9bc99af861d0326c68a90bb"
+  integrity sha512-BmDdqInKFVYJpv7qS9WI6L9656cDAC+FkDvUjJds56nKHbaVTBNeDmLwKBytRnzu37zWHs9Isg7gt5PT43y6xA==
   dependencies:
     flairup "1.0.0"
 
