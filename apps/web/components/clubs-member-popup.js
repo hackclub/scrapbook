@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { mutate } from 'swr'
 import { useState } from 'react'
 import { Close } from '../components/close'

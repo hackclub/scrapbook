@@ -1,15 +1,10 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../../auth/[...nextauth]'
+import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 
 export default async (req, res) => {
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    // console.error('No user.')
-    return res.status(401).json({ error: true })
-  }
+  const session = await requireServerAuthSession(req, res)
+  if (!session) return
 
   let clubs = session?.user.ClubMember.filter(x => x.admin).map(x => x.clubId)
 

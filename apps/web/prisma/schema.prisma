@@ -14,7 +14,11 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         Accounts @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  accounts     Accounts @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -27,9 +31,13 @@ model VerificationToken {
 
 model Accounts {
   id                      String       @unique @default(cuid())
+  name                    String?
   slackID                 String?      @unique(map: "Accounts.slackID_unique")
+  identityId              String?      @unique(map: "Accounts.identityId_unique")
   email                   String?      @unique(map: "Accounts.email_unique")
   emailVerified           DateTime?
+  authEmailVerified       Boolean      @default(false)
+  verificationStatus      String?
   username                String       @unique(map: "Accounts.username_unique")
   streakCount             Int?
   maxStreaks              Int?
@@ -50,10 +58,41 @@ model Accounts {
   customAudioURL          String?
   lastUsernameUpdatedTime DateTime?
   webhookURL              String?
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+  authAccounts            Account[]
   ClubMember              ClubMember[]
   sessions                Session[]
   updates                 Updates[] @relation("updates")
   slackUpdates            Updates[] @relation("slackUpdates")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  accounts              Accounts  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Updates {

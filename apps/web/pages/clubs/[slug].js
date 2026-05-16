@@ -17,7 +17,7 @@ import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
 import { clamp } from 'lodash-es'
-import { useSession } from 'next-auth/react'
+import { useSession } from '../../lib/auth-client'
 import { ClubsEditPopup } from '../../components/clubs-edit-popup'
 import { ClubsMemberPopup } from '../../components/clubs-member-popup'
 

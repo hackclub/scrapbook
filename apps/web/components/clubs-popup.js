@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Close } from '../components/close'

@@ -5,7 +5,7 @@ import { Close } from '../components/close'
 import toast from 'react-hot-toast'
 import { mutate } from 'swr'
 import { useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { useSession } from '../lib/auth-client'
 
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), {
   ssr: false

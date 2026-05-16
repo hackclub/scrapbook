@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from '@hackclub/icons'
 import Flag from './flag'
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from '../lib/auth-client'
 import { emailToPfp } from '../lib/email'
 import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
@@ -63,7 +63,13 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
       padding: "1em",
       zIndex: 10
     }}
-    onClick={() => setPostOpen(true)}
+    onClick={() => {
+      if (session.user.verificationStatus !== 'verified') {
+        toast('Verify your identity with Hack Club Auth before posting.')
+        return
+      }
+      setPostOpen(true)
+    }}
     >
       <Icon glyph='post' size={38.2} />
       New Post
@@ -189,11 +195,7 @@ const Nav = () => {
                 loggedIn={false}
               />
             )}
-            <SignIn clickHandler={async () => {
-              const repsonse = await fetch("/api/identity/start")
-              const data = await repsonse.text();
-              window.open(data, "_self");
-            }} />
+            <SignIn clickHandler={() => signIn('/')} />
           </>
         )}
       </nav>

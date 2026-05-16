@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../auth/[...nextauth]'
+import { requireVerifiedWebUser } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 
 const Mux = require('@mux/mux-node')
@@ -15,11 +14,8 @@ export default async (req, res) => {
     return res.status(405).json({ error: true, message: 'Method Not Allowed' })
   }
 
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    return res.status(401).json({ error: true })
-  }
+  const session = await requireVerifiedWebUser(req, res)
+  if (!session) return
 
   try {
     let muxAssetIDs = []
