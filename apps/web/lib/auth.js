@@ -158,7 +158,7 @@ function createAuth() {
   const clientSecret = process.env.HC_IDENTITY_CLIENT_SECRET || process.env.IDENTITY_CLIENT_SECRET
 
   return betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXTAUTH_URL,
+    baseURL: process.env.BETTER_AUTH_URL || process.env.BASE_URL,
     basePath: '/api/auth',
     secret: process.env.BETTER_AUTH_SECRET || process.env.TOKEN_SECRET,
     database: prismaAdapter(prisma, {
