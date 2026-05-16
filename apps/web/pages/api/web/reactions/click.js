@@ -1,13 +1,9 @@
 import prisma from '../../../../lib/prisma'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../auth/[...nextauth]'
+import { requireServerAuthSession } from '../../../../lib/auth-session'
 
 export default async (req, res) => {
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    res.status(401).json({ error: true, message: 'User undefined.' })
-  }
+  const session = await requireServerAuthSession(req, res)
+  if (!session) return
 
   try {
     const emoji = await prisma.emojiReactions.findFirst({

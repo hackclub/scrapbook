@@ -1,16 +1,11 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../auth/[...nextauth]'
+import { requireServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    // console.log("no server session found");
-    return res.status(401).json({ error: true })
-  }
+  const session = await requireServerAuthSession(req, res)
+  if (!session) return
 
   let account = await prisma.accounts.findFirst({
     where: {

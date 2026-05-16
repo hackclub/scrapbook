@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../auth/[...nextauth]';
+import { requireServerAuthSession } from '../../../../lib/auth-session';
 import prisma from '../../../../lib/prisma';
 import s3 from '../../../../lib/s3';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
@@ -10,12 +9,8 @@ export default async (req, res) => {
     return res.status(405).json({ error: true, message: 'Method Not Allowed' });
   }
 
-  const session = await getServerSession(req, res, authOptions);
-
-  if (!session?.user) {
-    // console.log('Unauthorized access attempt');
-    return res.status(401).json({ error: true, message: 'Unauthorized' });
-  }
+  const session = await requireServerAuthSession(req, res);
+  if (!session) return;
 
   try {
     const id = req.body?.id;

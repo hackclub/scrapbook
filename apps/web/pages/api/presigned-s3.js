@@ -1,22 +1,18 @@
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID } from "crypto";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from './auth/[...nextauth]'
+import { requireVerifiedWebUser } from '../../lib/auth-session'
 import s3 from "../../lib/s3";
 
 export default async function handleGetSignedUrl(req, res) {
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    return res.status(401).json({ error: true, message: 'Unauthorized' })
-  }
+  const session = await requireVerifiedWebUser(req, res)
+  if (!session) return
 
   const { filename, filetype } = req.query;
 
   const command = new PutObjectCommand({
     Bucket: 'scrapbook-into-the-redwoods',
-    Key: `${uuidv4()}-${filename}`,
+    Key: `${randomUUID()}-${filename}`,
     ContentType: filetype
   });
 

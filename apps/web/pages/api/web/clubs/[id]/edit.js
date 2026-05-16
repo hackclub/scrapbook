@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../../auth/[...nextauth]'
+import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
 
@@ -7,11 +6,8 @@ const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
-  const session = await getServerSession(req, res, authOptions)
-
-  if (session?.user === undefined) {
-    res.status(401).json({ error: true })
-  }
+  const session = await requireServerAuthSession(req, res)
+  if (!session) return
 
   let id = req.body.id
   delete req.body.id

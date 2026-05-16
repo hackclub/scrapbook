@@ -1,10 +1,9 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../auth/[...nextauth]'
+import { getServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 
 export default async (req, res) => {
   try {
-    const session = await getServerSession(req, res, authOptions)
+    const session = await getServerAuthSession(req)
     if (session?.user === undefined) {
       let [others] = await prisma.$transaction([
         prisma.club.findMany({

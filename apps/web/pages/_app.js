@@ -1,6 +1,5 @@
 import React from 'react'
 import { Toaster } from 'react-hot-toast'
-import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Nav from '../components/nav'
 import Analytics from '../components/analytics'
@@ -20,12 +19,12 @@ const App = ({ Component, pageProps }) => {
   const router = useRouter()
 
   return (
-    <SessionProvider>
+    <>
       <Toaster />
       {!router?.query?.embed && <Nav />}
       <Component {...pageProps} />
       <Analytics />
-    </SessionProvider>
+    </>
   )
 }
 
