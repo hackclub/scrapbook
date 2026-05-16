@@ -12,14 +12,14 @@ Scrapbook helps you **share the things you're working on every day!** As a [Hack
 
 2. **Install dependencies:**
 ```shell
-yarn deps-install
+npm install
 ```
 3. **Request the .env file:** 
 Send a message mentioning @creds in Hack Club's Slack asking for the .env file.
 
 4. **Start the development server:**
 ```shell
-yarn dev
+npm run dev
 ```
 
 5. View your server: Open your browser and navigate to http://localhost:3000/.
@@ -27,22 +27,22 @@ yarn dev
 ## Build Commands
 ### Build the web application:
 ```sh
-yarn build:web
+npm run build:web
 ```
 
 ### Check code formatting:
 ```sh
-yarn checkFormat 
+npm run checkFormat 
 ```
 
 ### Format code for Slack bot
 ```sh
-yarn prettier:slack-bot 
+npm run prettier:slack-bot 
 ```
 
 ### Format code for web app
 ```sh
-yarn prettier:web
+npm run prettier:web
 ```
 
 
@@ -55,4 +55,3 @@ apps/web apps/slack-bot \
 --extensions=js,jsx \
 --ignore-pattern '**/node_modules/**'
 ```
-
