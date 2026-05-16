@@ -3,12 +3,11 @@ FROM node:23-alpine3.20
 WORKDIR /app
 
 COPY package.json .
-COPY yarn.lock .
+COPY package-lock.json .
 
 # USER node
 
-# RUN npm install -g yarn
-RUN yarn install
+RUN npm ci
 
 COPY . .
 
@@ -16,4 +15,4 @@ COPY . .
 RUN npx prisma generate 
 
 EXPOSE 3001
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

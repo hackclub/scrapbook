@@ -36,14 +36,14 @@ In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https
    - Recommended installation is via [Homebrew](https://brew.sh/)
    - `brew install ngrok`
 1. Install dependencies
-   - `yarn`
+   - `npm install`
 1. Create `.env` file at root of project
    - `touch .env`
    - Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file contents
 1. Link your `.env` with your Prisma schema
    - `npx prisma generate`
 1. Start server
-   - `yarn dev`
+   - `npm run dev`
 1. Forward your local server to ngrok
    - `ngrok http 3000`
    - Your ngrok URL will be printed out after running this command, which you will need for the next step

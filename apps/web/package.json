@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "dev": "next",
-    "build": "yarn run prisma generate && yarn run next build",
+    "build": "prisma generate && next build",
     "start": "next start"
   },
   "dependencies": {

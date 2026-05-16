@@ -154,17 +154,17 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
 1. Clone this repository
    - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install dependencies
-   - `yarn`
+   - `npm install`
 1. Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file
 1. Start server
-   - `yarn dev`
+   - `npm run dev`
 1. View your server
    - `open http://localhost:3000/`
 
 Those with access to HQ's Vercel account can also generate their own `.env` file:
 
 1. Install Vercel's CLI (if you haven't already)
-   - `yarn global add vercel`
+   - `npm install --global vercel`
 1. Link Vercel to your account for deployment
    - `vercel`
 1. Pull environment variables from Vercel
