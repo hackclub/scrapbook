@@ -27,56 +27,61 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
     }
   )
   async function uploadFilesToS3(files) {
-    let uploadedImages = []
-    await Promise.all(
-      Array.from(files).map(async file => {
-        let uploadedImage
-        try {
-          // here we need to upload that particular file
-          const reader = new FileReader();
-          reader.onload = async (event) => {
-            const fileData = event.target.result;
-            if (fileData) {
-              const presignedUrl = new URL("/api/presigned-s3", location.origin);
-              presignedUrl.searchParams.set("filename", file.name);
-              presignedUrl.searchParams.set("filetype", file.type);
+    try {
+      const uploadedImages = await Promise.all(
+        Array.from(files).map(
+          file =>
+            new Promise((resolve, reject) => {
+              // here we need to upload that particular file
+              const reader = new FileReader()
+              reader.onload = async event => {
+                try {
+                  const fileData = event.target.result
+                  if (!fileData) return resolve(null)
 
-              const response = await fetch(
-                presignedUrl.toString()
-              )
-              const { signedUrl } = await response.json();
+                  const presignedUrl = new URL(
+                    '/api/presigned-s3',
+                    location.origin
+                  )
+                  presignedUrl.searchParams.set('filename', file.name)
+                  presignedUrl.searchParams.set('filetype', file.type)
 
-              // file blob
-              const blob = new Blob([fileData], { type: file.type });
+                  const response = await fetch(presignedUrl.toString())
+                  const { signedUrl } = await response.json()
+                  if (!response.ok || !signedUrl) {
+                    throw new Error('Failed to get upload URL')
+                  }
 
-              await fetch(signedUrl, {
-                method: "PUT",
-                body: blob
-              });
-              // uploadedImage = signedUrl.split("?")[0];
-              uploadedImages.push(signedUrl.split("?")[0])
+                  // file blob
+                  const blob = new Blob([fileData], { type: file.type })
 
-              // set uploading state to false when all images have been uploaded
-              if (uploadedImages.filter(image => typeof image === "string").length === files.length) setUploading(false);
-            }
-          }
+                  await fetch(signedUrl, {
+                    method: 'PUT',
+                    body: blob
+                  })
 
-          // read the file
-          reader.readAsArrayBuffer(file);
-
-        } catch (e) {
-          alert(
-            `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
-          )
-          // console.error(e)
-          return
-        }
-        // uploadedImages.push(uploadedImage)
-        // doesn't matter if it's null or not as it's not used
-        return uploadedImage
-      })
-    )
-    setDataValue('attachments', uploadedImages)
+                  resolve(signedUrl.split('?')[0])
+                } catch (e) {
+                  reject(e)
+                }
+              }
+              reader.onerror = () => reject(reader.error)
+              // read the file
+              reader.readAsArrayBuffer(file)
+            })
+        )
+      )
+      setDataValue(
+        'attachments',
+        uploadedImages.filter(image => typeof image === 'string')
+      )
+    } catch (e) {
+      alert(
+        `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
+      )
+    } finally {
+      setUploading(false)
+    }
   }
   return (
     <div

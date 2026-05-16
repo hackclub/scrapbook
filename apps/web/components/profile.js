@@ -20,28 +20,38 @@ const Profile = ({ closed, setMenuOpen, session }) => {
 
   function replaceProfilePicture(file) {
     async function uploadProfileImage(file) {
-      const reader = new FileReader()
-      reader.onload = async event => {
-        const fileData = event.target.result
-        if (fileData) {
-          const presignedUrl = new URL('/api/presigned-s3', location.origin)
-          presignedUrl.searchParams.set('filename', file.name)
-          presignedUrl.searchParams.set('filetype', file.type)
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = async event => {
+          try {
+            const fileData = event.target.result
+            if (!fileData) return resolve()
 
-          const response = await fetch(presignedUrl.toString())
-          const { signedUrl } = await response.json()
+            const presignedUrl = new URL('/api/presigned-s3', location.origin)
+            presignedUrl.searchParams.set('filename', file.name)
+            presignedUrl.searchParams.set('filetype', file.type)
 
-          // file blob
-          const blob = new Blob([fileData], { type: file.type })
-          fetch(signedUrl, {
-            method: 'PUT',
-            body: blob
-          }).then(() => {
+            const response = await fetch(presignedUrl.toString())
+            const { signedUrl } = await response.json()
+            if (!response.ok || !signedUrl) {
+              throw new Error('Failed to get upload URL')
+            }
+
+            // file blob
+            const blob = new Blob([fileData], { type: file.type })
+            await fetch(signedUrl, {
+              method: 'PUT',
+              body: blob
+            })
             setDataValue('avatar', signedUrl.split('?')[0])
-          })
+            resolve()
+          } catch (e) {
+            reject(e)
+          }
         }
-      }
-      reader.readAsArrayBuffer(file)
+        reader.onerror = () => reject(reader.error)
+        reader.readAsArrayBuffer(file)
+      })
     }
 
     try {
