@@ -63,27 +63,11 @@ async function consolidateIdentityAccount(identity) {
     authEmailVerified: true,
     name,
     identityId,
-    slackID,
     avatar,
     verificationStatus
   }
 
   if (accountWithEmail && accountWithSlackID && accountWithEmail.id !== accountWithSlackID.id) {
-    if (accountWithSlackID.email && accountWithSlackID.email !== email) {
-      return prisma.accounts.update({
-        where: { id: accountWithEmail.id },
-        data: {
-          name,
-          identityId,
-          slackID: accountWithEmail.slackID || slackID,
-          avatar,
-          verificationStatus,
-          authEmailVerified: true,
-          emailVerified: accountWithEmail.emailVerified || new Date()
-        }
-      })
-    }
-
     return prisma.$transaction(async tx => {
       await tx.updates.updateMany({
         where: { accountsID: accountWithEmail.id },
@@ -122,19 +106,26 @@ async function consolidateIdentityAccount(identity) {
       await tx.accounts.delete({ where: { id: accountWithEmail.id } })
       return tx.accounts.update({
         where: { id: accountWithSlackID.id },
-        data: profile
+        data: {
+          ...profile,
+          slackID
+        }
       })
     })
   }
 
   const existing = accountWithSlackID || accountWithEmail
   if (!existing) return null
+  const slackIDOwner = slackID
+    ? accountWithSlackID || await prisma.accounts.findUnique({ where: { slackID } })
+    : null
+  const canAssignSlackID = slackID && (!slackIDOwner || slackIDOwner.id === existing.id)
 
   return prisma.accounts.update({
     where: { id: existing.id },
     data: {
       ...profile,
-      slackID: existing.slackID || slackID,
+      ...(existing.slackID || canAssignSlackID ? { slackID: existing.slackID || slackID } : {}),
       name: name || existing.name || existing.username
     }
   })
@@ -154,8 +145,13 @@ async function fetchIdentity(accessToken) {
 
 function createAuth() {
   const host = identityHost()
+  const redirectURI = process.env.HC_IDENTITY_REDIRECT_URI || process.env.IDENTITY_REDIRECT_URI
   const clientId = process.env.HC_IDENTITY_CLIENT_ID || process.env.IDENTITY_CLIENT_ID
   const clientSecret = process.env.HC_IDENTITY_CLIENT_SECRET || process.env.IDENTITY_CLIENT_SECRET
+
+  if (!redirectURI) {
+    throw new Error('Set IDENTITY_REDIRECT_URI to the registered OAuth callback URL.')
+  }
 
   return betterAuth({
     baseURL: process.env.BETTER_AUTH_URL || process.env.BASE_URL,
@@ -231,10 +227,11 @@ function createAuth() {
             providerId: IDENTITY_PROVIDER_ID,
             clientId,
             clientSecret,
+            redirectURI,
             discoveryUrl: `${host}/.well-known/openid-configuration`,
             scopes: IDENTITY_SCOPES,
             overrideUserInfo: true,
-            getToken: async ({ code, redirectURI }) => {
+            getToken: async ({ code }) => {
               const response = await fetch(`${host}/oauth/token`, {
                 method: 'POST',
                 headers: {
@@ -277,13 +274,19 @@ function createAuth() {
 
               if (!identity || !email || !id) return null
 
+              const slackID = toStringOrNull(identity?.slack_id)
+              const slackIDOwner = slackID
+                ? await prisma.accounts.findUnique({ where: { slackID }, select: { email: true } })
+                : null
+              const canReturnSlackID = slackID && (!slackIDOwner || slackIDOwner.email === email)
+
               return {
                 id,
                 email,
                 emailVerified: true,
                 name: identityName(identity),
                 image: toStringOrNull(identity?.avatar_url) || undefined,
-                slackID: toStringOrNull(identity?.slack_id),
+                ...(canReturnSlackID ? { slackID } : {}),
                 identityId: id,
                 verificationStatus: toStringOrNull(identity?.verification_status),
                 avatar: toStringOrNull(identity?.avatar_url),

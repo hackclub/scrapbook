@@ -12,18 +12,27 @@ function createInstrumentedPrismaClient() {
     query: {
       async $allOperations({ operation, model, args, query }) {
         const metricKey = `${operation}_${model}`;
+        const start = performance.now();
         try {
-          const start = performance.now();
           const queryResult = await query(args);
           const time = performance.now() - start;
 
-          // send timing metrics
-          metrics.timing(metricKey, time);
-          metrics.increment(`success.${metricKey}`, 1);
+          try {
+            // send timing metrics
+            metrics.timing(metricKey, time);
+            metrics.increment(`success.${metricKey}`, 1);
+          } catch (metricsErr) {
+            console.error('Failed to record Prisma success metric', metricsErr);
+          }
 
           return queryResult;
         } catch (err) {
-          metrics.increment(`errors.${metricKey}`, 1);
+          try {
+            metrics.increment(`errors.${metricKey}`, 1);
+          } catch (metricsErr) {
+            console.error('Failed to record Prisma error metric', metricsErr);
+          }
+          throw err;
         }
       }
     }
