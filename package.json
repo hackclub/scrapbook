@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "prisma generate && next build",
-    "start": "next start"
+    "start": "next start",
+    "moderation:audit": "npm --prefix tools/scrapbook-moderation-audit run audit --"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1032.0",

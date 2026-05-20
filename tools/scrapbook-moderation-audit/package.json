@@ -1,0 +1,25 @@
+{
+  "name": "@hackclub/scrapbook-moderation-audit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prisma:generate": "prisma generate --schema ../../apps/web/prisma/schema.prisma",
+    "audit": "tsx src/index.ts",
+    "audit:dry": "tsx src/index.ts --dry-run --limit 100",
+    "test": "node --import tsx --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@prisma/client": "5.21.1",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "openai": "^4.104.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.19",
+    "prisma": "5.21.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
