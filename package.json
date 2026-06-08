@@ -20,7 +20,7 @@
     "@next/bundle-analyzer": "^16.2.6",
     "@next/mdx": "^16.2.7",
     "@prisma/client": "7.8.0",
-    "better-auth": "^1.6.11",
+    "better-auth": "^1.6.15",
     "dotenv": "^17.4.2",
     "emoji-picker-react": "^4.19.1",
     "github-slugger": "^2.0.0",
