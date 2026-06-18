@@ -32,7 +32,15 @@ let nextConfig = withMDX({
       },
       {
         protocol: 'https',
-        hostname: 'cloud-lp0r5yk68.vercel.app'
+        hostname: 'cloud-*.vercel.app'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cloud-*.hack-club-bot.vercel.app'
+      },
+      {
+        protocol: 'https',
+        hostname: '*-hack-club-bot.vercel.app'
       },
       {
         protocol: 'https',
