@@ -51,6 +51,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.9.3",
-    "nodemailer": "^8.0.5"
+    "nodemailer": "^9.0.1"
   }
 }
