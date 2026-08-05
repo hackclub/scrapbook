@@ -30,7 +30,7 @@
     "next": "16.3.0",
     "node-statsd": "^0.1.1",
     "nprogress": "^0.2.0",
-    "prisma": "7.8.0",
+    "prisma": "7.9.1",
     "react": "^19.2.7",
     "react-audio-player": "^0.17.0",
     "react-dom": "^19.2.7",
