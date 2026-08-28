@@ -1,7 +1,12 @@
-import Prisma from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 import metrics from "../metrics.js";
 
-let prisma = new Prisma.PrismaClient().$extends({
+const adapter = new PrismaPg({
+  connectionString: process.env.PG_DATABASE_URL || "postgresql://localhost:5432/postgres",
+});
+
+let prisma = new PrismaClient({ adapter }).$extends({
   // extend prisma client
   // to send query metrics such as latency & failures
   query: {

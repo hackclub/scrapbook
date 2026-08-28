@@ -1,7 +1,7 @@
 import { Upload } from "@aws-sdk/lib-storage";
-import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import S3 from "../src/lib/s3.js";
+import prisma from "../src/lib/prisma.js";
 
 export const getUrlFromString = (str) => {
   const urlRegex =
@@ -82,11 +82,10 @@ export async function getAndUploadOgImage(url) {
 }
 
 async function processPosts() {
-  const prismaClient = new PrismaClient();
   let processed = 0;
 
   const startDate = new Date("2023-12-22");
-  const postsWithPotentiallyOGImages = await prismaClient.updates.findMany({
+  const postsWithPotentiallyOGImages = await prisma.updates.findMany({
     where: {
       postTime: {
         gt: startDate
@@ -104,7 +103,6 @@ async function processPosts() {
 async function regenerateOGImages(posts) {
   return new Promise((resolve, reject) => {
     // this is the date when fallbacks to OG images was originally introduced
-    const prismaClient = new PrismaClient();
     Promise.all(posts.map(async post => {
       // console.log("Working on post", post.id);
       // check if the post has an image that is hosted on `imgutil.s3.us-east-2.amazonaws.com` and it's actually an image
@@ -136,7 +134,7 @@ async function regenerateOGImages(posts) {
       const updatedAttachments = [...attachmentesNotOnBucky, ...regeneratedOGs.filter(a => a !== null)];
 
       // update the attachments
-      await prismaClient.updates.update({
+      await prisma.updates.update({
         where: {
           id: post.id
         },

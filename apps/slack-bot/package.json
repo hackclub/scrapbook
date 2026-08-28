@@ -11,31 +11,38 @@
     "checkFormat": "prettier --check ."
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.712.0",
-    "@aws-sdk/lib-storage": "^3.703.0",
-    "@mux/mux-node": "^9.0.1",
-    "@prisma/client": "5.19.1",
-    "@slack/bolt": "^4.1.1",
+    "@aws-sdk/client-s3": "^3.1121.0",
+    "@aws-sdk/lib-storage": "^3.1121.0",
+    "@mux/mux-node": "^15.1.0",
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "@slack/bolt": "^5.0.0",
     "airtable": "^0.12.2",
     "airtable-plus": "^1.0.4",
+    "body-parser": "^2.3.0",
     "bottleneck": "^2.19.5",
-    "cheerio": "^1.0.0",
+    "cheerio": "^1.2.0",
     "date-season": "^0.0.2",
-    "dotenv": "^16.4.5",
-    "eslint": "^9.16.0",
-    "express": "^4.22.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.9.1",
+    "express": "^5.2.1",
     "form-data": "^4.0.6",
     "heic-convert": "^2.1.0",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^5.4.1",
     "lodash": "^4.18.1",
     "node-emoji": "^2.2.0",
-    "node-fetch": "2.6.7",
+    "node-fetch": "^3.3.2",
     "node-statsd": "^0.1.1",
-    "uuid": "^14.0.0"
+    "pg": "^8.23.0",
+    "uuid": "^14.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7",
-    "prettier": "3.4.2",
-    "prisma": "5.19.1"
+    "nodemon": "^3.1.14",
+    "prettier": "3.9.6",
+    "prisma": "7.10.0"
+  },
+  "allowScripts": {
+    "prisma@7.10.0": true,
+    "@prisma/engines@7.10.0": true
   }
 }

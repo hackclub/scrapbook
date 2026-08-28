@@ -1,7 +1,7 @@
 import { StatsD } from "node-statsd";
 import { config } from "dotenv";
 
-config();
+config({ quiet: true });
 const environment = process.env.NODE_ENV;
 const graphite = process.env.GRAPHITE_HOST;
 

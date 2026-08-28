@@ -11,7 +11,7 @@ import { config } from "dotenv";
 import Airtable from "airtable";
 
 // load environment variables
-config()
+config({ quiet: true })
 
 // initialize the airtable base
 const base = new Airtable({

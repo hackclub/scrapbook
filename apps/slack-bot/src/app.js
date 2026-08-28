@@ -1,5 +1,4 @@
-import bolt from "@slack/bolt";
-const { App, subtype, ExpressReceiver } = bolt;
+import { App, subtype, ExpressReceiver } from "@slack/bolt";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import { t } from "./lib/transcript.js";

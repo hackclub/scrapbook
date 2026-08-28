@@ -230,20 +230,26 @@ function createAuth() {
             redirectURI,
             discoveryUrl: `${host}/.well-known/openid-configuration`,
             scopes: IDENTITY_SCOPES,
+            accountIssuer: host,
+            pkce: false,
+            disableProviderLogout: true,
             overrideUserInfo: true,
-            getToken: async ({ code }) => {
+            getToken: async ({ code, codeVerifier }) => {
+              const body = new URLSearchParams({
+                client_id: clientId,
+                client_secret: clientSecret,
+                code,
+                redirect_uri: redirectURI,
+                grant_type: 'authorization_code'
+              })
+              if (codeVerifier) body.set('code_verifier', codeVerifier)
+
               const response = await fetch(`${host}/oauth/token`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: new URLSearchParams({
-                  client_id: clientId,
-                  client_secret: clientSecret,
-                  code,
-                  redirect_uri: redirectURI,
-                  grant_type: 'authorization_code'
-                })
+                body
               })
               const data = await response.json()
 

@@ -1,5 +1,5 @@
 import fs from "fs";
-import yaml from "js-yaml";
+import { load } from "js-yaml";
 import path from "path";
 import { sample } from "./utils.js";
 
@@ -7,7 +7,7 @@ import { sample } from "./utils.js";
 
 export const t = (search, vars) => {
   const searchArr = search.split(".");
-  const transcriptObj = yaml.load(
+  const transcriptObj = load(
     fs.readFileSync(path.join(process.cwd(), "src/lib/transcript.yml"), "utf-8")
   );
   return evalTranscript(recurseTranscript(searchArr, transcriptObj), vars);

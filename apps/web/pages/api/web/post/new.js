@@ -1,12 +1,11 @@
+import Mux from '@mux/mux-node'
 import { requireVerifiedWebUser } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 
-const Mux = require('@mux/mux-node')
-
-const { Video, Data } = new Mux(
-  process.env.MUX_TOKEN_ID,
-  process.env.MUX_TOKEN_SECRET
-)
+const mux = new Mux({
+  tokenId: process.env.MUX_TOKEN_ID,
+  tokenSecret: process.env.MUX_TOKEN_SECRET
+})
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -28,15 +27,12 @@ export default async (req, res) => {
             filename[filename.length - 1].toLowerCase()
           )
         ) {
-          let asset = await Video.Assets.create({
-            input: attachment,
-            playback_policy: ['public']
-          })
-          let playbackID = await Video.Assets.createPlaybackId(asset.id, {
-            policy: 'public'
+          let asset = await mux.video.assets.create({
+            inputs: [{ url: attachment }],
+            playback_policies: ['public']
           })
           muxAssetIDs.push(asset.id)
-          muxPlaybackIDs.push(playbackID.id)
+          muxPlaybackIDs.push(asset.playback_ids[0].id)
         }
       })
     )

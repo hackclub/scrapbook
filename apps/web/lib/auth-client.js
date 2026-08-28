@@ -1,12 +1,10 @@
 import { createAuthClient } from 'better-auth/react'
-import { genericOAuthClient } from 'better-auth/client/plugins'
 import useSWR from 'swr'
 import { IDENTITY_PROVIDER_ID, IDENTITY_SCOPES } from './auth-constants'
 
 export const authClient = createAuthClient({
   baseURL: typeof window === 'undefined' ? undefined : window.location.origin,
-  basePath: '/api/auth',
-  plugins: [genericOAuthClient()]
+  basePath: '/api/auth'
 })
 
 const sessionFetcher = url =>
@@ -28,8 +26,8 @@ export function useSession() {
 }
 
 export function signIn(callbackURL = '/') {
-  return authClient.signIn.oauth2({
-    providerId: IDENTITY_PROVIDER_ID,
+  return authClient.signIn.social({
+    provider: IDENTITY_PROVIDER_ID,
     callbackURL,
     scopes: IDENTITY_SCOPES
   })

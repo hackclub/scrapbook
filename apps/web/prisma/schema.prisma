@@ -1,12 +1,11 @@
 // This needs to be synced with hackclub/scrappy
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("PG_DATABASE_URL")
 }
 
 model Session {
@@ -70,6 +69,7 @@ model Accounts {
 model Account {
   id                    String    @id @default(cuid())
   accountId             String
+  issuer                String    @default("https://auth.hackclub.com")
   providerId            String
   userId                String
   accessToken           String?
@@ -84,6 +84,7 @@ model Account {
   accounts              Accounts  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, accountId])
+  @@unique([issuer, accountId])
 }
 
 model Verification {

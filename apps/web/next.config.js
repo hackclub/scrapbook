@@ -7,7 +7,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 
 // load environment variables
-config();
+config({ quiet: true });
 const BASE_URL = process.env.APP_URL;
 
 let nextConfig = withMDX({
@@ -130,6 +130,10 @@ let nextConfig = withMDX({
       {
         source: '/auth/error/:path*',
         destination: '/404'
+      },
+      {
+        source: '/api/auth/oauth2/callback/:path*',
+        destination: '/api/auth/callback/:path*'
       }
     ]
   },

@@ -1,9 +1,13 @@
+const { PrismaPg } = require('@prisma/adapter-pg')
 const { PrismaClient } = require('@prisma/client')
 const fetch = require("node-fetch")
 
 let failed = []
 
-let prisma = new PrismaClient()
+const adapter = new PrismaPg({
+  connectionString: process.env.PG_DATABASE_URL
+})
+let prisma = new PrismaClient({ adapter })
 
 async function migrateAccounts(){
     let accounts = await fetch("http://scrappy-hackclub.herokuapp.com/api/accounts").then(r => r.json())
