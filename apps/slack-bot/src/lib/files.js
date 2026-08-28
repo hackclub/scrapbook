@@ -7,7 +7,6 @@ import { t } from "./transcript.js";
 import { timeout } from "./utils.js";
 import { v4 as uuidv4 } from "uuid";
 import fetch from "node-fetch";
-import FormData from "form-data";
 import convert from "heic-convert";
 import stream from "node:stream";
 
@@ -58,8 +57,8 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
       postEphemeral(channel, t("messages.errors.bigvideo"), user);
       await timeout(30000);
       const asset = await mux.video.assets.create({
-        input: directUrl,
-        playback_policy: "public",
+        inputs: [{ url: directUrl }],
+        playback_policies: ["public"],
       });
       return {
         url: "https://i.imgur.com/UkXMexG.mp4",
@@ -72,18 +71,15 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
     }
   }
   if (isVideo) {
-    let form = new FormData();
-    form.append("file", mediaStream, {
-      filename: fileName,
-      knownLength: blob.size,
-    });
+    const form = new FormData();
+    form.append("file", blob, fileName);
     const uploadedUrl = await fetch("https://bucky.hackclub.com", {
       method: "POST",
       body: form,
     }).then((r) => r.text());
     const asset = await mux.video.assets.create({
-      input: uploadedUrl,
-      playback_policy: "public",
+      inputs: [{ url: uploadedUrl }],
+      playback_policies: ["public"],
     });
     return {
       url: uploadedUrl,
