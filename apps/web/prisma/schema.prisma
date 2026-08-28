@@ -69,7 +69,7 @@ model Accounts {
 model Account {
   id                    String    @id @default(cuid())
   accountId             String
-  issuer                String    @default("https://auth.hackclub.com")
+  issuer                String    @default("https://identity.hackclub.com")
   providerId            String
   userId                String
   accessToken           String?
