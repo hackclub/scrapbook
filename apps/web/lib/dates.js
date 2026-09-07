@@ -68,16 +68,13 @@ const monthNames = [
   'December'
 ].map(m => m.substring(0, 3))
 
-const formatUtcTime = timestamp => {
-  const formatted = new Intl.DateTimeFormat('en-US', {
+const formatUtcTime = timestamp =>
+  new Intl.DateTimeFormat('en-US', {
     timeZone: 'UTC',
-    hour: 'numeric',
+    hour: '2-digit',
     minute: '2-digit',
-    hour12: true
+    hourCycle: 'h23'
   }).format(new Date(timestamp))
-
-  return formatted.replace(' ', '').toLowerCase()
-}
 
 export const convertTimestampToDate = timestamp => {
   const today = new Date()
