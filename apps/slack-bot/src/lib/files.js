@@ -18,7 +18,20 @@ const mux = new Mux({
 const isFileType = (types, fileName) =>
   types.some((el) => fileName.toLowerCase().endsWith(el));
 
+// Remote files (files.remote.add) let anyone put an arbitrary URL in url_private,
+// so only ever send the bot token to Slack's own hosts.
+export const isSlackFileUrl = (url) => {
+  try {
+    const { protocol, hostname } = new URL(url);
+    const host = hostname.toLowerCase();
+    return protocol === "https:" && (host === "slack.com" || host.endsWith(".slack.com"));
+  } catch {
+    return false;
+  }
+};
+
 export const getPublicFileUrl = async (urlPrivate, channel, user) => {
+  if (!isSlackFileUrl(urlPrivate)) return null;
   let fileName = urlPrivate.split("/").pop();
   const fileId = urlPrivate.split("-")[2].split("/")[0];
   const isImage = isFileType(["jpg", "jpeg", "png", "gif", "webp", "heic"], fileName);
