@@ -11,7 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1126.0",
     "@aws-sdk/s3-request-presigner": "^3.1130.0",
-    "@better-auth/prisma-adapter": "^1.7.2",
+    "@better-auth/prisma-adapter": "^1.7.6",
     "@hackclub/icons": "^0.2.2",
     "@hackclub/meta": "^1.2.1",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
