@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
-    "nodemailer": "^9.1.1"
+    "nodemailer": "^10.0.2"
   },
   "allowScripts": {
     "prisma@7.10.0": true,
