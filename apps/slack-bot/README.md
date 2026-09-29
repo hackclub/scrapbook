@@ -39,7 +39,7 @@ In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https
    - `npm install`
 1. Create `.env` file at root of project
    - `touch .env`
-   - Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file contents
+   - Populate it with your own credentials
 1. Link your `.env` with your Prisma schema
    - `npx prisma generate`
 1. Start server
