@@ -37,9 +37,19 @@ In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https
    - `brew install ngrok`
 1. Install dependencies
    - `npm install`
-1. Create `.env` file at root of project
-   - `touch .env`
-   - Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file contents
+1. Create a `.env` file at the root of the `apps/slack-bot` project.
+     - `touch .env`
+     - To fully test the bot locally, you have to create your own Slack Workspace for testing. create a new Slack App, and populate your `.env` with the generated tokens.
+         - `PG_DATABASE_URL` (e.g., `postgresql://localhost:5432/postgres`)
+         - `SLACK_BOT_TOKEN`
+         - `SLACK_USER_TOKEN`
+         - `SLACK_ADMIN_TOKEN`
+         - `SLACK_SIGNING_SECRET`
+         - `CHANNEL` (The ID of the Slack channel your bot listens to)
+         - `S3_ACCESS_KEY_ID` (Your own S3 bucket, or request from HQ)
+         - `S3_SECRET_ACCESS_KEY` (Your own S3 bucket, or request from HQ)
+         - `MUX_TOKEN_ID` (For video processing, request from HQ)
+         - `MUX_TOKEN_SECRET` (For video processing, request from HQ)
 1. Link your `.env` with your Prisma schema
    - `npx prisma generate`
 1. Start server
