@@ -35,6 +35,7 @@ function getAttachmentSizes({ profile, visualCount }) {
 
 const Post = ({
   id = new Date().toISOString(),
+  canDelete = false,
   profile = false,
   user = {
     username: 'abc',
