@@ -142,7 +142,7 @@ const Post = ({
               </section>
           </Link>
         )}
-        {authSession?.user?.username === user?.username && (
+        {canDelete && (
           <button
             onClick={async (e) => {
               e.preventDefault()
