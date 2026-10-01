@@ -138,7 +138,10 @@ const IndexPage = ({ reactions = [], initialData }) => {
 export default IndexPage
 
 export const getServerSideProps = async (context) => {
-  const { getPosts } = require('./api/posts')
+  //update to dynamic import cause "require('./api/posts')" is deprecated and causes crash
+  const { getPosts } = await import('./api/posts')
+  const { getServerAuthSession } = await import('../lib/auth-session')
+  const session = await getServerAuthSession(context.req)
 
   const names = [
     'art',
@@ -160,7 +163,7 @@ export const getServerSideProps = async (context) => {
   ]
   // Custom-domain routing is deprecated; always render the standard homepage.
   try {
-    const initialData = await getPosts({}, 48, false)
+    const initialData = await getPosts({}, 48, false, session)
     const safeInitialData = Array.isArray(initialData) ? initialData : []
     const reactions = compact(
       names.map(name => find(flatten(map(safeInitialData, 'reactions')), { name }))
