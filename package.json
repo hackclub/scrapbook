@@ -16,7 +16,7 @@
     "@hackclub/meta": "^1.2.1",
     "@hackclub/react-calendar-heatmap": "^1.8.2",
     "@mdx-js/loader": "^3.1.1",
-    "@mux/mux-node": "^15.1.0",
+    "@mux/mux-node": "^15.5.0",
     "@next/bundle-analyzer": "^16.3.8",
     "@next/mdx": "^16.3.5",
     "@prisma/client": "7.10.0",
