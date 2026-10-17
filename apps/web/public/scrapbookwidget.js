@@ -1,4 +1,5 @@
 // Edit here: https://codepen.io/lachlanjc/pen/MWKpvZP?editors=0011
+// oxlint-disable-next-line no-unused-vars -- Global API called by embedding sites.
 function displayScrapbookUsername(username, customDomain) {
   fetch('https://scrapbook.hackclub.com/api/users/' + username + '/')
     .then(function (res) {
@@ -20,6 +21,6 @@ function displayScrapbookUsername(username, customDomain) {
       )
     })
     .catch(function (error) {
-    // console.error(error)
-  })
+      // console.error(error)
+    })
 }

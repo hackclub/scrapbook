@@ -32,6 +32,37 @@ repository root and commit the lockfile when updating dependencies. Scripts
 explicitly use Bun for Next.js and Prisma so their Node shebangs do not select a
 separate Node runtime.
 
+## Code checks
+
+Oxlint and Oxfmt are installed at the workspace root. ESLint and Prettier are
+replaced by these scripts:
+
+```sh
+bun run lint          # Check JavaScript/TypeScript correctness and unused code
+bun run lint:fix      # Apply safe lint fixes
+bun run format        # Format source, manifests, configs, and workflow files
+bun run format:check  # Check formatting without writing
+bun run check         # Lint, format check, and offline tests
+```
+
+Oxfmt retains the web app's single quotes / no semicolons and the bot's double
+quotes / semicolons. The formatter covers source, JSON, YAML, and workflow
+files. Documentation, CSS, Prisma schemas/migrations, the bot transcript, and
+generated build files are
+excluded in `.oxfmtrc.json`.
+
+Oxlint enables correctness rules plus React and Next.js checks. Native image
+markup remains allowed for external/user content, and React Compiler purity and
+synchronous-effect restrictions are not enabled for this existing Pages Router
+app. Exceptions for trusted transcript templates, the public widget API, manual
+migration helpers, and the feed's initial cursor effect are documented inline.
+
+[GitHub Actions](.github/workflows/ci.yml) runs independent **Lint**, **Format**,
+**Tests**, **Build (web)**, and **Build (slack-bot)** jobs on pushes and pull
+requests. The build jobs use the actual deployment Dockerfiles and a synthetic
+BuildKit `APP_URL`; they do not push images or deploy. Coolify continues to own
+deployments through `compose.yml`.
+
 ## Coolify / Docker Compose
 
 Use the repository's `compose.yml` with the repository root as the build context.

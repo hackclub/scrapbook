@@ -51,7 +51,9 @@ export default async (req, res) => {
         select: { id: true }
       })
       if (!isMember) {
-        return res.status(403).json({ error: true, message: 'Not a member of that club' })
+        return res
+          .status(403)
+          .json({ error: true, message: 'Not a member of that club' })
       }
     }
 
@@ -78,7 +80,7 @@ export default async (req, res) => {
     })
 
     res.json({ update, callback: `/` })
-  } catch (e) {
+  } catch {
     // console.error(e)
     res.status(500).json({ error: true })
   }

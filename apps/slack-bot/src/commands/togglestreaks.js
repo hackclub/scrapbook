@@ -25,7 +25,7 @@ export default async ({ command, respond }) => {
       respond(
         streaksToggledOff
           ? t("messages.streak.toggle.all.optin")
-          : t("messages.streak.toggle.all.optout")
+          : t("messages.streak.toggle.all.optout"),
       ),
     ]);
   } else {
@@ -39,7 +39,7 @@ export default async ({ command, respond }) => {
       respond(
         display
           ? t("messages.streak.toggle.status.invisible")
-          : t("messages.streak.toggle.status.visible")
+          : t("messages.streak.toggle.status.visible"),
       ),
     ]);
   }

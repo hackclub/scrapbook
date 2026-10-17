@@ -22,7 +22,7 @@ const deleteThreadedMessages = async (ts, channel, user) => {
         } else {
           return null;
         } // top-level comment
-      })
+      }),
     );
     const userRecord = await getUserRecord(user);
     const shouldUpdate = await shouldUpdateStreak(user, false);
@@ -39,23 +39,21 @@ const deleteThreadedMessages = async (ts, channel, user) => {
     await postEphemeral(
       channel,
       `Your scrapbook update has been deleted :boom:`,
-      user
+      user,
     );
-  } catch (e) {
+  } catch {
     // console.log(e);
   }
 };
 
 export default async ({ event }) => {
   try {
-    const { channel, message, previous_message, deleted_ts } = event;
+    const { channel, previous_message, deleted_ts } = event;
     const ts = deleted_ts || previous_message?.thread_ts;
     const hasScrap = await updateExistsTS(ts);
     if (ts && hasScrap) {
-      await Promise.all([
-        await react("remove", channel, ts, "beachball"),
-        await react("add", channel, ts, "boom"),
-      ]);
+      await react("remove", channel, ts, "beachball");
+      await react("add", channel, ts, "boom");
       await Promise.all([
         react("add", channel, ts, "beachball"),
         deleteUpdate(ts),
@@ -63,7 +61,7 @@ export default async ({ event }) => {
       ]);
     }
     // metrics.increment("success.delete_msg", 1);
-  } catch (e) {
+  } catch {
     metrics.increment("errors.delete_msg", 1);
     // console.log(e);
   }

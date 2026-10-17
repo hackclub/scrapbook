@@ -16,7 +16,7 @@ export default async (req, res) => {
   if (req.body.customDomain || account.customDomain != null) {
     if (account.customDomain != null) {
       const prevDomain = account.customDomain
-      const response = await fetch(
+      await fetch(
         `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
@@ -70,8 +70,8 @@ export default async (req, res) => {
       )
         .then(r => r.json())
         .catch(err => {
-        // console.log(`Error while setting custom domain ${arg}: ${err}`)
-      })
+          // console.log(`Error while setting custom domain ${arg}: ${err}`)
+        })
 
       if (vercelFetch.error) {
         return res.json({
@@ -96,7 +96,6 @@ export default async (req, res) => {
       data: {
         username: req.body.username,
         email: req.body.email,
-        website: req.body.website,
         pronouns: req.body.pronouns,
         cssURL: req.body.cssURL
           ? req.body.cssURL?.includes('http://') ||

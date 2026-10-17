@@ -13,7 +13,7 @@ export default async ({ event }) => {
   // delete the scrapbook update if the message was deleted on slack client
   try {
     if (event.subtype === "message_deleted") return await deleted({ event });
-  } catch (error) {
+  } catch {
     metrics.increment("errors.message_deleted", 1);
   }
 

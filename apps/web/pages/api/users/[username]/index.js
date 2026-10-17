@@ -1,4 +1,4 @@
-import { map, find, isEmpty, orderBy } from 'lodash-es'
+import { find, isEmpty } from 'lodash-es'
 import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
@@ -27,9 +27,9 @@ export const getProfile = async (value, field = 'username') => {
 
   try {
     const user = transformProfile(await prisma.accounts.findFirst(opts))
-    return user;
+    return user
   } catch {
-    return {};
+    return {}
   }
 }
 
@@ -42,11 +42,11 @@ export const getPosts = async (user, max = null) => {
         },
         user.slackID
           ? {
-            accountsSlackID: user.slackID
-          }
+              accountsSlackID: user.slackID
+            }
           : {
-            accountsID: user.id
-          }
+              accountsID: user.id
+            }
       ]
     }
   })
@@ -80,9 +80,9 @@ export const getMentions = async user => {
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
 
-    return mentions;
+    return mentions
   } catch {
-    return [];
+    return []
   }
 }
 

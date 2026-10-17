@@ -7,14 +7,19 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "bun run --cwd apps/web dev",
-    "dev:slack-bot": "bun run --cwd apps/slack-bot dev",
-    "build": "bun run --cwd apps/web build",
-    "build:web": "bun run --cwd apps/web build",
-    "start": "bun run --cwd apps/web start",
-    "start:slack-bot": "bun run --cwd apps/slack-bot start",
-    "generate": "bun run --cwd apps/web generate && bun run --cwd apps/slack-bot generate",
-    "test": "bun test"
+    "dev": "bun --cwd apps/web --bun next dev",
+    "dev:slack-bot": "bun --cwd apps/slack-bot --watch src/app.js",
+    "build": "bun --cwd apps/web --bun prisma generate && bun --cwd apps/web --bun next build",
+    "build:web": "bun --cwd apps/web --bun prisma generate && bun --cwd apps/web --bun next build",
+    "start": "bun --cwd apps/web --bun next start --hostname 0.0.0.0",
+    "start:slack-bot": "bun --cwd apps/slack-bot src/app.js",
+    "generate": "bun --cwd apps/web --bun prisma generate && bun --cwd apps/slack-bot --bun prisma generate",
+    "test": "bun test",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "check": "oxlint . && oxfmt --check . && bun test"
   },
   "trustedDependencies": [
     "@prisma/client",
@@ -24,5 +29,9 @@
   ],
   "engines": {
     "bun": ">=1 <2"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0"
   }
 }

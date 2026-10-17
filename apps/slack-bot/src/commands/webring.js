@@ -30,7 +30,7 @@ export default async ({ command, respond }) => {
     await respond(t(`messages.webring.add`, { webringUser, scrapbookLink }));
   } else {
     currentWebring = currentWebring.filter(
-      (rec) => rec != webringUserRecord.slackID
+      (rec) => rec != webringUserRecord.slackID,
     );
     await respond(t(`messages.webring.remove`, { webringUser, scrapbookLink }));
   }

@@ -8,7 +8,10 @@ import { sample } from "./utils.js";
 export const t = (search, vars) => {
   const searchArr = search.split(".");
   const transcriptObj = load(
-    fs.readFileSync(path.join(process.cwd(), "src/lib/transcript.yml"), "utf-8")
+    fs.readFileSync(
+      path.join(process.cwd(), "src/lib/transcript.yml"),
+      "utf-8",
+    ),
   );
   return evalTranscript(recurseTranscript(searchArr, transcriptObj), vars);
 };
@@ -37,6 +40,7 @@ const evalTranscript = (target, vars = {}) => {
     t,
   };
   return function () {
+    // oxlint-disable-next-line no-eval -- Evaluate trusted, repository-owned transcript templates.
     return eval("`" + target + "`");
   }.call(context);
 };

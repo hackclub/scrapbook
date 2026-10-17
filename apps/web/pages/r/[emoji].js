@@ -8,7 +8,15 @@ import Feed from '../../components/feed'
 import Message from '../../components/message'
 import Reaction from '../../components/reaction'
 import FourOhFour from '../404'
-import { filter, find, map, flatten, uniqBy, startCase, orderBy } from 'lodash-es'
+import {
+  filter,
+  find,
+  map,
+  flatten,
+  uniqBy,
+  startCase,
+  orderBy
+} from 'lodash-es'
 import SuperJSON from 'superjson'
 
 const HOST =
@@ -152,7 +160,9 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
   } else if (emoji) {
     return (
       <Feed
-      initialData={typeof posts === 'string' ? SuperJSON.parse(posts) : (posts || [])}
+        initialData={
+          typeof posts === 'string' ? SuperJSON.parse(posts) : posts || []
+        }
         src={`/api/r/${emoji.name}`}
         footer={related.length > 1 && <Footer reactions={related} />}
       >
@@ -234,9 +244,15 @@ export const getStaticProps = async ({ params }) => {
       ),
       'name'
     )
-    return { props: { emoji, posts: SuperJSON.stringify(posts), related, css }, revalidate: 1 }
-  } catch (error) {
+    return {
+      props: { emoji, posts: SuperJSON.stringify(posts), related, css },
+      revalidate: 1
+    }
+  } catch {
     // console.error(error)
-    return { props: { emoji: { name }, posts: SuperJSON.stringify([]), css }, revalidate: 1 }
+    return {
+      props: { emoji: { name }, posts: SuperJSON.stringify([]), css },
+      revalidate: 1
+    }
   }
 }

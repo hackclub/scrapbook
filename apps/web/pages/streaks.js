@@ -121,7 +121,7 @@ export const getStaticProps = async () => {
       },
       revalidate: 10
     }
-  } catch (err) {
+  } catch {
     return {
       props: { users: [] },
       revalidate: 10

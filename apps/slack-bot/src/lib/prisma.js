@@ -3,7 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import metrics from "../metrics.js";
 
 const adapter = new PrismaPg({
-  connectionString: process.env.PG_DATABASE_URL || "postgresql://localhost:5432/postgres",
+  connectionString:
+    process.env.PG_DATABASE_URL || "postgresql://localhost:5432/postgres",
 });
 
 let prisma = new PrismaClient({ adapter }).$extends({
@@ -20,12 +21,12 @@ let prisma = new PrismaClient({ adapter }).$extends({
         metrics.timing(metricKey, time);
 
         return queryResult;
-      } catch (err) {
+      } catch {
         metrics.increment(`errors.${metricKey}`, 1);
       }
       return;
-    }
-  }
+    },
+  },
 });
 
 export default prisma;

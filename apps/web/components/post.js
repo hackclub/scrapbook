@@ -85,97 +85,102 @@ const Post = ({
             </time>
           </header>
         ) : (
-          <Link href="/[profile]" as={`/${user.username}`} className='post-header' prefetch={false}>
-              {user.avatar && (
-                <Image
-                  loading="lazy"
-                  src={user.avatar}
-                  width={48}
-                  height={48}
-                  alt={user.username}
-                  unoptimized
-                  style={{ objectFit: 'cover' }}
-                  {...(user.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
-                  className="post-header-avatar"
-                />
-              )}
-              <section className="post-header-container">
-                <span className="post-header-name">
-                  <strong>@{user.username}</strong>
-                  <span
-                    className={`badge post-header-streak ${
-                      !user.displayStreak || user.streakCount === 0
-                        ? 'header-streak-zero'
-                        : ''
-                    }`}
-                    title={`${user.streakCount}-day streak`}
-                  >
-                    {`${user.streakCount <= 7 ? user.streakCount : '7+'}`}
-                    <Icon size={24} glyph="admin-badge" title="Streak icon" />
-                  </span>
-                  {user.css && (
-                    <Icon
-                      size={24}
-                      glyph="rep"
-                      title="Has a customized profile"
-                      className="post-header-css"
-                    />
-                  )}
-                  {user.audio && (
-                    <Icon
-                      size={24}
-                      glyph="rss"
-                      title="Has a customized sound"
-                      className="post-header-audio"
-                    />
-                  )}
-                </span>
-                <time
-                  className="post-header-date"
-                  dateTime={postedAt}
-                  suppressHydrationWarning
+          <Link
+            href="/[profile]"
+            as={`/${user.username}`}
+            className="post-header"
+            prefetch={false}
+          >
+            {user.avatar && (
+              <Image
+                loading="lazy"
+                src={user.avatar}
+                width={48}
+                height={48}
+                alt={user.username}
+                unoptimized
+                style={{ objectFit: 'cover' }}
+                {...(user.avatar.endsWith('.gif') ? { unoptimized: true } : {})}
+                className="post-header-avatar"
+              />
+            )}
+            <section className="post-header-container">
+              <span className="post-header-name">
+                <strong>@{user.username}</strong>
+                <span
+                  className={`badge post-header-streak ${
+                    !user.displayStreak || user.streakCount === 0
+                      ? 'header-streak-zero'
+                      : ''
+                  }`}
+                  title={`${user.streakCount}-day streak`}
                 >
-                  {postedAt?.startsWith('20')
-                    ? convertTimestampToDate(postedAt)
-                    : postedAt}
-                </time>
-              </section>
+                  {`${user.streakCount <= 7 ? user.streakCount : '7+'}`}
+                  <Icon size={24} glyph="admin-badge" title="Streak icon" />
+                </span>
+                {user.css && (
+                  <Icon
+                    size={24}
+                    glyph="rep"
+                    title="Has a customized profile"
+                    className="post-header-css"
+                  />
+                )}
+                {user.audio && (
+                  <Icon
+                    size={24}
+                    glyph="rss"
+                    title="Has a customized sound"
+                    className="post-header-audio"
+                  />
+                )}
+              </span>
+              <time
+                className="post-header-date"
+                dateTime={postedAt}
+                suppressHydrationWarning
+              >
+                {postedAt?.startsWith('20')
+                  ? convertTimestampToDate(postedAt)
+                  : postedAt}
+              </time>
+            </section>
           </Link>
         )}
         <Content>{text}</Content>
         {(attachments.length > 0 || mux.length > 0) && (
           <div className="post-attachments">
             {imageAttachments.map(img => (
-                <a
-                  key={img}
-                  href={img}
-                  target="_blank"
-                  rel="noreferrer"
+              <a
+                key={img}
+                href={img}
+                target="_blank"
+                rel="noreferrer"
+                title={img}
+                className="post-attachment"
+              >
+                <Image
+                  alt={img}
+                  src={img}
+                  loading="lazy"
                   title={img}
-                  className="post-attachment"
-                >
-                  <Image
-                    alt={img}
-                    src={img}
-                    loading="lazy"
-                    title={img}
-                    width={400}
-                    height={300}
-                    sizes={attachmentSizes}
-                    style={{ width: '100%', height: 'auto' }}
-                    {...(img.endsWith('.gif') ? { unoptimized: true } : {})}
-                  />
-                </a>
-              ))}
-            {audioAttachments.map(aud => (
-                <audio
-                  key={aud}
-                  className="post-attachment"
-                  src={aud}
-                  controls
-                  preload="metadata"
+                  width={400}
+                  height={300}
+                  sizes={attachmentSizes}
+                  style={{ width: '100%', height: 'auto' }}
+                  {...(img.endsWith('.gif') ? { unoptimized: true } : {})}
                 />
-              ))}
+              </a>
+            ))}
+            {audioAttachments.map(aud => (
+              <audio
+                key={aud}
+                className="post-attachment"
+                src={aud}
+                controls
+                preload="metadata"
+              />
+            ))}
             {mux.map(id => (
               <Video key={id} mux={id} />
             ))}

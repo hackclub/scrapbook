@@ -13,13 +13,14 @@ export const getReactionRecord = async (emoji, updateId) =>
 export const reactBasedOnKeywords = (channel, message, ts) => {
   Object.keys(emojiKeywords).forEach(async (keyword) => {
     try {
-       if (
-        message?.toLowerCase().search(new RegExp("\\b" + keyword + "\\b", "gi")) !== -1
+      if (
+        message
+          ?.toLowerCase()
+          .search(new RegExp("\\b" + keyword + "\\b", "gi")) !== -1
       ) {
         await react("add", channel, ts, emojiKeywords[keyword]);
       }
-    }
-    catch (e) {
+    } catch {
       // console.log(message)
       // console.log(e)
     }

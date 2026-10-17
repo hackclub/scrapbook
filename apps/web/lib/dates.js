@@ -91,7 +91,5 @@ export const convertTimestampToDate = timestamp => {
   let month = monthNames[monthIndex]
   let year = date.getFullYear()
   year = year != today.getFullYear() ? `, ${year}` : ''
-  return isToday
-    ? formatUtcTime(timestamp)
-    : `${week}, ${month} ${day}` + year
+  return isToday ? formatUtcTime(timestamp) : `${week}, ${month} ${day}` + year
 }

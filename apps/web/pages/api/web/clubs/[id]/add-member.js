@@ -1,6 +1,5 @@
 import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
-import GithubSlugger from 'github-slugger'
 
 export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)
@@ -20,13 +19,13 @@ export default async (req, res) => {
           account: {
             connectOrCreate: {
               where: {
-                email: req.body.email,
+                email: req.body.email
               },
               create: {
                 email: req.body.email,
-                username: `${req.body.email.split("@")[0]}${Math.ceil(Math.random()*1000)}`,
-              },
-            },
+                username: `${req.body.email.split('@')[0]}${Math.ceil(Math.random() * 1000)}`
+              }
+            }
           },
           admin: req.body.admin || false
         },
@@ -39,7 +38,7 @@ export default async (req, res) => {
         }
       })
       return res.json({ newMember })
-    } catch (e) {
+    } catch {
       return res.status(500).json({ error: true })
     }
   }

@@ -3,14 +3,16 @@ import { app } from "../app.js";
 import { sample } from "./utils.js";
 
 export const getUserRecord = async (userId) => {
-  let user
+  let user;
   try {
-    user = await app.client.users.profile.get({ token: process.env.SLACK_USER_TOKEN, user: userId });
-  }
-  catch (e) {
+    user = await app.client.users.profile.get({
+      token: process.env.SLACK_USER_TOKEN,
+      user: userId,
+    });
+  } catch {
     // console.log(userId)
     // console.error(e)
-    return
+    return;
   }
   if (user.profile === undefined) return;
   let record = await prisma.accounts.findUnique({
@@ -62,36 +64,34 @@ export const getUserRecord = async (userId) => {
     }
   } else {
     // update the user email if they don't have one on their account
-      if (!record.email) {
-        await prisma.accounts.update({
-          where: {
-            slackID: userId
-          },
-          data: {
-            email: user.profile.email
-          }
-        })
-      }
+    if (!record.email) {
+      await prisma.accounts.update({
+        where: {
+          slackID: userId,
+        },
+        data: {
+          email: user.profile.email,
+        },
+      });
+    }
   }
 
   return { ...record, slack: user };
 };
 
 export const forgetUser = async (user) => {
-  await Promise.all([
-    await prisma.updates.deleteMany({
-      // delete their updates...
-      where: {
-        slackID: user,
-      },
-    }),
-    await prisma.accounts.deleteMany({
-      // delete their account
-      where: {
-        accountsSlackID: user,
-      },
-    }),
-  ]);
+  await prisma.updates.deleteMany({
+    // delete their updates...
+    where: {
+      slackID: user,
+    },
+  });
+  await prisma.accounts.deleteMany({
+    // delete their account
+    where: {
+      accountsSlackID: user,
+    },
+  });
 };
 
 export const canDisplayStreaks = async (userId) => {

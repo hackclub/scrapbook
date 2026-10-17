@@ -1,5 +1,5 @@
 import { app } from "../app.js";
-import metrics from "../metrics.js"
+import metrics from "../metrics.js";
 import prisma from "../lib/prisma.js";
 import { getEmojiRecord, emojiExists } from "./emojis.js";
 
@@ -20,7 +20,7 @@ export const react = async (addOrRemove, channel, ts, reaction) => {
 
     const emojiRecord = await getEmojiRecord(reaction);
     if (update && emojiRecord) {
-      if (addOrRemove === 'add') {
+      if (addOrRemove === "add") {
         const exists = await emojiExists(reaction, update.id);
         if (!exists) {
           await prisma.emojiReactions.create({
@@ -30,7 +30,7 @@ export const react = async (addOrRemove, channel, ts, reaction) => {
             },
           });
         }
-      } else if (addOrRemove === 'remove') {
+      } else if (addOrRemove === "remove") {
         await prisma.emojiReactions.deleteMany({
           where: {
             updateId: update.id,
@@ -40,7 +40,7 @@ export const react = async (addOrRemove, channel, ts, reaction) => {
       }
     }
     // metrics.increment(`success.react.${addOrRemove}`, 1);
-  } catch (error) {
+  } catch {
     metrics.increment(`errors.react.${addOrRemove}`, 1);
   }
 };
@@ -59,10 +59,10 @@ export const reply = async (channel, parentTs, text, unfurl) => {
     });
 
     // metrics.increment("success.reply", 1);
-  } catch (err) {
+  } catch {
     metrics.increment("errors.reply", 1);
   }
-}
+};
 
 export const getMessage = async (ts, channel) => {
   try {
@@ -74,7 +74,7 @@ export const getMessage = async (ts, channel) => {
     });
     // metrics.increment("success.get_message", 1);
     return history.messages[0] || null;
-  } catch (e) {
+  } catch {
     metrics.increment("errors.get_message", 1);
     return null;
   }
@@ -90,7 +90,7 @@ export const postEphemeral = async (channel, text, user, threadTs) => {
       thread_ts: threadTs,
     });
     // metrics.increment("success.post_ephemeral", 1);
-  } catch (e) {
+  } catch {
     metrics.increment("errors.post_ephemeral", 1);
     // console.log(e);
   }

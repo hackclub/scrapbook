@@ -5,7 +5,7 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
-import { find, compact, map, flatten } from "lodash-es";
+import { find, compact, map, flatten } from 'lodash-es'
 import { serialize, deserialize } from 'superjson'
 
 const Header = ({ reactions = [], children }) => (
@@ -115,7 +115,7 @@ const Header = ({ reactions = [], children }) => (
   </>
 )
 
-const safeDeserializePosts = (value) => {
+const safeDeserializePosts = value => {
   try {
     const parsed = deserialize(value, { inPlace: true })
     return Array.isArray(parsed) ? parsed : []
@@ -137,7 +137,7 @@ const IndexPage = ({ reactions = [], initialData }) => {
 
 export default IndexPage
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async context => {
   const { getPosts } = require('./api/posts')
 
   const names = [
@@ -163,7 +163,9 @@ export const getServerSideProps = async (context) => {
     const initialData = await getPosts({}, 48, false)
     const safeInitialData = Array.isArray(initialData) ? initialData : []
     const reactions = compact(
-      names.map(name => find(flatten(map(safeInitialData, 'reactions')), { name }))
+      names.map(name =>
+        find(flatten(map(safeInitialData, 'reactions')), { name })
+      )
     )
     return { props: { reactions, initialData: serialize(safeInitialData) } }
   } catch (error) {

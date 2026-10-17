@@ -1,8 +1,6 @@
 import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
-import GithubSlugger from 'github-slugger'
 
-const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
@@ -16,13 +14,13 @@ export default async (req, res) => {
     where: {
       id
     }
-  });
+  })
 
   if (req.body.customDomain || club.customDomain != null) {
     if (club.customDomain != null) {
       const prevDomain = club.customDomain
 
-      const response = await fetch(
+      await fetch(
         `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
@@ -38,10 +36,10 @@ export default async (req, res) => {
         prisma.accounts.findMany(),
         prisma.club.findMany()
       ])
-      allUsers = allUsers.filter(function(user) {
+      allUsers = allUsers.filter(function (user) {
         return user.customDomain == req.body.customDomain
       })
-      allClubs = allClubs.filter(function(club) {
+      allClubs = allClubs.filter(function (club) {
         return club.customDomain == req.body.customDomain
       })
       if (allUsers.length != 0) {
@@ -71,8 +69,8 @@ export default async (req, res) => {
       )
         .then(r => r.json())
         .catch(err => {
-        // console.log(`Error while setting custom domain ${arg}: ${err}`)
-      })
+          // console.log(`Error while setting custom domain ${arg}: ${err}`)
+        })
       if (vercelFetch.error) {
         return res.status(500).json({
           error: true,
@@ -105,7 +103,7 @@ export default async (req, res) => {
     })
 
     res.json({ club })
-  } catch (e) {
+  } catch {
     // console.error(e)
     res.status(500).json({ error: true })
   }

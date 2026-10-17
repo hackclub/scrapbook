@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 const Profile = ({ closed, setMenuOpen, session }) => {
   if (closed) return null
 
-  const { status, submit, useField, setData, setDataValue } = useForm(
+  const { status, submit, useField, setDataValue } = useForm(
     '/api/web/profile/edit',
     {
       method: 'POST',
@@ -62,13 +62,12 @@ const Profile = ({ closed, setMenuOpen, session }) => {
           success: 'Yay you got some new looks there!'
         })
         .then(() => toast('Make sure to save your profile'))
-    } catch (e) {
+    } catch {
       toast.error('Humm... something wrong happened')
     }
   }
 
-  useEffect(() => {
-  }, [status]);
+  useEffect(() => {}, [status])
   return (
     <div
       className="overlay-wrapper"

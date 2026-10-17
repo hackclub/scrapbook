@@ -22,12 +22,12 @@ export default async ({ event }) => {
       await postEphemeral(
         event.channel,
         `Your post has been edited! You should see it update on the website in a few seconds.`,
-        event.message.user
+        event.message.user,
       );
       await getUserRecord(event.message.user);
     }
     // metrics.increment("success.update_post", 1);
-  } catch (e) {
+  } catch {
     metrics.increment("errors.update_post", 1);
     // console.log(e);
   }

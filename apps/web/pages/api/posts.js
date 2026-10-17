@@ -1,6 +1,5 @@
-import { find, compact, isEmpty } from 'lodash-es'
+import { find, compact } from 'lodash-es'
 import { getRawUsers } from './users'
-import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
 import { emailToPfp } from '../../lib/email'
 
@@ -60,42 +59,49 @@ export const transformReactions = (raw = []) =>
         const obj = { name, usersReacted: emoji.usersReacted }
         obj[emojiSource.startsWith('http') ? 'url' : 'char'] = emojiSource
         return obj
-      } catch (e) {
+      } catch {
         return null
       }
     })
   )
 
 export const transformPost = p => {
-  return ({
+  return {
     id: p.id,
-    user: exclude(p.user
-      ? {
-        ...p.user,
-        avatar: isBrokenMediaURL(p.user.avatar)
-          ? null
-          : p.user.avatar || emailToPfp(p.user.email)
-      }
-      : {}, ['slackID', 'email', 'emailVerified']),
+    user: exclude(
+      p.user
+        ? {
+            ...p.user,
+            avatar: isBrokenMediaURL(p.user.avatar)
+              ? null
+              : p.user.avatar || emailToPfp(p.user.email)
+          }
+        : {},
+      ['slackID', 'email', 'emailVerified']
+    ),
     timestamp: p.messageTimestamp || null,
     slackUrl: p.messageTimestamp
       ? `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp
-        .toString()
-        .replace('.', '')
-        .padEnd(16, '0')}`
+          .toString()
+          .replace('.', '')
+          .padEnd(16, '0')}`
       : null,
     postedAt: p.messageTimestamp
       ? formatTS(p.messageTimestamp)
       : new Date(p.postTime).toISOString(),
     text: p.text != null ? p.text : '',
     attachments: Array.isArray(p.attachments)
-      ? p.attachments.filter(url => typeof url === 'string' && !isBrokenMediaURL(url))
+      ? p.attachments.filter(
+          url => typeof url === 'string' && !isBrokenMediaURL(url)
+        )
       : [],
     mux: Array.isArray(p.muxPlaybackIDs)
-      ? p.muxPlaybackIDs.filter(id => typeof id === 'string' && id.trim().length > 0)
+      ? p.muxPlaybackIDs.filter(
+          id => typeof id === 'string' && id.trim().length > 0
+        )
       : [],
     reactions: transformReactions(p.emojiReactions) || []
-  });
+  }
 }
 
 export const getPosts = async (where = {}, max = null, api = false) => {
@@ -113,7 +119,7 @@ export const getPosts = async (where = {}, max = null, api = false) => {
         //.filter(p => !isEmpty(p.user))
         .map(p => transformPost(p))
     )
-    return posts;
+    return posts
   } catch (e) {
     throw Error(e)
   }
@@ -130,9 +136,12 @@ export default async (req, res) => {
       }
     }
 
-    const posts = await getPosts(where, req.query.max ? Number(req.query.max) : 200)
-    res.json(posts);
+    const posts = await getPosts(
+      where,
+      req.query.max ? Number(req.query.max) : 200
+    )
+    res.json(posts)
   } catch {
-    res.status(404).json([]);
+    res.status(404).json([])
   }
 }

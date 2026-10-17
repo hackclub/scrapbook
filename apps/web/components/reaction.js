@@ -33,13 +33,7 @@ const Reaction = ({
 }) => {
   let children = (
     <>
-      <EmojiImg
-        src={url}
-        char={char}
-        name={name}
-        width={24}
-        height={24}
-      />
+      <EmojiImg src={url} char={char} name={name} width={24} height={24} />
     </>
   )
   return authStatus == 'authenticated' ? (
@@ -55,8 +49,8 @@ const Reaction = ({
       {children}
     </button>
   ) : (
-    <Link href={`/r/${name}`} className='post-reaction' title={startCase(name)}>
-        {children}
+    <Link href={`/r/${name}`} className="post-reaction" title={startCase(name)}>
+      {children}
     </Link>
   )
 }

@@ -43,7 +43,7 @@ class NProgressContainer extends React.Component {
   }
 
   render() {
-    const { color, spinner } = this.props
+    const { color } = this.props
 
     return (
       <style jsx global>{`
@@ -65,7 +65,8 @@ class NProgressContainer extends React.Component {
           right: 0px;
           width: 100px;
           height: 100%;
-          box-shadow: 0 0 10px var(--colors-progress),
+          box-shadow:
+            0 0 10px var(--colors-progress),
             0 0 5px var(--colors-progress);
           opacity: 1;
           -webkit-transform: rotate(3deg) translate(0px, -4px);

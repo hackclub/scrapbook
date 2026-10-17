@@ -7,7 +7,6 @@ import Icon from '@hackclub/icons'
 import Message from '../../components/message'
 import Posts from '../../components/posts'
 import FourOhFour from '../404'
-import { proxy } from '../../lib/images'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -45,12 +44,16 @@ const Profile = ({ profile = {}, posts = [] }) => (
           className="header-title-avatar"
           unoptimized
           style={{ objectFit: 'cover' }}
-            {...(profile.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
+          {...(profile.avatar.endsWith('.gif') ? { unoptimized: true } : {})}
         />
       )}
       <div>
-        <Link href="/[username]" as={`/${profile.username}`} className='header-back'>
-            <Icon glyph="view-back" size={24} />@{profile.username}
+        <Link
+          href="/[username]"
+          as={`/${profile.username}`}
+          className="header-back"
+        >
+          <Icon glyph="view-back" size={24} />@{profile.username}
         </Link>
         <h1>Mentions</h1>
       </div>
@@ -158,7 +161,7 @@ export const getStaticProps = async ({ params }) => {
       props: { profile, posts },
       revalidate: 1
     }
-  } catch (error) {
+  } catch {
     // console.error(error)
     return { props: { profile }, revalidate: 1 }
   }

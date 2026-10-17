@@ -1,5 +1,5 @@
 export default async (req, res) => {
-  const { url } = req.query;
+  const { url } = req.query
   if (!url)
     return res
       .status(400)

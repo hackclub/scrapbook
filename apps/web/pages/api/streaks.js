@@ -25,19 +25,17 @@ export const getUserStreaks = async () => {
       avatar: user.avatar ?? null,
       streakCount: user.streakCount ?? 0,
       maxStreaks: user.maxStreaks ?? 0
-    }));
-  }
-  catch (err) {
+    }))
+  } catch (err) {
     throw Error(err)
   }
 }
 
-
 export default async (req, res) => {
   try {
-    const streaks = await getUserStreaks();
-    res.json(streaks);
-  } catch (err) {
-    res.status(404).json([]);
+    const streaks = await getUserStreaks()
+    res.json(streaks)
+  } catch {
+    res.status(404).json([])
   }
 }

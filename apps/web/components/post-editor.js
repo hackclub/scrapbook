@@ -9,22 +9,19 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
 
   const [uploading, setUploading] = useState(false)
   let router = useRouter()
-  const { status, submit, useField, setData, setDataValue } = useForm(
-    '/api/web/post/new',
-    {
-      method: 'POST',
-      success: 'Post created!',
-      closingAction: () => {
-        setPostOpen(false)
-      },
-      router: router,
-      clearOnSubmit: 3500,
-      initData: {
-        attachments: null
-      },
-      requiredFields: ['attachments']
-    }
-  )
+  const { submit, useField, setDataValue } = useForm('/api/web/post/new', {
+    method: 'POST',
+    success: 'Post created!',
+    closingAction: () => {
+      setPostOpen(false)
+    },
+    router: router,
+    clearOnSubmit: 3500,
+    initData: {
+      attachments: null
+    },
+    requiredFields: ['attachments']
+  })
   async function uploadFilesToS3(files) {
     try {
       const uploadedImages = await Promise.all(
@@ -74,7 +71,7 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
         'attachments',
         uploadedImages.filter(image => typeof image === 'string')
       )
-    } catch (e) {
+    } catch {
       alert(
         `Failed to upload the file to the server! Please contact the maintainers to resolve this.`
       )

@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "bun --watch src/app.js",
     "start": "bun src/app.js",
-    "format": "bun --bun prettier --write .",
-    "checkFormat": "bun --bun prettier --check .",
-    "generate": "bun --bun prisma generate"
+    "format": "oxfmt --write .",
+    "checkFormat": "oxfmt --check .",
+    "generate": "bun --bun prisma generate",
+    "lint": "oxlint ."
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1152.0",
@@ -23,7 +24,6 @@
     "cheerio": "1.2.0",
     "date-season": "0.0.2",
     "dotenv": "18.0.8",
-    "eslint": "10.13.0",
     "express": "5.3.0",
     "form-data": "4.0.6",
     "heic-convert": "2.1.0",
@@ -37,7 +37,6 @@
     "@mux/ts": "15.6.1"
   },
   "devDependencies": {
-    "prettier": "3.9.10",
     "prisma": "7.10.1"
   }
 }

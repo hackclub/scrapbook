@@ -5,7 +5,6 @@ export default {
   C6C026NHJ: "hardware", // #hardware
   CJ1UVDF7E: "art", // #art
   CBX54ACPJ: "camera", // #photography
-  C02EWM09ACE: "camera", // #surroundings
   CCW6Q86UF: "appleinc", // #apple
   C90686D0T: "rainbow-flag", // #lgbtq
   CN523HLKW: "bank-hackclub", // #bank
@@ -30,5 +29,5 @@ export default {
   CGVCSNLAJ: "first", // #frc
   C064PGB86JE: "quests", // #quests
   C06CHS2D05Q: "leaders-summit", //#the-summit
-  C09SWT5DCGY: "50days" // #50-days
+  C09SWT5DCGY: "50days", // #50-days
 };

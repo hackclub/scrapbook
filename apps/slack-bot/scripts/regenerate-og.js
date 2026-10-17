@@ -5,7 +5,7 @@ import prisma from "../src/lib/prisma.js";
 
 export const getUrlFromString = (str) => {
   const urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
   let url = str.match(urlRegex)[0];
   if (url.includes("|")) url = url.split("|")[0];
   if (url.startsWith("<")) url = url.substring(1, url.length - 1);
@@ -19,17 +19,18 @@ export function getUrls(text) {
    *
    * matches http,https,www and urls like raylib.com including scrapbook.hackclub.com
    */
-  const matcher = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()'@:%_\+.~#?!&//=]*)/gi;
+  const matcher =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()'@:%_+.~#?!&//=]*)/gi;
   return text.match(matcher);
 }
 
 export function extractOgUrl(htmlDoc) {
-  const result = RegExp("\"og:image\"").exec(htmlDoc);
+  const result = RegExp('"og:image"').exec(htmlDoc);
 
   if (!result) return;
 
   let index = result.index;
-  for (; ;) {
+  for (;;) {
     if (htmlDoc[index] === "/" && htmlDoc[index + 1] === ">") break;
     if (htmlDoc[index] === ">") break;
     index++;
@@ -50,7 +51,7 @@ async function uploadImageToS3(filename, blob) {
   let formData = new FormData();
   formData.append("file", blob, {
     filename,
-    knownLength: blob.size
+    knownLength: blob.size,
   });
 
   const uploads = new Upload({
@@ -58,8 +59,8 @@ async function uploadImageToS3(filename, blob) {
     params: {
       Bucket: "scrapbook-into-the-redwoods",
       Key: `${uuidv4()}-${filename}`,
-      Body: blob
-    }
+      Body: blob,
+    },
   });
 
   const uploadedImage = await uploads.done();
@@ -67,18 +68,17 @@ async function uploadImageToS3(filename, blob) {
 }
 
 export async function getAndUploadOgImage(url) {
-  try {
-    const file = await fetch(url);
-    let blob = await file.blob();
-    const form = new FormData();
-    form.append("file", blob, `${uuidv4()}.${blob.type.split("/")[1]}`);
+  const file = await fetch(url);
+  let blob = await file.blob();
+  const form = new FormData();
+  form.append("file", blob, `${uuidv4()}.${blob.type.split("/")[1]}`);
 
-    const imageUrl = await uploadImageToS3(`${uuidv4()}.${blob.type.split("/")[1]}`, blob);
+  const imageUrl = await uploadImageToS3(
+    `${uuidv4()}.${blob.type.split("/")[1]}`,
+    blob,
+  );
 
-    return imageUrl;
-  } catch (error) {
-    throw error;
-  }
+  return imageUrl;
 }
 
 async function processPosts() {
@@ -88,14 +88,16 @@ async function processPosts() {
   const postsWithPotentiallyOGImages = await prisma.updates.findMany({
     where: {
       postTime: {
-        gt: startDate
-      }
+        gt: startDate,
+      },
     },
   });
 
   while (processed <= postsWithPotentiallyOGImages.length) {
     // console.log("Processing posts", processed, "to", processed + 100);
-    await regenerateOGImages(postsWithPotentiallyOGImages.slice(processed, processed + 100));
+    await regenerateOGImages(
+      postsWithPotentiallyOGImages.slice(processed, processed + 100),
+    );
     processed += 100;
   }
 }
@@ -103,48 +105,63 @@ async function processPosts() {
 async function regenerateOGImages(posts) {
   return new Promise((resolve, reject) => {
     // this is the date when fallbacks to OG images was originally introduced
-    Promise.all(posts.map(async post => {
-      // console.log("Working on post", post.id);
-      // check if the post has an image that is hosted on `imgutil.s3.us-east-2.amazonaws.com` and it's actually an image
-      const imageWasOnBucky = image => image.includes('imgutil.s3.us-east-2.amazonaws.com') && ["jpg", "jpeg", "png", "gif", "webp", "heic"].some(ext => image.toLowerCase().endsWith(ext))
-      const attachmentsOnBucky = post.attachments.filter(attachment => imageWasOnBucky(attachment));
-      const attachmentesNotOnBucky = post.attachments.filter(attachment => !imageWasOnBucky(attachment));
+    Promise.all(
+      posts.map(async (post) => {
+        // console.log("Working on post", post.id);
+        // check if the post has an image that is hosted on `imgutil.s3.us-east-2.amazonaws.com` and it's actually an image
+        const imageWasOnBucky = (image) =>
+          image.includes("imgutil.s3.us-east-2.amazonaws.com") &&
+          ["jpg", "jpeg", "png", "gif", "webp", "heic"].some((ext) =>
+            image.toLowerCase().endsWith(ext),
+          );
+        const attachmentsOnBucky = post.attachments.filter((attachment) =>
+          imageWasOnBucky(attachment),
+        );
+        const attachmentesNotOnBucky = post.attachments.filter(
+          (attachment) => !imageWasOnBucky(attachment),
+        );
 
-      if (post.attachments.length > 0 && attachmentsOnBucky.length === 0) return;
+        if (post.attachments.length > 0 && attachmentsOnBucky.length === 0)
+          return;
 
-      const urls = getUrls(post.text);
-      if (!urls || urls.length === 0) return;
+        const urls = getUrls(post.text);
+        if (!urls || urls.length === 0) return;
 
-      const regeneratedOGs = await Promise.all(urls.map(async url => {
-        try {
+        const regeneratedOGs = await Promise.all(
+          urls.map(async (url) => {
+            try {
+              const pageContent = await getPageContent(url);
+              const ogUrls = extractOgUrl(pageContent);
 
-          const pageContent = await getPageContent(url);
-          const ogUrls = extractOgUrl(pageContent);
+              if (ogUrls.length === 0) return null;
 
-          if (ogUrls.length === 0) return null;
+              let imageUrl = await getAndUploadOgImage(ogUrls);
+              return imageUrl;
+            } catch {
+              // console.log("Failed to update OG image", url, error);
+              return null;
+            }
+          }),
+        );
 
-          let imageUrl = await getAndUploadOgImage(ogUrls);
-          return imageUrl;
-        } catch (error) {
-          // console.log("Failed to update OG image", url, error);
-          return null;
-        }
-      }));
+        const updatedAttachments = [
+          ...attachmentesNotOnBucky,
+          ...regeneratedOGs.filter((a) => a !== null),
+        ];
 
-      const updatedAttachments = [...attachmentesNotOnBucky, ...regeneratedOGs.filter(a => a !== null)];
+        // update the attachments
+        await prisma.updates.update({
+          where: {
+            id: post.id,
+          },
+          data: {
+            attachments: updatedAttachments,
+          },
+        });
 
-      // update the attachments
-      await prisma.updates.update({
-        where: {
-          id: post.id
-        },
-        data: {
-          attachments: updatedAttachments
-        }
-      });
-
-      // console.log("Updated post attachments", post.id);
-    })).then(() => {
+        // console.log("Updated post attachments", post.id);
+      }),
+    ).then(() => {
       resolve();
     });
     // console.log("Done!");

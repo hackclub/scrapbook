@@ -52,8 +52,7 @@ export default async (req, res) => {
     ])
 
     return res.json({ clubs, others })
-  }
-  catch {
+  } catch {
     return res.status(404).json({ clubs: [], others: [] })
   }
 }

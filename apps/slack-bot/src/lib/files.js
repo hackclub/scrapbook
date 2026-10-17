@@ -12,7 +12,7 @@ import stream from "node:stream";
 
 const mux = new Mux({
   tokenId: process.env.MUX_TOKEN_ID,
-  tokenSecret: process.env.MUX_TOKEN_SECRET
+  tokenSecret: process.env.MUX_TOKEN_SECRET,
 });
 
 const isFileType = (types, fileName) =>
@@ -24,7 +24,10 @@ export const isSlackFileUrl = (url) => {
   try {
     const { protocol, hostname } = new URL(url);
     const host = hostname.toLowerCase();
-    return protocol === "https:" && (host === "slack.com" || host.endsWith(".slack.com"));
+    return (
+      protocol === "https:" &&
+      (host === "slack.com" || host.endsWith(".slack.com"))
+    );
   } catch {
     return false;
   }
@@ -34,10 +37,13 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
   if (!isSlackFileUrl(urlPrivate)) return null;
   let fileName = urlPrivate.split("/").pop();
   const fileId = urlPrivate.split("-")[2].split("/")[0];
-  const isImage = isFileType(["jpg", "jpeg", "png", "gif", "webp", "heic"], fileName);
+  const isImage = isFileType(
+    ["jpg", "jpeg", "png", "gif", "webp", "heic"],
+    fileName,
+  );
   const isAudio = isFileType(["mp3", "wav", "aiff", "m4a"], fileName);
   const isVideo = isFileType(["mp4", "mov", "webm"], fileName);
-  
+
   if (!(isImage || isAudio | isVideo)) return null;
   const file = await fetch(urlPrivate, {
     headers: {
@@ -51,14 +57,14 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
     // convert the image buffer into a jpeg image
     const outBuffer = await convert({
       buffer: blobArrayBuffer,
-      format: "JPEG" 
+      format: "JPEG",
     });
 
     // create a readable stream for upload
     mediaStream = stream.Readable.from(outBuffer);
 
     fileName = `./${uuidv4()}.jpeg`;
-  } 
+  }
   if (blob.size === 19) {
     const publicFile = app.client.files.sharedPublicURL({
       token: process.env.SLACK_USER_TOKEN,
@@ -107,7 +113,7 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
       Bucket: "scrapbook-into-the-redwoods",
       Key: `${uuidv4()}-${fileName}`,
       Body: mediaStream,
-    }
+    },
   });
   const uploadedImage = await uploads.done();
 

@@ -1,6 +1,5 @@
 import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
-import GithubSlugger from 'github-slugger'
 
 export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)

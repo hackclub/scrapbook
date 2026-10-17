@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "dev": "bun --bun next dev",
-    "build": "bun run generate && bun --bun next build",
+    "build": "bun --bun prisma generate && bun --bun next build",
     "start": "bun --bun next start --hostname 0.0.0.0",
     "generate": "bun --bun prisma generate"
   },

@@ -31,7 +31,7 @@ export default async (req, res) => {
         slug: slugger.slug(req.body.name),
         name: req.body.name,
         website: req.body.website
-          ? new URL(req.body.website).href.replace("http://", "https://")
+          ? new URL(req.body.website).href.replace('http://', 'https://')
           : null,
         logo: req.query.website
           ? `https://unavatar.io/${normalizeUrl(req.body.website, {
@@ -45,7 +45,7 @@ export default async (req, res) => {
     })
 
     return res.json({ ...club, callback: `/clubs/${club.slug}` })
-  } catch (e) {
+  } catch {
     // console.error(e)
     return res.status(500).json({ error: true })
   }

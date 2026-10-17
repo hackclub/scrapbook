@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: apps/slack-bot/Dockerfile
     ports:
-      - "3001:3001"
-    env_file: "scrappy.env"
+      - '3001:3001'
+    env_file: 'scrappy.env'
     environment:
       - PG_DATABASE_URL=${PG_DATABASE_URL}
       - GRAPHITE_HOST=${GRAPHITE_HOST}
@@ -16,8 +16,8 @@ services:
       args:
         - APP_URL=${APP_URL}
     ports:
-      - "3002:3000"
-    env_file: "scrappy.env"
+      - '3002:3000'
+    env_file: 'scrappy.env'
     environment:
       - PG_DATABASE_URL=${PG_DATABASE_URL}
       - GRAPHITE_HOST=${GRAPHITE_HOST}

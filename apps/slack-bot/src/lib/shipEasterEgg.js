@@ -1,10 +1,10 @@
-import lodash from 'lodash';
+import lodash from "lodash";
 const { random } = lodash;
-import { postEphemeral } from "./slack.js"
+import { postEphemeral } from "./slack.js";
 
 export default async ({ event }) => {
-  const { item, user, reaction, item_user } = event;
-  const { channel, ts } = item;
+  const { item, user } = event;
+  const { channel } = item;
   const get = (arr) => random(0, arr.length - 1);
   const randomize = () => [
     get(platforms),

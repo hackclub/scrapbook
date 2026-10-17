@@ -1,4 +1,4 @@
-import { map, find, isEmpty, orderBy } from 'lodash-es'
+import { find, isEmpty } from 'lodash-es'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { getRawUsers } from '../../users'
@@ -37,9 +37,9 @@ export const getClub = async (value, field = 'slug') => {
         updates: member.account.updates.length
       }
     }))
-    return club && club?.slug ? club : {};
+    return club && club?.slug ? club : {}
   } catch {
-    return {};
+    return {}
   }
 }
 
@@ -65,11 +65,11 @@ export const getPosts = async (club, max = null) => {
         return p
       })
       .filter(p => !isEmpty(p.user))
-      .map(p => transformPost(p));
+      .map(p => transformPost(p))
 
-    return clubUpdates;
+    return clubUpdates
   } catch {
-    return [];
+    return []
   }
 }
 

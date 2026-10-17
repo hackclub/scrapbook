@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "nextjs"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none",
+        "caughtErrors": "none",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "nextjs/no-img-element": "off",
+    "react/set-state-in-effect": "off",
+    "react/purity": "off"
+  },
+  "ignorePatterns": ["**/node_modules/**", "**/.next/**", "**/.vercel/**"],
+  "overrides": [
+    {
+      "files": ["apps/slack-bot/**", "scripts/**", "tests/**"],
+      "plugins": ["typescript", "unicorn", "oxc"]
+    }
+  ]
+}

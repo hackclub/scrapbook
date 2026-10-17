@@ -15,11 +15,18 @@ const sessionFetcher = url =>
   })
 
 export function useSession() {
-  const { data, error, isLoading, mutate } = useSWR('/api/web/session', sessionFetcher)
+  const { data, error, isLoading, mutate } = useSWR(
+    '/api/web/session',
+    sessionFetcher
+  )
 
   return {
     data,
-    status: isLoading ? 'loading' : data?.user ? 'authenticated' : 'unauthenticated',
+    status: isLoading
+      ? 'loading'
+      : data?.user
+        ? 'authenticated'
+        : 'unauthenticated',
     error,
     refetch: mutate
   }
