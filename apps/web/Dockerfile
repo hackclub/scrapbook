@@ -1,18 +1,32 @@
-FROM node:23-alpine3.20
-
+# syntax=docker/dockerfile:1
+FROM dhi.io/bun:1-dev AS dependencies
 WORKDIR /app
+COPY package.json bun.lock bunfig.toml ./
+COPY apps/web/package.json ./apps/web/package.json
+COPY apps/slack-bot/package.json ./apps/slack-bot/package.json
+RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile
 
-COPY package.json .
-COPY package-lock.json .
+FROM dependencies AS build
+COPY apps/web ./apps/web
+WORKDIR /app/apps/web
+ARG APP_URL
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN --mount=type=secret,id=APP_URL,env=BUILD_APP_URL \
+    APP_URL="${BUILD_APP_URL:-$APP_URL}" bun run build
 
-RUN npm ci --legacy-peer-deps
+FROM dhi.io/bun:1-dev AS production-dependencies
+WORKDIR /app
+COPY package.json bun.lock bunfig.toml ./
+COPY apps/web/package.json ./apps/web/package.json
+COPY apps/slack-bot/package.json ./apps/slack-bot/package.json
+RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile --production --ignore-scripts
 
-COPY . .
-
-ARG GRAPHITE_HOST
-ARG PG_DATABASE_URL
-
-RUN npm run build
-
+FROM dhi.io/bun:1 AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=production-dependencies --chown=65532:65532 /app/node_modules ./node_modules
+COPY --from=build --chown=65532:65532 /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build --chown=65532:65532 /app/apps/web ./apps/web
+WORKDIR /app/apps/web
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["bun", "--bun", "next", "start", "--hostname", "0.0.0.0"]

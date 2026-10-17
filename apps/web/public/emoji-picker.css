@@ -2,27 +2,19 @@
   font-family: var(--fonts-body) !important;
 }
 
-.epr-preview {
-  display: none !important;
-}
-
-.epr-skin-tones {
-  display: none !important;
-}
-
-input.epr-search {
+.EmojiPickerReact [data-epr-part="search-input"] {
   font-size: 16px;
 }
 
-input.epr-search::placeholder {
+.EmojiPickerReact [data-epr-part="search-input"]::placeholder {
   font-size: 0px !important;
 }
 
-.EmojiPickerReact .epr-category-nav {
+.EmojiPickerReact [data-epr-part="category-nav"] {
   padding: 0px 10px !important;
 }
 
-.EmojiPickerReact .epr-category-nav > button.epr-cat-btn:focus:before {
+.EmojiPickerReact [data-epr-part="category-tab"]:focus:before {
   border: 0px solid var(--epr-category-icon-active-color) !important;
   border-radius: 50%;
 }

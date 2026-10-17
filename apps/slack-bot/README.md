@@ -31,24 +31,24 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
 In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). From there, ask @sampoder to be added to the `scrappy (dev)` app on Slack.
 
 1. Clone this repository
-   - `git clone https://github.com/hackclub/scrappy.git && cd scrappy`
+   - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install [ngrok](https://dashboard.ngrok.com/get-started/setup) (if you haven't already)
    - Recommended installation is via [Homebrew](https://brew.sh/)
    - `brew install ngrok`
 1. Install dependencies
-   - `npm install`
-1. Create `.env` file at root of project
-   - `touch .env`
+   - `bun install --frozen-lockfile` (from the repository root)
+1. Create the bot environment file
+   - `touch apps/slack-bot/.env`
    - Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file contents
 1. Link your `.env` with your Prisma schema
-   - `npx prisma generate`
+   - `bun run generate`
 1. Start server
-   - `npm run dev`
+   - `bun run dev:slack-bot`
 1. Forward your local server to ngrok
-   - `ngrok http 3000`
+   - `ngrok http 3001`
    - Your ngrok URL will be printed out after running this command, which you will need for the next step
 1. Update the [Slack settings](https://api.slack.com/apps/A015DCRTT43/event-subscriptions?)
    - Click the toggle to enable events
-   - Update the URL request URL to be `<your-ngrok-url>/api/slack/message`. An example would look like `https://ea61-73-68-194-110.ngrok.io/api/slack/message`
+   - Update the URL request URL to be `<your-ngrok-url>/slack/events`. An example would look like `https://ea61-73-68-194-110.ngrok.io/slack/events`
    - Save changes and reinstall the Slack app
    - This will regenerate Scrappy's [oauth](https://api.slack.com/apps/A015DCRTT43/oauth?) tokens, so make sure to update these in the `.env` file 

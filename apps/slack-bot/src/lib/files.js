@@ -1,6 +1,6 @@
 import S3 from "./s3.js";
 import { Upload } from "@aws-sdk/lib-storage";
-import Mux from "@mux/mux-node";
+import Mux from "@mux/ts";
 import { app } from "../app.js";
 import { postEphemeral } from "./slack.js";
 import { t } from "./transcript.js";

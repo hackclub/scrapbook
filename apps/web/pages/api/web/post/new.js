@@ -1,4 +1,4 @@
-import Mux from '@mux/mux-node'
+import Mux from '@mux/ts'
 import { requireVerifiedWebUser } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 

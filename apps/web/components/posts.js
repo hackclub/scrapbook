@@ -56,7 +56,12 @@ const Posts = ({ posts = [], swrKey = null }) => {
           }}
         >
           <Close onClick={() => setEmojiPickerOpen(false)} background={true} />
-          <EmojiPicker onEmojiClick={react} />
+          <EmojiPicker
+            emojiStyle="apple"
+            previewConfig={{ showPreview: false }}
+            skinTonePickerLocation="NONE"
+            onEmojiClick={react}
+          />
         </div>
       )}
       <Masonry
