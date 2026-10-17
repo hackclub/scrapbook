@@ -57,13 +57,3 @@ Prisma generation runs during image builds; database migrations remain an
 explicit operation against the intended database. The image build does not
 apply migrations. See [dependency upgrade notes](docs/dependency-upgrade.md)
 for the release review and compatibility changes.
-
-## Codemod
-
-```sh
-bunx --bun jscodeshift \
-  -t scripts/codemods/comment-console-logs.js \
-  apps/web apps/slack-bot \
-  --extensions=js,jsx \
-  --ignore-pattern '**/node_modules/**'
-```
