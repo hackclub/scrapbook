@@ -14,8 +14,7 @@ Scrapbook helps you **share the things you're working on every day!** As a [Hack
 ```shell
 npm install
 ```
-3. **Request the .env file:** 
-Send a message mentioning @creds in Hack Club's Slack asking for the .env file.
+3. **Set up environment variables:** 
 
 4. **Start the development server:**
 ```shell

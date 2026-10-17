@@ -155,7 +155,24 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
    - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install dependencies
    - `npm install`
-1. Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file
+1. **Set up your `.env` file** 
+   
+   Create a `.env` file in the `apps/web` directory. Scrapbook relies on Hack Club Identity for authentication and AWS S3 for image uploads.
+
+   Populate your `.env` with the following variables:
+
+   - **Database:**
+      - `PG_DATABASE_URL` (Your local Postgres database, e.g., `postgresql://localhost:5432/postgres`)
+   - **Hack Club Identity (Authentication):**
+      - `IDENTITY_CLIENT_ID` (Generate your own via Hack Club Identity)
+      - `IDENTITY_CLIENT_SECRET` (Generate your own via Hack Club Identity)
+      - `IDENTITY_REDIRECT_URI="http://localhost:3000/api/auth/callback/hackclub"`
+      - `BETTER_AUTH_SECRET` (Generate a random 32-character string)
+      - `BETTER_AUTH_URL="http://localhost:3000"`
+   - **AWS S3 (Image Uploads):**
+      - `S3_ACCESS_KEY_ID` (Use your own personal S3 bucket, or request from HQ)
+      - `S3_SECRET_ACCESS_KEY` (Use your own personal S3 bucket, or request from HQ)
+      - `S3_BUCKET_NAME` (Your bucket name)
 1. Start server
    - `npm run dev`
 1. View your server

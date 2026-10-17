@@ -1,3 +1,4 @@
+import { getServerAuthSession } from '../../lib/auth-session'
 import { find, compact, isEmpty } from 'lodash-es'
 import { getRawUsers } from './users'
 import { stripColons } from '../../lib/emoji'
@@ -30,7 +31,8 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
         include: {
           EmojiType: true
         }
-      }
+      },
+      ClubUpdate: true
     },
     ...params,
     where: {
@@ -66,7 +68,17 @@ export const transformReactions = (raw = []) =>
     })
   )
 
-export const transformPost = p => {
+export const transformPost = (p, session = null) => {
+  let canDelete = false;
+  if (session?.user) {
+    const isOwnerByAccountId = !!p.accountsID && p.accountsID === session.user.id;
+    const isOwnerBySlackId = !!p.accountsSlackID && !!session.user.slackID && p.accountsSlackID === session.user.slackID;
+    let isClubAdmin = false;
+    if (p.ClubUpdate?.clubId && session.user.ClubMember) {
+      isClubAdmin = session.user.ClubMember.some(m => m.admin && m.clubId === p.ClubUpdate.clubId);
+    }
+    canDelete = isOwnerByAccountId || isOwnerBySlackId || isClubAdmin;
+  }
   return ({
     id: p.id,
     user: exclude(p.user
@@ -94,11 +106,12 @@ export const transformPost = p => {
     mux: Array.isArray(p.muxPlaybackIDs)
       ? p.muxPlaybackIDs.filter(id => typeof id === 'string' && id.trim().length > 0)
       : [],
-    reactions: transformReactions(p.emojiReactions) || []
+    reactions: transformReactions(p.emojiReactions) || [],
+    canDelete
   });
 }
 
-export const getPosts = async (where = {}, max = null, api = false) => {
+export const getPosts = async (where = {}, max = null, api = false, session = null) => {
   const users = await getRawUsers()
   try {
     const posts = await getRawPosts(max, { where }, api).then(posts =>
@@ -111,7 +124,7 @@ export const getPosts = async (where = {}, max = null, api = false) => {
           return p
         })
         //.filter(p => !isEmpty(p.user))
-        .map(p => transformPost(p))
+        .map(p => transformPost(p, session))
     )
     return posts;
   } catch (e) {
@@ -121,6 +134,7 @@ export const getPosts = async (where = {}, max = null, api = false) => {
 
 export default async (req, res) => {
   try {
+    const session = await getServerAuthSession(req);
     let where = {}
     if (req.query.gt) {
       where = {
@@ -130,7 +144,7 @@ export default async (req, res) => {
       }
     }
 
-    const posts = await getPosts(where, req.query.max ? Number(req.query.max) : 200)
+    const posts = await getPosts(where, req.query.max ? Number(req.query.max) : 200, false, session)
     res.json(posts);
   } catch {
     res.status(404).json([]);
