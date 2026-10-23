@@ -19,7 +19,7 @@ export default async ({ command, respond }) => {
           headers: {
             Authorization: `Bearer ${process.env.VC_SCRAPBOOK_TOKEN}`,
           },
-        }
+        },
       ).then((res) => res.json());
     }
     const vercelFetch = await fetch(
@@ -33,18 +33,18 @@ export default async ({ command, respond }) => {
         body: JSON.stringify({
           name: arg,
         }),
-      }
+      },
     )
       .then((r) => r.json())
       .catch((err) => {
-      // console.log(`Error while setting custom domain ${arg}: ${err}`);
-    });
+        // console.log(`Error while setting custom domain ${arg}: ${err}`);
+      });
     if (vercelFetch.error) {
       await respond(
         t("messages.domain.domainerror", {
           text: arg,
           error: JSON.stringify(vercelFetch.error),
-        })
+        }),
       );
     } else if (!vercelFetch.verified) {
       /*
@@ -57,7 +57,7 @@ export default async ({ command, respond }) => {
           t("messages.domain.domainerror", {
             text: arg,
             error: "No verification records were provided by the Vercel API",
-          })
+          }),
         );
       }
       const record = vercelFetch.verification[0];
@@ -68,7 +68,7 @@ value: \`${record.value}\``;
         t("messages.domain.domainverify", {
           text: recordText,
           domain: arg,
-        })
+        }),
       );
     } else {
       await prisma.accounts.update({

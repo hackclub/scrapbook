@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import Message from '../components/message'
 import Posts from '../components/posts'
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 const fetcher = url => fetch(url).then(r => r.json())
 
 const toFeedMap = posts =>
@@ -10,40 +10,42 @@ const toFeedMap = posts =>
     return mappedPosts
   }, {})
 
-const Feed = ({
-  src = '/api/posts',
-  initialData = [],
-  children,
-  footer,
-}) => {
-  const normalizedInitialData = Array.isArray(initialData) ? initialData : [];
-  const [cursor, setCursor] = useState(null);
-  const [feedData, setFeedData] = useState(() => toFeedMap(normalizedInitialData));
-  const { data, error } = useSWR(cursor ? `${src}?gt=${cursor}` : src, fetcher, {
-    fallbackData: normalizedInitialData,
-    refreshInterval: 10000
-  });
+const Feed = ({ src = '/api/posts', initialData = [], children, footer }) => {
+  const normalizedInitialData = Array.isArray(initialData) ? initialData : []
+  const [cursor, setCursor] = useState(null)
+  const [feedData, setFeedData] = useState(() =>
+    toFeedMap(normalizedInitialData)
+  )
+  const { data, error } = useSWR(
+    cursor ? `${src}?gt=${cursor}` : src,
+    fetcher,
+    {
+      fallbackData: normalizedInitialData,
+      refreshInterval: 10000
+    }
+  )
 
   useEffect(() => {
-    if (error || !data) return;
-    if (!Array.isArray(data)) return;
-    if (data.length == 0) return;
-    setCursor(data[0].timestamp);
-  }, []);
+    if (error || !data) return
+    if (!Array.isArray(data)) return
+    if (data.length == 0) return
+    setCursor(data[0].timestamp)
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Initialize the cursor once; the next effect handles live updates.
+  }, [])
 
   // update to the latest data we have
   useEffect(() => {
-    if (error || !data) return;
-    if (!Array.isArray(data)) return;
-    if (data.length === 0) return;
+    if (error || !data) return
+    if (!Array.isArray(data)) return
+    if (data.length === 0) return
     // only go ahead to update the feed data if the cursor is not the same as the latest post
-    if (data[0].timestamp <= cursor) return;
-    setCursor(data[0].timestamp); // set the cursor to always point to the latest post
+    if (data[0].timestamp <= cursor) return
+    setCursor(data[0].timestamp) // set the cursor to always point to the latest post
     setFeedData(currentFeedData => ({
       ...toFeedMap(data),
       ...currentFeedData
     }))
-  }, [cursor, data, error]);
+  }, [cursor, data, error])
 
   if (error) {
     return (
@@ -59,10 +61,7 @@ const Feed = ({
           }
         `}</style>
         {children}
-        <Posts
-          posts={Object.values(feedData)}
-          swrKey={src}
-        />
+        <Posts posts={Object.values(feedData)} swrKey={src} />
       </main>
     )
   }
@@ -70,7 +69,6 @@ const Feed = ({
   if (!data) {
     return <Message text="Loading…" />
   }
-
 
   return (
     <main>

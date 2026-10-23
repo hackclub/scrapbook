@@ -1,22 +1,14 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import useSWR from 'swr'
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import Image from 'next/image'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
-import Banner from '../../components/banner'
 import Content from '../../components/content'
 import Message from '../../components/message'
-import { StaticMention } from '../../components/mention'
 import Post from '../../components/post'
-import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { clamp } from 'lodash-es'
 import { useSession } from '../../lib/auth-client'
 import { ClubsEditPopup } from '../../components/clubs-edit-popup'
 import { ClubsMemberPopup } from '../../components/clubs-member-popup'
@@ -67,7 +59,7 @@ const Club = ({ club = {}, posts = [], children, session }) => {
           <link
             rel="stylesheet"
             type="text/css"
-            href={HOST + `/api/css?url=${club.cssURL}`}
+            href={HOST + `/api/css?url=${encodeURIComponent(club.cssURL)}`}
           />
         )}
         {children}
@@ -228,11 +220,11 @@ const Page = ({ slug = '', router = {}, initialData = {} }) => {
       refreshInterval: 5000
     }
   )
-  const { data: session, status } = useSession()
-  if (!data) {
-    return <Message text="Loading…" />
-  } else if (error && !data) {
+  const { data: session } = useSession()
+  if (error && !data) {
     return <Message text="Error" color1="orange" color2="pink" />
+  } else if (!data) {
+    return <Message text="Loading…" />
   } else {
     return <Club {...data} session={session} />
   }
@@ -272,7 +264,7 @@ export const getStaticProps = async ({ params }) => {
       props: { club, posts },
       revalidate: 1
     }
-  } catch (error) {
+  } catch {
     // console.error(error)
     return { props: { club }, revalidate: 1 }
   }

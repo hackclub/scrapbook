@@ -7,7 +7,13 @@ import { mutate } from 'swr'
 async function clickEmoji(name, postID, swrKey) {
   toast
     .promise(
-      fetch(`/api/web/reactions/click?emojiName=${name}&post=${postID}`),
+      fetch(
+        `/api/web/reactions/click?emojiName=${encodeURIComponent(name)}&post=${encodeURIComponent(postID)}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }
+      ),
       {
         loading: 'Clicking...',
         success: 'Success!',
@@ -33,13 +39,7 @@ const Reaction = ({
 }) => {
   let children = (
     <>
-      <EmojiImg
-        src={url}
-        char={char}
-        name={name}
-        width={24}
-        height={24}
-      />
+      <EmojiImg src={url} char={char} name={name} width={24} height={24} />
     </>
   )
   return authStatus == 'authenticated' ? (
@@ -55,8 +55,8 @@ const Reaction = ({
       {children}
     </button>
   ) : (
-    <Link href={`/r/${name}`} className='post-reaction' title={startCase(name)}>
-        {children}
+    <Link href={`/r/${name}`} className="post-reaction" title={startCase(name)}>
+      {children}
     </Link>
   )
 }

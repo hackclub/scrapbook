@@ -1,5 +1,6 @@
 import prisma from '../../../lib/prisma'
 import { transformProfile } from './[username]/index'
+import { postLimit } from '../../../lib/pagination'
 
 export const getRawUsers = async (
   where = undefined,
@@ -8,7 +9,7 @@ export const getRawUsers = async (
 ) => {
   try {
     const users = await prisma.accounts.findMany({ where, include, take })
-    return users;
+    return users
   } catch (err) {
     throw Error(err)
   }
@@ -26,12 +27,12 @@ export default async (req, res) => {
         }
       },
       undefined,
-      Number(req.query?.max) || undefined
-    );
+      postLimit(req.query?.max)
+    )
 
-    const users = rawUsers.map(transformProfile);
-    res.json(users);
+    const users = rawUsers.map(transformProfile)
+    res.json(users)
   } catch {
-    res.status(404).json([]);
+    res.status(404).json([])
   }
 }

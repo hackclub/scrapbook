@@ -45,6 +45,6 @@ export default async (req, res) => {
     })
     res.json(upsertEmoji)
   } catch {
-    res.status(500).send("");
+    res.status(500).send('')
   }
 }

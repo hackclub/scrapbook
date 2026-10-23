@@ -18,7 +18,6 @@ import deleted from "./events/deleted.js";
 import mention from "./events/mention.js";
 import updated from "./events/updated.js";
 import forget from "./events/forget.js";
-import noFile, { noFileCheck } from "./events/noFile.js";
 import reactionAdded from "./events/reactionAdded.js";
 import reactionRemoved from "./events/reactionRemoved.js";
 import { commands } from "./commands/commands.js";
@@ -42,7 +41,8 @@ export const execute = (actionToExecute) => {
       await slackObject.ack();
     }
 
-    let isCommandOrMessage = slackObject.payload.command || slackObject.payload.message;
+    let isCommandOrMessage =
+      slackObject.payload.command || slackObject.payload.message;
     const payload = slackObject.payload;
     let metricKey;
     if (payload.type === "message" && payload.subtype) {
@@ -54,8 +54,7 @@ export const execute = (actionToExecute) => {
     try {
       const metricMsg = `success.${metricKey}`;
       // const startTime = new Date().getTime();
-      actionToExecute(slackObject, ...props)
-        .then(() => {
+      actionToExecute(slackObject, ...props).then(() => {
         // const time = (new Date().getTime()) - startTime;
         // if (isCommandOrMessage) metrics.timing(metricKey, time);
       });
@@ -122,7 +121,7 @@ app.message("<@U015D6A36AG>", execute(mention));
 
 try {
   receiver.router.post("/api/mux", mux.handler);
-} catch (e) {
+} catch {
   // console.log(e);
 }
 
@@ -136,7 +135,7 @@ try {
 
 try {
   receiver.router.get("/api/streakResetter", streakResetter);
-} catch (e) {
+} catch {
   // console.log(e);
 }
 

@@ -60,7 +60,6 @@ const useForm = (
     if (!allRequiredFilled) {
       return
     }
-    const valuesBeingSubmitted = name ? { ...data, [name]: value || '' } : data;
     fetch(action, {
       method,
       headers: {
@@ -92,15 +91,15 @@ const useForm = (
         }
       })
       .catch(e => {
-      // console.error(e)
-      setStatus('error')
-      toast.dismiss(toastId)
-      toast.error(
-        options.error ||
-          errorMessage ||
-          'An unexpected error occured - please try again.'
-      )
-    })
+        // console.error(e)
+        setStatus('error')
+        toast.dismiss(toastId)
+        toast.error(
+          options.error ||
+            errorMessage ||
+            'An unexpected error occured - please try again.'
+        )
+      })
   }
 
   return { status, data, touched, useField, setData, setDataValue, submit }

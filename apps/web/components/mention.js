@@ -11,18 +11,18 @@ export const StaticMention = memo(
       prefetch={false}
       {...props}
     >
-        <Image
-          src={user.avatar}
-          alt={user.username}
-          loading="lazy"
-          width={size}
-          height={size}
-          className="mention-avatar"
-          unoptimized
-          style={{ objectFit: 'cover' }}
-        />{' '}
-        @{user.username}
-        {children}
+      <Image
+        src={user.avatar}
+        alt={user.username}
+        loading="lazy"
+        width={size}
+        height={size}
+        className="mention-avatar"
+        unoptimized
+        style={{ objectFit: 'cover' }}
+      />{' '}
+      @{user.username}
+      {children}
     </Link>
   )
 )
@@ -64,23 +64,27 @@ const Mention = memo(({ username }) => {
   }
 
   return (
-    <Link href={`/${username}`} className='mention post-text-mention' prefetch={false}>
-        {img ? (
-          <Image
-            src={img}
-            alt={username}
-            loading="lazy"
-            width={24}
-            height={24}
-            className="mention-avatar post-text-mention-avatar"
-            unoptimized
-            style={{ objectFit: 'cover' }}
-            {...(img.endsWith(".gif") ? { unoptimized: true } : {})}
-          />
-        ) : (
-          <span className="mention-avatar post-text-mention-avatar" aria-hidden />
-        )}
-        @{username}
+    <Link
+      href={`/${username}`}
+      className="mention post-text-mention"
+      prefetch={false}
+    >
+      {img ? (
+        <Image
+          src={img}
+          alt={username}
+          loading="lazy"
+          width={24}
+          height={24}
+          className="mention-avatar post-text-mention-avatar"
+          unoptimized
+          style={{ objectFit: 'cover' }}
+          {...(img.endsWith('.gif') ? { unoptimized: true } : {})}
+        />
+      ) : (
+        <span className="mention-avatar post-text-mention-avatar" aria-hidden />
+      )}
+      @{username}
     </Link>
   )
 })

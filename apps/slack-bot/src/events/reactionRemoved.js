@@ -27,7 +27,7 @@ export default async ({ event }) => {
       const userRecord = await getUserRecord(user);
       let usersReacted = reactionRecord.usersReacted;
       const updatedUsersReacted = usersReacted.filter(
-        (userReacted) => userReacted != userRecord.id
+        (userReacted) => userReacted != userRecord.id,
       );
       if (updatedUsersReacted.length === 0) {
         await prisma.emojiReactions.deleteMany({
@@ -50,8 +50,8 @@ export default async ({ event }) => {
             where: {
               updateId: update.id,
               club: {
-                slug: clubEmojis[emojiRecord.name]
-              }
+                slug: clubEmojis[emojiRecord.name],
+              },
             },
           });
         }
@@ -64,6 +64,5 @@ export default async ({ event }) => {
     } catch {
       return;
     }
-   
   });
 };

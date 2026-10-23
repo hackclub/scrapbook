@@ -5,28 +5,28 @@ import Mention from './mention'
 import Emoji from './emoji'
 
 const dataDetector =
-  /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/
+  /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/
 
 // Enhanced emoji detection regex that also catches Unicode emojis
-const emojiRegex = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u
+const emojiRegex =
+  /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u
 
 const hasSingleAtMention = chunk => {
   const firstAt = chunk.indexOf('@')
   return firstAt !== -1 && firstAt === chunk.lastIndexOf('@')
 }
 
-
 export const formatText = text =>
   text.split(dataDetector).map((chunk, i) => {
     if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
       return <Emoji name={chunk} key={i} />
     }
-    
+
     // Handle Unicode emojis in text
     if (emojiRegex.test(chunk)) {
       return (
-        <span 
-          key={i} 
+        <span
+          key={i}
           className="post-emoji-unicode"
           style={{
             fontSize: '18px',
@@ -40,7 +40,10 @@ export const formatText = text =>
       )
     }
 
-    if ((chunk?.startsWith('@') || chunk?.startsWith('<@')) && hasSingleAtMention(chunk)) {
+    if (
+      (chunk?.startsWith('@') || chunk?.startsWith('<@')) &&
+      hasSingleAtMention(chunk)
+    ) {
       const punct = /([,!:.'"’”]|’s|'s|\))+$/g
       const username = chunk.replace(/[@<>]/g, '').replace(punct, '')
       return (
@@ -51,7 +54,7 @@ export const formatText = text =>
       )
     }
     if (chunk?.startsWith('<')) {
-      const parts = chunk.match(/<(([^\|]+)\|)?([^>]+?)>/)
+      const parts = chunk.match(/<(([^|]+)\|)?([^>]+?)>/)
       const url = parts?.[2] || last(parts)
       const children = last(parts)
         ?.replace(/https?:\/\//, '')
@@ -75,18 +78,20 @@ export const formatText = text =>
       return <i key={i}>{chunk.replace(/_/g, '')}</i>
     }
     if (chunk?.includes('~')) {
-  return (
-    <span key={i}>
-      {chunk.split(/(~[^~]+~)/g).map((segment, j) =>
-        segment.startsWith('~') && segment.endsWith('~') ? (
-          <s key={j}>{segment.slice(1, -1)}</s>
-        ) : (
-          <span key={j}>{segment}</span>
-        )
-      )}
-    </span>
-  );
-}
+      return (
+        <span key={i}>
+          {chunk
+            .split(/(~[^~]+~)/g)
+            .map((segment, j) =>
+              segment.startsWith('~') && segment.endsWith('~') ? (
+                <s key={j}>{segment.slice(1, -1)}</s>
+              ) : (
+                <span key={j}>{segment}</span>
+              )
+            )}
+        </span>
+      )
+    }
 
     return <Fragment key={i}>{chunk?.replace(/&amp;/g, '&')}</Fragment>
   })

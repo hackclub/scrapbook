@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 const Profile = ({ closed, setMenuOpen, session }) => {
   if (closed) return null
 
-  const { status, submit, useField, setData, setDataValue } = useForm(
+  const { status, submit, useField, setDataValue } = useForm(
     '/api/web/profile/edit',
     {
       method: 'POST',
@@ -31,7 +31,10 @@ const Profile = ({ closed, setMenuOpen, session }) => {
             presignedUrl.searchParams.set('filename', file.name)
             presignedUrl.searchParams.set('filetype', file.type)
 
-            const response = await fetch(presignedUrl.toString())
+            const response = await fetch(presignedUrl.toString(), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' }
+            })
             const { signedUrl } = await response.json()
             if (!response.ok || !signedUrl) {
               throw new Error('Failed to get upload URL')
@@ -62,13 +65,12 @@ const Profile = ({ closed, setMenuOpen, session }) => {
           success: 'Yay you got some new looks there!'
         })
         .then(() => toast('Make sure to save your profile'))
-    } catch (e) {
+    } catch {
       toast.error('Humm... something wrong happened')
     }
   }
 
-  useEffect(() => {
-  }, [status]);
+  useEffect(() => {}, [status])
   return (
     <div
       className="overlay-wrapper"
@@ -121,8 +123,8 @@ const Profile = ({ closed, setMenuOpen, session }) => {
               <label>Email Address</label>
               <input
                 placeholder="sam@hackclub.com"
-                required
-                {...useField('email', 'email', true)}
+                value={session.user.email || ''}
+                readOnly
               ></input>
             </div>
             <div>
@@ -163,7 +165,7 @@ const Profile = ({ closed, setMenuOpen, session }) => {
                 CSS URL <Optional />
               </label>
               <input
-                placeholder="css.hackclub.com/theme.css"
+                placeholder="https://gist.githubusercontent.com/…/raw/style.css"
                 {...useField('cssURL')}
               ></input>
             </div>

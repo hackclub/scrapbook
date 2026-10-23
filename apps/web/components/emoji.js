@@ -58,8 +58,8 @@ export const EmojiImg = ({
 
   // Fallback: render the name as text
   return (
-      <span
-        style={{
+    <span
+      style={{
         fontSize: `${height}px`,
         verticalAlign: 'middle',
         display: 'inline-block',
@@ -74,7 +74,7 @@ export const EmojiImg = ({
 
 const CustomEmoji = memo(({ url, char, name }) => {
   const emoji = stripColons(name)
-  return <EmojiImg src={url} char={char} name={emoji} />;
+  return <EmojiImg src={url} char={char} name={emoji} />
 })
 
 export default CustomEmoji

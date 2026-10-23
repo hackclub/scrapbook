@@ -2,8 +2,9 @@ import * as emoji from "node-emoji";
 import { getUserRecord } from "./users.js";
 import { app } from "../app.js";
 import { v4 as uuidv4 } from "uuid";
-import { Upload } from "@aws-sdk/lib-storage"
+import { Upload } from "@aws-sdk/lib-storage";
 import S3 from "./s3.js";
+import { publicFetch } from "./public-fetch.js";
 
 const replaceEmoji = (str) => emoji.emojify(str.replace(/::(.*):/, ":"));
 
@@ -18,7 +19,9 @@ export const timeout = (ms) => {
 export const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export const getNow = (tz) => {
-  const date = new Date().toLocaleString("en-US", { timeZone: tz ?? undefined });
+  const date = new Date().toLocaleString("en-US", {
+    timeZone: tz ?? undefined,
+  });
   return new Date(date).toISOString();
 };
 
@@ -48,7 +51,7 @@ export const formatText = async (text) => {
           .then(({ profile }) => profile.display_name || profile.real_name)
           .then((displayName) => (text = text.replace(u, `@${displayName}`)));
       } else text = text.replace(u, ` @${userRecord.username} `);
-    })
+    }),
   );
   let channels = text.match(/<#[^|>]+\|\S+>/g) || [];
   channels.forEach(async (channel) => {
@@ -60,7 +63,7 @@ export const formatText = async (text) => {
 
 export const getUrlFromString = (str) => {
   const urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
   let url = str.match(urlRegex)[0];
   if (url.includes("|")) url = url.split("|")[0];
   if (url.startsWith("<")) url = url.substring(1, url.length - 1);
@@ -74,18 +77,19 @@ export function getUrls(text) {
    *
    * matches http,https,www and urls like raylib.com including scrapbook.hackclub.com
    */
-  const matcher = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()'@:%_\+.~#?!&//=]*)/gi;
+  const matcher =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()'@:%_+.~#?!&//=]*)/gi;
   return text.match(matcher);
 }
 
 export function extractOgUrl(htmlDoc) {
-  const result = RegExp("\"og:image\"").exec(htmlDoc);
+  const result = RegExp('"og:image"').exec(htmlDoc);
 
   if (!result) return;
 
   let index = result.index;
-  for(;;) {
-    if (htmlDoc[index] === "/" && htmlDoc[index+1] === ">") break;
+  for (;;) {
+    if (htmlDoc[index] === "/" && htmlDoc[index + 1] === ">") break;
     if (htmlDoc[index] === ">") break;
     index++;
   }
@@ -96,7 +100,7 @@ export function extractOgUrl(htmlDoc) {
 }
 
 export async function getPageContent(page) {
-  const response = await fetch(page);
+  const response = await publicFetch(page);
   const content = await response.text();
   return content;
 }
@@ -105,7 +109,7 @@ async function uploadImageToS3(filename, blob) {
   let formData = new FormData();
   formData.append("file", blob, {
     filename,
-    knownLength: blob.size
+    knownLength: blob.size,
   });
 
   const uploads = new Upload({
@@ -113,8 +117,8 @@ async function uploadImageToS3(filename, blob) {
     params: {
       Bucket: "scrapbook-into-the-redwoods",
       Key: `${uuidv4()}-${filename}`,
-      Body: blob
-    }
+      Body: blob,
+    },
   });
 
   const uploadedImage = await uploads.done();
@@ -122,12 +126,18 @@ async function uploadImageToS3(filename, blob) {
 }
 
 export async function getAndUploadOgImage(url) {
-  const file = await fetch(url);
+  const file = await publicFetch(url, 20 * 1024 * 1024);
   let blob = await file.blob();
+  if (!/^image\/(png|jpeg|gif|webp|avif)$/.test(blob.type)) {
+    throw new Error("Unsupported preview image");
+  }
   const form = new FormData();
   form.append("file", blob, `${uuidv4()}.${blob.type.split("/")[1]}`);
 
-  const imageUrl = await uploadImageToS3(`${uuidv4()}.${blob.type.split("/")[1]}`, blob);
+  const imageUrl = await uploadImageToS3(
+    `${uuidv4()}.${blob.type.split("/")[1]}`,
+    blob,
+  );
 
   return imageUrl;
 }

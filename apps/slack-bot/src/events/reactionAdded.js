@@ -17,18 +17,26 @@ import metrics from "../metrics.js";
 export default async ({ event }) => {
   const { item, user, reaction, item_user } = event;
   const { channel, ts } = item;
-  if (channel == "C0M8PUPU6" && ts == "1679405777.423309" && reaction == "boom") {
+  if (
+    channel == "C0M8PUPU6" &&
+    ts == "1679405777.423309" &&
+    reaction == "boom"
+  ) {
     return await shipEasterEgg({ event });
   }
   if (reaction !== SEASON_EMOJI && user === "U015D6A36AG") return;
   if (
     (await updateExistsTS(ts)) &&
-    (reaction === commands.scrappy || reaction === commands.scrappyParrotReaction) &&
+    (reaction === commands.scrappy ||
+      reaction === commands.scrappyParrotReaction) &&
     channel !== process.env.CHANNEL
   )
     return;
   const message = await getMessage(ts, channel);
-  if ((await updateExistsTS(ts)) && reaction === commands.scrappyRetryReaction) {
+  if (
+    (await updateExistsTS(ts)) &&
+    reaction === commands.scrappyRetryReaction
+  ) {
     if (channelKeywords[channel])
       await react("add", channel, ts, channelKeywords[channel]);
     await reactBasedOnKeywords(channel, message.text, ts);
@@ -38,7 +46,8 @@ export default async ({ event }) => {
   }
   // If someone reacted with a Scrappy emoji in a non-#scrapbook channel, then maybe upload it.
   if (
-    (reaction === commands.scrappy || reaction === commands.scrappyParrotReaction) &&
+    (reaction === commands.scrappy ||
+      reaction === commands.scrappyParrotReaction) &&
     channel !== process.env.CHANNEL
   ) {
     if (item_user != user) {
@@ -46,10 +55,9 @@ export default async ({ event }) => {
       postEphemeral(
         channel,
         t("messages.errors.anywhere.op", { reaction }),
-        user
+        user,
       );
     } else if (message) {
-
       let hasNoMediaFiles = !message.files || message.files.length == 0;
       const files = hasNoMediaFiles ? [] : message.files;
 
@@ -58,17 +66,18 @@ export default async ({ event }) => {
 
       const update = await createUpdate(files, channel, ts, user, message.text);
 
-      message.reactions.forEach(async reaction => {
+      message.reactions.forEach(async (reaction) => {
         if (
           reaction.name === "scrappy" ||
           reaction.name === "scrappy-retry" ||
-          reaction.name ===commands.scrappyParrotReaction 
-        ) return;
+          reaction.name === commands.scrappyParrotReaction
+        )
+          return;
         await prisma.emojiReactions.create({
           data: {
             updateId: update.id,
-            emojiTypeName: reaction.name
-          }
+            emojiTypeName: reaction.name,
+          },
         });
       });
     }
@@ -77,7 +86,8 @@ export default async ({ event }) => {
   if (
     reaction === commands.scrappyRetryReaction &&
     channel == process.env.CHANNEL &&
-    message && !message.thread_ts
+    message &&
+    !message.thread_ts
   ) {
     if (!message.files || message.files.length == 0) {
       postEphemeral(channel, t("messages.errors.anywhere.files"), user);
@@ -102,14 +112,14 @@ export default async ({ event }) => {
         data: {
           update: {
             connect: {
-              id: update.id
+              id: update.id,
             },
           },
           club: {
             connect: {
-              slug: clubEmojis[emojiRecord.name]
+              slug: clubEmojis[emojiRecord.name],
             },
-          }
+          },
         },
       });
     }
@@ -123,11 +133,11 @@ export default async ({ event }) => {
       });
     } else if (postExists && reactionExists) {
       const userRecord = await getUserRecord(user).catch((err) =>
-        console.log("Cannot get user record", err)
+        console.log("Cannot get user record", err),
       );
       // Post has been reacted to with this emoji
       const reactionRecord = await getReactionRecord(reaction, update.id).catch(
-        (err) => console.log("Cannot get reaction record", err)
+        (err) => console.log("Cannot get reaction record", err),
       );
       let usersReacted = reactionRecord.usersReacted;
       if (userRecord.id) {

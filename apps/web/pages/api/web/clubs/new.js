@@ -1,12 +1,22 @@
 import { requireServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 import GithubSlugger from 'github-slugger'
+import { profileInput } from '../../../../lib/profile-input'
 
 const slugger = new GithubSlugger()
 
 export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)
   if (!session) return
+  try {
+    req.body = profileInput(req.body)
+    if (typeof req.body.name !== 'string' || !req.body.name.trim())
+      throw new Error('Missing name')
+  } catch {
+    return res
+      .status(400)
+      .json({ error: true, message: 'Invalid club details' })
+  }
 
   try {
     let clubs = await prisma.club.findMany()
@@ -31,12 +41,10 @@ export default async (req, res) => {
         slug: slugger.slug(req.body.name),
         name: req.body.name,
         website: req.body.website
-          ? new URL(req.body.website).href.replace("http://", "https://")
+          ? new URL(req.body.website).href.replace('http://', 'https://')
           : null,
-        logo: req.query.website
-          ? `https://unavatar.io/${normalizeUrl(req.body.website, {
-              stripProtocol: true
-            })}`
+        logo: req.body.website
+          ? `https://unavatar.io/${new URL(req.body.website).hostname}`
           : 'https://assets.hackclub.com/icon-square.png',
         members: {
           create: { accountId: session.user.id, admin: true }
@@ -45,7 +53,7 @@ export default async (req, res) => {
     })
 
     return res.json({ ...club, callback: `/clubs/${club.slug}` })
-  } catch (e) {
+  } catch {
     // console.error(e)
     return res.status(500).json({ error: true })
   }

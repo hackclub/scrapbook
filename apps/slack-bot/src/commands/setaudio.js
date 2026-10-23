@@ -10,7 +10,7 @@ export default async ({ command, respond }) => {
   if (!url) {
     if (userRecord.customAudioURL != null) {
       await respond(
-        t("messages.audio.removed", { previous: userRecord.customAudioURL })
+        t("messages.audio.removed", { previous: userRecord.customAudioURL }),
       );
       await prisma.accounts.update({
         // update the account with the new audioless
@@ -32,7 +32,7 @@ export default async ({ command, respond }) => {
     await respond(
       t("messages.audio.set", {
         url: `https://scrapbook.hackclub.com/${userRecord.username}`,
-      })
+      }),
     );
   }
 };

@@ -1,20 +1,11 @@
-import { map, find, isEmpty, orderBy } from 'lodash-es'
+import { find, isEmpty } from 'lodash-es'
 import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
-import { emailToPfp } from '../../../../lib/email'
+import { publicProfile } from '../../../../lib/public-profile'
+import { enrichPublicProfile } from '../../../../lib/cachet'
 
-export const transformProfile = profile => {
-  if (profile) {
-    return {
-      ...profile,
-      email: null,
-      avatar: !profile?.avatar ? emailToPfp(profile?.email) : profile?.avatar
-    }
-  } else {
-    return profile
-  }
-}
+export const transformProfile = publicProfile
 
 export const getProfile = async (value, field = 'username') => {
   let where = {}
@@ -26,10 +17,12 @@ export const getProfile = async (value, field = 'username') => {
   }
 
   try {
-    const user = transformProfile(await prisma.accounts.findFirst(opts))
-    return user;
+    const user = await enrichPublicProfile(
+      transformProfile(await prisma.accounts.findFirst(opts))
+    )
+    return user
   } catch {
-    return {};
+    return {}
   }
 }
 
@@ -42,11 +35,11 @@ export const getPosts = async (user, max = null) => {
         },
         user.slackID
           ? {
-            accountsSlackID: user.slackID
-          }
+              accountsSlackID: user.slackID
+            }
           : {
-            accountsID: user.id
-          }
+              accountsID: user.id
+            }
       ]
     }
   })
@@ -80,9 +73,9 @@ export const getMentions = async user => {
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
 
-    return mentions;
+    return mentions
   } catch {
-    return [];
+    return []
   }
 }
 

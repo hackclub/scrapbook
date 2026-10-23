@@ -1,9 +1,9 @@
 import { getServerAuthSession } from '../../lib/auth-session'
-import { find, compact, isEmpty } from 'lodash-es'
+import { find, compact } from 'lodash-es'
 import { getRawUsers } from './users'
-import { stripColons } from '../../lib/emoji'
 import prisma from '../../lib/prisma'
-import { emailToPfp } from '../../lib/email'
+import { publicProfile } from '../../lib/public-profile'
+import { postLimit } from '../../lib/pagination'
 
 export function exclude(object, keys) {
   if (!object) return {}
@@ -32,7 +32,7 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
           EmojiType: true
         }
       },
-      ClubUpdate: true
+      ClubUpdate: { select: { clubId: true } }
     },
     ...params,
     where: {
@@ -42,7 +42,7 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
       ...params?.where
     }
   }
-  if (max) opts.take = max
+  opts.take = postLimit(max)
   try {
     const updates = await prisma.updates.findMany(opts)
     return updates
@@ -62,53 +62,62 @@ export const transformReactions = (raw = []) =>
         const obj = { name, usersReacted: emoji.usersReacted }
         obj[emojiSource.startsWith('http') ? 'url' : 'char'] = emojiSource
         return obj
-      } catch (e) {
+      } catch {
         return null
       }
     })
   )
 
 export const transformPost = (p, session = null) => {
-  let canDelete = false;
+  let canDelete = false
   if (session?.user) {
-    const isOwnerByAccountId = !!p.accountsID && p.accountsID === session.user.id;
-    const isOwnerBySlackId = !!p.accountsSlackID && !!session.user.slackID && p.accountsSlackID === session.user.slackID;
-    let isClubAdmin = false;
+    const isOwnerByAccountId = !!p.accountsID && p.accountsID === session.user.id
+    const isOwnerBySlackId =
+      !!p.accountsSlackID &&
+      !!session.user.slackID &&
+      p.accountsSlackID === session.user.slackID
+    let isClubAdmin = false
     if (p.ClubUpdate?.clubId && session.user.ClubMember) {
-      isClubAdmin = session.user.ClubMember.some(m => m.admin && m.clubId === p.ClubUpdate.clubId);
+      isClubAdmin = session.user.ClubMember.some(
+        member => member.admin && member.clubId === p.ClubUpdate.clubId
+      )
     }
-    canDelete = isOwnerByAccountId || isOwnerBySlackId || isClubAdmin;
+    canDelete = isOwnerByAccountId || isOwnerBySlackId || isClubAdmin
   }
-  return ({
+  return {
     id: p.id,
-    user: exclude(p.user
-      ? {
-        ...p.user,
-        avatar: isBrokenMediaURL(p.user.avatar)
-          ? null
-          : p.user.avatar || emailToPfp(p.user.email)
-      }
-      : {}, ['slackID', 'email', 'emailVerified']),
+    user: publicProfile(
+      p.user
+        ? {
+            ...p.user,
+            avatar: isBrokenMediaURL(p.user.avatar) ? null : p.user.avatar
+          }
+        : {}
+    ),
     timestamp: p.messageTimestamp || null,
     slackUrl: p.messageTimestamp
       ? `https://hackclub.slack.com/archives/${p.channel}/p${p.messageTimestamp
-        .toString()
-        .replace('.', '')
-        .padEnd(16, '0')}`
+          .toString()
+          .replace('.', '')
+          .padEnd(16, '0')}`
       : null,
     postedAt: p.messageTimestamp
       ? formatTS(p.messageTimestamp)
       : new Date(p.postTime).toISOString(),
     text: p.text != null ? p.text : '',
     attachments: Array.isArray(p.attachments)
-      ? p.attachments.filter(url => typeof url === 'string' && !isBrokenMediaURL(url))
+      ? p.attachments.filter(
+          url => typeof url === 'string' && !isBrokenMediaURL(url)
+        )
       : [],
     mux: Array.isArray(p.muxPlaybackIDs)
-      ? p.muxPlaybackIDs.filter(id => typeof id === 'string' && id.trim().length > 0)
+      ? p.muxPlaybackIDs.filter(
+          id => typeof id === 'string' && id.trim().length > 0
+        )
       : [],
     reactions: transformReactions(p.emojiReactions) || [],
     canDelete
-  });
+  }
 }
 
 export const getPosts = async (where = {}, max = null, api = false, session = null) => {
@@ -126,7 +135,7 @@ export const getPosts = async (where = {}, max = null, api = false, session = nu
         //.filter(p => !isEmpty(p.user))
         .map(p => transformPost(p, session))
     )
-    return posts;
+    return posts
   } catch (e) {
     throw Error(e)
   }
@@ -134,7 +143,7 @@ export const getPosts = async (where = {}, max = null, api = false, session = nu
 
 export default async (req, res) => {
   try {
-    const session = await getServerAuthSession(req);
+    const session = await getServerAuthSession(req)
     let where = {}
     if (req.query.gt) {
       where = {
@@ -144,9 +153,14 @@ export default async (req, res) => {
       }
     }
 
-    const posts = await getPosts(where, req.query.max ? Number(req.query.max) : 200, false, session)
-    res.json(posts);
+    const posts = await getPosts(
+      where,
+      req.query.max ? Number(req.query.max) : 200,
+      false,
+      session
+    )
+    res.json(posts)
   } catch {
-    res.status(404).json([]);
+    res.status(404).json([])
   }
 }

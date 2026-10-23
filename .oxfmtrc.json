@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.vercel/**",
+    "**/*.md",
+    "**/*.mdx",
+    "**/*.css",
+    "**/*.prisma",
+    "**/*.sql",
+    "**/*.toml",
+    "apps/slack-bot/src/lib/transcript.yml"
+  ],
+  "overrides": [
+    {
+      "files": ["apps/slack-bot/**"],
+      "options": {
+        "singleQuote": false,
+        "semi": true,
+        "trailingComma": "all",
+        "arrowParens": "always"
+      }
+    }
+  ]
+}

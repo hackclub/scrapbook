@@ -2,16 +2,16 @@ import { setStatus } from "../lib/profiles.js";
 import { getUserRecord } from "../lib/users.js";
 import { app } from "../app.js";
 import prisma from "../lib/prisma.js";
-import metrics from "../metrics.js";
 
 export default async ({ event }) => {
   try {
     const { user } = event;
     const statusEmoji = user.profile.status_emoji;
-    if (statusEmoji?.startsWith("som-") &&
-    // the character that follows "som-" MUST be a numbe
-    !Number.isNaN(parseInt(statusEmoji?.slice("som-".length)[0]))
-  ) {
+    if (
+      statusEmoji?.startsWith("som-") &&
+      // the character that follows "som-" MUST be a numbe
+      !Number.isNaN(parseInt(statusEmoji?.slice("som-".length)[0]))
+    ) {
       const statusEmojiCount = statusEmoji.split("-")[1].split(":")[0];
       const { streakCount } = await getUserRecord(user.id);
       if (
@@ -21,7 +21,7 @@ export default async ({ event }) => {
         setStatus(
           user.id,
           `I tried to cheat Scrappy because I’m a clown`,
-          ":clown_face:"
+          ":clown_face:",
         );
       }
     }
@@ -49,8 +49,7 @@ export default async ({ event }) => {
         github: user.profile.fields["Xf0DMHFDQA"]?.value || undefined,
       },
     });
-  }
-  catch (e) {
+  } catch {
     // console.log(e);
   }
 };

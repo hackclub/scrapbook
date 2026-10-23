@@ -10,11 +10,13 @@ import { ClubsIcon } from './club-icon'
 import toast from 'react-hot-toast'
 
 const Profile = dynamic(() => import('./profile'), { ssr: false })
-const ClubsPopup = dynamic(() =>
-  import('./clubs-popup').then(module => module.ClubsPopup), { ssr: false }
+const ClubsPopup = dynamic(
+  () => import('./clubs-popup').then(module => module.ClubsPopup),
+  { ssr: false }
 )
-const PostEditor = dynamic(() =>
-  import('./post-editor').then(module => module.PostEditor), { ssr: false }
+const PostEditor = dynamic(
+  () => import('./post-editor').then(module => module.PostEditor),
+  { ssr: false }
 )
 
 const badgeStyles = `
@@ -48,7 +50,6 @@ const SignIn = ({ clickHandler }) => {
       Sign-in
       <style>{badgeStyles}</style>
     </button>
-
   )
 }
 
@@ -57,21 +58,21 @@ const SignOut = ({ session, setMenuOpen, setPostOpen, setClubsOpen }) => (
     <button
       type="button"
       style={{
-        position: "fixed",
-        bottom: "2em",
-      right: "2em",
-      padding: "1em",
-      zIndex: 10
-    }}
-    onClick={() => {
-      if (session.user.verificationStatus !== 'verified') {
-        toast('Verify your identity with Hack Club Auth before posting.')
-        return
-      }
-      setPostOpen(true)
-    }}
+        position: 'fixed',
+        bottom: '2em',
+        right: '2em',
+        padding: '1em',
+        zIndex: 10
+      }}
+      onClick={() => {
+        if (session.user.verificationStatus !== 'verified') {
+          toast('Verify your identity with Hack Club Auth before posting.')
+          return
+        }
+        setPostOpen(true)
+      }}
     >
-      <Icon glyph='post' size={38.2} />
+      <Icon glyph="post" size={38.2} />
       New Post
     </button>
     <button
@@ -127,13 +128,12 @@ const Nav = () => {
     <>
       <nav className="nav">
         <Flag />
-        {!home &&
-          (
-            <Link href="/" className='nav-link nav-link-home'>
-              Scrapbook
-            </Link>
-          )}
-        <Link href="/about/" passHref className='nav-link nav-link-about'>
+        {!home && (
+          <Link href="/" className="nav-link nav-link-home">
+            Scrapbook
+          </Link>
+        )}
+        <Link href="/about/" passHref className="nav-link nav-link-about">
           About
         </Link>
         <a

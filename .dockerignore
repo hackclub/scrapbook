@@ -1,0 +1,10 @@
+**/node_modules
+**/.next
+**/.env
+**/.env.*
+**/*.env
+**/*.env.*
+.git
+.vercel
+**/.vercel
+*.log

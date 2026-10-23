@@ -20,15 +20,15 @@ export default async (req, res) => {
       data: {
         usersReacted: emoji.usersReacted.includes(session.user.id)
           ? {
-            set: emoji.usersReacted.filter(x => x != session.user.id)
-          }
+              set: emoji.usersReacted.filter(x => x != session.user.id)
+            }
           : {
-            push: session.user.id
-          }
+              push: session.user.id
+            }
       }
     })
     if (updateEmoji.usersReacted.length == 0) {
-      const deleteEmoji = await prisma.emojiReactions.delete({
+      await prisma.emojiReactions.delete({
         where: {
           id: emoji.id
         }
@@ -36,8 +36,7 @@ export default async (req, res) => {
     }
 
     res.json(updateEmoji)
-
   } catch {
-    res.status(500).send(" ");
+    res.status(500).send(' ')
   }
 }

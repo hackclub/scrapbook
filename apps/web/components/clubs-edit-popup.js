@@ -1,24 +1,16 @@
-import { useState } from 'react'
 import { Optional } from '../components/optional'
 import { Close } from '../components/close'
-import useSWR from 'swr'
-import Link from 'next/link'
 import useForm from '../lib/use-form'
-const fetcher = url => fetch(url).then(r => r.json())
 
 export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
   if (closed) return null
 
-  const { status, submit, useField, setData } = useForm(
-    `/api/web/clubs/${club.id}/edit`,
-    {
-      method: 'POST',
-      initData: club,
-      success: 'Club updated!',
-      closingAction: () => setClubsOpen(false),
-      initData: club
-    }
-  )
+  const { submit, useField } = useForm(`/api/web/clubs/${club.id}/edit`, {
+    method: 'POST',
+    success: 'Club updated!',
+    closingAction: () => setClubsOpen(false),
+    initData: club
+  })
   return (
     <div
       className="overlay-wrapper"
@@ -144,7 +136,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 Custom CSS <Optional />
               </label>
               <input
-                placeholder="happy.hackclub.com/style.css"
+                placeholder="https://gist.githubusercontent.com/…/raw/style.css"
                 type="url"
                 {...useField('cssURL')}
               />

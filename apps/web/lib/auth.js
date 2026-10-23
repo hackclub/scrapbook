@@ -7,7 +7,11 @@ import { IDENTITY_PROVIDER_ID, IDENTITY_SCOPES } from './auth-constants'
 let _auth = null
 
 function identityHost() {
-  return (process.env.HC_IDENTITY_HOST || process.env.IDENTITY_URL || 'https://auth.hackclub.com').replace(/\/+$/, '')
+  return (
+    process.env.HC_IDENTITY_HOST ||
+    process.env.IDENTITY_URL ||
+    'https://auth.hackclub.com'
+  ).replace(/\/+$/, '')
 }
 
 function toStringOrNull(value) {
@@ -17,16 +21,23 @@ function toStringOrNull(value) {
 function identityName(identity) {
   const firstName = toStringOrNull(identity?.first_name) || ''
   const lastName = toStringOrNull(identity?.last_name) || ''
-  return `${firstName} ${lastName}`.trim() || toStringOrNull(identity?.name) || toStringOrNull(identity?.primary_email) || ''
+  return (
+    `${firstName} ${lastName}`.trim() ||
+    toStringOrNull(identity?.name) ||
+    toStringOrNull(identity?.primary_email) ||
+    ''
+  )
 }
 
 function usernameBase(name, email) {
   const source = name || email?.split('@')[0] || 'scrapbooker'
-  return source
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 36) || 'scrapbooker'
+  return (
+    source
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 36) || 'scrapbooker'
+  )
 }
 
 async function uniqueUsername(name, email) {
@@ -34,7 +45,12 @@ async function uniqueUsername(name, email) {
   let candidate = base
   let suffix = 1
 
-  while (await prisma.accounts.findUnique({ where: { username: candidate }, select: { id: true } })) {
+  while (
+    await prisma.accounts.findUnique({
+      where: { username: candidate },
+      select: { id: true }
+    })
+  ) {
     suffix += 1
     candidate = `${base}-${suffix}`
   }
@@ -42,7 +58,7 @@ async function uniqueUsername(name, email) {
   return candidate
 }
 
-async function consolidateIdentityAccount(identity) {
+export async function consolidateIdentityAccount(identity) {
   const email = toStringOrNull(identity?.primary_email)?.toLowerCase()
   const slackID = toStringOrNull(identity?.slack_id)
   const identityId = toStringOrNull(identity?.id)
@@ -50,7 +66,7 @@ async function consolidateIdentityAccount(identity) {
   const avatar = toStringOrNull(identity?.avatar_url)
   const verificationStatus = toStringOrNull(identity?.verification_status)
 
-  if (!email) return null
+  if (!email || !identityId) return null
 
   const [accountWithEmail, accountWithSlackID] = await Promise.all([
     prisma.accounts.findUnique({ where: { email } }),
@@ -67,7 +83,11 @@ async function consolidateIdentityAccount(identity) {
     verificationStatus
   }
 
-  if (accountWithEmail && accountWithSlackID && accountWithEmail.id !== accountWithSlackID.id) {
+  if (
+    accountWithEmail &&
+    accountWithSlackID &&
+    accountWithEmail.id !== accountWithSlackID.id
+  ) {
     return prisma.$transaction(async tx => {
       await tx.updates.updateMany({
         where: { accountsID: accountWithEmail.id },
@@ -86,13 +106,18 @@ async function consolidateIdentityAccount(identity) {
         tx.clubMember.findMany({ where: { accountId: accountWithEmail.id } }),
         tx.clubMember.findMany({ where: { accountId: accountWithSlackID.id } })
       ])
-      const slackMembershipByClub = new Map(slackMemberships.map(membership => [membership.clubId, membership]))
+      const slackMembershipByClub = new Map(
+        slackMemberships.map(membership => [membership.clubId, membership])
+      )
 
       for (const membership of emailMemberships) {
         const existing = slackMembershipByClub.get(membership.clubId)
         if (existing) {
           if (membership.admin && !existing.admin) {
-            await tx.clubMember.update({ where: { id: existing.id }, data: { admin: true } })
+            await tx.clubMember.update({
+              where: { id: existing.id },
+              data: { admin: true }
+            })
           }
           await tx.clubMember.delete({ where: { id: membership.id } })
         } else {
@@ -115,17 +140,31 @@ async function consolidateIdentityAccount(identity) {
   }
 
   const existing = accountWithSlackID || accountWithEmail
-  if (!existing) return null
+  if (!existing) {
+    // Persist provider-owned fields directly. Better Auth intentionally filters
+    // input:false fields from OAuth profile mappings as well as client input.
+    return prisma.accounts.create({
+      data: {
+        ...profile,
+        username: await uniqueUsername(name, email),
+        ...(slackID ? { slackID } : {})
+      }
+    })
+  }
   const slackIDOwner = slackID
-    ? accountWithSlackID || await prisma.accounts.findUnique({ where: { slackID } })
+    ? accountWithSlackID ||
+      (await prisma.accounts.findUnique({ where: { slackID } }))
     : null
-  const canAssignSlackID = slackID && (!slackIDOwner || slackIDOwner.id === existing.id)
+  const canAssignSlackID =
+    slackID && (!slackIDOwner || slackIDOwner.id === existing.id)
 
   return prisma.accounts.update({
     where: { id: existing.id },
     data: {
       ...profile,
-      ...(existing.slackID || canAssignSlackID ? { slackID: existing.slackID || slackID } : {}),
+      ...(existing.slackID || canAssignSlackID
+        ? { slackID: existing.slackID || slackID }
+        : {}),
       name: name || existing.name || existing.username
     }
   })
@@ -145,16 +184,26 @@ async function fetchIdentity(accessToken) {
 
 function createAuth() {
   const host = identityHost()
-  const redirectURI = process.env.HC_IDENTITY_REDIRECT_URI || process.env.IDENTITY_REDIRECT_URI
-  const clientId = process.env.HC_IDENTITY_CLIENT_ID || process.env.IDENTITY_CLIENT_ID
-  const clientSecret = process.env.HC_IDENTITY_CLIENT_SECRET || process.env.IDENTITY_CLIENT_SECRET
+  const redirectURI =
+    process.env.HC_IDENTITY_REDIRECT_URI || process.env.IDENTITY_REDIRECT_URI
+  const clientId =
+    process.env.HC_IDENTITY_CLIENT_ID || process.env.IDENTITY_CLIENT_ID
+  const clientSecret =
+    process.env.HC_IDENTITY_CLIENT_SECRET || process.env.IDENTITY_CLIENT_SECRET
 
   if (!redirectURI) {
-    throw new Error('Set IDENTITY_REDIRECT_URI to the registered OAuth callback URL.')
+    throw new Error(
+      'Set IDENTITY_REDIRECT_URI to the registered OAuth callback URL.'
+    )
   }
 
   return betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.BASE_URL,
+    baseURL:
+      process.env.BETTER_AUTH_URL ||
+      process.env.BASE_URL ||
+      (process.env.NODE_ENV === 'production'
+        ? 'https://scrapbook.hackclub.com'
+        : 'http://localhost:3000'),
     basePath: '/api/auth',
     secret: process.env.BETTER_AUTH_SECRET || process.env.TOKEN_SECRET,
     database: prismaAdapter(prisma, {
@@ -166,15 +215,31 @@ function createAuth() {
         emailVerified: 'authEmailVerified'
       },
       additionalFields: {
-        username: { type: 'string', required: false },
-        slackID: { type: 'string', required: false, fieldName: 'slackID' },
-        identityId: { type: 'string', required: false, fieldName: 'identityId' },
-        verificationStatus: { type: 'string', required: false, fieldName: 'verificationStatus' },
+        username: { type: 'string', required: false, input: false },
+        slackID: {
+          type: 'string',
+          required: false,
+          input: false,
+          fieldName: 'slackID'
+        },
+        identityId: {
+          type: 'string',
+          required: false,
+          input: false,
+          fieldName: 'identityId'
+        },
+        verificationStatus: {
+          type: 'string',
+          required: false,
+          input: false,
+          fieldName: 'verificationStatus'
+        },
         avatar: { type: 'string', required: false, fieldName: 'avatar' },
         legacyEmailVerified: {
           type: 'date',
           required: false,
           returned: false,
+          input: false,
           fieldName: 'emailVerified'
         }
       }
@@ -254,7 +319,9 @@ function createAuth() {
               const data = await response.json()
 
               if (!response.ok) {
-                throw new Error(data?.error || 'Hack Club Auth token exchange failed')
+                throw new Error(
+                  data?.error || 'Hack Club Auth token exchange failed'
+                )
               }
 
               const identity = await fetchIdentity(data.access_token)
@@ -274,17 +341,25 @@ function createAuth() {
               }
             },
             getUserInfo: async tokens => {
-              const identity = tokens.raw?.identity || await fetchIdentity(tokens.accessToken)
-              const email = toStringOrNull(identity?.primary_email)?.toLowerCase()
+              const identity =
+                tokens.raw?.identity ||
+                (await fetchIdentity(tokens.accessToken))
+              const email = toStringOrNull(
+                identity?.primary_email
+              )?.toLowerCase()
               const id = toStringOrNull(identity?.id)
 
               if (!identity || !email || !id) return null
 
               const slackID = toStringOrNull(identity?.slack_id)
               const slackIDOwner = slackID
-                ? await prisma.accounts.findUnique({ where: { slackID }, select: { email: true } })
+                ? await prisma.accounts.findUnique({
+                    where: { slackID },
+                    select: { email: true }
+                  })
                 : null
-              const canReturnSlackID = slackID && (!slackIDOwner || slackIDOwner.email === email)
+              const canReturnSlackID =
+                slackID && (!slackIDOwner || slackIDOwner.email === email)
 
               return {
                 id,
@@ -294,7 +369,9 @@ function createAuth() {
                 image: toStringOrNull(identity?.avatar_url) || undefined,
                 ...(canReturnSlackID ? { slackID } : {}),
                 identityId: id,
-                verificationStatus: toStringOrNull(identity?.verification_status),
+                verificationStatus: toStringOrNull(
+                  identity?.verification_status
+                ),
                 avatar: toStringOrNull(identity?.avatar_url),
                 legacyEmailVerified: new Date()
               }

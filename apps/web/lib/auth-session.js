@@ -1,6 +1,8 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import { auth } from './auth'
 import prisma from './prisma'
+import { requireMutation } from './request-security'
+import { profileAvatar } from './cachet'
 
 const accountInclude = {
   ClubMember: {
@@ -26,11 +28,12 @@ export async function getServerAuthSession(req) {
 
   return {
     ...authSession.session,
-    user
+    user: { ...user, avatar: profileAvatar(user) }
   }
 }
 
 export async function requireServerAuthSession(req, res) {
+  if (!requireMutation(req, res)) return null
   const session = await getServerAuthSession(req)
 
   if (!session?.user) {

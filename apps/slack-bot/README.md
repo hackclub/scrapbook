@@ -28,37 +28,34 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
 
 ## Running locally
 
-In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). From there, ask @sampoder to be added to the `scrappy (dev)` app on Slack.
+For local testing, use a dedicated Slack workspace and Slack app that you can configure. Add the bot to a test channel; do not use production credentials.
 
 1. Clone this repository
-   - `git clone https://github.com/hackclub/scrappy.git && cd scrappy`
+   - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install [ngrok](https://dashboard.ngrok.com/get-started/setup) (if you haven't already)
    - Recommended installation is via [Homebrew](https://brew.sh/)
    - `brew install ngrok`
 1. Install dependencies
-   - `npm install`
-1. Create a `.env` file at the root of the `apps/slack-bot` project.
-     - `touch .env`
-     - To fully test the bot locally, you have to create your own Slack Workspace for testing. create a new Slack App, and populate your `.env` with the generated tokens.
-         - `PG_DATABASE_URL` (e.g., `postgresql://localhost:5432/postgres`)
-         - `SLACK_BOT_TOKEN`
-         - `SLACK_USER_TOKEN`
-         - `SLACK_ADMIN_TOKEN`
-         - `SLACK_SIGNING_SECRET`
-         - `CHANNEL` (The ID of the Slack channel your bot listens to)
-         - `S3_ACCESS_KEY_ID` (Your own S3 bucket, or request from HQ)
-         - `S3_SECRET_ACCESS_KEY` (Your own S3 bucket, or request from HQ)
-         - `MUX_TOKEN_ID` (For video processing, request from HQ)
-         - `MUX_TOKEN_SECRET` (For video processing, request from HQ)
+   - `bun install --frozen-lockfile` (from the repository root)
+1. Create the bot environment file
+   - `touch apps/slack-bot/.env`
+   - Fill in the values for your test workspace and app:
+     - `PG_DATABASE_URL` (local PostgreSQL connection string)
+     - `SLACK_BOT_TOKEN`
+     - `SLACK_USER_TOKEN`
+     - `SLACK_ADMIN_TOKEN`
+     - `SLACK_SIGNING_SECRET`
+     - `CHANNEL` (the ID of the test channel)
+     - `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` (credentials for the configured Scrapbook media bucket)
+     - `MUX_TOKEN_ID` and `MUX_TOKEN_SECRET` (for video processing)
 1. Link your `.env` with your Prisma schema
-   - `npx prisma generate`
+   - `bun run generate`
 1. Start server
-   - `npm run dev`
+   - `bun run dev:slack-bot`
 1. Forward your local server to ngrok
-   - `ngrok http 3000`
+   - `ngrok http 3001`
    - Your ngrok URL will be printed out after running this command, which you will need for the next step
-1. Update the [Slack settings](https://api.slack.com/apps/A015DCRTT43/event-subscriptions?)
-   - Click the toggle to enable events
-   - Update the URL request URL to be `<your-ngrok-url>/api/slack/message`. An example would look like `https://ea61-73-68-194-110.ngrok.io/api/slack/message`
-   - Save changes and reinstall the Slack app
-   - This will regenerate Scrappy's [oauth](https://api.slack.com/apps/A015DCRTT43/oauth?) tokens, so make sure to update these in the `.env` file 
+1. Configure Event Subscriptions for your test Slack app
+   - Enable events and set the Request URL to `<your-ngrok-url>/slack/events` (for example, `https://example.ngrok.io/slack/events`).
+   - Save the changes and install the app in your test workspace.
+   - Put the app's tokens and signing secret in `apps/slack-bot/.env`.

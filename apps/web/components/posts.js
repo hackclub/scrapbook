@@ -23,7 +23,8 @@ const Posts = ({ posts = [], swrKey = null }) => {
     toast
       .promise(
         fetch(
-          `/api/web/reactions/new?emoji=${emoji.emoji}&emojiName=${emoji.names[0]}&post=${emojiPickerPostiD}`
+          `/api/web/reactions/new?emoji=${encodeURIComponent(emoji.emoji)}&emojiName=${encodeURIComponent(emoji.names[0])}&post=${encodeURIComponent(emojiPickerPostiD)}`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' } }
         ),
         {
           loading: 'Reacting...',
@@ -56,7 +57,12 @@ const Posts = ({ posts = [], swrKey = null }) => {
           }}
         >
           <Close onClick={() => setEmojiPickerOpen(false)} background={true} />
-          <EmojiPicker onEmojiClick={react} />
+          <EmojiPicker
+            emojiStyle="apple"
+            previewConfig={{ showPreview: false }}
+            skinTonePickerLocation="NONE"
+            onEmojiClick={react}
+          />
         </div>
       )}
       <Masonry
@@ -83,49 +89,49 @@ const Posts = ({ posts = [], swrKey = null }) => {
         ))}
       </Masonry>
       <style jsx global key="masonry-style">{`
-      .masonry-posts {
-        display: flex;
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .masonry-posts-column {
-        background-clip: padding-box;
-      }
-
-      .post {
-        margin-bottom: 2px;
-      }
-
-      @media (min-width: 32em) {
         .masonry-posts {
-          padding-right: 12px;
+          display: flex;
+          width: 100%;
+          max-width: 100%;
         }
 
         .masonry-posts-column {
-          padding-left: 12px;
+          background-clip: padding-box;
         }
 
         .post {
-          border-radius: 12px;
-          margin-bottom: 12px;
-        }
-      }
-
-      @media (min-width: 64em) {
-        .masonry-posts {
-          padding-right: 24px;
+          margin-bottom: 2px;
         }
 
-        .masonry-posts-column {
-          padding-left: 24px;
+        @media (min-width: 32em) {
+          .masonry-posts {
+            padding-right: 12px;
+          }
+
+          .masonry-posts-column {
+            padding-left: 12px;
+          }
+
+          .post {
+            border-radius: 12px;
+            margin-bottom: 12px;
+          }
         }
 
-        .post {
-          margin-bottom: 24px;
+        @media (min-width: 64em) {
+          .masonry-posts {
+            padding-right: 24px;
+          }
+
+          .masonry-posts-column {
+            padding-left: 24px;
+          }
+
+          .post {
+            margin-bottom: 24px;
+          }
         }
-      }
-    `}</style>
+      `}</style>
     </>
   )
 }

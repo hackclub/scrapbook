@@ -1,4 +1,4 @@
-import { map, find, isEmpty, orderBy, filter } from 'lodash-es'
+import { find, isEmpty } from 'lodash-es'
 import { getRawUsers } from '../users/index'
 import { getRawPosts, transformPost } from '../posts'
 
@@ -23,11 +23,17 @@ const sanitizePost = post => ({
     avatar: isBrokenMediaURL(post?.user?.avatar) ? null : post?.user?.avatar
   },
   attachments: Array.isArray(post.attachments)
-    ? post.attachments.filter(url => typeof url === 'string' && !isBrokenMediaURL(url))
+    ? post.attachments.filter(
+        url => typeof url === 'string' && !isBrokenMediaURL(url)
+      )
     : []
 })
 
-export const getPosts = async (emoji, maxRecords = DEFAULT_MAX_RECORDS, where = {}) => {
+export const getPosts = async (
+  emoji,
+  maxRecords = DEFAULT_MAX_RECORDS,
+  where = {}
+) => {
   try {
     const users = await getRawUsers()
     const allUpdates = await getRawPosts(maxRecords, {
@@ -49,10 +55,9 @@ export const getPosts = async (emoji, maxRecords = DEFAULT_MAX_RECORDS, where = 
       .filter(p => !isEmpty(p.user))
       .map(p => transformPost(p))
       .map(sanitizePost)
-
   } catch (err) {
     // console.error(err)
-    throw new Error(err);
+    throw new Error(err)
   }
 }
 
@@ -68,15 +73,14 @@ export default async (req, res) => {
         maxRecords,
         emoji == 'summer-of-making'
           ? {
-            postTime: {
-              lte: new Date(2021, 1)
+              postTime: {
+                lte: new Date(2021, 1)
+              }
             }
-          }
           : {}
       )) || []
-    res.json(posts);
+    res.json(posts)
   } catch {
-    res.status(404).json([]);
+    res.status(404).json([])
   }
-
 }

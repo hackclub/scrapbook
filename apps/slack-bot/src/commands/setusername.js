@@ -29,7 +29,7 @@ export default async ({ command, respond }) => {
     await respond(
       t("messages.username.set", {
         url: `https://scrapbook.hackclub.com/${username}`,
-      })
+      }),
     );
   }
 };

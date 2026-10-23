@@ -1,29 +1,44 @@
 import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
-import GithubSlugger from 'github-slugger'
+import { profileInput } from '../../../../../lib/profile-input'
 
-const slugger = new GithubSlugger()
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)
   if (!session) return
 
-  let id = req.body.id
-  delete req.body.id
+  const id = req.query.id
+  if (
+    typeof id !== 'string' ||
+    !session.user.ClubMember.some(
+      member => member.clubId === id && member.admin
+    )
+  ) {
+    return res.status(403).json({ error: true, message: 'Forbidden' })
+  }
+  try {
+    req.body = profileInput(req.body)
+  } catch {
+    return res.status(400).json({
+      error: true,
+      message: 'Invalid club URL or field. CSS must use a raw GitHub HTTPS URL.'
+    })
+  }
 
   let club = await prisma.club.findFirst({
     where: {
       id
     }
-  });
+  })
+  if (!club) return res.status(404).json({ error: true })
 
   if (req.body.customDomain || club.customDomain != null) {
     if (club.customDomain != null) {
       const prevDomain = club.customDomain
 
-      const response = await fetch(
-        `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
+      await fetch(
+        `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${encodeURIComponent(prevDomain)}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
           headers: {
@@ -38,10 +53,10 @@ export default async (req, res) => {
         prisma.accounts.findMany(),
         prisma.club.findMany()
       ])
-      allUsers = allUsers.filter(function(user) {
+      allUsers = allUsers.filter(function (user) {
         return user.customDomain == req.body.customDomain
       })
-      allClubs = allClubs.filter(function(club) {
+      allClubs = allClubs.filter(function (club) {
         return club.customDomain == req.body.customDomain
       })
       if (allUsers.length != 0) {
@@ -71,8 +86,8 @@ export default async (req, res) => {
       )
         .then(r => r.json())
         .catch(err => {
-        // console.log(`Error while setting custom domain ${arg}: ${err}`)
-      })
+          // console.log(`Error while setting custom domain ${arg}: ${err}`)
+        })
       if (vercelFetch.error) {
         return res.status(500).json({
           error: true,
@@ -95,8 +110,15 @@ export default async (req, res) => {
         id
       },
       data: {
-        ...req.body,
-        members: undefined,
+        // Explicitly exclude IDs and nested membership/update writes.
+        name: req.body.name,
+        location: req.body.location,
+        banner: req.body.banner,
+        logo: req.body.logo,
+        github: req.body.github,
+        cssURL: req.body.cssURL,
+        customDomain: req.body.customDomain || null,
+        description: req.body.description,
         website:
           req.body?.website != '' && req.body?.website
             ? new URL(req.body.website).href.replace('http://', 'https://')
@@ -105,7 +127,7 @@ export default async (req, res) => {
     })
 
     res.json({ club })
-  } catch (e) {
+  } catch {
     // console.error(e)
     res.status(500).json({ error: true })
   }

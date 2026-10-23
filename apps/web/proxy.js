@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export async function proxy() {
   // Pass requests through without proxying. The previous implementation
   // refetched API routes via APP_URL, which can recurse and exhaust memory.
-  return NextResponse.next();
+  return NextResponse.next()
 }
 
 /*
@@ -66,7 +66,5 @@ export async function proxy(req) {
 */
 
 export const config = {
-  matcher: [
-    '/(api\\/(?!auth|web/profile/edit).*)'
-  ]
+  matcher: ['/(api\\/(?!auth|web/profile/edit).*)']
 }

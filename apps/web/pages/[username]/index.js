@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
@@ -15,7 +14,7 @@ import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { exclude } from "../api/posts";
+import { exclude } from '../api/posts'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -56,10 +55,10 @@ const Profile = ({
     {profile.cssURL && (
       <link
         rel="stylesheet"
-        href={HOST + `/api/css?url=${profile.cssURL}`}
+        href={HOST + `/api/css?url=${encodeURIComponent(profile.cssURL)}`}
       />
     )}
-   {children}
+    {children}
     <header className="header">
       <div className="header-col-1">
         {profile.avatar && (
@@ -72,7 +71,7 @@ const Profile = ({
             className="header-title-avatar"
             unoptimized
             style={{ objectFit: 'cover' }}
-            {...(profile.avatar.endsWith(".gif") ? { unoptimized: true } : {})}
+            {...(profile.avatar.endsWith('.gif') ? { unoptimized: true } : {})}
           />
         )}
         <section>
@@ -95,9 +94,9 @@ const Profile = ({
                 <Link
                   href="/[username]/mentions"
                   as={`/${profile.username}/mentions`}
-                  className='header-link header-link-mentions'
+                  className="header-link header-link-mentions"
                 >
-                    <Icon size={32} glyph="mention" />
+                  <Icon size={32} glyph="mention" />
                 </Link>
               )}
               {profile.slackID && (
@@ -232,10 +231,10 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     fallbackData: initialData,
     refreshInterval: 5000
   })
-  if (!data) {
-    return <Message text="Loading…" />
-  } else if (error && !data) {
+  if (error && !data) {
     return <Message text="Error" color1="orange" color2="pink" />
+  } else if (!data) {
+    return <Message text="Loading…" />
   } else {
     return (
       <Profile
@@ -300,7 +299,11 @@ export const getServerSideProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.username?.length < 2)
     return console.error('No username') || { props: {} }
-  const profile = exclude(await getProfile(params.username), ['slackID', 'email', 'emailVerified'])
+  const profile = exclude(await getProfile(params.username), [
+    'slackID',
+    'email',
+    'emailVerified'
+  ])
   if (!profile || !profile?.username)
     return console.error('No profile') || { props: {} }
   try {
@@ -331,16 +334,14 @@ export const getServerSideProps = async ({ params }) => {
     }
 
     return {
-      props: { profile, webring, heatmap, posts },
+      props: { profile, webring, heatmap, posts }
       // revalidate: 1
     }
-  } catch (error) {
+  } catch {
     // console.error(error)
     return { props: { profile } }
     // return { props: { profile }, revalidate: 1 }
   }
-
-
 }
 
 // export const getStaticProps = async ({ params }) => {

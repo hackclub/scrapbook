@@ -1,6 +1,6 @@
 import S3 from "./s3.js";
 import { Upload } from "@aws-sdk/lib-storage";
-import Mux from "@mux/mux-node";
+import Mux from "@mux/ts";
 import { app } from "../app.js";
 import { postEphemeral } from "./slack.js";
 import { t } from "./transcript.js";
@@ -12,7 +12,7 @@ import stream from "node:stream";
 
 const mux = new Mux({
   tokenId: process.env.MUX_TOKEN_ID,
-  tokenSecret: process.env.MUX_TOKEN_SECRET
+  tokenSecret: process.env.MUX_TOKEN_SECRET,
 });
 
 const isFileType = (types, fileName) =>
@@ -22,9 +22,15 @@ const isFileType = (types, fileName) =>
 // so only ever send the bot token to Slack's own hosts.
 export const isSlackFileUrl = (url) => {
   try {
-    const { protocol, hostname } = new URL(url);
+    const { protocol, hostname, port, username, password } = new URL(url);
     const host = hostname.toLowerCase();
-    return protocol === "https:" && (host === "slack.com" || host.endsWith(".slack.com"));
+    return (
+      protocol === "https:" &&
+      !port &&
+      !username &&
+      !password &&
+      (host === "slack.com" || host.endsWith(".slack.com"))
+    );
   } catch {
     return false;
   }
@@ -34,12 +40,16 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
   if (!isSlackFileUrl(urlPrivate)) return null;
   let fileName = urlPrivate.split("/").pop();
   const fileId = urlPrivate.split("-")[2].split("/")[0];
-  const isImage = isFileType(["jpg", "jpeg", "png", "gif", "webp", "heic"], fileName);
+  const isImage = isFileType(
+    ["jpg", "jpeg", "png", "gif", "webp", "heic"],
+    fileName,
+  );
   const isAudio = isFileType(["mp3", "wav", "aiff", "m4a"], fileName);
   const isVideo = isFileType(["mp4", "mov", "webm"], fileName);
-  
+
   if (!(isImage || isAudio | isVideo)) return null;
   const file = await fetch(urlPrivate, {
+    redirect: "error",
     headers: {
       Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
     },
@@ -51,14 +61,14 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
     // convert the image buffer into a jpeg image
     const outBuffer = await convert({
       buffer: blobArrayBuffer,
-      format: "JPEG" 
+      format: "JPEG",
     });
 
     // create a readable stream for upload
     mediaStream = stream.Readable.from(outBuffer);
 
     fileName = `./${uuidv4()}.jpeg`;
-  } 
+  }
   if (blob.size === 19) {
     const publicFile = app.client.files.sharedPublicURL({
       token: process.env.SLACK_USER_TOKEN,
@@ -107,7 +117,7 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
       Bucket: "scrapbook-into-the-redwoods",
       Key: `${uuidv4()}-${fileName}`,
       Body: mediaStream,
-    }
+    },
   });
   const uploadedImage = await uploads.done();
 

@@ -1,14 +1,13 @@
-const path = require('path');
-const { config } = require("dotenv");
+const path = require('path')
+const { config } = require('dotenv')
 const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE == 'true'
-});
-
+})
 
 // load environment variables
-config({ quiet: true });
-const BASE_URL = process.env.APP_URL;
+config({ quiet: true })
+const BASE_URL = process.env.APP_URL
 
 let nextConfig = withMDX({
   outputFileTracingRoot: path.join(__dirname, '../..'),
@@ -24,10 +23,15 @@ let nextConfig = withMDX({
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'cachet.hackclub.com',
+        pathname: '/users/*/r'
+      },
+      {
+        protocol: 'https',
         hostname: 'dl.airtable.com'
       },
       {
-        protocol: 'https', 
+        protocol: 'https',
         hostname: 'emoji.slack-edge.com'
       },
       {
@@ -153,11 +157,15 @@ let nextConfig = withMDX({
         ]
       },
       {
-        source: "/api/css",
+        source: '/api/css',
         headers: [
           {
-            key: "Content-Type",
-            value: "text/css;charset=UTF-8"
+            key: 'Cache-Control',
+            value: 'private, no-store, max-age=0'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           }
         ]
       },
@@ -174,7 +182,7 @@ let nextConfig = withMDX({
         ]
       }
     ]
-  },
+  }
 })
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(nextConfig)

@@ -1,6 +1,6 @@
-const { config } = require("dotenv");
+const { config } = require('dotenv')
 
 // load the environment variables
-config({ quiet: true });
+config({ quiet: true })
 
-export const BASE_URL = process.env.APP_URL;
+export const BASE_URL = process.env.APP_URL

@@ -45,87 +45,81 @@ export const streaksToggledOff = async (user) => {
   return userRecord.streaksToggledOff;
 };
 
-export const incrementStreakCount = (userId, channel, message, ts) =>
-  new Promise(async (resolve) => {
-    const userRecord = await getUserRecord(userId);
-    const shouldUpdate = await shouldUpdateStreak(userId, true);
-    const randomWebringPost = await getRandomWebringPost(userId);
-    let updatedMaxStreakCount;
-    const updatedStreakCount = userRecord.streakCount + 1;
-    const scrapbookLink =
-      "https://scrapbook.hackclub.com/" + userRecord.username;
-    await react("remove", channel, ts, "beachball"); // remove beachball react
-    await react("add", channel, ts, SEASON_EMOJI);
-    if (typeof channelKeywords[channel] !== "undefined")
-      await react("add", channel, ts, channelKeywords[channel]);
-    await reactBasedOnKeywords(channel, message, ts);
-    if (shouldUpdate) {
-      if (userRecord.newMember && updatedStreakCount > 1) {
-        await prisma.accounts.update({
-          where: {
-            slackID: userRecord.slackID,
-          },
-          data: {
-            newMember: false,
-          },
-        });
-      }
-      if (
-        userRecord.maxStreaks < updatedStreakCount ||
-        !userRecord.maxStreaks
-      ) {
-        updatedMaxStreakCount = updatedStreakCount;
-      } else {
-        updatedMaxStreakCount = userRecord.maxStreaks;
-      }
+export const incrementStreakCount = async (userId, channel, message, ts) => {
+  const userRecord = await getUserRecord(userId);
+  const shouldUpdate = await shouldUpdateStreak(userId, true);
+  const randomWebringPost = await getRandomWebringPost(userId);
+  let updatedMaxStreakCount;
+  const updatedStreakCount = userRecord.streakCount + 1;
+  const scrapbookLink = "https://scrapbook.hackclub.com/" + userRecord.username;
+  await react("remove", channel, ts, "beachball"); // remove beachball react
+  await react("add", channel, ts, SEASON_EMOJI);
+  if (typeof channelKeywords[channel] !== "undefined")
+    await react("add", channel, ts, channelKeywords[channel]);
+  await reactBasedOnKeywords(channel, message, ts);
+  if (shouldUpdate) {
+    if (userRecord.newMember && updatedStreakCount > 1) {
       await prisma.accounts.update({
         where: {
           slackID: userRecord.slackID,
         },
         data: {
-          maxStreaks: updatedMaxStreakCount,
-          streakCount: updatedStreakCount,
+          newMember: false,
         },
       });
-      metrics.increment("streak", 1);
-      await displayStreaks(userId, updatedStreakCount);
-      if (userRecord.newMember && updatedStreakCount === 1) {
-        postEphemeral(channel, t("messages.streak.newstreak"), userId);
-      }
     }
-    const replyMessage = await getReplyMessage(
-      userId,
-      userRecord.username,
-      updatedStreakCount
-    );
+    if (userRecord.maxStreaks < updatedStreakCount || !userRecord.maxStreaks) {
+      updatedMaxStreakCount = updatedStreakCount;
+    } else {
+      updatedMaxStreakCount = userRecord.maxStreaks;
+    }
+    await prisma.accounts.update({
+      where: {
+        slackID: userRecord.slackID,
+      },
+      data: {
+        maxStreaks: updatedMaxStreakCount,
+        streakCount: updatedStreakCount,
+      },
+    });
+    metrics.increment("streak", 1);
+    await displayStreaks(userId, updatedStreakCount);
+    if (userRecord.newMember && updatedStreakCount === 1) {
+      postEphemeral(channel, t("messages.streak.newstreak"), userId);
+    }
+  }
+  const replyMessage = await getReplyMessage(
+    userId,
+    userRecord.username,
+    updatedStreakCount,
+  );
 
+  await reply(
+    channel,
+    ts,
+    shouldUpdate
+      ? replyMessage
+      : t("messages.streak.nostreak", { scrapbookLink }),
+  );
+  if (randomWebringPost.post) {
     await reply(
       channel,
       ts,
-      shouldUpdate
-        ? replyMessage
-        : t("messages.streak.nostreak", { scrapbookLink })
+      t("messages.webring.random", {
+        randomWebringPost: randomWebringPost.post,
+      }),
+      true,
     );
-    if (randomWebringPost.post) {
-      await reply(
-        channel,
-        ts,
-        t("messages.webring.random", {
-          randomWebringPost: randomWebringPost.post,
-        }),
-        true
-      );
-    } else if (!randomWebringPost.post && randomWebringPost.nonexistence) {
-      await reply(
-        channel,
-        ts,
-        t("messages.webring.nonexistence", {
-          scrapbookUrl: randomWebringPost.scrapbookUrl,
-        })
-      );
-    }
-    resolve();
-  });
+  } else if (!randomWebringPost.post && randomWebringPost.nonexistence) {
+    await reply(
+      channel,
+      ts,
+      t("messages.webring.nonexistence", {
+        scrapbookUrl: randomWebringPost.scrapbookUrl,
+      }),
+    );
+  }
+};
 
 export const getReplyMessage = async (user, username, day) => {
   const toggledOff = await streaksToggledOff(user);

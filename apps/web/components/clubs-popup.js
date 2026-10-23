@@ -2,22 +2,26 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Close } from '../components/close'
 import useSWR from 'swr'
-import Link from 'next/link'
 import useForm from '../lib/use-form'
 import { Optional } from '../components/optional'
 import Icon from '@hackclub/icons'
 const fetcher = url => fetch(url).then(r => r.json())
 
-export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) => {
+export const ClubsPopup = ({
+  closed,
+  setClubsOpen,
+  session,
+  loggedIn = false
+}) => {
   if (closed) return null
 
-  const { data, error } = useSWR('/api/web/clubs/my', fetcher, {
+  const { data } = useSWR('/api/web/clubs/my', fetcher, {
     refreshInterval: 5000
   })
   let router = useRouter()
   const [starting, setStarting] = useState(false)
   const search = useForm()
-  const { status, submit, useField, setData } = useForm('/api/web/clubs/new', {
+  const { submit, useField, setData } = useForm('/api/web/clubs/new', {
     method: 'POST',
     success: 'Club created!',
     closingAction: () => {
@@ -55,7 +59,6 @@ export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) 
           {!starting && (
             <span
               style={{
-                display: 'flex',
                 alignItems: 'center',
                 cursor: 'pointer',
                 display: loggedIn ? 'inline' : 'none'
@@ -76,11 +79,12 @@ export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) 
         {(starting
           ? []
           : data
-          ? [
-              ...data?.clubs,
-              ...data?.others?.map(other => ({ ...other, other: true }))
-            ]
-          : []
+            ? [
+                ...(data.clubs ?? []),
+                ...(data.others?.map(other => ({ ...other, other: true })) ??
+                  [])
+              ]
+            : []
         )?.map(club => (
           <div
             key={club.id}
@@ -88,13 +92,13 @@ export const ClubsPopup = ({ closed, setClubsOpen, session, loggedIn = false }) 
               display: !search.data.search
                 ? 'flex'
                 : club.name
-                    .toLowerCase()
-                    .includes(search.data.search.toLowerCase()) ||
-                  club.location
-                    ?.toLowerCase()
-                    .includes(search.data.search.toLowerCase())
-                ? 'flex'
-                : 'none',
+                      .toLowerCase()
+                      .includes(search.data.search.toLowerCase()) ||
+                    club.location
+                      ?.toLowerCase()
+                      .includes(search.data.search.toLowerCase())
+                  ? 'flex'
+                  : 'none',
               gap: '12px',
               alignItems: 'center',
               cursor: 'pointer'

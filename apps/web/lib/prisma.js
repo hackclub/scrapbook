@@ -1,6 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
-import metrics from '../metrics.js';
+import metrics from '../metrics.js'
 
 // Docs about instantiating `PrismaClient` with Next.js:
 // https://pris.ly/d/help/next-js-best-practices
@@ -8,7 +8,8 @@ import metrics from '../metrics.js';
 let prisma
 function createInstrumentedPrismaClient() {
   const adapter = new PrismaPg({
-    connectionString: process.env.PG_DATABASE_URL || 'postgresql://localhost:5432/postgres'
+    connectionString:
+      process.env.PG_DATABASE_URL || 'postgresql://localhost:5432/postgres'
   })
 
   return new PrismaClient({ adapter }).$extends({
@@ -16,28 +17,28 @@ function createInstrumentedPrismaClient() {
     // send query metrics and latency
     query: {
       async $allOperations({ operation, model, args, query }) {
-        const metricKey = `${operation}_${model}`;
-        const start = performance.now();
+        const metricKey = `${operation}_${model}`
+        const start = performance.now()
         try {
-          const queryResult = await query(args);
-          const time = performance.now() - start;
+          const queryResult = await query(args)
+          const time = performance.now() - start
 
           try {
             // send timing metrics
-            metrics.timing(metricKey, time);
-            metrics.increment(`success.${metricKey}`, 1);
+            metrics.timing(metricKey, time)
+            metrics.increment(`success.${metricKey}`, 1)
           } catch (metricsErr) {
-            console.error('Failed to record Prisma success metric', metricsErr);
+            console.error('Failed to record Prisma success metric', metricsErr)
           }
 
-          return queryResult;
+          return queryResult
         } catch (err) {
           try {
-            metrics.increment(`errors.${metricKey}`, 1);
+            metrics.increment(`errors.${metricKey}`, 1)
           } catch (metricsErr) {
-            console.error('Failed to record Prisma error metric', metricsErr);
+            console.error('Failed to record Prisma error metric', metricsErr)
           }
-          throw err;
+          throw err
         }
       }
     }
@@ -45,10 +46,10 @@ function createInstrumentedPrismaClient() {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = createInstrumentedPrismaClient();
+  prisma = createInstrumentedPrismaClient()
 } else {
   if (!global.prisma) {
-    global.prisma = createInstrumentedPrismaClient();
+    global.prisma = createInstrumentedPrismaClient()
   }
   prisma = global.prisma
 }
