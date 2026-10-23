@@ -35,6 +35,7 @@ function getAttachmentSizes({ profile, visualCount }) {
 
 const Post = ({
   id = new Date().toISOString(),
+  canDelete = false,
   profile = false,
   user = {
     username: 'abc',
@@ -146,6 +147,46 @@ const Post = ({
               </time>
             </section>
           </Link>
+        )}
+        {canDelete && (
+          <button
+            type="button"
+            onClick={async event => {
+              event.preventDefault()
+              if (!window.confirm('Are you sure you want to delete this post?')) {
+                return
+              }
+              try {
+                const response = await fetch('/api/web/post/delete', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id })
+                })
+                if (!response.ok) {
+                  window.alert('Failed to delete post')
+                  return
+                }
+                document.getElementById(id)?.remove()
+              } catch {
+                window.alert('Failed to delete post')
+              }
+            }}
+            style={{
+              position: 'absolute',
+              bottom: '16px',
+              right: '16px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'var(--colors-muted)',
+              padding: '8px',
+              zIndex: 10
+            }}
+            title="Delete post"
+            aria-label="Delete post"
+          >
+            <Icon glyph="delete" size={24} />
+          </button>
         )}
         <Content>{text}</Content>
         {(attachments.length > 0 || mux.length > 0) && (

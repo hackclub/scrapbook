@@ -28,7 +28,7 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
 
 ## Running locally
 
-In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https://hackclub.com/slack). From there, ask @sampoder to be added to the `scrappy (dev)` app on Slack.
+For local testing, use a dedicated Slack workspace and Slack app that you can configure. Add the bot to a test channel; do not use production credentials.
 
 1. Clone this repository
    - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
@@ -39,7 +39,15 @@ In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https
    - `bun install --frozen-lockfile` (from the repository root)
 1. Create the bot environment file
    - `touch apps/slack-bot/.env`
-   - Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file contents
+   - Fill in the values for your test workspace and app:
+     - `PG_DATABASE_URL` (local PostgreSQL connection string)
+     - `SLACK_BOT_TOKEN`
+     - `SLACK_USER_TOKEN`
+     - `SLACK_ADMIN_TOKEN`
+     - `SLACK_SIGNING_SECRET`
+     - `CHANNEL` (the ID of the test channel)
+     - `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` (credentials for the configured Scrapbook media bucket)
+     - `MUX_TOKEN_ID` and `MUX_TOKEN_SECRET` (for video processing)
 1. Link your `.env` with your Prisma schema
    - `bun run generate`
 1. Start server
@@ -47,8 +55,7 @@ In order to run Scrappy locally, you'll need to [join the Hack Club Slack](https
 1. Forward your local server to ngrok
    - `ngrok http 3001`
    - Your ngrok URL will be printed out after running this command, which you will need for the next step
-1. Update the [Slack settings](https://api.slack.com/apps/A015DCRTT43/event-subscriptions?)
-   - Click the toggle to enable events
-   - Update the URL request URL to be `<your-ngrok-url>/slack/events`. An example would look like `https://ea61-73-68-194-110.ngrok.io/slack/events`
-   - Save changes and reinstall the Slack app
-   - This will regenerate Scrappy's [oauth](https://api.slack.com/apps/A015DCRTT43/oauth?) tokens, so make sure to update these in the `.env` file 
+1. Configure Event Subscriptions for your test Slack app
+   - Enable events and set the Request URL to `<your-ngrok-url>/slack/events` (for example, `https://example.ngrok.io/slack/events`).
+   - Save the changes and install the app in your test workspace.
+   - Put the app's tokens and signing secret in `apps/slack-bot/.env`.

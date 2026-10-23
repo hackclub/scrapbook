@@ -155,7 +155,13 @@ Development chatter happens in the [#scrapbook-dev](https://app.slack.com/client
    - `git clone https://github.com/hackclub/scrapbook.git && cd scrapbook`
 1. Install dependencies
    - `bun install --frozen-lockfile` (from the repository root)
-1. Send a message mentioning `@creds` in [Hack Club's Slack](https://hackclub.com/slack/) asking for the `.env` file
+1. Create `apps/web/.env` and add the local database, Hack Club Identity, Better Auth, and AWS credentials:
+   - `PG_DATABASE_URL` (local PostgreSQL connection string)
+   - `IDENTITY_CLIENT_ID` and `IDENTITY_CLIENT_SECRET` (your Hack Club Identity OAuth app)
+   - `IDENTITY_REDIRECT_URI="http://localhost:3000/api/auth/callback/hackclub-identity"`
+   - `BETTER_AUTH_SECRET` (a random secret)
+   - `BETTER_AUTH_URL="http://localhost:3000"`
+   - `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` (credentials used for Scrapbook uploads)
 1. Start server
    - `bun run dev`
 1. View your server
