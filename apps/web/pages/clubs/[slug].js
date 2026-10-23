@@ -59,7 +59,7 @@ const Club = ({ club = {}, posts = [], children, session }) => {
           <link
             rel="stylesheet"
             type="text/css"
-            href={HOST + `/api/css?url=${club.cssURL}`}
+            href={HOST + `/api/css?url=${encodeURIComponent(club.cssURL)}`}
           />
         )}
         {children}

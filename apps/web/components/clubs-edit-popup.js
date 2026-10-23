@@ -136,7 +136,7 @@ export const ClubsEditPopup = ({ closed, setClubsOpen, session, club }) => {
                 Custom CSS <Optional />
               </label>
               <input
-                placeholder="happy.hackclub.com/style.css"
+                placeholder="https://gist.githubusercontent.com/…/raw/style.css"
                 type="url"
                 {...useField('cssURL')}
               />

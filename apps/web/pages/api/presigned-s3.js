@@ -9,10 +9,23 @@ export default async function handleGetSignedUrl(req, res) {
   if (!session) return
 
   const { filename, filetype } = req.query
+  if (
+    typeof filename !== 'string' ||
+    !filename ||
+    filename.length > 200 ||
+    typeof filetype !== 'string' ||
+    !/^(image\/(png|jpeg|gif|webp|avif|heic)|video\/(mp4|quicktime|webm)|audio\/(mpeg|mp3|wav|x-wav|aiff|mp4|webm|ogg))$/.test(
+      filetype
+    )
+  ) {
+    return res
+      .status(400)
+      .json({ error: true, message: 'Invalid media upload' })
+  }
 
   const command = new PutObjectCommand({
     Bucket: 'scrapbook-into-the-redwoods',
-    Key: `${randomUUID()}-${filename}`,
+    Key: `web/${session.user.id}/${randomUUID()}-${filename.replace(/[^a-zA-Z0-9._-]/g, '_')}`,
     ContentType: filetype
   })
 

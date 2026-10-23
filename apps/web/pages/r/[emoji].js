@@ -169,7 +169,11 @@ const Page = ({ status, emoji, related = [], posts = [], css }) => {
         <link
           rel="stylesheet"
           type="text/css"
-          href={HOST + css.includes('http') ? `/api/css?url=${css}` : css}
+          href={
+            css.startsWith('https://')
+              ? HOST + `/api/css?url=${encodeURIComponent(css)}`
+              : css
+          }
         />
         <Header {...emoji} />
       </Feed>

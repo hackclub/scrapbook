@@ -2,19 +2,10 @@ import { find, isEmpty } from 'lodash-es'
 import { getRawUsers } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
-import { emailToPfp } from '../../../../lib/email'
+import { publicProfile } from '../../../../lib/public-profile'
+import { enrichPublicProfile } from '../../../../lib/cachet'
 
-export const transformProfile = profile => {
-  if (profile) {
-    return {
-      ...profile,
-      email: null,
-      avatar: !profile?.avatar ? emailToPfp(profile?.email) : profile?.avatar
-    }
-  } else {
-    return profile
-  }
-}
+export const transformProfile = publicProfile
 
 export const getProfile = async (value, field = 'username') => {
   let where = {}
@@ -26,7 +17,9 @@ export const getProfile = async (value, field = 'username') => {
   }
 
   try {
-    const user = transformProfile(await prisma.accounts.findFirst(opts))
+    const user = await enrichPublicProfile(
+      transformProfile(await prisma.accounts.findFirst(opts))
+    )
     return user
   } catch {
     return {}

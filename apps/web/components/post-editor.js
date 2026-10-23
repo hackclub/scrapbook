@@ -42,7 +42,10 @@ export const PostEditor = ({ closed, setPostOpen, session }) => {
                   presignedUrl.searchParams.set('filename', file.name)
                   presignedUrl.searchParams.set('filetype', file.type)
 
-                  const response = await fetch(presignedUrl.toString())
+                  const response = await fetch(presignedUrl.toString(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                  })
                   const { signedUrl } = await response.json()
                   if (!response.ok || !signedUrl) {
                     throw new Error('Failed to get upload URL')

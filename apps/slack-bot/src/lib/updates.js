@@ -62,7 +62,7 @@ export const createUpdate = async (files = [], channel, ts, user, text) => {
   if (!text) return;
   const urls = getUrls(text);
   if (urls && urls.length > 0) {
-    for (const url of urls) {
+    for (const url of urls.slice(0, 5)) {
       try {
         const pageContent = await getPageContent(url);
         const ogUrls = extractOgUrl(pageContent);

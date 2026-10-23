@@ -1,5 +1,6 @@
 import { requireServerAuthSession } from '../../../../../lib/auth-session'
 import prisma from '../../../../../lib/prisma'
+import { profileInput } from '../../../../../lib/profile-input'
 
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
@@ -7,21 +8,37 @@ export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)
   if (!session) return
 
-  let id = req.body.id
-  delete req.body.id
+  const id = req.query.id
+  if (
+    typeof id !== 'string' ||
+    !session.user.ClubMember.some(
+      member => member.clubId === id && member.admin
+    )
+  ) {
+    return res.status(403).json({ error: true, message: 'Forbidden' })
+  }
+  try {
+    req.body = profileInput(req.body)
+  } catch {
+    return res.status(400).json({
+      error: true,
+      message: 'Invalid club URL or field. CSS must use a raw GitHub HTTPS URL.'
+    })
+  }
 
   let club = await prisma.club.findFirst({
     where: {
       id
     }
   })
+  if (!club) return res.status(404).json({ error: true })
 
   if (req.body.customDomain || club.customDomain != null) {
     if (club.customDomain != null) {
       const prevDomain = club.customDomain
 
       await fetch(
-        `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
+        `https://api.vercel.com/v1/projects/QmWRnAGRMjviMn7f2EkW5QEieMv2TAGjUz8RS698KZm5q8/alias?domain=${encodeURIComponent(prevDomain)}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
           headers: {
@@ -93,8 +110,15 @@ export default async (req, res) => {
         id
       },
       data: {
-        ...req.body,
-        members: undefined,
+        // Explicitly exclude IDs and nested membership/update writes.
+        name: req.body.name,
+        location: req.body.location,
+        banner: req.body.banner,
+        logo: req.body.logo,
+        github: req.body.github,
+        cssURL: req.body.cssURL,
+        customDomain: req.body.customDomain || null,
+        description: req.body.description,
         website:
           req.body?.website != '' && req.body?.website
             ? new URL(req.body.website).href.replace('http://', 'https://')

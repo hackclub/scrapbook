@@ -23,7 +23,8 @@ const Posts = ({ posts = [], swrKey = null }) => {
     toast
       .promise(
         fetch(
-          `/api/web/reactions/new?emoji=${emoji.emoji}&emojiName=${emoji.names[0]}&post=${emojiPickerPostiD}`
+          `/api/web/reactions/new?emoji=${encodeURIComponent(emoji.emoji)}&emojiName=${encodeURIComponent(emoji.names[0])}&post=${encodeURIComponent(emojiPickerPostiD)}`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' } }
         ),
         {
           loading: 'Reacting...',

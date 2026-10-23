@@ -2,6 +2,7 @@ import { requireServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 import s3 from '../../../../lib/s3'
 import { DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { ownedUploadKey } from '../../../../lib/uploads'
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -62,9 +63,10 @@ export default async (req, res) => {
     await prisma.updates.delete({ where: { id: update.id } })
 
     for (let attachment of update.attachments) {
-      // console.log("attachment", attachment);
-      if (!attachment.includes('amazonaws.com')) continue
-      let s3ItemKey = attachment.split('/').pop() // the last part of the url is the key of the object in s3
+      // An attachment URL does not prove ownership of an S3 object. Only new
+      // uploads in the post author's namespace qualify for automatic deletion.
+      const s3ItemKey = ownedUploadKey(attachment, update.accountsID)
+      if (!s3ItemKey) continue
       // console.log("s3 item key", s3ItemKey);
       await s3.send(
         new DeleteObjectCommand({

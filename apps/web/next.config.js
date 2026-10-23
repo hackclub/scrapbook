@@ -23,6 +23,11 @@ let nextConfig = withMDX({
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'cachet.hackclub.com',
+        pathname: '/users/*/r'
+      },
+      {
+        protocol: 'https',
         hostname: 'dl.airtable.com'
       },
       {
@@ -155,8 +160,12 @@ let nextConfig = withMDX({
         source: '/api/css',
         headers: [
           {
-            key: 'Content-Type',
-            value: 'text/css;charset=UTF-8'
+            key: 'Cache-Control',
+            value: 'private, no-store, max-age=0'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           }
         ]
       },

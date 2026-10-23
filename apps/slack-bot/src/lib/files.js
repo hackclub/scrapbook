@@ -22,10 +22,13 @@ const isFileType = (types, fileName) =>
 // so only ever send the bot token to Slack's own hosts.
 export const isSlackFileUrl = (url) => {
   try {
-    const { protocol, hostname } = new URL(url);
+    const { protocol, hostname, port, username, password } = new URL(url);
     const host = hostname.toLowerCase();
     return (
       protocol === "https:" &&
+      !port &&
+      !username &&
+      !password &&
       (host === "slack.com" || host.endsWith(".slack.com"))
     );
   } catch {
@@ -46,6 +49,7 @@ export const getPublicFileUrl = async (urlPrivate, channel, user) => {
 
   if (!(isImage || isAudio | isVideo)) return null;
   const file = await fetch(urlPrivate, {
+    redirect: "error",
     headers: {
       Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
     },

@@ -58,7 +58,7 @@ async function uniqueUsername(name, email) {
   return candidate
 }
 
-async function consolidateIdentityAccount(identity) {
+export async function consolidateIdentityAccount(identity) {
   const email = toStringOrNull(identity?.primary_email)?.toLowerCase()
   const slackID = toStringOrNull(identity?.slack_id)
   const identityId = toStringOrNull(identity?.id)
@@ -66,7 +66,7 @@ async function consolidateIdentityAccount(identity) {
   const avatar = toStringOrNull(identity?.avatar_url)
   const verificationStatus = toStringOrNull(identity?.verification_status)
 
-  if (!email) return null
+  if (!email || !identityId) return null
 
   const [accountWithEmail, accountWithSlackID] = await Promise.all([
     prisma.accounts.findUnique({ where: { email } }),
@@ -140,7 +140,17 @@ async function consolidateIdentityAccount(identity) {
   }
 
   const existing = accountWithSlackID || accountWithEmail
-  if (!existing) return null
+  if (!existing) {
+    // Persist provider-owned fields directly. Better Auth intentionally filters
+    // input:false fields from OAuth profile mappings as well as client input.
+    return prisma.accounts.create({
+      data: {
+        ...profile,
+        username: await uniqueUsername(name, email),
+        ...(slackID ? { slackID } : {})
+      }
+    })
+  }
   const slackIDOwner = slackID
     ? accountWithSlackID ||
       (await prisma.accounts.findUnique({ where: { slackID } }))
@@ -188,7 +198,12 @@ function createAuth() {
   }
 
   return betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.BASE_URL,
+    baseURL:
+      process.env.BETTER_AUTH_URL ||
+      process.env.BASE_URL ||
+      (process.env.NODE_ENV === 'production'
+        ? 'https://scrapbook.hackclub.com'
+        : 'http://localhost:3000'),
     basePath: '/api/auth',
     secret: process.env.BETTER_AUTH_SECRET || process.env.TOKEN_SECRET,
     database: prismaAdapter(prisma, {
@@ -200,16 +215,23 @@ function createAuth() {
         emailVerified: 'authEmailVerified'
       },
       additionalFields: {
-        username: { type: 'string', required: false },
-        slackID: { type: 'string', required: false, fieldName: 'slackID' },
+        username: { type: 'string', required: false, input: false },
+        slackID: {
+          type: 'string',
+          required: false,
+          input: false,
+          fieldName: 'slackID'
+        },
         identityId: {
           type: 'string',
           required: false,
+          input: false,
           fieldName: 'identityId'
         },
         verificationStatus: {
           type: 'string',
           required: false,
+          input: false,
           fieldName: 'verificationStatus'
         },
         avatar: { type: 'string', required: false, fieldName: 'avatar' },
@@ -217,6 +239,7 @@ function createAuth() {
           type: 'date',
           required: false,
           returned: false,
+          input: false,
           fieldName: 'emailVerified'
         }
       }

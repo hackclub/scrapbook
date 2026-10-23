@@ -3,6 +3,7 @@ import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 import { getRawUsers } from '../../users'
 import { emailToPfp } from '../../../../lib/email'
+import { profileAvatar } from '../../../../lib/cachet'
 
 export const getClub = async (value, field = 'slug') => {
   let where = {}
@@ -16,6 +17,7 @@ export const getClub = async (value, field = 'slug') => {
           account: {
             select: {
               avatar: true,
+              slackID: true,
               username: true,
               email: true,
               updates: true
@@ -32,7 +34,9 @@ export const getClub = async (value, field = 'slug') => {
       ...member,
       account: {
         ...member.account,
-        avatar: member.account.avatar || emailToPfp(member.account.email),
+        avatar:
+          profileAvatar(member.account) ||
+          emailToPfp(member.account.email || ''),
         email: null,
         updates: member.account.updates.length
       }

@@ -2,6 +2,7 @@ import { getServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
 
 export default async (req, res) => {
+  res.setHeader('Cache-Control', 'private, no-store')
   try {
     const session = await getServerAuthSession(req)
     if (session?.user === undefined) {

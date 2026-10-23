@@ -1,11 +1,21 @@
 import { requireServerAuthSession } from '../../../../lib/auth-session'
 import prisma from '../../../../lib/prisma'
+import { profileInput } from '../../../../lib/profile-input'
 
 const TEAM_ID = 'team_gUyibHqOWrQfv3PDfEUpB45J'
 
 export default async (req, res) => {
   const session = await requireServerAuthSession(req, res)
   if (!session) return
+  try {
+    req.body = profileInput(req.body)
+  } catch {
+    return res.status(400).json({
+      error: true,
+      message:
+        'Invalid profile URL or field. CSS must use a raw GitHub HTTPS URL.'
+    })
+  }
 
   let account = await prisma.accounts.findFirst({
     where: {
@@ -17,7 +27,7 @@ export default async (req, res) => {
     if (account.customDomain != null) {
       const prevDomain = account.customDomain
       await fetch(
-        `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${prevDomain}&teamId=${TEAM_ID}`,
+        `https://api.vercel.com/v1/projects/QmbACrEv2xvaVA3J5GWKzfQ5tYSiHTVX2DqTYfcAxRzvHj/alias?domain=${encodeURIComponent(prevDomain)}&teamId=${TEAM_ID}`,
         {
           method: 'DELETE',
           headers: {
@@ -95,36 +105,12 @@ export default async (req, res) => {
       },
       data: {
         username: req.body.username,
-        email: req.body.email,
+        // Login email and verification are owned by the identity provider.
         pronouns: req.body.pronouns,
-        cssURL: req.body.cssURL
-          ? req.body.cssURL?.includes('http://') ||
-            req.body.cssURL?.includes('https://') ||
-            req.body.cssURL == ''
-            ? req.body.cssURL
-            : 'http://'.concat(req.body.cssURL)
-          : null,
-        website: req.body.website
-          ? req.body.website?.includes('http://') ||
-            req.body.website?.includes('https://') ||
-            req.body.website == ''
-            ? req.body.website
-            : 'http://'.concat(req.body.website)
-          : null,
-        github: req.body.github
-          ? req.body.github?.includes('https://') ||
-            req.body.github?.includes('http://') ||
-            req.body.github == ''
-            ? req.body.github
-            : 'https://'.concat(req.body.github)
-          : null,
-        avatar: req.body.avatar
-          ? req.body.avatar?.includes('https://') ||
-            req.body.avatar?.includes('http://') ||
-            req.body.avatar == ''
-            ? req.body.avatar
-            : 'https://'.concat(req.body.avatar)
-          : null,
+        cssURL: req.body.cssURL || null,
+        website: req.body.website || null,
+        github: req.body.github || null,
+        avatar: req.body.avatar || null,
         customDomain: req.body.customDomain ? req.body.customDomain : null
       }
     })

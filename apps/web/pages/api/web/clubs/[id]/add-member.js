@@ -9,7 +9,7 @@ export default async (req, res) => {
 
   if (clubs.includes(req.query.id)) {
     try {
-      let newMember = await prisma.ClubMember.create({
+      let newMember = await prisma.clubMember.create({
         data: {
           club: {
             connect: {

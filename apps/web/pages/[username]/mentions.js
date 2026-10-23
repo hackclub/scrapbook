@@ -26,11 +26,11 @@ const Profile = ({ profile = {}, posts = [] }) => (
         profile.avatar ? `&images=${profile.avatar}` : ''
       }&caption=${`mentions on the Scrapbook.`}`}
     />
-    {profile.css && (
+    {profile.cssURL && (
       <link
         rel="stylesheet"
         type="text/css"
-        href={HOST + `/api/css?url=${profile.css}`}
+        href={HOST + `/api/css?url=${encodeURIComponent(profile.cssURL)}`}
       />
     )}
     <header>

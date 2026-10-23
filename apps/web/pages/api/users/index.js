@@ -1,5 +1,6 @@
 import prisma from '../../../lib/prisma'
 import { transformProfile } from './[username]/index'
+import { postLimit } from '../../../lib/pagination'
 
 export const getRawUsers = async (
   where = undefined,
@@ -26,7 +27,7 @@ export default async (req, res) => {
         }
       },
       undefined,
-      Number(req.query?.max) || undefined
+      postLimit(req.query?.max)
     )
 
     const users = rawUsers.map(transformProfile)

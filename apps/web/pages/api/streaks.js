@@ -1,4 +1,5 @@
 import prisma from '../../lib/prisma'
+import { profileAvatar } from '../../lib/cachet'
 
 export const getUserStreaks = async () => {
   try {
@@ -22,7 +23,7 @@ export const getUserStreaks = async () => {
       id: user.id ?? null,
       username: user.username ?? null,
       slackID: user.slackID ?? null,
-      avatar: user.avatar ?? null,
+      avatar: profileAvatar(user),
       streakCount: user.streakCount ?? 0,
       maxStreaks: user.maxStreaks ?? 0
     }))

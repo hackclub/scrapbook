@@ -4,6 +4,7 @@ import { app } from "../app.js";
 import { v4 as uuidv4 } from "uuid";
 import { Upload } from "@aws-sdk/lib-storage";
 import S3 from "./s3.js";
+import { publicFetch } from "./public-fetch.js";
 
 const replaceEmoji = (str) => emoji.emojify(str.replace(/::(.*):/, ":"));
 
@@ -99,7 +100,7 @@ export function extractOgUrl(htmlDoc) {
 }
 
 export async function getPageContent(page) {
-  const response = await fetch(page);
+  const response = await publicFetch(page);
   const content = await response.text();
   return content;
 }
@@ -125,8 +126,11 @@ async function uploadImageToS3(filename, blob) {
 }
 
 export async function getAndUploadOgImage(url) {
-  const file = await fetch(url);
+  const file = await publicFetch(url, 20 * 1024 * 1024);
   let blob = await file.blob();
+  if (!/^image\/(png|jpeg|gif|webp|avif)$/.test(blob.type)) {
+    throw new Error("Unsupported preview image");
+  }
   const form = new FormData();
   form.append("file", blob, `${uuidv4()}.${blob.type.split("/")[1]}`);
 

@@ -53,7 +53,10 @@ const Profile = ({
       }`}
     />
     {profile.cssURL && (
-      <link rel="stylesheet" href={HOST + `/api/css?url=${profile.cssURL}`} />
+      <link
+        rel="stylesheet"
+        href={HOST + `/api/css?url=${encodeURIComponent(profile.cssURL)}`}
+      />
     )}
     {children}
     <header className="header">

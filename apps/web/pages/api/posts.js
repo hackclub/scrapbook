@@ -1,7 +1,8 @@
 import { find, compact } from 'lodash-es'
 import { getRawUsers } from './users'
 import prisma from '../../lib/prisma'
-import { emailToPfp } from '../../lib/email'
+import { publicProfile } from '../../lib/public-profile'
+import { postLimit } from '../../lib/pagination'
 
 export function exclude(object, keys) {
   if (!object) return {}
@@ -39,7 +40,7 @@ export const getRawPosts = async (max = null, params = {}, api = false) => {
       ...params?.where
     }
   }
-  if (max) opts.take = max
+  opts.take = postLimit(max)
   try {
     const updates = await prisma.updates.findMany(opts)
     return updates
@@ -68,16 +69,13 @@ export const transformReactions = (raw = []) =>
 export const transformPost = p => {
   return {
     id: p.id,
-    user: exclude(
+    user: publicProfile(
       p.user
         ? {
             ...p.user,
-            avatar: isBrokenMediaURL(p.user.avatar)
-              ? null
-              : p.user.avatar || emailToPfp(p.user.email)
+            avatar: isBrokenMediaURL(p.user.avatar) ? null : p.user.avatar
           }
-        : {},
-      ['slackID', 'email', 'emailVerified']
+        : {}
     ),
     timestamp: p.messageTimestamp || null,
     slackUrl: p.messageTimestamp
