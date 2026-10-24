@@ -47,7 +47,7 @@
     "rss": "1.2.2",
     "superjson": "2.2.6",
     "swr": "2.5.1",
-    "nodemailer": "10.1.2",
+    "nodemailer": "10.1.7",
     "@mux/ts": "15.6.1"
   },
   "devDependencies": {
