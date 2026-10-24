@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1152.0",
-    "@aws-sdk/s3-request-presigner": "3.1152.0",
+    "@aws-sdk/s3-request-presigner": "3.1154.0",
     "@better-auth/prisma-adapter": "1.7.10",
     "@hackclub/icons": "0.2.2",
     "@hackclub/meta": "1.2.1",
