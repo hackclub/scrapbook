@@ -28,7 +28,7 @@
     "@next/mdx": "16.4.2",
     "@prisma/adapter-pg": "7.10.1",
     "@prisma/client": "7.10.1",
-    "better-auth": "1.7.10",
+    "better-auth": "1.7.12",
     "dotenv": "18.0.8",
     "emoji-picker-react": "5.0.0",
     "github-slugger": "2.0.0",
