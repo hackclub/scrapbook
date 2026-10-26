@@ -1,7 +1,7 @@
 import { find, isEmpty } from 'lodash-es'
-import { getRawPosts, transformPost } from '../../posts'
+import { getRawPosts, transformPost } from '../../../../lib/posts'
 import prisma from '../../../../lib/prisma'
-import { getRawUsers } from '../../users'
+import { getRawUsers } from '../../../../lib/users'
 import { emailToPfp } from '../../../../lib/email'
 import { profileAvatar } from '../../../../lib/cachet'
 

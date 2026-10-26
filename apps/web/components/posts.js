@@ -83,6 +83,7 @@ const Posts = ({ posts = [], swrKey = null }) => {
             openEmojiPicker={openEmojiPicker}
             authStatus={status}
             authSession={session}
+            reportable
             swrKey={swrKey}
             {...post}
           />

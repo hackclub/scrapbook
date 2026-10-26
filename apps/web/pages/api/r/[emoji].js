@@ -1,6 +1,6 @@
 import { find, isEmpty } from 'lodash-es'
-import { getRawUsers } from '../users/index'
-import { getRawPosts, transformPost } from '../posts'
+import { getRawUsers } from '../../../lib/users'
+import { getRawPosts, transformPost } from '../../../lib/posts'
 
 const DEFAULT_MAX_RECORDS = 200
 const HARD_MAX_RECORDS = 300

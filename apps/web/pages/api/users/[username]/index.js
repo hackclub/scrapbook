@@ -1,11 +1,8 @@
 import { find, isEmpty } from 'lodash-es'
-import { getRawUsers } from '../index'
-import { getRawPosts, transformPost } from '../../posts'
+import { getRawUsers, transformProfile } from '../../../../lib/users'
+import { getRawPosts, transformPost } from '../../../../lib/posts'
 import prisma from '../../../../lib/prisma'
-import { publicProfile } from '../../../../lib/public-profile'
 import { enrichPublicProfile } from '../../../../lib/cachet'
-
-export const transformProfile = publicProfile
 
 export const getProfile = async (value, field = 'username') => {
   let where = {}

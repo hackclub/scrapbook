@@ -127,7 +127,14 @@ const Club = ({ club = {}, posts = [], children, session }) => {
       <main className="container">
         <article className="posts club-posts">
           {posts.map(post => (
-            <Post key={post.id} user={post.Accounts} {...post} />
+            <Post
+              key={post.id}
+              user={post.Accounts}
+              authStatus={session?.user ? 'authenticated' : 'unauthenticated'}
+              authSession={session}
+              reportable
+              {...post}
+            />
           ))}
           {posts.length <= 1 && (
             <ExamplePosts club={posts.length == 0 ? true : false} />

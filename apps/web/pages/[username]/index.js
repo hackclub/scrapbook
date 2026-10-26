@@ -14,7 +14,8 @@ import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { exclude } from '../api/posts'
+import { exclude } from '../../lib/posts'
+import { useSession } from '../../lib/auth-client'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -24,6 +25,27 @@ const today = new Date()
 const dateString = dt => dt.toISOString().substring(0, 10)
 const heatmapEnd = dateString(today)
 const heatmapStart = dateString(new Date(today.setDate(today.getDate() - 62)))
+
+const ProfilePosts = ({ profile, posts }) => {
+  const { data: authSession, status: authStatus } = useSession()
+
+  return (
+    <article className="posts">
+      {posts.map(post => (
+        <Post
+          key={post.id}
+          user={profile}
+          profile
+          authStatus={authStatus}
+          authSession={authSession}
+          reportable
+          {...post}
+        />
+      ))}
+      {posts.length === 1 && <ExamplePosts />}
+    </article>
+  )
+}
 
 const Profile = ({
   profile = {},
@@ -189,12 +211,7 @@ const Profile = ({
         />
       </aside>
     </header>
-    <article className="posts">
-      {posts.map(post => (
-        <Post key={post.id} user={profile} profile {...post} />
-      ))}
-      {posts.length === 1 && <ExamplePosts />}
-    </article>
+    <ProfilePosts profile={profile} posts={posts} />
     {profile.cssURL && (
       <footer className="css" title="External CSS URL">
         <Icon

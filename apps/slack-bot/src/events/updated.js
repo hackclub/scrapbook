@@ -5,8 +5,9 @@ import { postEphemeral } from "../lib/slack.js";
 import { getUserRecord } from "../lib/users.js";
 import prisma from "../lib/prisma.js";
 import metrics from "../metrics.js";
+import { reviewScrapbookUpdate } from "../lib/moderation.js";
 
-export default async ({ event }) => {
+export default async ({ event, client }) => {
   try {
     const updateRecord = await prisma.updates.findFirst({
       where: {
@@ -19,6 +20,7 @@ export default async ({ event }) => {
         where: { id: updateRecord.id },
         data: { text: newMessage },
       });
+      await reviewScrapbookUpdate(client, updateRecord.id);
       await postEphemeral(
         event.channel,
         `Your post has been edited! You should see it update on the website in a few seconds.`,

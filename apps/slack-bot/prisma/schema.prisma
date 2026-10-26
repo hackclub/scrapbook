@@ -165,3 +165,37 @@ model Club {
   members      ClubMember[]
   updates      ClubUpdate[]
 }
+
+// Keep a post's moderation decision after the post itself is removed.
+model ModerationReview {
+  id                String    @id @default(cuid())
+  updateId          String    @unique
+  contentHash       String
+  flaggedTerms      String[]
+  flaggedCategories String[]
+  status            String    @default("pending")
+  reportChannel     String?
+  reportMessageTs   String?
+  rejectionReason   String?
+  reviewedBy        String?
+  createdAt         DateTime  @default(now())
+  reviewedAt        DateTime?
+}
+
+model ScrapbookPostReport {
+  id                 String   @id @default(cuid())
+  updateId           String
+  reporterAccountId  String
+  reporterUsername   String
+  createdAt          DateTime @default(now())
+  notifiedAt         DateTime?
+
+  @@unique([updateId, reporterAccountId])
+  @@index([reporterAccountId, createdAt])
+  @@index([notifiedAt, createdAt])
+}
+
+model ModerationScanState {
+  id             String   @id
+  lastScannedAt  DateTime @default("1970-01-01T00:00:00.000Z")
+}

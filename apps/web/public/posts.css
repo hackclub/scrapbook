@@ -231,3 +231,25 @@ video.post-attachment {
   width: 24px;
   height: 24px;
 }
+
+.post-report-button {
+  margin: 0 12px 12px 0;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  color: var(--colors-muted);
+  font: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.post-report-button:hover,
+.post-report-button:focus {
+  color: var(--colors-red);
+}
+
+.post-report-button:disabled {
+  color: var(--colors-muted);
+  cursor: default;
+}

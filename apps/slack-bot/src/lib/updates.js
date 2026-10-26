@@ -19,10 +19,13 @@ import Airtable from "airtable";
 // load environment variables
 config({ quiet: true });
 
-// initialize the airtable base
-const base = new Airtable({
-  apiKey: process.env.PLUGINS_AIRTABLE_API_KEY,
-}).base(process.env.PLUGINS_AIRTABLE_BASE_ID);
+// Airtable is optional for local development environments.
+const base =
+  process.env.PLUGINS_AIRTABLE_API_KEY && process.env.PLUGINS_AIRTABLE_BASE_ID
+    ? new Airtable({
+        apiKey: process.env.PLUGINS_AIRTABLE_API_KEY,
+      }).base(process.env.PLUGINS_AIRTABLE_BASE_ID)
+    : null;
 
 export const createUpdate = async (files = [], channel, ts, user, text) => {
   let attachments = [];
@@ -151,43 +154,45 @@ export const createUpdate = async (files = [], channel, ts, user, text) => {
     await reply(channel, ts, randomMessage);
   }
 
-  // send a copy of the updates to the subcribers
-  base("Update Listeners")
-    .select({
-      maxRecords: 100,
-      view: "Grid view",
-      filterByFormula: "NOT({Status} = 'Inactive')",
-    })
-    .eachPage(
-      (records, nextPage) => {
-        records.forEach(async (record) => {
-          const subcriber = {
-            app: record.get("App"),
-            endpoint: record.get("Endpoint"),
-            status: record.get("Status"),
-          };
-          try {
-            await fetch(subcriber.endpoint, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(updateInfo),
-            });
-            metrics.increment("success.send_post_update", 1);
-          } catch {
-            metrics.increment("errors.send_post_update", 1);
-          } // silently fail to not crash app
-        });
+  // Send subscriber updates when Airtable is configured.
+  if (base) {
+    base("Update Listeners")
+      .select({
+        maxRecords: 100,
+        view: "Grid view",
+        filterByFormula: "NOT({Status} = 'Inactive')",
+      })
+      .eachPage(
+        (records, nextPage) => {
+          records.forEach(async (record) => {
+            const subcriber = {
+              app: record.get("App"),
+              endpoint: record.get("Endpoint"),
+              status: record.get("Status"),
+            };
+            try {
+              await fetch(subcriber.endpoint, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updateInfo),
+              });
+              metrics.increment("success.send_post_update", 1);
+            } catch {
+              metrics.increment("errors.send_post_update", 1);
+            } // silently fail to not crash app
+          });
 
-        // load the next set of documents
-        nextPage();
-      },
-      (error) => {
-        if (error) metrics.increment("errors.airtable_get_post_listeners", 1);
-        metrics.increment("success.airtable_get_post_listeners", 1);
-      },
-    );
+          // load the next set of documents
+          nextPage();
+        },
+        (error) => {
+          if (error) metrics.increment("errors.airtable_get_post_listeners", 1);
+          metrics.increment("success.airtable_get_post_listeners", 1);
+        },
+      );
+  }
 
   return update;
 };

@@ -22,6 +22,10 @@ import reactionAdded from "./events/reactionAdded.js";
 import reactionRemoved from "./events/reactionRemoved.js";
 import { commands } from "./commands/commands.js";
 import metrics from "./metrics.js";
+import {
+  registerModerationActions,
+  startModerationScanner,
+} from "./lib/moderation.js";
 
 const receiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -34,6 +38,8 @@ export const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   receiver,
 });
+
+registerModerationActions(app);
 
 export const execute = (actionToExecute) => {
   return async (slackObject, ...props) => {
@@ -141,16 +147,19 @@ try {
 
 (async () => {
   await app.start(process.env.PORT || 3001);
-  let latestCommitMsg = "misc...";
-  await fetch("https://api.github.com/repos/hackclub/scrappy/commits/main")
-    .then((r) => r.json())
-    .then((d) => (latestCommitMsg = d.commit?.message || ""));
-  app.client.chat.postMessage({
-    channel: "C0P5NE354",
-    text: t("startup.message", { latestCommitMsg }),
-    parse: "mrkdwn",
-    unfurl_links: false,
-    unfurl_media: false,
-  });
+  startModerationScanner(app.client);
+  if (process.env.SCRAPPY_DISABLE_STARTUP_MESSAGE !== "true") {
+    let latestCommitMsg = "misc...";
+    await fetch("https://api.github.com/repos/hackclub/scrappy/commits/main")
+      .then((r) => r.json())
+      .then((d) => (latestCommitMsg = d.commit?.message || ""));
+    app.client.chat.postMessage({
+      channel: "C0P5NE354",
+      text: t("startup.message", { latestCommitMsg }),
+      parse: "mrkdwn",
+      unfurl_links: false,
+      unfurl_media: false,
+    });
+  }
   // console.log("⚡️ Scrappy is running !");
 })();

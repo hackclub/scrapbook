@@ -5,6 +5,7 @@ import Meta from '@hackclub/meta'
 import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import Footer from '../components/footer'
+import { getPosts } from '../lib/posts'
 import { find, compact, map, flatten } from 'lodash-es'
 import { serialize, deserialize } from 'superjson'
 
@@ -138,8 +139,6 @@ const IndexPage = ({ reactions = [], initialData }) => {
 export default IndexPage
 
 export const getServerSideProps = async context => {
-  const { getPosts } = require('./api/posts')
-
   const names = [
     'art',
     'package',

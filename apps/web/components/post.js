@@ -6,6 +6,7 @@ import Content from './content'
 import Video from './video'
 import Image from 'next/image'
 import Reaction from './reaction'
+import PostReportButton from './post-report-button'
 
 const imageFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 
@@ -52,7 +53,8 @@ const Post = ({
   openEmojiPicker = () => {},
   authStatus,
   swrKey,
-  authSession
+  authSession,
+  reportable = false
 }) => {
   const imageAttachments = filter(attachments, attachment =>
     endsWithAny(imageFileTypes, attachment)
@@ -206,6 +208,9 @@ const Post = ({
             >
               +
             </button>
+          )}
+          {authStatus === 'authenticated' && reportable && (
+            <PostReportButton postId={id} />
           )}
         </section>
       </section>
