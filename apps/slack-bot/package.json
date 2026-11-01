@@ -19,7 +19,7 @@
     "@prisma/client": "7.10.1",
     "@slack/bolt": "5.1.0",
     "airtable": "0.12.2",
-    "body-parser": "2.3.0",
+    "body-parser": "2.4.0",
     "bottleneck": "2.19.5",
     "cheerio": "1.2.0",
     "date-season": "0.0.2",
